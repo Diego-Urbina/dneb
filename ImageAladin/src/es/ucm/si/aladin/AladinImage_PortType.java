@@ -12,7 +12,7 @@ public interface AladinImage_PortType extends java.rmi.Remote {
     public es.ucm.si.aladin.ObservingProgram getObservingProgram(java.lang.String position, java.lang.String radius, java.lang.String program_name) throws java.rmi.RemoteException;
     public es.ucm.si.aladin.Filter[] getFilters(java.lang.String position, java.lang.String radius, java.lang.String program_name) throws java.rmi.RemoteException;
     public es.ucm.si.aladin.Observation[] getObservations(java.lang.String position, java.lang.String radius, java.lang.String program_name) throws java.rmi.RemoteException;
-    //public java.lang.String[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException;
-    public javax.activation.DataHandler[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException;
+    public java.lang.String[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException;
+    //public javax.activation.DataHandler[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException;
     public java.lang.String getAvailability() throws java.rmi.RemoteException;
 }

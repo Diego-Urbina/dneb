@@ -471,9 +471,38 @@ public class AladinImageSoapBindingStub extends org.apache.axis.client.Stub impl
 }
     }
 
-   
+    public java.lang.String[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[4]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("urn:AladinImage", "getImagesLocations"));
 
-    public javax.activation.DataHandler[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException {
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {storedImages, new java.lang.Float(centralPointRA), new java.lang.Float(centralPointDEC), processings, codings});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.String[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.String[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    /*public javax.activation.DataHandler[] getImagesLocations(es.ucm.si.aladin.StoredImage[] storedImages, float centralPointRA, float centralPointDEC, java.lang.String processings, java.lang.String codings) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -502,7 +531,7 @@ public class AladinImageSoapBindingStub extends org.apache.axis.client.Stub impl
   } catch (org.apache.axis.AxisFault axisFaultException) {
   throw axisFaultException;
 }
-    }
+    }*/
 
     public java.lang.String getAvailability() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
