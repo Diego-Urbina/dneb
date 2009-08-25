@@ -7,6 +7,8 @@
 
 package es.ucm.si.aladin;
 
+import java.net.*;
+import java.io.*;
 import java.rmi.RemoteException;
 
 import javax.activation.DataHandler;
@@ -54,7 +56,7 @@ public class AladinImageServiceTestCase extends junit.framework.TestCase {
 		// TBD - validate results
 	}
 
-	public void testWeb() throws ServiceException, RemoteException {
+	public void testWeb() throws Exception {
 
 		// locator creation
 		AladinImageService locator = new AladinImageServiceLocator();
@@ -86,6 +88,24 @@ public class AladinImageServiceTestCase extends junit.framework.TestCase {
 			
 			System.out.println(x);
 		}
+		
+		URL url = new URL(dh[0]);
+		URLConnection con = url.openConnection();
+		BufferedInputStream bis = new BufferedInputStream(con.getInputStream());
+		FileOutputStream fos = new FileOutputStream(new File("d:\\kk.fits"));
+		
+		byte[] x = new byte[1000];
+		int cont = bis.read(x);
+		while (cont >= 0) {
+			fos.write(x,0,cont);
+			cont = bis.read(x);
+		}
+		
+		bis.close();
+		fos.close();
+
+		
+		
 		// example with getFilters
 		Filter[] f = mysw.getFilters("053.11661-27.80931", "0.5", "GOODS-ACIS");
 
