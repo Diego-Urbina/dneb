@@ -531,8 +531,8 @@ public class AladinImageSoapBindingStub extends org.apache.axis.client.Stub impl
   } catch (org.apache.axis.AxisFault axisFaultException) {
   throw axisFaultException;
 }
-    }*/
-
+    }
+*/
     public java.lang.String getAvailability() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
