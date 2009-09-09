@@ -1,5 +1,6 @@
 package es.ucm.si.dneb;
 
+import java.awt.Frame;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +9,10 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,17 +32,23 @@ public class HttpImageDownloaderApp {
 	 */
 	public static void main(String[] args) throws ClientProtocolException,
 			IOException {
-		/*formparams.add(new BasicNameValuePair("v", "poss2ukstu_red"));
-		formparams.add(new BasicNameValuePair("r", "43"));
-		formparams.add(new BasicNameValuePair("d", "43"));
-		formparams.add(new BasicNameValuePair("e", "J2000"));
-		formparams.add(new BasicNameValuePair("h", "15.0"));
-		formparams.add(new BasicNameValuePair("w", "15.0"));
-		formparams.add(new BasicNameValuePair("f", "fits"));
-		formparams.add(new BasicNameValuePair("c", "none"));
-		formparams.add(new BasicNameValuePair("fov", "none"));
-		formparams.add(new BasicNameValuePair("v3", ""));*/
-		DownloadIt.downloadImage("poss2ukstu_red","43","43","J2000","5.0","5.0","fits","none");
+		
+		
+		JFrame form = new JFrame();
+		form.setSize(640, 480);
+		form.setVisible(true);
+		
+		
+		
+		//JMenu menu = new JMenu();
+		//JMenuItem menuItem= new JMenuItem("aaaa");
+		//menuItem.setVisible(true);
+		//menu.add(menuItem);
+		
+		
+		//form.add(menu);
+		
+		//DownloadIt.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
 	}
 
 }
