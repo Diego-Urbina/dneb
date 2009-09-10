@@ -10,9 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,6 +20,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+
+import es.ucm.si.dneb.gui.VentanaPcpal;
 
 public class HttpImageDownloaderApp {
 
@@ -34,10 +34,15 @@ public class HttpImageDownloaderApp {
 			IOException {
 		
 		
-		JFrame form = new JFrame();
-		form.setSize(640, 480);
-		form.setVisible(true);
+		//JFrame frame = new JFrame();
+		//frame.setSize(640, 480);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		//JTextArea inputSurvey = new JTextArea();
+		
+		VentanaPcpal ventana= new VentanaPcpal(480,640);
+		
+		//frame.setVisible(true);
 		
 		
 		//JMenu menu = new JMenu();
