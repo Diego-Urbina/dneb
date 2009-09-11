@@ -20,7 +20,7 @@ public class ImageAladinApp {
 		AladinImage_PortType mysw = locator.getAladinImage();
 
 		
-		ObservingProgramDescription[] opd=mysw.getObservingProgramsDescription("+20+20","0.5");
+		ObservingProgramDescription[] opd=mysw.getObservingProgramsDescription("3.03279972+0.72387999","0.5");
 		System.out.println(opd.length);
 		for(ObservingProgramDescription x : opd){
 			System.out.println(x.getName());
