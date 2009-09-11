@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="antlr/antlr/2.7.6/antlr-2.7.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm/asm/1.5.3/asm-1.5.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="cglib/cglib/2.1_3/cglib-2.1_3.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-collections/commons-collections/2.1.1/commons-collections-2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="javassist/javassist/3.4.GA/javassist-3.4.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="javax/transaction/jta/1.0.1B/jta-1.0.1B.jar"/>
+	<classpathentry exported="true" kind="lib" path="junit/junit/4.5/junit-4.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="net/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/hibernate/ejb3-persistence/1.0.1.GA/ejb3-persistence-1.0.1.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/hibernate/hibernate-annotations/3.3.1.GA/hibernate-annotations-3.3.1.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/hibernate/hibernate-commons-annotations/3.0.0.ga/hibernate-commons-annotations-3.0.0.ga.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/hibernate/hibernate-entitymanager/3.3.2.GA/hibernate-entitymanager-3.3.2.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-aop/2.5.6/spring-aop-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-beans/2.5.6/spring-beans-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-context/2.5.6/spring-context-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-jdbc/2.5.6/spring-jdbc-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-orm/2.5.6/spring-orm-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="org/springframework/spring-tx/2.5.6/spring-tx-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="log4j/log4j-1.2.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="javax/annotation/jsr250-api-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-dbcp/commons-dbcp-1.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-pool/commons-pool-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="jasperreports-3.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-beanutils-1.8.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="log4j-1.2.15.jar"/>
+	<classpathentry exported="true" kind="lib" path="servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="iText-2.1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-collections-3.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-digester-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-jci-core-1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
