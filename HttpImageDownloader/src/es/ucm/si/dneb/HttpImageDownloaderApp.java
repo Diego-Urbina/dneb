@@ -34,13 +34,11 @@ public class HttpImageDownloaderApp {
 			IOException {
 		
 		
-		//JFrame frame = new JFrame();
-		//frame.setSize(640, 480);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		
 		//JTextArea inputSurvey = new JTextArea();
 		
-		VentanaPcpal ventana= new VentanaPcpal(480,640);
+		//VentanaPcpal ventana= new VentanaPcpal(480,640);
 		
 		//frame.setVisible(true);
 		
@@ -53,7 +51,7 @@ public class HttpImageDownloaderApp {
 		
 		//form.add(menu);
 		
-		//DownloadIt.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
+		DownloadIt.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
 	}
 
 }
