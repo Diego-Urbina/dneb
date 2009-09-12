@@ -23,14 +23,14 @@ import org.apache.http.message.BasicNameValuePair;
 
 import es.ucm.si.dneb.gui.VentanaPcpal;
 
-public class HttpImageDownloaderApp {
+public abstract class HttpImageDownloaderApp {
 
 	/**
 	 * @param args
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	public static void main(String[] args) throws ClientProtocolException,
+	public static void main(final String[] args) throws ClientProtocolException,
 			IOException {
 		
 		
@@ -51,7 +51,8 @@ public class HttpImageDownloaderApp {
 		
 		//form.add(menu);
 		
-		DownloadIt.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
+		ImageDownloaderImpl id = new ImageDownloaderImpl();
+		id.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
 	}
 
 }
