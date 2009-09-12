@@ -9,13 +9,13 @@
                 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
                 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
                 ">
-<!--
+
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="classpath:jdbc.properties" />
 
 
-	 bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	 <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
@@ -25,7 +25,7 @@
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 		<property name="dataSource" ref="dataSource" />
-	</bean> -->
+	</bean>
 
 
 	<context:annotation-config />
@@ -38,8 +38,9 @@
 		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
 		p:username="${jdbc.username}" p:password="${jdbc.password}" />
 	-->
-<!--
+
 	<tx:annotation-driven />
+	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -55,7 +56,7 @@
 		<property name="maxActive" value="10" />
 
 	</bean>
--->
+
 
 </beans>
 
