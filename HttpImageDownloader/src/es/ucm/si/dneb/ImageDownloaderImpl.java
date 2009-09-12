@@ -16,12 +16,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.springframework.stereotype.Service;
 
-public class DownloadIt {
+@Service("ImageDownloader")
+public class ImageDownloaderImpl implements ImageDownloader{
 	
-	public static void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion) throws ClientProtocolException, IOException{
-		
-		
+	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion) throws ClientProtocolException, IOException{
 		
 		HttpClient httpclient = new DefaultHttpClient();
 		List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>();
