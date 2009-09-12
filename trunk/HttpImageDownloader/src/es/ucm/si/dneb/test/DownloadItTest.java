@@ -2,6 +2,8 @@ package es.ucm.si.dneb.test;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.ClientProtocolException;
 import org.junit.*;
 import org.springframework.context.*;
@@ -10,6 +12,7 @@ import es.ucm.si.dneb.ImageDownloader;
 
 public class DownloadItTest {
 	
+	private static final  Log LOG = LogFactory.getLog(DownloadItTest.class);
 	static ImageDownloader imageDownloader;
 	
 	@BeforeClass
@@ -23,11 +26,11 @@ public class DownloadItTest {
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
+    public static void tearDownClass(){
     }
 
     @Test
-    public void Test() throws ClientProtocolException, IOException{
+    public void pos1RedTest() throws ClientProtocolException, IOException{
     	imageDownloader.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
     	
     }
