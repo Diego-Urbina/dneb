@@ -9,7 +9,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	@NamedQuery(name="buscarUsuarioContrasenia",query="select u from User u where username = :user and password = :pass")
+	//@NamedQuery(name="UltimaCreada",query="select from Tarea t where "),
+	//@NamedQuery(name="UltimaActualizada",query="select from Tarea t where "),
+	@NamedQuery(name="TodasTareas",query="select t from Tarea t order by fechaCreacion")
 })
 public class Tarea implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -34,6 +36,82 @@ public class Tarea implements Serializable {
     private double alto;
     
     private double ancho;
+
+	public long getIdTarea() {
+		return idTarea;
+	}
+
+	public void setIdTarea(long idTarea) {
+		this.idTarea = idTarea;
+	}
+
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Date getFechaUltimaActualizacion() {
+		return fechaUltimaActualizacion;
+	}
+
+	public void setFechaUltimaActualizacion(Date fechaUltimaActualizacion) {
+		this.fechaUltimaActualizacion = fechaUltimaActualizacion;
+	}
+
+	public String getArInicial() {
+		return arInicial;
+	}
+
+	public void setArInicial(String arInicial) {
+		this.arInicial = arInicial;
+	}
+
+	public String getDecInicial() {
+		return decInicial;
+	}
+
+	public void setDecInicial(String decInicial) {
+		this.decInicial = decInicial;
+	}
+
+	public String getArFinal() {
+		return arFinal;
+	}
+
+	public void setArFinal(String arFinal) {
+		this.arFinal = arFinal;
+	}
+
+	public String getDecFinal() {
+		return decFinal;
+	}
+
+	public void setDecFinal(String decFinal) {
+		this.decFinal = decFinal;
+	}
+
+	public double getAlto() {
+		return alto;
+	}
+
+	public void setAlto(double alto) {
+		this.alto = alto;
+	}
+
+	public double getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(double ancho) {
+		this.ancho = ancho;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
     
     
     
