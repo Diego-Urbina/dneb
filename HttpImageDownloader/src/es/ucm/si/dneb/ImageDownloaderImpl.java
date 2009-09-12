@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +19,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.stereotype.Service;
 
-import es.ucm.si.dneb.test.DownloadItTest;
-
 @Service("ImageDownloader")
 public class ImageDownloaderImpl implements ImageDownloader{
 	
@@ -30,8 +27,8 @@ public class ImageDownloaderImpl implements ImageDownloader{
 	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion) throws ClientProtocolException, IOException{
 		
 		LOG.info("Entrada en el método downloadImage");
-		HttpClient httpclient = new DefaultHttpClient();
-		List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>(10);
+		final HttpClient httpclient = new DefaultHttpClient();
+		final List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>(10);
 		formparams.add(new BasicNameValuePair("v", survey));
 		formparams.add(new BasicNameValuePair("r", ascensionRecta));
 		formparams.add(new BasicNameValuePair("d", declinacion));
@@ -45,29 +42,32 @@ public class ImageDownloaderImpl implements ImageDownloader{
 		
 		LOG.info("Parámetros configurados correctamente");
 		
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,
+		final UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,
 				"UTF-8");
-		HttpPost httppost = new HttpPost(
+		final HttpPost httppost = new HttpPost(
 				"http://archive.stsci.edu/cgi-bin/dss_search");
 		httppost.setEntity(entity);
 
-		HttpResponse response = httpclient.execute(httppost);
+		final HttpResponse response = httpclient.execute(httppost);
 		LOG.info("HTTPPOST EJECUTADO");
-		HttpEntity resEnt = response.getEntity();
+		final HttpEntity resEnt = response.getEntity();
 		if (resEnt != null) {
-			BufferedInputStream bis = new BufferedInputStream(resEnt.getContent());
+			final BufferedInputStream bis = new BufferedInputStream(resEnt.getContent());
 
 			// BufferedInputStream bis = new BufferedInputStream(response.get);
-			FileOutputStream fos = new FileOutputStream(new File("d:\\kk.fits"));
+			final FileOutputStream fos = new FileOutputStream(new File("d:\\kk.fits"));
 			LOG.info("Se procede a la lecuta de datos");
-			byte[] x = new byte[1000];
-			int cont = bis.read(x);
+			final byte[] buffer = new byte[1024];
+			int cont = bis.read(buffer);
+			int total=cont;
 			while (cont >= 0) {
-				LOG.info(".");
-				fos.write(x, 0, cont);
-				cont = bis.read(x);
+				LOG.info("Leidos "+cont);
+				fos.write(buffer, 0, cont);
+				cont = bis.read(buffer);
+				total+=cont;
 			}
 			LOG.info("Fin de la lectura de datos");
+			LOG.info("Leidos: "+total+" bytes");
 			bis.close();
 			fos.close();
 			LOG.info("Fichero cerrado");
