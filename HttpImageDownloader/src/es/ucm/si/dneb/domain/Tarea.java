@@ -40,7 +40,23 @@ public class Tarea implements Serializable {
     
     private double ancho;
     
+    @ManyToOne
+    @JoinColumn(name="SURVEYINI_ID_FK",nullable=false)
+    private Survey surveyInicial;
     
+    @ManyToOne
+    @JoinColumn(name="SURVEYFIN_ID_FK",nullable=false)
+    private Survey surveyFinal;
+    
+    private double solapamiento;
+    
+    @ManyToOne
+    @JoinColumn(name="FORSOLAPAMIENTO_ID_FK",nullable=false)
+    private FormatoSolapamiento formatoSolapamiento;
+    
+    @ManyToOne
+    @JoinColumn(name="FORFICHERO_ID_FK",nullable=false) 
+    private FormatoFichero formatoFichero;
     
     @OneToMany(mappedBy="tarea")
     private Collection<Descarga> descargas;
@@ -127,6 +143,46 @@ public class Tarea implements Serializable {
 
 	public Collection<Descarga> getDescargas() {
 		return descargas;
+	}
+
+	public void setSurveyInicial(Survey surveyInicial) {
+		this.surveyInicial = surveyInicial;
+	}
+
+	public Survey getSurveyInicial() {
+		return surveyInicial;
+	}
+
+	public void setSurveyFinal(Survey surveyFinal) {
+		this.surveyFinal = surveyFinal;
+	}
+
+	public Survey getSurveyFinal() {
+		return surveyFinal;
+	}
+
+	public void setSolpamiento(double solpamiento) {
+		this.solapamiento = solpamiento;
+	}
+
+	public double getSolpamiento() {
+		return solapamiento;
+	}
+
+	public void setFormatoSolapamiento(FormatoSolapamiento formatoSolapamiento) {
+		this.formatoSolapamiento = formatoSolapamiento;
+	}
+
+	public FormatoSolapamiento getFormatoSolapamiento() {
+		return formatoSolapamiento;
+	}
+
+	public void setFormatoFichero(FormatoFichero formatoFichero) {
+		this.formatoFichero = formatoFichero;
+	}
+
+	public FormatoFichero getFormatoFichero() {
+		return formatoFichero;
 	}
     
     
