@@ -2,9 +2,12 @@
 package es.ucm.si.dneb.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.*;
+
+
 
 @Entity
 @Table(name="TAREA")
@@ -36,6 +39,11 @@ public class Tarea implements Serializable {
     private double alto;
     
     private double ancho;
+    
+    
+    
+    @OneToMany(mappedBy="tarea")
+    private Collection<Descarga> descargas;
 
 	public long getIdTarea() {
 		return idTarea;
@@ -111,6 +119,14 @@ public class Tarea implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public void setDescargas(Collection<Descarga> descargas) {
+		this.descargas = descargas;
+	}
+
+	public Collection<Descarga> getDescargas() {
+		return descargas;
 	}
     
     
