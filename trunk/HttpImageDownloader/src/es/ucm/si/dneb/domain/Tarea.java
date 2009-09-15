@@ -4,6 +4,7 @@ package es.ucm.si.dneb.domain;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -12,8 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	//@NamedQuery(name="UltimaCreada",query="select from Tarea t where "),
-	//@NamedQuery(name="UltimaActualizada",query="select from Tarea t where "),
+	@NamedQuery(name="TareasActualizadasFecha",query="select from Tarea t where fechaUltimaActulizacion=?"),
+	@NamedQuery(name="TareasCreadasFecha",query="select from Tarea t where fechaCreacion=?"),
 	@NamedQuery(name="TodasTareas",query="select t from Tarea t order by fechaCreacion")
 })
 public class Tarea implements Serializable {
@@ -23,36 +24,38 @@ public class Tarea implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_TAREA")
     private long idTarea;
-
+    
+    @Column(name="FECHACREACION", nullable =false)
     private Date fechaCreacion;
     
+    @Column(name="FECHAULTACTUALIZACION")
     private Date fechaUltimaActualizacion;
     
+    @Column(name="ARINICIAL", nullable =false)
     private String arInicial;
     
+    @Column(name="DECINICIAL", nullable =false) 
     private String decInicial;
     
+    @Column(name="ARFINAL", nullable =false)
     private String arFinal;
     
+    @Column(name="DECFINAL", nullable =false)
     private String decFinal;
     
+    @Column(name="ALTO", nullable =false)
     private double alto;
     
+    @Column(name="ANCHO", nullable =false)
     private double ancho;
     
-    @ManyToOne
-    @JoinColumn(name="SURVEYINI_ID_FK",nullable=false)
-    private Survey surveyInicial;
+    @ManyToMany
+    @JoinTable(name="TAREA_SURVEY_JT")
+    @JoinColumn(name="SURVEY_FK")
+    private List<Survey> surveys;
     
-    @ManyToOne
-    @JoinColumn(name="SURVEYFIN_ID_FK",nullable=false)
-    private Survey surveyFinal;
-    
+    @Column(name="SOLAPAMIENTO")
     private double solapamiento;
-    
-    @ManyToOne
-    @JoinColumn(name="FORSOLAPAMIENTO_ID_FK",nullable=false)
-    private FormatoSolapamiento formatoSolapamiento;
     
     @ManyToOne
     @JoinColumn(name="FORFICHERO_ID_FK",nullable=false) 
@@ -145,21 +148,7 @@ public class Tarea implements Serializable {
 		return descargas;
 	}
 
-	public void setSurveyInicial(Survey surveyInicial) {
-		this.surveyInicial = surveyInicial;
-	}
 
-	public Survey getSurveyInicial() {
-		return surveyInicial;
-	}
-
-	public void setSurveyFinal(Survey surveyFinal) {
-		this.surveyFinal = surveyFinal;
-	}
-
-	public Survey getSurveyFinal() {
-		return surveyFinal;
-	}
 
 	public void setSolpamiento(double solpamiento) {
 		this.solapamiento = solpamiento;
@@ -169,14 +158,6 @@ public class Tarea implements Serializable {
 		return solapamiento;
 	}
 
-	public void setFormatoSolapamiento(FormatoSolapamiento formatoSolapamiento) {
-		this.formatoSolapamiento = formatoSolapamiento;
-	}
-
-	public FormatoSolapamiento getFormatoSolapamiento() {
-		return formatoSolapamiento;
-	}
-
 	public void setFormatoFichero(FormatoFichero formatoFichero) {
 		this.formatoFichero = formatoFichero;
 	}
@@ -184,7 +165,16 @@ public class Tarea implements Serializable {
 	public FormatoFichero getFormatoFichero() {
 		return formatoFichero;
 	}
-    
+
+	public void setSurveys(List<Survey> surveys) {
+		this.surveys = surveys;
+	}
+
+	public List<Survey> getSurveys() {
+		return surveys;
+	}
+
+
     
     
     
