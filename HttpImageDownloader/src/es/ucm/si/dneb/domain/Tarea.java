@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	@NamedQuery(name="TareasActualizadasFecha",query="select from Tarea t where fechaUltimaActulizacion=?"),
-	@NamedQuery(name="TareasCreadasFecha",query="select from Tarea t where fechaCreacion=?"),
+	@NamedQuery(name="TareasActualizadasFecha",query="select t from Tarea t where fechaUltimaActulizacion=?"),
+	@NamedQuery(name="TareasCreadasFecha",query="select t from Tarea t where fechaCreacion=?"),
 	@NamedQuery(name="TodasTareas",query="select t from Tarea t order by fechaCreacion")
 })
 public class Tarea implements Serializable {
