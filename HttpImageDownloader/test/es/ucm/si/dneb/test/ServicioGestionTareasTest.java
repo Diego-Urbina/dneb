@@ -32,12 +32,14 @@ public class ServicioGestionTareasTest {
     @AfterClass
     public static void tearDownClass(){
     }
-
+    
+    
+    /**Prueba test poss1_red**/
     @Test
     public void pos1RedTest() throws ClientProtocolException, IOException{
-    	servicioGestionTareas.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none");
+    	servicioGestionTareas.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none","D:\\");
     	
     }
-    
+    /**P**/
 
 }
