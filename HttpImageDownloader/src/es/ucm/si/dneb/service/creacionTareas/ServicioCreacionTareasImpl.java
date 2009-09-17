@@ -1,5 +1,9 @@
 package es.ucm.si.dneb.service.creacionTareas;
 
-public class ServicioCreacionTareasImpl {
+import org.springframework.stereotype.Service;
+
+
+@Service("servicioCreacionTareas")
+public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 }
