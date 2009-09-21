@@ -5,6 +5,9 @@ import java.util.Collection;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Survey:dameSurveyPorDescripcion",query="select s from Survey s where descripcion=?")
+})
 public class Survey {
 	
 	@Id
@@ -12,7 +15,7 @@ public class Survey {
     @Column(name="ID_SURVEY")
     private long idSurvey;
 	
-	@Column(name="DESCRIPCION",nullable=false)
+	@Column(name="DESCRIPCION",nullable=false,unique=true)
 	private String descripcion;
 	
 	@ManyToMany
