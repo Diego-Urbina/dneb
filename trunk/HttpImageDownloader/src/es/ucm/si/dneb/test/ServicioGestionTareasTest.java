@@ -36,8 +36,13 @@ public class ServicioGestionTareasTest {
     
     /**Prueba test poss1_red**/
     @Test
-    public void pos1RedTest() throws ClientProtocolException, IOException{
+    public void pos1RedTestConBarra() throws ClientProtocolException, IOException{
     	servicioGestionTareas.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none","D:\\");
+    	
+    }
+    @Test
+    public void pos1RedTestSinBarra() throws ClientProtocolException, IOException{
+    	servicioGestionTareas.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none","D:");
     	
     }
     /**P**/
