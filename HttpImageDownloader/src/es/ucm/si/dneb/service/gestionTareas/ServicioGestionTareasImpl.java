@@ -9,6 +9,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
@@ -25,7 +28,10 @@ import org.springframework.stereotype.Service;
 @Service("servicioGestionTareas")
 public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 
-private static final Log LOG= LogFactory.getLog(ServicioGestionTareasImpl.class);
+	private static final Log LOG= LogFactory.getLog(ServicioGestionTareasImpl.class);
+	
+	@PersistenceContext
+	EntityManager manager;
 	
 	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion,String ruta){
 		
@@ -163,14 +169,28 @@ private static final Log LOG= LogFactory.getLog(ServicioGestionTareasImpl.class)
 		
 	}
 
+	
+
 	@Override
-	public void PararTarea(long tareaId) {
+	public void reanudarTarea(long tareaId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void reanudarTarea(long tareaId) {
+	public double obtenerPorcentajeCompletado(long tareaId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void pararTarea(long tareaId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reiniciarTarea(long tareaId) {
 		// TODO Auto-generated method stub
 		
 	}
