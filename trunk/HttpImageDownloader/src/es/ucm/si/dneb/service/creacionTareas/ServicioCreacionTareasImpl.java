@@ -12,6 +12,10 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.Descarga;
 import es.ucm.si.dneb.domain.FormatoFichero;
@@ -29,7 +33,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@PersistenceContext
 	EntityManager manager;
 	
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato){
 		
 		if(arInicial==null || arFinal==null || decInicial== null || decFinal==null || alto<=0 ||  ancho<=0 || solapamiento<0 || surveyOld==null || surveynNew==null || formato==null){
@@ -104,7 +108,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		
 	}
-	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public ArrayList<Descarga> crearDescargas(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String formato){
 		
 		return null;

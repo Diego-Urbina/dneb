@@ -33,7 +33,7 @@ public class ServicioCreacionTareasTest{
     public static void tearDownClass(){
     }
     
-    //"poss1_red","43","43","J2000","5.0","5.0","fits","none","D:"
+    //"","43","43","J2000","5.0","5.0","fits","none","D:"
     @Test
     public void testCreacionTarea(){
     	servicioCreacionTareas.crearTarea("25", "43", "25", "43", 10, 10, 2,"poss1_red" , "poss1_red", "fits");

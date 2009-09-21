@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="FormatoFichero:dameFormatoPorDescripcion",query="select f from FormatoFichero f where descripcion=?")
+	@NamedQuery(name="FormatoFichero:dameFormatoPorDescripcion",query="select f from FormatoFichero f where descipcion=?")
 })
 public class FormatoFichero {
 	
