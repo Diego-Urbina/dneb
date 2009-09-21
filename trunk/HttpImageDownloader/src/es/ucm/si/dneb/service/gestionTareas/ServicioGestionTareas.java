@@ -9,7 +9,11 @@ public interface ServicioGestionTareas {
 	
 	public void reanudarTarea(long tareaId);
 	
-	public void PararTarea(long tareaId);
+	public void pararTarea(long tareaId);
+	
+	public double obtenerPorcentajeCompletado(long tareaId);
+	
+	public void reiniciarTarea(long tareaId);
 	
 	
 }
