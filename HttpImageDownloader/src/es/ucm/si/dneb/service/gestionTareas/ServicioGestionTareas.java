@@ -7,5 +7,9 @@ public interface ServicioGestionTareas {
 	
 	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion,String ruta);
 	
-
+	public void reanudarTarea(long tareaId);
+	
+	public void PararTarea(long tareaId);
+	
+	
 }

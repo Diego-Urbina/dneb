@@ -163,4 +163,16 @@ private static final Log LOG= LogFactory.getLog(ServicioGestionTareasImpl.class)
 		
 	}
 
+	@Override
+	public void PararTarea(long tareaId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reanudarTarea(long tareaId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
