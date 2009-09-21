@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
@@ -30,20 +32,52 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@Override
 	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato){
 		
+		if(arInicial==null || arFinal==null || decInicial== null || decFinal==null || alto<=0 ||  ancho<=0 || solapamiento<0 || surveyOld==null || surveynNew==null || formato==null){
+			LOG.error("Parámetro ilegales");
+			throw new ServicioCreacionTareasException("Parámetros ilegarles al crear tarea");
+		}
+		
 		Tarea tarea = new Tarea();
 		GregorianCalendar calendar = new GregorianCalendar();
 		Date fechaActual= calendar.getTime();
 		
 		FormatoFichero formatoFichero;
-		//OJO falta por capturar la excepcion no single result ?
-		formatoFichero = (FormatoFichero) manager.createNamedQuery("").setParameter(1, formato).getSingleResult();
 		
+		try{
+			formatoFichero = (FormatoFichero) manager.createNamedQuery("FormatoFichero:dameFormatoPorDescripcion").setParameter(1, formato).getSingleResult();
+		}catch(NoResultException e){
+			LOG.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
+			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
+		}catch(NonUniqueResultException e){
+			LOG.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
+		}
+	    
 		ArrayList<Survey> surveys = new ArrayList<Survey>();
 		
-		Survey surveyViejo= (Survey) manager.createNamedQuery("").setParameter(1, surveyOld).getSingleResult();
-		surveys.add(surveyViejo);
-		Survey surveyActual= (Survey) manager.createNamedQuery("").setParameter(1, surveynNew).getSingleResult();
-		surveys.add(surveyActual);
+		
+		try{
+			Survey surveyViejo= (Survey) manager.createNamedQuery("Survey:dameSurveyPorDescripcion").setParameter(1, surveyOld).getSingleResult();
+			surveys.add(surveyViejo);
+		}catch(NoResultException e){
+			LOG.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,No se Devuelve resultado");
+			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
+		}catch(NonUniqueResultException e){
+			LOG.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,Se devuelve más de un resultado");
+			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
+		}
+		
+		
+		try{
+			Survey surveyActual= (Survey) manager.createNamedQuery("Survey:dameSurveyPorDescripcion").setParameter(1, surveynNew).getSingleResult();
+			surveys.add(surveyActual);
+		}catch(NoResultException e){
+			LOG.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,No se Devuelve resultado");
+			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
+		}catch(NonUniqueResultException e){
+			LOG.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,Se devuelve más de un resultado");
+			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
+		}
 		
 		tarea.setSurveys(surveys);
 		
@@ -64,6 +98,8 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		ArrayList<Descarga> descargas = crearDescargas(arInicial,arFinal,decInicial,decFinal,alto,ancho,solapamiento,formato);
 		
 		tarea.setDescargas(descargas);
+		
+		manager.persist(tarea);
 		
 		
 		
