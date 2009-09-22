@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.FitsException;
 
@@ -72,6 +74,31 @@ public class LectorImageHDU extends LectorHDU {
 		}
 		brilloMinimo=minimo;
 		return minimo;
+	}
+	
+	public int numPuntosQueSuperanUnCiertoBrillo(short brilloLimite){
+		int contador=0;
+		for(int i = 0; i < arrayData.length; i++){
+			for(int j = 0; j < arrayData[0].length; j++){
+				if(arrayData[i][j]>brilloLimite){
+					contador++;
+				}
+			}
+		}
+		return contador;
+	}
+	
+	public ArrayList <ParInt> PuntosQueSuperanUnCiertoBrillo(short brilloLimite){
+		ArrayList<ParInt> lista= new ArrayList<ParInt>(); 
+		for(int i = 0; i < arrayData.length; i++){
+			for(int j = 0; j < arrayData[0].length; j++){
+				if(arrayData[i][j]>brilloLimite){
+					lista.add(new ParInt(i,j));
+				}
+			}
+		}
+		return lista;
+		
 	}
 	
 	public short[][] getArrayData() {

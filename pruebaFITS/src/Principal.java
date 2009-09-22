@@ -50,9 +50,16 @@ public class Principal {
 			System.out.println(imageHDU.toString());
 			
 			// Leo los datos y la cabecera del primer HDU
-			LectorHDU l1 = new LectorImageHDU(imageHDU);
+			LectorImageHDU l1 = new LectorImageHDU(imageHDU);
 			l1.leerMatriz();
 			l1.leerCabecera();
+			
+			System.out.println("maximo "+l1.getBrilloMaximo());
+			System.out.println("medio "+l1.getBrilloMedio());
+			System.out.println("minimo " +l1.getBrilloMinimo());
+			System.out.println(l1.numPuntosQueSuperanUnCiertoBrillo((short) 5000));
+			System.out.println(l1.PuntosQueSuperanUnCiertoBrillo((short) 5000).size());
+			
 			
 			
 			
