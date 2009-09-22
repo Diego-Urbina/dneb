@@ -8,7 +8,7 @@ public class LectorImageHDU extends LectorHDU {
 	private short[][] arrayData;
 	private short brilloMedio=-1;
 	private short brilloMaximo=-1;
-	private short brilloMinimo=(short) 999999;
+	private short brilloMinimo=-1;
 	
 
 
@@ -55,12 +55,13 @@ public class LectorImageHDU extends LectorHDU {
 				}
 			}
 		}
+		brilloMaximo=maximo;
 		return maximo;
 	}
 	
 	private short brilloMinimo(){
 		
-		short minimo=-1;
+		short minimo= 30000;
 		
 		for(int i = 0; i < arrayData.length; i++){
 			for(int j = 0; j < arrayData[0].length; j++){
@@ -69,6 +70,7 @@ public class LectorImageHDU extends LectorHDU {
 				}
 			}
 		}
+		brilloMinimo=minimo;
 		return minimo;
 	}
 	
