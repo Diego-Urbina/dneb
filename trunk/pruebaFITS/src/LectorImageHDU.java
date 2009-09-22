@@ -8,7 +8,7 @@ public class LectorImageHDU extends LectorHDU {
 	private short[][] arrayData;
 	private short brilloMedio=-1;
 	private short brilloMaximo=-1;
-	private short brilloMinimo=-1;
+	private short brilloMinimo=(short) 999999;
 	
 
 
