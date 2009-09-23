@@ -19,6 +19,7 @@ public class VentanaPcpal extends JFrame{
 	    setSize(390, 300);
 	    this.setResizable(false);
 	    this.pack();
+	    setLocationRelativeTo(null);
 	    setVisible(true); 
 	    
 	}
