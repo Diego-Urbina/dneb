@@ -1,30 +1,25 @@
 package es.ucm.si.dneb.gui;
 
-import java.awt.FlowLayout;
-
 import javax.swing.*;
-import javax.swing.event.PopupMenuListener;
+import es.ucm.si.dneb.service.gestionTareas.*;
 
 public class VentanaPcpal extends JFrame{
 	
-	MapPanel vent;
+	String survey1, survey2, ari, deci, arf, decf, eq, alto, ancho, solapamiento, ruta;
 	
-	
-	
-	
-	public VentanaPcpal(int alto, int ancho){
+	public VentanaPcpal(){
 		super("HttpImageDownloader"); 
-		
-		vent= new MapPanel();
+				
+		JPanel vent = new MenuPanel(this);
 		vent.setVisible(true);
 		this.getContentPane().add(vent);
 		
 	    
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-	    setSize(ancho, alto); 
+	    setSize(390, 300);
+	    this.setResizable(false);
+	    this.pack();
 	    setVisible(true); 
-	    
-	   
 	    
 	}
 

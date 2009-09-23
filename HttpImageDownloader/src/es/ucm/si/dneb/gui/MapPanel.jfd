@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_16" class="java.beans.XMLDecoder"> 
  <object class="com.jformdesigner.model.FormModel"> 
   <void property="contentType"> 
    <string>form/swing</string> 
@@ -13,11 +13,11 @@
        <class>org.jdesktop.layout.GroupLayout</class> 
        <void method="setProperty"> 
         <string>$horizontalGroup</string> 
-        <string>par l {seq {space :::p, par l {seq l {par t {seq t {comp label4:::p:73:p, space ::18:x, comp textField6:::p:80:p}, seq t {comp label3:::p:73:p, space ::18:x, comp textField5:::p:80:p}, seq t {comp label1:::p:73:p, space ::18:x, comp textField1:::p:80:p}, seq {comp label2:::p:73:p, space ::18:x, comp textField3:::p:80:p}}, space s:::p, par l {seq {par l {comp label5:::p:73:p, comp label6:::p:73:p, comp label8:::p:73:p}, space :p:18:p, par t {comp textField2:::p:80:p, comp textField4::t:p:80:p, comp comboBox3::t:p::p}}, seq l {par l {comp label9:::p:91:p, comp label7:::p:73:p}, space :p:28:p, par l:::p {comp textField7::t:::x:1, comp comboBox2::t:::x:1}}}}, seq t {comp button2:::p:113:p, space ::134:x, comp button1:::p:113:p}}, space :::p}}</string> 
+        <string>par l {seq l {space :p:35:p, comp buttonAnterior:::p:113:p, space ::67:x, comp buttonSiguiente:::p:113:p, space :p:37:p}, seq {space :::p, par l {comp labelARI::l:p:73:p, comp labelDECI::l:p:73:p}, space :::x, par l {comp textFieldARI:1:l:p:80:p, comp textFieldDECI:1:l:p:80:p}, space :p:13:p, par l {comp labelARF:2:l:p:73:p, comp labelDECF:2:l:p:73:p}, space :::p, par l:::p {comp textFieldDECF:1:l::70:x:1, comp textFieldARF:1:l:p::p:1}, space :::p}, seq t {space :::p, par l {seq l {comp labelAlto:::p:73:p, space :::x, comp textFieldAlto:1::p:80:p}, seq l {comp labelAncho:::p:73:p, space :::x, comp textFieldAncho:1::p:80:p}}, space :p:13:p, par t {comp labelEq:2:t:p:73:p, comp labelSolap:2::p:91:p}, space :::p, par l {comp comboBoxEq:1:t:p::p, comp textFieldSolap:1:t:p:52:p:1}, space :::p}}</string> 
        </void> 
        <void method="setProperty"> 
         <string>$verticalGroup</string> 
-        <string>par l {seq l {space :::p, par b {comp textField2::b:p::p, comp textField1::b:p::p, comp label1::b:p::p, comp label6::b:p::p}, space s:::p, par b {comp textField4::b:p::p, comp textField3::b:p::p, comp label2::b:p::p, comp label8::b:p::p}, space :p:44:p, par t {par b {comp textField5::b:p::p, comp label3::b:p::p, comp label5::b:p::p}, comp comboBox3::t:p::p}, space :::p, par t {par b {comp textField6::b:p::p, comp comboBox2::b:p::p, comp label4::b:p::p}, comp label7::t:p::p}, space :::p, par b {comp textField7::b:p::p, comp label9::b:p::p}, space ::78:x, par b {comp button1::b:p::p, comp button2::b:p::p}, space :::p}}</string> 
+        <string>par l {seq l {par l {seq {space :37:37:p, par b {comp textFieldARI:3:b:p::p, comp labelARI:4:b:p::p}, space s:::p, par b {comp textFieldDECI:4:b:p::p, comp labelDECI:4:b:p::p}}, seq l {space :p:35:p, par l {seq l {comp labelARF:4::p::p, space s:::p, comp labelDECF:4::p::p}, seq l {comp textFieldARF:3::p::p, space s:::p, comp textFieldDECF:4::p::p}}}}, space s:::p, par l {seq l {space :2:2:2, par b {comp textFieldAlto:4:b:p::p, comp labelAlto:4:b:p::p}, space s:::p, par b {comp textFieldAncho:4:b:p::p, comp labelAncho:4:b:p::p}}, seq l {par c {comp labelEq:4:c:p::p, comp comboBoxEq:4:c:p::p}, space s:::p, par b {comp textFieldSolap:4:b:p::p, comp labelSolap:4:b:p::p}}}, space ::70:x, par b {comp buttonAnterior::b:p::p, comp buttonSiguiente::b:p::p}, space :p:26:p}}</string> 
        </void> 
       </object> 
       <void property="name"> 
@@ -26,64 +26,88 @@
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object id="Font0" class="java.awt.Font"> 
+          <string>Arial</string> 
+          <int>0</int> 
+          <int>11</int> 
+         </object> 
+        </void> 
         <void property="name"> 
-         <string>textField1</string> 
+         <string>textFieldARI</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>textField2</string> 
+         <string>textFieldARF</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>textField3</string> 
+         <string>textFieldDECI</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>textField4</string> 
+         <string>textFieldDECF</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>textField5</string> 
+         <string>textFieldAlto</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
-        <void property="name"> 
-         <string>textField6</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
         </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JComboBox</string> 
         <void property="name"> 
-         <string>comboBox2</string> 
+         <string>textFieldAncho</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>textField7</string> 
+         <string>textFieldSolap</string> 
         </void> 
        </object> 
       </void> 
@@ -94,8 +118,20 @@
          <string>text</string> 
          <string>SIGUIENTE</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>button1</string> 
+         <string>buttonSiguiente</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.ActionListener</string> 
+          <string>actionPerformed</string> 
+          <string>buttonSiguienteActionPerformed</string> 
+          <boolean>true</boolean> 
+         </object> 
         </void> 
        </object> 
       </void> 
@@ -106,8 +142,20 @@
          <string>text</string> 
          <string>ANTERIOR</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>button2</string> 
+         <string>buttonAnterior</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.ActionListener</string> 
+          <string>actionPerformed</string> 
+          <string>buttonAnteriorActionPerformed</string> 
+          <boolean>true</boolean> 
+         </object> 
         </void> 
        </object> 
       </void> 
@@ -118,8 +166,16 @@
          <string>text</string> 
          <string>AR INICIAL</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object id="Font1" class="java.awt.Font"> 
+          <string>Arial</string> 
+          <int>0</int> 
+          <int>11</int> 
+         </object> 
+        </void> 
         <void property="name"> 
-         <string>label1</string> 
+         <string>labelARI</string> 
         </void> 
        </object> 
       </void> 
@@ -130,8 +186,12 @@
          <string>text</string> 
          <string>DEC INICIAL</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font1"/> 
+        </void> 
         <void property="name"> 
-         <string>label2</string> 
+         <string>labelDECI</string> 
         </void> 
        </object> 
       </void> 
@@ -142,8 +202,12 @@
          <string>text</string> 
          <string>ALTO</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font1"/> 
+        </void> 
         <void property="name"> 
-         <string>label3</string> 
+         <string>labelAlto</string> 
         </void> 
        </object> 
       </void> 
@@ -154,8 +218,12 @@
          <string>text</string> 
          <string>ANCHO</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font1"/> 
+        </void> 
         <void property="name"> 
-         <string>label4</string> 
+         <string>labelAncho</string> 
         </void> 
        </object> 
       </void> 
@@ -166,8 +234,12 @@
          <string>text</string> 
          <string>EQUINOCIO</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font1"/> 
+        </void> 
         <void property="name"> 
-         <string>label5</string> 
+         <string>labelEq</string> 
         </void> 
        </object> 
       </void> 
@@ -178,8 +250,12 @@
          <string>text</string> 
          <string>AR FINAL</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font1"/> 
+        </void> 
         <void property="name"> 
-         <string>label6</string> 
+         <string>labelARF</string> 
         </void> 
        </object> 
       </void> 
@@ -190,8 +266,12 @@
          <string>text</string> 
          <string>DEC FINAL</string> 
         </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font1"/> 
+        </void> 
         <void property="name"> 
-         <string>label8</string> 
+         <string>labelDECF</string> 
         </void> 
        </object> 
       </void> 
@@ -202,28 +282,38 @@
          <string>text</string> 
          <string>SOLAPAMIENTO</string> 
         </void> 
-        <void property="name"> 
-         <string>label9</string> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JLabel</string> 
         <void method="setProperty"> 
-         <string>text</string> 
-         <string>F SOLAP</string> 
+         <string>font</string> 
+         <object idref="Font1"/> 
         </void> 
         <void property="name"> 
-         <string>label7</string> 
+         <string>labelSolap</string> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JComboBox</string> 
+        <void method="setProperty"> 
+         <string>model</string> 
+         <object class="javax.swing.DefaultComboBoxModel"> 
+          <void property="selectedItem"> 
+           <string>J2000</string> 
+          </void> 
+          <void method="addElement"> 
+           <string>J2000</string> 
+          </void> 
+          <void method="addElement"> 
+           <string>B1950</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object idref="Font0"/> 
+        </void> 
         <void property="name"> 
-         <string>comboBox3</string> 
+         <string>comboBoxEq</string> 
         </void> 
        </object> 
       </void> 
@@ -240,7 +330,7 @@
       <void method="setProperty"> 
        <string>size</string> 
        <object class="java.awt.Dimension"> 
-        <int>380</int> 
+        <int>365</int> 
         <int>300</int> 
        </object> 
       </void> 
