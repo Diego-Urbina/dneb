@@ -60,7 +60,7 @@ public class Principal {
 			System.out.println(l1.numPuntosQueSuperanUnCiertoBrillo((short) 5000));
 			System.out.println(l1.PuntosQueSuperanUnCiertoBrillo((short) 5000).size());
 			
-			
+			l1.getPicosPorFilas();
 			
 			
 			// Comprobando el segundo HDU
