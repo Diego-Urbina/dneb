@@ -6,14 +6,28 @@ import nom.tam.fits.HeaderCard;
 
 public abstract class LectorHDU {
 
-	BasicHDU HDU;
+	protected BasicHDU HDU;
 	
+	
+	public BasicHDU getHDU() {
+		return HDU;
+	}
+
+
+	public void setHDU(BasicHDU hdu) {
+		HDU = hdu;
+	}
+
+
 	public LectorHDU(BasicHDU bHDU){
 		HDU = bHDU;
 	}
 	
-	// Obtengo la cabecera (Header) y usando un 
-	//iterador miro todos los pares atributo-valor
+	
+	/**
+	 * Imprime todos los pares atributo-valor de la
+	 * cabecera
+	 */
 	public void leerCabecera(){
 		Header cabecera = HDU.getHeader();
 		HeaderCard hc;
@@ -29,7 +43,13 @@ public abstract class LectorHDU {
 		System.out.println("\n");
 	}
 	
+	
+	/**
+	 * Imprime la matriz de datos
+	 * @throws FitsException
+	 */
 	public abstract void leerMatriz() throws FitsException;
+	
 	
 	/**
 	 * Devuelve la matriz de datos
@@ -39,6 +59,7 @@ public abstract class LectorHDU {
 	public Object getMatriz() throws FitsException {
 		return HDU.getData().getData();
 	}
+	
 	
 	/**
 	 * Devuelve el valor asociado a la keyword dada
