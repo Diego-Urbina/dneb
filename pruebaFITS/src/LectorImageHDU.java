@@ -141,6 +141,44 @@ public class LectorImageHDU extends LectorHDU {
 		}
 	}
 	
-	
+	public ArrayList<ParInt> getPicosPorFilas() {
+		ArrayList<ParInt> picos = new ArrayList<ParInt>();
+		int umbral = 4000;
+		ParInt aux = new ParInt(0,0);
+		
+		for(int i = 0; i < arrayData.length; i++){
+			for(int j = 0; j < arrayData[0].length; j++){
+				if (arrayData[i][j] > umbral) {
+					if (j == 0 && arrayData[i][j] > arrayData[i][j+1]) {
+						aux.setI(i);
+						aux.setJ(j);
+						picos.add(aux);
+						aux.print();
+						System.out.println(" -> " + arrayData[i][j]);
+					} else {
+						if (j == arrayData[0].length-1 && arrayData[i][j] >= arrayData[i][j-1]) {
+							aux.setI(i);
+							aux.setJ(j);
+							picos.add(aux);
+							aux.print();
+							System.out.println(" -> " + arrayData[i][j]);
+						} else {
+							if (j > 0 && j < arrayData[0].length-1 && 
+									arrayData[i][j] >= arrayData[i][j-1]
+									&& arrayData[i][j] < arrayData[i][j+1]) {
+								aux.setI(i);
+								aux.setJ(j);
+								picos.add(aux);
+								aux.print();
+								System.out.println(" -> " + arrayData[i][j]);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return picos;
+	}
 	
 }

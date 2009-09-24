@@ -23,6 +23,8 @@ public class ParInt {
 	public int getJ() {
 		return j;
 	}
-	
+	public void print() {
+		System.out.print(i + ", " + j);
+	}
 
 }
