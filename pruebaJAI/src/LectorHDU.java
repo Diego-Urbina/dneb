@@ -6,32 +6,34 @@ import nom.tam.fits.HeaderCard;
 
 public abstract class LectorHDU {
 
-	protected BasicHDU HDU;
-	
-	
-	public BasicHDU getHDU() {
-		return HDU;
-	}
+	protected Header header;
 
 
-	public void setHDU(BasicHDU hdu) {
-		HDU = hdu;
-	}
-
-
-	public LectorHDU(BasicHDU bHDU){
-		HDU = bHDU;
+	public LectorHDU(Header h){
+		header = h;
 	}
 	
 	
+		
+	public Header getHeader() {
+		return header;
+	}
+
+	public void setHeader(Header header) {
+		this.header = header;
+	}
+
+
+
+
+
 	/**
 	 * Imprime todos los pares atributo-valor de la
 	 * cabecera
 	 */
-	public void leerCabecera(){
-		Header cabecera = HDU.getHeader();
+	public void printHeader(){
 		HeaderCard hc;
-		Iterator iterator = cabecera.iterator();
+		Iterator iterator = header.iterator();
 		int i = 1;
 		while (iterator.hasNext()){
 			hc = (HeaderCard) iterator.next();
@@ -48,17 +50,7 @@ public abstract class LectorHDU {
 	 * Imprime la matriz de datos
 	 * @throws FitsException
 	 */
-	public abstract void leerMatriz() throws FitsException;
-	
-	
-	/**
-	 * Devuelve la matriz de datos
-	 * @return
-	 * @throws FitsException
-	 */
-	public Object getMatriz() throws FitsException {
-		return HDU.getData().getData();
-	}
+	public abstract void printArray() throws FitsException;
 	
 	
 	/**
@@ -67,8 +59,7 @@ public abstract class LectorHDU {
 	 * @return
 	 */
 	public String getValue(String keyword){
-		Header cabecera = HDU.getHeader();
-		HeaderCard hc = cabecera.findCard(keyword);
+		HeaderCard hc = header.findCard(keyword);
 		return hc.getValue();
 	}
 }
