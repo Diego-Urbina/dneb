@@ -28,6 +28,12 @@ public class Tarea implements Serializable {
     @Column(name="FECHACREACION", nullable =false)
     private Date fechaCreacion;
     
+    @Column(name="FINALIZADA", nullable =false)
+    private boolean finalizada;
+    
+    @Column(name="ACTIVA", nullable =false)
+    private boolean activa;
+    
     @Column(name="FECHAULTACTUALIZACION")
     private Date fechaUltimaActualizacion;
     
@@ -51,11 +57,13 @@ public class Tarea implements Serializable {
     
     @ManyToMany
     @JoinTable(name="TAREA_SURVEY_JT")
-    @JoinColumn(name="SURVEY_FK")
     private List<Survey> surveys;
     
     @Column(name="SOLAPAMIENTO")
     private double solapamiento;
+    
+    @Column(name="ruta")
+    private String ruta;
     
     @ManyToOne
     @JoinColumn(name="FORFICHERO_ID_FK",nullable=false) 
@@ -172,6 +180,30 @@ public class Tarea implements Serializable {
 
 	public List<Survey> getSurveys() {
 		return surveys;
+	}
+
+	public void setRuta(String ruta) {
+		this.ruta = ruta;
+	}
+
+	public String getRuta() {
+		return ruta;
+	}
+
+	public void setFinalizada(boolean finalizada) {
+		this.finalizada = finalizada;
+	}
+
+	public boolean isFinalizada() {
+		return finalizada;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
+	}
+
+	public boolean isActiva() {
+		return activa;
 	}
 
 

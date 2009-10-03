@@ -18,9 +18,7 @@ public class Survey {
 	@Column(name="DESCRIPCION",nullable=false,unique=true)
 	private String descripcion;
 	
-	@ManyToMany
-	@JoinTable(name="TAREA_SURVEY_JT")
-	@JoinColumn(name="SURVEY_FK")
+	@ManyToMany(mappedBy="surveys")
 	private Collection<Tarea> tareas;
 
 	public void setIdSurvey(long idSurvey) {

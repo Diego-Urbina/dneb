@@ -18,7 +18,9 @@ public class Descarga {
 	
 	private String declinacion;
 	
-	private String survey;
+	@ManyToOne
+	@JoinColumn(name="Survey_ID_FK",nullable=false)
+	private Survey survey;
 	
 	private boolean finalizada;
 	
@@ -62,13 +64,7 @@ public class Descarga {
 		return tarea;
 	}
 
-	public void setSurvey(String survey) {
-		this.survey = survey;
-	}
 
-	public String getSurvey() {
-		return survey;
-	}
 
 	public void setFinalizada(boolean finalizada) {
 		this.finalizada = finalizada;
@@ -92,6 +88,14 @@ public class Descarga {
 
 	public String getRutaFichero() {
 		return rutaFichero;
+	}
+
+	public void setSurvey(Survey survey) {
+		this.survey = survey;
+	}
+
+	public Survey getSurvey() {
+		return survey;
 	}
 	
 	
