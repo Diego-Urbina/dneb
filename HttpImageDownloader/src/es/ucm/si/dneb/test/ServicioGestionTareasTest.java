@@ -14,37 +14,82 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 
 public class ServicioGestionTareasTest {
-	
-	
-	private static final  Log LOG = LogFactory.getLog(ServicioGestionTareasTest.class);
-	static ServicioGestionTareas servicioGestionTareas;
-	
-	@BeforeClass
-    public static void setUpClass() throws Exception {
-        try {
-            ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-            servicioGestionTareas =(ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
-                } catch (Throwable e) {
-                        e.printStackTrace();
-                }
-    }
 
-    @AfterClass
-    public static void tearDownClass(){
-    }
-    
-    
-    /**Prueba test poss1_red**/
-    @Test
-    public void pos1RedTestConBarra() throws ClientProtocolException, IOException{
-    	servicioGestionTareas.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none","D:\\");
-    	
-    }
-    @Test
-    public void pos1RedTestSinBarra() throws ClientProtocolException, IOException{
-    	servicioGestionTareas.downloadImage("poss1_red","43","43","J2000","5.0","5.0","fits","none","D:");
-    	
-    }
-    /**P**/
+	private static final Log LOG = LogFactory
+			.getLog(ServicioGestionTareasTest.class);
+	static ServicioGestionTareas servicioGestionTareas;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					"applicationContext.xml");
+			servicioGestionTareas = (ServicioGestionTareas) ctx
+					.getBean("servicioGestionTareas");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+	}
+
+	/** Prueba test poss1_red **/
+	@Test
+	public void poss1RedTest() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("poss1_red", "43", "43", "J2000",
+				"0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void poss1BlueTest() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("poss1_blue", "43", "43", "J2000",
+				"0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void poss2BlueTest() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("poss2ukstu_blue", "43", "43",
+				"J2000", "0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void poss2IRTest() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("poss2ukstu_ir", "43", "43",
+				"J2000", "0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void poss2RedTest() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("poss2ukstu_red", "43", "43",
+				"J2000", "0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void quickvTest() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("quickv&r", "43", "43", "J2000",
+				"0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void phase2_gsc2Test() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("phase2_gsc2", "43", "43", "J2000",
+				"0.5", "0.5", "fits", "none", "D:\\");
+
+	}
+
+	@Test
+	public void phase2_gsc1Test() throws ClientProtocolException, IOException {
+		servicioGestionTareas.downloadImage("phase2_gsc1", "43", "43", "J2000",
+				"0.5", "0.5", "fits", "none", "D:\\");
+
+	}
 
 }
