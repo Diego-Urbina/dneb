@@ -3,6 +3,7 @@ package es.ucm.si.dneb.service.creacionTareas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -34,7 +35,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	EntityManager manager;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato){
+	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato,String ruta){
 		
 		if(arInicial==null || arFinal==null || decInicial== null || decFinal==null || alto<=0 ||  ancho<=0 || solapamiento<0 || surveyOld==null || surveynNew==null || formato==null){
 			LOG.error("Parámetro ilegales");
@@ -93,25 +94,46 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		tarea.setDecFinal(decFinal);
 		tarea.setSolpamiento(solapamiento);
 		tarea.setFormatoFichero(formatoFichero);
-		
-		
+		tarea.setRuta(ruta);
+		tarea.setActiva(false);
+		tarea.setFinalizada(false);
 		
 		tarea.setFechaCreacion(fechaActual);
 		tarea.setFechaUltimaActualizacion(fechaActual);
 		
-		ArrayList<Descarga> descargas = crearDescargas(arInicial,arFinal,decInicial,decFinal,alto,ancho,solapamiento,formato);
+		manager.persist(tarea);
+		
+		List<Descarga> descargas = crearDescargas(tarea);
 		
 		tarea.setDescargas(descargas);
 		
-		manager.persist(tarea);
+		
+		manager.merge(tarea);
+		
 		
 		
 		
 	}
 	@Transactional(propagation = Propagation.REQUIRED)
-	public ArrayList<Descarga> crearDescargas(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String formato){
+	public List<Descarga> crearDescargas(Tarea tarea){
 		
-		return null;
+		ArrayList<Descarga> descargas = new ArrayList<Descarga>();
+		
+		Descarga descarga = new Descarga();
+		
+		descarga.setAscensionRecta(tarea.getArInicial());
+		descarga.setDeclinacion(tarea.getDecInicial());
+		descarga.setFinalizada(false);
+		descarga.setRutaFichero(tarea.getRuta());
+		descarga.setSurvey(tarea.getSurveys().get(0));
+		descarga.setTarea(tarea);
+		
+		manager.persist(descarga);
+		
+		descargas.add(descarga);
+		
+		
+		return descargas;
 	}
 
 }
