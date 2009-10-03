@@ -24,6 +24,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.stereotype.Service;
 
+import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Tarea;
+
 
 @Service("servicioGestionTareas")
 public class ServicioGestionTareasImpl implements ServicioGestionTareas{
@@ -189,9 +192,19 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 		
 	}
 
-	@Override
-	public void reiniciarTarea(long tareaId) {
-		// TODO Auto-generated method stub
+	
+	
+	public void procesoDescarga(Tarea tarea){
+		
+		//List<Descarga> descargas= tarea.getDescargas();
+		
+		Tarea tarea2 = manager.find(Tarea.class, 1L);
+		List<Descarga> descargas=manager.createNamedQuery("Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1, tarea.getIdTarea()).getResultList();
+		
+		for(Descarga descarga : descargas){
+			
+			
+		}
 		
 	}
 
