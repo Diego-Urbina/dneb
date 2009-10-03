@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 
 public class ServicioGestionTareasTest {
@@ -90,6 +91,12 @@ public class ServicioGestionTareasTest {
 		servicioGestionTareas.downloadImage("phase2_gsc1", "43", "43", "J2000",
 				"0.5", "0.5", "fits", "none", "D:\\");
 
+	}
+	
+	@Test
+	public void pruebaProcesoDescarga(){
+		/**Prueba chapuza**/
+		servicioGestionTareas.procesoDescarga(new Tarea());
 	}
 
 }

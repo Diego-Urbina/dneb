@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NamedQueries({
 	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t where fechaUltimaActulizacion=?"),
 	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t where fechaCreacion=?"),
+	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.descargas d where t.idTarea=? and d.finalizada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t order by fechaCreacion")
 })
 public class Tarea implements Serializable {
@@ -70,7 +71,7 @@ public class Tarea implements Serializable {
     private FormatoFichero formatoFichero;
     
     @OneToMany(mappedBy="tarea")
-    private Collection<Descarga> descargas;
+    private List<Descarga> descargas;
 
 	public long getIdTarea() {
 		return idTarea;
@@ -148,11 +149,11 @@ public class Tarea implements Serializable {
 		return serialVersionUID;
 	}
 
-	public void setDescargas(Collection<Descarga> descargas) {
+	public void setDescargas(List<Descarga> descargas) {
 		this.descargas = descargas;
 	}
 
-	public Collection<Descarga> getDescargas() {
+	public List<Descarga> getDescargas() {
 		return descargas;
 	}
 

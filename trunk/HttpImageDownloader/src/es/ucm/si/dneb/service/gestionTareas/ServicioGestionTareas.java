@@ -3,6 +3,8 @@ package es.ucm.si.dneb.service.gestionTareas;
 import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 
+import es.ucm.si.dneb.domain.Tarea;
+
 public interface ServicioGestionTareas {
 	
 	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion,String ruta);
@@ -13,7 +15,7 @@ public interface ServicioGestionTareas {
 	
 	public double obtenerPorcentajeCompletado(long tareaId);
 	
-	public void reiniciarTarea(long tareaId);
+	public void procesoDescarga(Tarea tarea);
 	
 	
 }
