@@ -1,9 +1,12 @@
 package es.ucm.si.dneb.service.gestionTareas;
 
 import java.io.IOException;
+import java.util.List;
+
 import org.apache.http.client.ClientProtocolException;
 
-import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.*;
+
 
 public interface ServicioGestionTareas {
 	
@@ -17,5 +20,7 @@ public interface ServicioGestionTareas {
 	
 	public void procesoDescarga(Tarea tarea);
 	
+	public List<Survey> getAllSurveys();
 	
+	public List<Tarea> getTareas();
 }

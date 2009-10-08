@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Survey:dameSurveyPorDescripcion",query="select s from Survey s where descripcion=?")
+	@NamedQuery(name="Survey:dameSurveyPorDescripcion",query="select s from Survey s where descripcion=?"),
+	@NamedQuery(name="Survey:dameTodosLosSurveys",query="select s from Survey s")
 })
 public class Survey {
 	

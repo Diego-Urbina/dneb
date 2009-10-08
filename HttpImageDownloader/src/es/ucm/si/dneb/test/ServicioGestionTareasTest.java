@@ -40,14 +40,14 @@ public class ServicioGestionTareasTest {
 	@Test
 	public void poss1RedTest() throws ClientProtocolException, IOException {
 		servicioGestionTareas.downloadImage("poss1_red", "43", "43", "J2000",
-				"0.5", "0.5", "fits", "none", "D:\\");
+				"11", "11", "fits", "none", "D:\\");
 
 	}
 
 	@Test
 	public void poss1BlueTest() throws ClientProtocolException, IOException {
 		servicioGestionTareas.downloadImage("poss1_blue", "43", "43", "J2000",
-				"0.5", "0.5", "fits", "none", "D:\\");
+				"11", "11", "fits", "none", "D:\\");
 
 	}
 
@@ -92,7 +92,7 @@ public class ServicioGestionTareasTest {
 				"0.5", "0.5", "fits", "none", "D:\\");
 
 	}
-	
+ 	
 	@Test
 	public void pruebaProcesoDescarga(){
 		/**Prueba chapuza**/

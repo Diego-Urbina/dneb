@@ -23,25 +23,32 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
+import org.springframework.transaction.annotation.*;
 import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 
-
 @Service("servicioGestionTareas")
-public class ServicioGestionTareasImpl implements ServicioGestionTareas{
+public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
-	private static final Log LOG= LogFactory.getLog(ServicioGestionTareasImpl.class);
-	
+	private static final Log LOG = LogFactory
+			.getLog(ServicioGestionTareasImpl.class);
+
 	@PersistenceContext
 	EntityManager manager;
 	
-	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion,String ruta){
-		
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void downloadImage(String survey, String ascensionRecta,
+			String declinacion, String equinocio, String alto, String ancho,
+			String formato, String compresion, String ruta) {
+
 		LOG.info("Entrada en el método downloadImage");
 		final HttpClient httpclient = new DefaultHttpClient();
-		
-		final List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>(10);
+
+		final List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>(
+				10);
 		formparams.add(new BasicNameValuePair("v", survey));
 		formparams.add(new BasicNameValuePair("r", ascensionRecta));
 		formparams.add(new BasicNameValuePair("d", declinacion));
@@ -52,25 +59,22 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 		formparams.add(new BasicNameValuePair("c", compresion));
 		formparams.add(new BasicNameValuePair("fov", "none"));
 		formparams.add(new BasicNameValuePair("v3", ""));
-		
-		
-		
-		UrlEncodedFormEntity entity=null;
+
+		UrlEncodedFormEntity entity = null;
 		try {
-			entity = new UrlEncodedFormEntity(formparams,
-					"UTF-8");
+			entity = new UrlEncodedFormEntity(formparams, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOG.debug("Problema con la codificación de los parámetros");
 			e.printStackTrace();
 		}
-		
+
 		LOG.info("Parámetros configurados correctamente");
 		final HttpPost httppost = new HttpPost(
 				"http://archive.stsci.edu/cgi-bin/dss_search");
-		
+
 		httppost.setEntity(entity);
 
-		HttpResponse response=null;
+		HttpResponse response = null;
 		try {
 			response = httpclient.execute(httppost);
 		} catch (ClientProtocolException e) {
@@ -80,26 +84,27 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 			LOG.debug("ERROR EJECUTANDO HTTPPOST");
 			e.printStackTrace();
 		}
-		
+
 		LOG.info("HTTPPOST EJECUTADO SATISFACTORIAMENTE");
-		
+
 		final HttpEntity resEnt = response.getEntity();
 		if (resEnt != null) {
 			BufferedInputStream bis = null;
 			try {
 				bis = new BufferedInputStream(resEnt.getContent());
 			} catch (IllegalStateException e) {
-				
+
 				e.printStackTrace();
 			} catch (IOException e) {
-				
+
 				e.printStackTrace();
 			}
 
 			FileOutputStream fos = null;
 			try {
-				/**TODO PONER LA RUTA DE MANERA CORRECTA**/
-				fos = new FileOutputStream(new File(creaRuta(ruta,survey,ascensionRecta,declinacion,formato)));
+				/** TODO PONER LA RUTA DE MANERA CORRECTA **/
+				fos = new FileOutputStream(new File(creaRuta(ruta, survey,
+						ascensionRecta, declinacion, formato)));
 			} catch (FileNotFoundException e) {
 				LOG.debug("ERROR AL CREAR EL FICHERO");
 				e.printStackTrace();
@@ -113,9 +118,9 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 				LOG.debug("ERROR AL LEER DATOS DE LA URL");
 				e.printStackTrace();
 			}
-			int total=cont;
+			int total = cont;
 			while (cont >= 0) {
-				LOG.info("Leidos "+cont);
+				LOG.info("Leidos " + cont);
 				try {
 					fos.write(buffer, 0, cont);
 				} catch (IOException e) {
@@ -128,10 +133,10 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 					LOG.debug("ERROR AL LEER DATOS DE LA URL");
 					e.printStackTrace();
 				}
-				total+=cont;
+				total += cont;
 			}
 			LOG.info("Fin de la lectura de datos");
-			LOG.info("Leidos: "+total+" bytes");
+			LOG.info("Leidos: " + total + " bytes");
 			try {
 				bis.close();
 			} catch (IOException e) {
@@ -145,67 +150,85 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas{
 				e.printStackTrace();
 			}
 			LOG.info("Fichero cerrado");
-		}else{
+		} else {
 			LOG.debug("PROBLEMA OBTENIENDO RESPONSE ENTITY");
-			
+
 		}
 
-		
 	}
-	
-	public String creaRuta( String rutaBase, String survey, String ascensionRecta, String declinacion,String formato){
-		
-		String ruta=rutaBase;
-		String nombreFichero=null;
-		
-		if (ruta!=null){
-			if(rutaBase.charAt(rutaBase.length()-1)!='/'){
-				rutaBase=rutaBase+"/";
+	@Transactional(propagation = Propagation.REQUIRED)
+	public String creaRuta(String rutaBase, String survey,
+			String ascensionRecta, String declinacion, String formato) {
+
+		String ruta = rutaBase;
+		String nombreFichero = null;
+
+		if (ruta != null) {
+			if (rutaBase.charAt(rutaBase.length() - 1) != '/') {
+				rutaBase = rutaBase + "/";
 			}
-			nombreFichero="AR"+ascensionRecta+"DEC"+declinacion+"SURV"+survey+"."+formato;
-			ruta=rutaBase+nombreFichero;
+			nombreFichero = "AR" + ascensionRecta + "DEC" + declinacion
+					+ "SURV" + survey + "." + formato;
+			ruta = rutaBase + nombreFichero;
 			return ruta;
-			
-		}else{
+
+		} else {
 			return null;
 		}
-		
+
 	}
 
-	
-
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarTarea(long tareaId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public double obtenerPorcentajeCompletado(long tareaId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void pararTarea(long tareaId) {
 		// TODO Auto-generated method stub
-		
+
+	}
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void procesoDescarga(Tarea tarea) {
+
+		// List<Descarga> descargas= tarea.getDescargas();
+
+		Tarea tarea2 = manager.find(Tarea.class, 1L);
+		List<Descarga> descargas = manager.createNamedQuery(
+				"Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1,
+				tarea.getIdTarea()).getResultList();
+
+		for (Descarga descarga : descargas) {
+			/*servicioGestionTareas.downloadImage("quickv&r", "43", "43",
+					"J2000", "0.5", "0.5", "fits", "none", "D:\\");*/
+
+			downloadImage(descarga.getSurvey().getDescripcion(), descarga
+					.getAscensionRecta().toString(), descarga.getDeclinacion().toString(), "J2000",
+					Double.toString(tarea.getAlto()),Double.toString(tarea.getAncho()), tarea
+							.getFormatoFichero().getDescipcion(), "none", descarga.getRutaFichero());
+
+		}
+
 	}
 
-	
-	
-	public void procesoDescarga(Tarea tarea){
-		
-		//List<Descarga> descargas= tarea.getDescargas();
-		
-		Tarea tarea2 = manager.find(Tarea.class, 1L);
-		List<Descarga> descargas=manager.createNamedQuery("Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1, tarea.getIdTarea()).getResultList();
-		
-		for(Descarga descarga : descargas){
-			
-			
-		}
-		
+	@Transactional(propagation = Propagation.REQUIRED)
+	public List<Survey> getAllSurveys() {
+
+		List resultList = manager
+				.createNamedQuery("Survey:dameTodosLosSurveys").getResultList();
+		return resultList;
+
+	}
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Tarea> getTareas() {
+		return manager.createNamedQuery("Tarea:DameTodasTareas").getResultList();
 	}
 
 }
