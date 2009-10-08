@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_16" class="java.beans.XMLDecoder"> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
  <object class="com.jformdesigner.model.FormModel"> 
   <void property="contentType"> 
    <string>form/swing</string> 
@@ -17,7 +17,7 @@
        </void> 
        <void method="setProperty"> 
         <string>$verticalGroup</string> 
-        <string>par l {seq l {space :p:27:p, comp labelSurvey:::p:28:p, space :p:36:p, par l {comp scrollPaneSurvey::l:p::p, comp scrollPaneSurvey2:::p:84:p}, space :p:50:p, par b {comp buttonSiguiente::b:p::p, comp buttonAnterior::b:p::p}, space ::52:x}}</string> 
+        <string>par l {seq l {space :p:27:p, comp labelSurvey:::p:28:p, space :p:36:p, par l {comp scrollPaneSurvey::l:p::p, comp scrollPaneSurvey2:::p:84:p}, space :p:50:p, par b {comp buttonSiguiente::b:p::p, comp buttonAnterior::b:p::p}, space ::54:x}}</string> 
        </void> 
       </object> 
       <void method="setProperty"> 
@@ -99,26 +99,6 @@
            <int>5</int> 
           </void> 
           <void method="setProperty"> 
-           <string>model</string> 
-           <object id="DefaultListModel0" class="javax.swing.DefaultListModel"> 
-            <void method="addElement"> 
-             <string>POSS2/UKSTU Red</string> 
-            </void> 
-            <void method="addElement"> 
-             <string>POSS2/UKSTU Blue</string> 
-            </void> 
-            <void method="addElement"> 
-             <string>POSS2/UKSTU IR</string> 
-            </void> 
-            <void method="addElement"> 
-             <string>POSS1 Red</string> 
-            </void> 
-            <void method="addElement"> 
-             <string>POSS1 Blue</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void method="setProperty"> 
            <string>font</string> 
            <object id="Font0" class="java.awt.Font"> 
             <string>Arial</string> 
@@ -152,10 +132,6 @@
           <void method="setProperty"> 
            <string>visibleRowCount</string> 
            <int>5</int> 
-          </void> 
-          <void method="setProperty"> 
-           <string>model</string> 
-           <object idref="DefaultListModel0"/> 
           </void> 
           <void method="setProperty"> 
            <string>font</string> 

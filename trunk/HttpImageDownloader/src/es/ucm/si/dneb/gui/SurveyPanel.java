@@ -6,7 +6,16 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import es.ucm.si.dneb.domain.Survey;
+import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 
 /**
  * @author aa
@@ -18,10 +27,26 @@ public class SurveyPanel extends JPanel {
 	public SurveyPanel(VentanaPcpal pcpal) {
 		initComponents();
 		principal = pcpal;
+		
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
+        
+        ArrayList<Survey> surveys = (ArrayList<Survey>) servicioGestionTareas.getAllSurveys();
+		
+        DefaultListModel list = new DefaultListModel();
+        for (Survey aux : surveys){
+        	list.addElement(aux.getDescripcion());
+        }
+        
+        listSurvey.setModel(list);
+        listSurvey.setSelectedIndex(0);
+        listSurvey2.setModel(list);
+        listSurvey2.setSelectedIndex(0);
 	}
 
 	private void buttonSiguienteActionPerformed(ActionEvent e) {
 		// TODO add your code here
+        
 		principal.survey1 = (String) this.listSurvey.getSelectedValue();
 		principal.survey2 = (String) this.listSurvey2.getSelectedValue();
 		
@@ -73,17 +98,6 @@ public class SurveyPanel extends JPanel {
 
 			//---- listSurvey ----
 			listSurvey.setVisibleRowCount(5);
-			listSurvey.setModel(new AbstractListModel() {
-				String[] values = {
-					"POSS2/UKSTU Red",
-					"POSS2/UKSTU Blue",
-					"POSS2/UKSTU IR",
-					"POSS1 Red",
-					"POSS1 Blue"
-				};
-				public int getSize() { return values.length; }
-				public Object getElementAt(int i) { return values[i]; }
-			});
 			listSurvey.setFont(new Font("Arial", Font.PLAIN, 11));
 			listSurvey.setSelectedIndex(0);
 			scrollPaneSurvey.setViewportView(listSurvey);
@@ -94,17 +108,6 @@ public class SurveyPanel extends JPanel {
 
 			//---- listSurvey2 ----
 			listSurvey2.setVisibleRowCount(5);
-			listSurvey2.setModel(new AbstractListModel() {
-				String[] values = {
-					"POSS2/UKSTU Red",
-					"POSS2/UKSTU Blue",
-					"POSS2/UKSTU IR",
-					"POSS1 Red",
-					"POSS1 Blue"
-				};
-				public int getSize() { return values.length; }
-				public Object getElementAt(int i) { return values[i]; }
-			});
 			listSurvey2.setFont(new Font("Arial", Font.PLAIN, 11));
 			listSurvey2.setSelectedIndex(0);
 			scrollPaneSurvey2.setViewportView(listSurvey2);
@@ -154,7 +157,7 @@ public class SurveyPanel extends JPanel {
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(buttonSiguiente)
 						.addComponent(buttonAnterior))
-					.addContainerGap(52, Short.MAX_VALUE))
+					.addContainerGap(54, Short.MAX_VALUE))
 		);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
