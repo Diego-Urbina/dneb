@@ -6,11 +6,14 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 
@@ -47,7 +50,8 @@ public class MapPanel extends JPanel {
             ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
             servicioCreacionTareas.crearTarea(principal.ari, principal.arf, principal.deci, principal.decf, Double.parseDouble(principal.alto), Double.parseDouble(principal.ancho), Double.parseDouble(principal.solapamiento), principal.survey1, principal.survey2, "fits", principal.ruta);
             ServicioGestionTareas servicioGestionTareas= (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
-            //servicioGestionTareas.procesoDescarga(tarea);
+            ArrayList<Tarea> tareas= (ArrayList<Tarea>) servicioGestionTareas.getTareas();
+            servicioGestionTareas.procesoDescarga(tareas.get(0));
 		}
 	}
 
