@@ -1,4 +1,4 @@
-package es.ucm.si.dneb.service.gestionTareas;
+package es.ucm.si.dneb.service.gestionHilos;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -6,15 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.AbstractQueue;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -28,45 +22,72 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.transaction.annotation.*;
 import es.ucm.si.dneb.domain.Descarga;
-import es.ucm.si.dneb.domain.FormatoFichero;
-import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.service.gestionHilos.GestorHilos;
-
-@Service("servicioGestionTareas")
-public class ServicioGestionTareasImpl implements ServicioGestionTareas {
-
+@Service("hilo")
+@Scope("prototype")
+public class Hilo extends Thread {
+	
 	private static final Log LOG = LogFactory
-			.getLog(ServicioGestionTareasImpl.class);
-
+	.getLog(Hilo.class);
+	private Long idTarea;
+	private Tarea tarea;
+	
 	@PersistenceContext
 	EntityManager manager;
 	
-	@Resource
-	private GestorHilos gestorHilos;
-
-
-	public ServicioGestionTareasImpl() {
-		
-		//ApplicationContext ctx = new ClassPathXmlApplicationContext(
-		//"applicationContext.xml");
-
-		//GestorHilos gestorHilos = (GestorHilos) ctx.getBean("gestorHilos");
-	}
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void anadirTareasAlGestor(){
-		
-		gestorHilos.crearHilosParaTodasLasTareas(getTareas());
+	public Hilo(){
+		idTarea=null;
+		tarea=null;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	public EntityManager getManager() {
+		return manager;
+	}
+
+	public void setManager(EntityManager manager) {
+		this.manager = manager;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void run() {
+
+		List<Descarga> descargas = manager.createNamedQuery(
+				"Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1,
+				tarea.getIdTarea()).getResultList();
+		for (Descarga descarga : descargas) {
+			downloadImage(descarga.getSurvey().getDescripcion(), descarga
+					.getAscensionRecta().toString(), descarga.getDeclinacion()
+					.toString(), "J2000", Double.toString(tarea.getAlto()),
+					Double.toString(tarea.getAncho()), tarea
+							.getFormatoFichero().getDescipcion(), "none",
+					descarga.getRutaFichero());
+		}
+
+	}
+
+	public void setIdTarea(Long idTarea) {
+		this.idTarea = idTarea;
+	}
+
+	public Long getIdTarea() {
+		return idTarea;
+	}
+
+	public void setTarea(Tarea tarea) {
+		this.tarea = tarea;
+	}
+
+	public Tarea getTarea() {
+		return tarea;
+	}
+	
+	
 	public void downloadImage(String survey, String ascensionRecta,
 			String declinacion, String equinocio, String alto, String ancho,
 			String formato, String compresion, String ruta) {
@@ -183,8 +204,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		}
 
 	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
+	
 	private String creaRuta(String rutaBase, String survey,
 			String ascensionRecta, String declinacion, String formato) {
 
@@ -206,110 +226,5 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void reanudarTarea(long tareaId) {
-
-		Tarea tarea = manager.find(Tarea.class, tareaId);
-
-		if (tarea.isActiva()) {
-			throw new ServicioGestionTareasException(
-					"ReanudarTarea: La tareas ya está activa");
-		}
-
-		tarea.setActiva(true);
-
-		GregorianCalendar calendar = new GregorianCalendar();
-		Date fechaActual = calendar.getTime();
-		tarea.setFechaUltimaActualizacion(fechaActual);
-
-		procesoDescarga(tarea);
-
-		gestorHilos.anadirHilo(tarea);
-		gestorHilos.iniciarHilo(tarea.getIdTarea());
-
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public double obtenerPorcentajeCompletado(long tareaId) {
-
-		Tarea tarea = manager.find(Tarea.class, tareaId);
-		Integer total = (Integer) manager.createNamedQuery(
-				"Descarga:dameNumeroDescargasDeUnaTarea")
-				.setParameter(1, tarea).getSingleResult();
-		Integer pendientes = (Integer) manager.createNamedQuery(
-				"Descarga:dameNumeroDescargasPendientesDeUnaTarea")
-				.setParameter(1, tarea).getSingleResult();
-
-		return (1 - (pendientes / total)) * 100;
-
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void pararTarea(long tareaId) {
-
-		Tarea tarea = manager.find(Tarea.class, tareaId);
-
-		if (!tarea.isActiva()) {
-			throw new ServicioGestionTareasException(
-					"ReanudarTarea: La tareas ya está parada");
-		}
-		tarea.setActiva(false);
-
-		gestorHilos.interrumpirHilo(tareaId);
-
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void procesoDescarga(Tarea tarea) {
-
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public List<Survey> getAllSurveys() {
-		List resultList = manager
-				.createNamedQuery("Survey:dameTodosLosSurveys").getResultList();
-		return resultList;
-	}
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Tarea> getTareas() {
-		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTodasTareas")
-				.getResultList();
-	}
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<FormatoFichero> getFormatosFichero() {
-		return manager.createNamedQuery("FormatoFichero:dameTodosFormatos")
-				.getResultList();
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void iniciarTarea(long tareaId) {
-
-		Tarea tarea = manager.find(Tarea.class, tareaId);
-
-		if (tarea.isActiva()) {
-			throw new ServicioGestionTareasException(
-					"IniciarTarea: La tareas ya está activa");
-		}
-
-		tarea.setActiva(true);
-
-		GregorianCalendar calendar = new GregorianCalendar();
-		Date fechaActual = calendar.getTime();
-		tarea.setFechaUltimaActualizacion(fechaActual);
-
-		procesoDescarga(tarea);
-		
-		gestorHilos.iniciarHilo(tareaId);
-	}
-	
-	public GestorHilos getGestorHilos() {
-		return gestorHilos;
-	}
-	
-	public void setGestorHilos(GestorHilos gestorHilos) {
-		this.gestorHilos = gestorHilos;
-	}
 
 }

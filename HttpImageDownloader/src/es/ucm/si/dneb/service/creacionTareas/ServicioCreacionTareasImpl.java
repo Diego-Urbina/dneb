@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -22,6 +23,7 @@ import es.ucm.si.dneb.domain.Descarga;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.service.gestionHilos.GestorHilos;
 
 
 
@@ -33,6 +35,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	
 	@PersistenceContext
 	EntityManager manager;
+	
+	@Resource
+	private GestorHilos gestorHilos;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato,String ruta){
@@ -110,6 +115,8 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		manager.merge(tarea);
 		
+		gestorHilos.anadirHilo(tarea);
+		
 		
 		
 		
@@ -134,6 +141,12 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		
 		return descargas;
+	}
+	public void setGestorHilos(GestorHilos gestorHilos) {
+		this.gestorHilos = gestorHilos;
+	}
+	public GestorHilos getGestorHilos() {
+		return gestorHilos;
 	}
 
 }
