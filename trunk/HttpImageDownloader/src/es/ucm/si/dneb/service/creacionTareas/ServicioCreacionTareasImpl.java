@@ -139,6 +139,19 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		descargas.add(descarga);
 		
+		descarga = new Descarga();
+		
+		descarga.setAscensionRecta(tarea.getArFinal());
+		descarga.setDeclinacion(tarea.getDecFinal());
+		descarga.setFinalizada(false);
+		descarga.setRutaFichero(tarea.getRuta());
+		descarga.setSurvey(tarea.getSurveys().get(1));
+		descarga.setTarea(tarea);
+		
+		manager.persist(descarga);
+		
+		descargas.add(descarga);
+		
 		
 		return descargas;
 	}
