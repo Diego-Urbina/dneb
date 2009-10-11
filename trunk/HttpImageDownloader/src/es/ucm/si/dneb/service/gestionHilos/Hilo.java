@@ -54,7 +54,7 @@ public class Hilo extends Thread {
 		this.manager = manager;
 	}
 
-	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void run() {
 
 		List<Descarga> descargas = manager.createNamedQuery(
@@ -87,7 +87,7 @@ public class Hilo extends Thread {
 		return tarea;
 	}
 	
-	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void downloadImage(String survey, String ascensionRecta,
 			String declinacion, String equinocio, String alto, String ancho,
 			String formato, String compresion, String ruta) {
@@ -204,7 +204,7 @@ public class Hilo extends Thread {
 		}
 
 	}
-	
+	@Transactional(propagation = Propagation.REQUIRED)
 	private String creaRuta(String rutaBase, String survey,
 			String ascensionRecta, String declinacion, String formato) {
 
