@@ -12,6 +12,10 @@ public interface ServicioGestionTareas {
 	
 	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion,String ruta);
 	
+	public void iniciarTarea(long tareaId);
+	
+	public void anadirTareasAlGestor();
+	
 	public void reanudarTarea(long tareaId);
 	
 	public void pararTarea(long tareaId);

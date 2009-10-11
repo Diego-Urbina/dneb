@@ -6,6 +6,10 @@ import javax.persistence.*;
 
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Descarga:dameNumeroDescargasDeUnaTarea",query="select count(*) from Descarga d where tarea=?"),
+	@NamedQuery(name="Descarga:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Descarga d where tarea=? and finalizada=false")
+})
 @Table(name="DESCARGA")
 public class Descarga {
 	
