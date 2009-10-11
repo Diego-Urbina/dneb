@@ -51,7 +51,7 @@ public class MapPanel extends JPanel {
             servicioCreacionTareas.crearTarea(principal.ari, principal.arf, principal.deci, principal.decf, Double.parseDouble(principal.alto), Double.parseDouble(principal.ancho), Double.parseDouble(principal.solapamiento), principal.survey1, principal.survey2, "fits", principal.ruta);
             ServicioGestionTareas servicioGestionTareas= (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
             ArrayList<Tarea> tareas= (ArrayList<Tarea>) servicioGestionTareas.getTareas();
-            servicioGestionTareas.procesoDescarga(tareas.get(0));
+            servicioGestionTareas.iniciarTarea(tareas.get(tareas.size()-1).getIdTarea());
 		}
 	}
 
