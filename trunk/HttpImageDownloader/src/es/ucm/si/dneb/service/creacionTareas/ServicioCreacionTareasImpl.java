@@ -23,7 +23,7 @@ import es.ucm.si.dneb.domain.Descarga;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.service.gestionHilos.GestorHilos;
+import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 
 
 
@@ -37,7 +37,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	EntityManager manager;
 	
 	@Resource
-	private GestorHilos gestorHilos;
+	private GestorDescargas gestorDescargas;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato,String ruta){
@@ -115,7 +115,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		manager.merge(tarea);
 		
-		gestorHilos.anadirHilo(tarea);
+		gestorDescargas.anadirHilo(tarea);
 		
 		
 		
@@ -155,11 +155,11 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		return descargas;
 	}
-	public void setGestorHilos(GestorHilos gestorHilos) {
-		this.gestorHilos = gestorHilos;
+	public void setGestorHilos(GestorDescargas gestorDescargas) {
+		this.gestorDescargas = gestorDescargas;
 	}
-	public GestorHilos getGestorHilos() {
-		return gestorHilos;
+	public GestorDescargas getGestorHilos() {
+		return gestorDescargas;
 	}
 
 }

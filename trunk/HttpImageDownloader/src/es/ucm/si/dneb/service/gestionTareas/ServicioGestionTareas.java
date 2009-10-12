@@ -16,14 +16,15 @@ public interface ServicioGestionTareas {
 	
 	public void anadirTareasAlGestor();
 	
+	public void eliminarTarea(long tareaId);
+	
 	public void reanudarTarea(long tareaId);
 	
 	public void pararTarea(long tareaId);
 	
 	public double obtenerPorcentajeCompletado(long tareaId);
 	
-	public void procesoDescarga(Tarea tarea);
-	
+
 	public List<Survey> getAllSurveys();
 	
 	public List<Tarea> getTareas();
