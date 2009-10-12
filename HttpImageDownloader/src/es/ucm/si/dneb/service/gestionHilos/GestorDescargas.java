@@ -17,45 +17,49 @@ import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 
 @Service("gestorHilos")
-public class GestorHilos{
+public class GestorDescargas{
 	
 	private HashMap <Long,Hilo> hilos;
 	ExecutorService service = Executors.newFixedThreadPool(3);
 	
-	public GestorHilos(){
+	public GestorDescargas(){
 		hilos=new HashMap<Long,Hilo>();
 	}
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void anadirHilo(Tarea tarea) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
 		"applicationContext.xml");
-		Hilo hilo = (Hilo) ctx.getBean("hilo");
-		hilo.setTarea(tarea);
-		hilo.setIdTarea(tarea.getIdTarea());
+		EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorTarea");
+		gestor.setTarea(tarea);
+		gestor.setIdTarea(tarea.getIdTarea());
+		
+		Hilo hilo = new Hilo(gestor);
 		hilos.put(tarea.getIdTarea(), hilo);
 		
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearHilosParaTodasLasTareas(List<Tarea> tareas) {
-		/**TODO OJO QUE SE ESTÁ HACIENDO INYECCION**/
+		
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
 		"applicationContext.xml");
 		for(Tarea tarea : tareas){
-			Hilo hilo = (Hilo) ctx.getBean("hilo");
-			hilo.setTarea(tarea);
-			hilo.setIdTarea(tarea.getIdTarea());
-			hilos.put(tarea.getIdTarea(),hilo);
+			EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorTarea");
+			gestor.setTarea(tarea);
+			gestor.setIdTarea(tarea.getIdTarea());
+			
+			Hilo hilo = new Hilo(gestor);
+			hilos.put(tarea.getIdTarea(), hilo);
 		}
 		
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eleminarHilo(Long id) {
-		Hilo hilo=hilos.get(id);
+		//Hilo hilo=hilos.get(id);
 		/**TODO**/
-		hilo.interrupt();
-		hilos.remove(id);
+		//hilo.interrupt();
+		//hilos.remove(id);
 		
 	}
 
@@ -73,9 +77,9 @@ public class GestorHilos{
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void interrumpirHilo(Long idHilo) {
-		Hilo hilo=hilos.get(idHilo);
-		hilo.interrupt();
-		hilos.remove(idHilo);
+		//Hilo hilo=hilos.get(idHilo);
+		//hilo.interrupt();
+		//hilos.remove(idHilo);
 		
 	}
 

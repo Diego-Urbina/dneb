@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
-import es.ucm.si.dneb.service.gestionHilos.GestorHilos;
+import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 import es.ucm.si.dneb.service.gestionHilos.Hilo;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasImpl;
@@ -54,7 +54,7 @@ public class ServicioGestionTareasTest {
 		
 		/**Pinto los hilos que tiene**/
 		
-		//GestorHilos gestor= servicioGestionTareas.getGestorHilos();
+		//GestorDescargas gestor= servicioGestionTareas.getGestorHilos();
 		
 		
 		//HashMap<Long,Hilo> hilos=gestor.getHilos();
@@ -137,9 +137,6 @@ public class ServicioGestionTareasTest {
 	}
  	
 	
-	public void pruebaProcesoDescarga(){
-		/**Prueba chapuza**/
-		servicioGestionTareas.procesoDescarga(new Tarea());
-	}
+
 
 }
