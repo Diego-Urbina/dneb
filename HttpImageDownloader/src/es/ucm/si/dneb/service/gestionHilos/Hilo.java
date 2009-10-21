@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.ucm.si.dneb.domain.Descarga;
 import es.ucm.si.dneb.domain.Tarea;
 
-public class Hilo implements Runnable {
+public class Hilo extends Thread {
 	
 	private static final Log LOG = LogFactory
 	.getLog(Hilo.class);
