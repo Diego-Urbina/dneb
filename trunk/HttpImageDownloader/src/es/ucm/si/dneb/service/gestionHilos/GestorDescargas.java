@@ -56,10 +56,11 @@ public class GestorDescargas{
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eleminarHilo(Long id) {
-		//Hilo hilo=hilos.get(id);
+		Hilo hilo=hilos.get(id);
 		/**TODO**/
-		//hilo.interrupt();
-		//hilos.remove(id);
+		hilo.interrupt();
+		hilos.remove(id);
+		
 		
 	}
 
@@ -77,8 +78,8 @@ public class GestorDescargas{
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void interrumpirHilo(Long idHilo) {
-		//Hilo hilo=hilos.get(idHilo);
-		//hilo.interrupt();
+		Hilo hilo=hilos.get(idHilo);
+		hilo.interrupt();
 		//hilos.remove(idHilo);
 		
 	}

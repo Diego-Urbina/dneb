@@ -121,39 +121,75 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		
 	}
+	
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public List<Descarga> crearDescargas(Tarea tarea){
 		
 		ArrayList<Descarga> descargas = new ArrayList<Descarga>();
 		
-		Descarga descarga = new Descarga();
+		String ariniS=tarea.getArInicial();
+		Double arini=  Double.parseDouble(ariniS);
 		
-		descarga.setAscensionRecta(tarea.getArInicial());
-		descarga.setDeclinacion(tarea.getDecInicial());
-		descarga.setFinalizada(false);
-		descarga.setRutaFichero(tarea.getRuta());
-		descarga.setSurvey(tarea.getSurveys().get(0));
-		descarga.setTarea(tarea);
+		String deciniS=tarea.getDecInicial();
+		Double decini=  Double.parseDouble(deciniS);
 		
-		manager.persist(descarga);
+		String arfinS=tarea.getArFinal();
+		Double arfin=  Double.parseDouble(arfinS);
 		
-		descargas.add(descarga);
+		String decfinS=tarea.getDecFinal();
+		Double decfin=  Double.parseDouble(decfinS);
 		
-		descarga = new Descarga();
+		Double alto=tarea.getAlto();
+		Double ancho=tarea.getAncho();
 		
-		descarga.setAscensionRecta(tarea.getArFinal());
-		descarga.setDeclinacion(tarea.getDecFinal());
-		descarga.setFinalizada(false);
-		descarga.setRutaFichero(tarea.getRuta());
-		descarga.setSurvey(tarea.getSurveys().get(1));
-		descarga.setTarea(tarea);
+		Double ar=arini;
+		Double dec=decini;
 		
-		manager.persist(descarga);
+		Double solap = tarea.getSolpamiento()/100;
+		Double anchoreal;
 		
-		descargas.add(descarga);
-		
-		
+		while(ar<=arfin){
+			
+			while(dec<=decfin){
+					
+				List<Survey> surveys= tarea.getSurveys();
+				
+				for(Survey survey : surveys){
+				
+					Descarga descarga= new Descarga();
+					descarga.setAscensionRecta(ar.toString());
+					descarga.setDeclinacion(dec.toString());
+					descarga.setFinalizada(false);
+					descarga.setRutaFichero(tarea.getRuta());
+					descarga.setSurvey(survey);
+					descarga.setTarea(tarea);
+					manager.persist(descarga);
+					
+					descargas.add(descarga);
+				
+				}
+				
+				dec = calculaDec(decini, decfin, alto, dec, solap);
+				
+			}
+			dec=decini;
+			anchoreal=ancho*(Math.cos(dec));
+			ar=ar+(anchoreal)-(anchoreal*solap);
+			
+		}
 		return descargas;
+	}
+
+
+	private Double calculaDec(Double decini, Double decfin, Double alto,
+			Double dec, Double solap) {
+		if(decini>decfin){
+			dec=dec-alto+(alto*solap);
+		}else{
+			dec=dec+alto-(alto*solap);
+		}
+		return dec;
 	}
 	public void setGestorHilos(GestorDescargas gestorDescargas) {
 		this.gestorDescargas = gestorDescargas;
