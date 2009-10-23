@@ -10,7 +10,6 @@ import es.ucm.si.dneb.domain.*;
 
 public interface ServicioGestionTareas {
 	
-	public void downloadImage(String survey,String ascensionRecta,String declinacion,String equinocio,String alto,String ancho,String formato, String compresion,String ruta);
 	
 	public void iniciarTarea(long tareaId);
 	

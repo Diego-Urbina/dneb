@@ -32,6 +32,10 @@ public class Descarga {
 	
 	private String rutaFichero;
 	
+	private Double ancho;
+	
+	
+
 	@ManyToOne
     @JoinColumn(name="TAREA_ID_FK",nullable=false)
 	private Tarea tarea;
@@ -100,6 +104,14 @@ public class Descarga {
 
 	public Survey getSurvey() {
 		return survey;
+	}
+
+	public void setAncho(Double ancho) {
+		this.ancho = ancho;
+	}
+
+	public Double getAncho() {
+		return ancho;
 	}
 	
 	
