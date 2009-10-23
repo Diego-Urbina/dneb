@@ -25,9 +25,6 @@ import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 
-
-
-
 @Service("servicioCreacionTareas")
 public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	
@@ -42,14 +39,16 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato,String ruta){
 		
-		if(arInicial==null || arFinal==null || decInicial== null || decFinal==null || alto<=0 ||  ancho<=0 || solapamiento<0 || surveyOld==null || surveynNew==null || formato==null){
-			LOG.error("Parámetro ilegales");
-			throw new ServicioCreacionTareasException("Parámetros ilegarles al crear tarea");
-		}
+		
+		chequeaSiValoresNoNulos(arInicial, arFinal, decInicial, decFinal, alto,
+				ancho, solapamiento, surveyOld, surveynNew, formato);
+		
+		Date fechaActual;
 		
 		Tarea tarea = new Tarea();
-		GregorianCalendar calendar = new GregorianCalendar();
-		Date fechaActual= calendar.getTime();
+		
+		fechaActual = dameFechaActual();
+		
 		
 		FormatoFichero formatoFichero;
 		
@@ -112,14 +111,29 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		tarea.setDescargas(descargas);
 		
-		
 		manager.merge(tarea);
 		
-		gestorDescargas.anadirHilo(tarea);
+		gestorDescargas.anadirHilo(tarea);		
 		
-		
-		
-		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private Date dameFechaActual() {
+		Date fechaActual;
+		GregorianCalendar calendar = new GregorianCalendar();
+		fechaActual= calendar.getTime();
+		return fechaActual;
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private void chequeaSiValoresNoNulos(String arInicial, String arFinal,
+			String decInicial, String decFinal, double alto, double ancho,
+			double solapamiento, String surveyOld, String surveynNew,
+			String formato) {
+		if(arInicial==null || arFinal==null || decInicial== null || decFinal==null || alto<=0 ||  ancho<=0 || solapamiento<0 || surveyOld==null || surveynNew==null || formato==null){
+			LOG.error("Parámetro ilegales");
+			throw new ServicioCreacionTareasException("Parámetros ilegarles al crear tarea");
+		}
 	}
 	
 	
@@ -164,10 +178,11 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					descarga.setRutaFichero(tarea.getRuta());
 					descarga.setSurvey(survey);
 					descarga.setTarea(tarea);
+					descarga.setAncho((ancho*(Math.cos((dec-(alto/2))))));
+					
 					manager.persist(descarga);
 					
 					descargas.add(descarga);
-				
 				}
 				
 				dec = calculaDec(decini, decfin, alto, dec, solap);
@@ -175,13 +190,19 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			}
 			dec=decini;
 			anchoreal=ancho*(Math.cos(dec));
-			ar=ar+(anchoreal)-(anchoreal*solap);
+			ar = calculaAr(ar, solap, anchoreal);
 			
 		}
 		return descargas;
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private Double calculaAr(Double ar, Double solap, Double anchoreal) {
+		ar=ar+(anchoreal)-(anchoreal*solap);
+		return ar;
+	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	private Double calculaDec(Double decini, Double decfin, Double alto,
 			Double dec, Double solap) {
 		if(decini>decfin){

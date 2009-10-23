@@ -79,64 +79,6 @@ public class ServicioGestionTareasTest {
 		
 	}
 	
-	/** Prueba test poss1_red **/
-	//@Test
-	public void poss1RedTest() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("poss1_red", "43", "43", "J2000",
-				"11", "11", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void poss1BlueTest() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("poss1_blue", "43", "43", "J2000",
-				"11", "11", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void poss2BlueTest() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("poss2ukstu_blue", "43", "43",
-				"J2000", "0.5", "0.5", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void poss2IRTest() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("poss2ukstu_ir", "43", "43",
-				"J2000", "0.5", "0.5", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void poss2RedTest() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("poss2ukstu_red", "43", "43",
-				"J2000", "0.5", "0.5", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void quickvTest() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("quickv&r", "43", "43", "J2000",
-				"0.5", "0.5", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void phase2_gsc2Test() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("phase2_gsc2", "43", "43", "J2000",
-				"0.5", "0.5", "fits", "none", "D:\\");
-
-	}
-
-	//@Test
-	public void phase2_gsc1Test() throws ClientProtocolException, IOException {
-		servicioGestionTareas.downloadImage("phase2_gsc1", "43", "43", "J2000",
-				"0.5", "0.5", "fits", "none", "D:\\");
-
-	}
- 	
 	
-
 
 }
