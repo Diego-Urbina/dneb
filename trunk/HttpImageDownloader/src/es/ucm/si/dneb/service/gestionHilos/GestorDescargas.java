@@ -20,7 +20,7 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 public class GestorDescargas{
 	
 	private HashMap <Long,Hilo> hilos;
-	ExecutorService service = Executors.newFixedThreadPool(3);
+	ExecutorService service = Executors.newFixedThreadPool(6);
 	
 	public GestorDescargas(){
 		hilos=new HashMap<Long,Hilo>();
@@ -57,8 +57,10 @@ public class GestorDescargas{
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eleminarHilo(Long id) {
 		Hilo hilo=hilos.get(id);
-		/**TODO**/
-		hilo.interrupt();
+		
+		if(hilo.isInterrupted()==false){
+			hilo.interrupt();
+		}
 		hilos.remove(id);
 		
 		
@@ -79,7 +81,10 @@ public class GestorDescargas{
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void interrumpirHilo(Long idHilo) {
 		Hilo hilo=hilos.get(idHilo);
-		hilo.interrupt();
+		
+		if(hilo.isInterrupted()==false){
+			hilo.interrupt();
+		}
 		//hilos.remove(idHilo);
 		
 	}

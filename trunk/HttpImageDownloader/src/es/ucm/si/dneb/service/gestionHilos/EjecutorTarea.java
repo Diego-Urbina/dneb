@@ -207,7 +207,7 @@ public class EjecutorTarea {
 			downloadImage(descarga.getSurvey().getDescripcion(), descarga
 			.getAscensionRecta().toString(), descarga.getDeclinacion()
 			.toString(), "J2000", Double.toString(tarea.getAlto()),
-			Double.toString(tarea.getAncho()), tarea
+			Double.toString(descarga.getAncho()), tarea
 					.getFormatoFichero().getDescipcion(), "none",
 			descarga.getRutaFichero());
 		}
