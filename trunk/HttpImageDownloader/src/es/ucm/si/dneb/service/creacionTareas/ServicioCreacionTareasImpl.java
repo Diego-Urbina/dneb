@@ -147,7 +147,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		Double dec=decini;
 		
 		Double solap = tarea.getSolpamiento()/100;
-		Double anchoreal;
+		Double anchoreal=new Double(1D);
 		
 		while(ar<=arfin){
 			
