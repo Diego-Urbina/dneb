@@ -65,6 +65,9 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	 * 
 	 * No se puede reanudar una tarea que ya está activa.
 	 */
+	
+	
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarTarea(long tareaId) {
 
@@ -183,6 +186,12 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		if (tarea.isActiva()) {
 			gestorDescargas.interrumpirHilo(tarea.getIdTarea());
 			gestorDescargas.eleminarHilo(tarea.getIdTarea());
+		}
+		
+		List<Descarga> descargas = tarea.getDescargas();
+		
+		for(Descarga descarga : descargas){
+			manager.remove(descarga);
 		}
 			
 		manager.remove(tarea);

@@ -1,5 +1,7 @@
 package es.ucm.si.dneb.service.inicializador;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +13,8 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.Descarga;
 import es.ucm.si.dneb.domain.Tarea;
@@ -23,7 +27,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 	
 	final static String THEME = "Test";
 
-	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void chequeoConsistencia() {
 		
 		List<Tarea> tareas =manager.createNamedQuery("Tarea:DameTodasTareasActivas").getResultList();
@@ -38,10 +42,11 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		
 	}
-	
-	public void eleminarTareasHistoricas(int dias){
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void eleminarTareasHistoricas(Date fecha){
 		
-		List<Tarea> tareas= manager.createNamedQuery("Tarea:DameTodasTareasActualizadasAntesFecha").getResultList();
+		
+		List<Tarea> tareas= manager.createNamedQuery("Tarea:DameTodasTareasActualizadasAntesFecha").setParameter(1, fecha).getResultList();
 		
 		for(Tarea tarea: tareas){
 			if(tarea.isActiva()==false && tarea.isFinalizada()==true){
@@ -55,6 +60,14 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 				manager.remove(tarea);	
 			}
 		}
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private Date dameFechaActual() {
+		Date fechaActual;
+		GregorianCalendar calendar = new GregorianCalendar();
+		fechaActual= calendar.getTime();
+		return fechaActual;
 	}
 	
 
