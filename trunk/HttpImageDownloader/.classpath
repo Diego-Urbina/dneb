@@ -16,5 +16,7 @@
 			<attribute name="javadoc_location" value="jar:file:/D:/DESARROLLO/workspace/HttpImageDownloader/lib/swing-layout-javadoc.zip!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
