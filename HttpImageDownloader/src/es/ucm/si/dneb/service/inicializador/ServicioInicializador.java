@@ -8,6 +8,8 @@ public interface ServicioInicializador {
 	
 	public void inicializarContexto();
 	
+	public void eleminarTareasHistoricas(int dias);
+	
 	public void chequeoConsistencia();
 	
 	public void initLookAndFeel(String theme);
