@@ -107,8 +107,7 @@ public class EjecutorTarea {
 			FileOutputStream fos = null;
 			try {
 				/** TODO PONER LA RUTA DE MANERA CORRECTA **/
-				fos = new FileOutputStream(new File(creaRuta(ruta, survey,
-						ascensionRecta, declinacion, formato)));
+				fos = new FileOutputStream(new File(ruta));
 			} catch (FileNotFoundException e) {
 				LOG.debug("ERROR AL CREAR EL FICHERO");
 				e.printStackTrace();
@@ -160,28 +159,7 @@ public class EjecutorTarea {
 		}
 
 	}
-	@Transactional(propagation = Propagation.REQUIRED)
-	private String creaRuta(String rutaBase, String survey,
-			String ascensionRecta, String declinacion, String formato) {
-
-		String ruta = rutaBase;
-		String nombreFichero = null;
-
-		if (ruta != null) {
-			if (rutaBase.charAt(rutaBase.length() - 1) != '/') {
-				rutaBase = rutaBase + "/";
-			}
-			nombreFichero = "AR" + ascensionRecta + "DEC" + declinacion
-					+ "SURV" + survey + "." + formato;
-			ruta = rutaBase + nombreFichero;
-			return ruta;
-
-		} else {
-			return null;
-		}
-
-	}
-
+	
 
 	public void setIdTarea(Long idTarea) {
 		this.idTarea = idTarea;
