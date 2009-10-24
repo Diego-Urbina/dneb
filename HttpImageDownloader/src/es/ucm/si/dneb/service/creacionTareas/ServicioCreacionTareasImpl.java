@@ -43,6 +43,8 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		chequeaSiValoresNoNulos(arInicial, arFinal, decInicial, decFinal, alto,
 				ancho, solapamiento, surveyOld, surveynNew, formato);
 		
+		
+		
 		Date fechaActual;
 		
 		Tarea tarea = new Tarea();
@@ -75,6 +77,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			LOG.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,Se devuelve más de un resultado");
 			throw new ServicioCreacionTareasException("Prolema al ejecutar query");
 		}
+		
 		
 		
 		try{
@@ -122,6 +125,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		Date fechaActual;
 		GregorianCalendar calendar = new GregorianCalendar();
 		fechaActual= calendar.getTime();
+		
+		LOG.debug("LA FECHA ACTUAL GENERADA"+fechaActual.toString());
+		
 		return fechaActual;
 	}
 
@@ -131,9 +137,10 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			double solapamiento, String surveyOld, String surveynNew,
 			String formato) {
 		if(arInicial==null || arFinal==null || decInicial== null || decFinal==null || alto<=0 ||  ancho<=0 || solapamiento<0 || surveyOld==null || surveynNew==null || formato==null){
-			LOG.error("Parámetro ilegales");
+			LOG.error("PARAMETROS NO VÁLIDOS");
 			throw new ServicioCreacionTareasException("Parámetros ilegarles al crear tarea");
 		}
+		LOG.debug("CHEQUEO DE VALORES NULOS SUPERADO");
 	}
 	
 	
@@ -163,11 +170,15 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		Double solap = tarea.getSolpamiento()/100;
 		Double anchoreal=new Double(1D);
 		
+		LOG.debug("DATOS CREADOS CORRECTAMENTE");
+		
 		while(ar<=arfin){
 			
 			while(dec<=decfin){
 					
 				List<Survey> surveys= tarea.getSurveys();
+				
+				LOG.debug("OBTENIDAS TODAS LAS LISTAS DE SURVEYS");
 				
 				for(Survey survey : surveys){
 				
@@ -175,7 +186,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					descarga.setAscensionRecta(ar.toString());
 					descarga.setDeclinacion(dec.toString());
 					descarga.setFinalizada(false);
-					descarga.setRutaFichero(tarea.getRuta());
+					/**TODO OJO QUE ESTO ES UN CAMBIO IMPORTANTE HAY QUE PROBAR SI FUNCIONA**/
+					descarga.setRutaFichero(creaRuta(tarea.getRuta(), survey.getDescripcion(),
+							ar.toString(), dec.toString(),tarea.getFormatoFichero().getDescipcion()));
 					descarga.setSurvey(survey);
 					descarga.setTarea(tarea);
 					descarga.setAncho((ancho*(Math.cos((dec-(alto/2))))));
@@ -183,6 +196,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					manager.persist(descarga);
 					
 					descargas.add(descarga);
+					
+					LOG.debug("AÑADIDA LA DESCARGA DEL SURVEY:"+descarga.getSurvey().getDescripcion());
+					
 				}
 				
 				dec = calculaDec(decini, decfin, alto, dec, solap);
@@ -195,6 +211,28 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		}
 		return descargas;
 	}
+	@Transactional(propagation = Propagation.REQUIRED)
+	private String creaRuta(String rutaBase, String survey,
+			String ascensionRecta, String declinacion, String formato) {
+
+		String ruta = rutaBase;
+		String nombreFichero = null;
+
+		if (ruta != null) {
+			if (rutaBase.charAt(rutaBase.length() - 1) != '/') {
+				rutaBase = rutaBase + "/";
+			}
+			nombreFichero = "AR" + ascensionRecta + "DEC" + declinacion
+					+ "SURV" + survey + "." + formato;
+			ruta = rutaBase + nombreFichero;
+			return ruta;
+
+		} else {
+			return null;
+		}
+
+	}
+
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	private Double calculaAr(Double ar, Double solap, Double anchoreal) {
