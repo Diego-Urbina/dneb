@@ -1,5 +1,9 @@
 package es.ucm.si.dneb.service.inicializador;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.DefaultMetalTheme;
@@ -8,16 +12,51 @@ import javax.swing.plaf.metal.OceanTheme;
 
 import org.springframework.stereotype.Service;
 
+import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Tarea;
+
 @Service("servicioInicializador")
 public class ServicioInicializadorImpl implements ServicioInicializador {
-
+	
+	@PersistenceContext
+	EntityManager manager;
+	
 	final static String THEME = "Test";
 
 	@Override
 	public void chequeoConsistencia() {
-		// TODO Auto-generated method stub
-
+		
+		List<Tarea> tareas =manager.createNamedQuery("Tarea:DameTodasTareasActivas").getResultList();
+		
+		for(Tarea tarea: tareas){
+			
+			if(tarea.isActiva()==true){
+				tarea.setActiva(false);
+			}
+			
+		}
+		
+		
 	}
+	
+	public void eleminarTareasHistoricas(int dias){
+		
+		List<Tarea> tareas= manager.createNamedQuery("Tarea:DameTodasTareasActualizadasAntesFecha").getResultList();
+		
+		for(Tarea tarea: tareas){
+			if(tarea.isActiva()==false && tarea.isFinalizada()==true){
+				
+				List<Descarga> descargas=tarea.getDescargas();
+				
+				for(Descarga descarga :descargas){
+					manager.remove(descarga);
+				}
+				
+				manager.remove(tarea);	
+			}
+		}
+	}
+	
 
 	@Override
 	public void inicializarContexto() {
