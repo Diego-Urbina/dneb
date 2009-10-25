@@ -197,5 +197,18 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		manager.remove(tarea);
 
 	}
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Descarga> getDescargasTarea(Long tareaId) {
+		Tarea tarea = manager.find(Tarea.class, tareaId);
+
+		if(tarea==null){
+			throw new ServicioGestionTareasException("La tarea no existe");
+		}
+		
+		
+		List<Descarga> descargas = tarea.getDescargas();
+		return descargas;
+		
+	}
 
 }
