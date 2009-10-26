@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.PuntosRelevantes;
 import es.ucm.si.dneb.domain.Tarea;
 
 @Service("servicioInicializador")
@@ -155,6 +156,12 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 				e.printStackTrace();
 			}
 		}
+	}
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void generarTareaSobreDatosManuales() {
+		List<PuntosRelevantes> puntosRelevantes= manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
+		
+		/**TODO**/
 	}
 
 }

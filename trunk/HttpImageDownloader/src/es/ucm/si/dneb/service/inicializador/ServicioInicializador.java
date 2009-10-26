@@ -15,5 +15,7 @@ public interface ServicioInicializador {
 	public void chequeoConsistencia();
 	
 	public void initLookAndFeel(String theme);
+	
+	public void generarTareaSobreDatosManuales();
 
 }
