@@ -188,6 +188,9 @@ public class EjecutorTarea {
 			Double.toString(descarga.getAncho()), tarea
 					.getFormatoFichero().getDescipcion(), "none",
 			descarga.getRutaFichero());
+			
+			descarga.setFinalizada(true);
 		}
+		tarea.setFinalizada(true);
 	}
 }
