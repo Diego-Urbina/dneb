@@ -43,6 +43,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		
 	}
+	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void eleminarTareasHistoricas(Date fecha){
 		
@@ -162,6 +163,8 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		List<PuntosRelevantes> puntosRelevantes= manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
 		
 		/**TODO**/
+		
+		
 	}
 
 }
