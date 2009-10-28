@@ -205,7 +205,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 				
 			}
 			dec=decini;
-			anchoreal=ancho*(Math.cos(dec));
+			anchoreal=ancho*(Math.cos((dec * 2.0 * Math.PI)/360.0));
 			ar = calculaAr(ar, solap, anchoreal);
 			
 		}
