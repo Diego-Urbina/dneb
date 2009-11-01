@@ -26,6 +26,7 @@ import es.ucm.si.dneb.domain.PuntosRelevantes;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
+import es.ucm.si.dneb.util.Util;
 
 @Service("servicioInicializador")
 public class ServicioInicializadorImpl implements ServicioInicializador {
@@ -74,13 +75,6 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		}
 	}
 	
-	@Transactional(propagation = Propagation.SUPPORTS)
-	private Date dameFechaActual() {
-		Date fechaActual;
-		GregorianCalendar calendar = new GregorianCalendar();
-		fechaActual= calendar.getTime();
-		return fechaActual;
-	}
 	
 
 	@Override
@@ -173,7 +167,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		LOG.info("GENERANDO DATOS MANUALES DE DESCARGA");
 		
-		List<PuntosRelevantes> puntosRelevantes= manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
+		List<PuntosRelevantes> puntosRelevantes=(List<PuntosRelevantes>) manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
 		
 		ResourceBundle resource= ResourceBundle.getBundle("es.ucm.si.dneb.resources");
 		String survey1=resource.getString("survey1");
@@ -205,8 +199,8 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		tarea.setArInicial("0");
 		tarea.setDecInicial("0");
 		tarea.setDecFinal("0");
-		tarea.setFechaCreacion(this.dameFechaActual());
-		tarea.setFechaUltimaActualizacion(this.dameFechaActual());
+		tarea.setFechaCreacion(Util.dameFechaActual());
+		tarea.setFechaUltimaActualizacion(Util.dameFechaActual());
 		tarea.setFinalizada(false);
 		tarea.setFormatoFichero(formato);
 		tarea.setRuta(ruta);
@@ -226,7 +220,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 				String dec = new Double(punto.getDeclinacion()).toString();
 				descarga.setDeclinacion(dec);
 				descarga.setFinalizada(false);
-				descarga.setRutaFichero(creaRuta(tarea.getRuta(), survey.getDescripcion(),
+				descarga.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey.getDescripcion(),
 						ar.toString(), dec.toString(),tarea.getFormatoFichero().getDescipcion()));
 				descarga.setSurvey(survey);
 				descargas.add(descarga);
@@ -241,28 +235,6 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		
 	}
-	private String creaRuta(String rutaBase, String survey,
-			String ascensionRecta, String declinacion, String formato) {
-
-		String ruta = rutaBase;
-		String nombreFichero = null;
-
-		if (ruta != null) {
-			if (rutaBase.charAt(rutaBase.length() - 1) != '/') {
-				rutaBase = rutaBase + "/";
-			}
-			nombreFichero = "AR" + ascensionRecta + "DEC" + declinacion
-					+ "SURV" + survey + "." + formato;
-			ruta = rutaBase + nombreFichero;
-			return ruta;
-
-		} else {
-			return null;
-		}
-
-	}
-
-	
 	
 
 }
