@@ -24,6 +24,7 @@ import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
+import es.ucm.si.dneb.util.Util;
 
 @Service("servicioCreacionTareas")
 public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
@@ -49,7 +50,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 		Tarea tarea = new Tarea();
 		
-		fechaActual = dameFechaActual();
+		fechaActual = Util.dameFechaActual();
 		
 		
 		FormatoFichero formatoFichero;
@@ -120,16 +121,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		
 	}
 
-	@Transactional(propagation = Propagation.SUPPORTS)
-	private Date dameFechaActual() {
-		Date fechaActual;
-		GregorianCalendar calendar = new GregorianCalendar();
-		fechaActual= calendar.getTime();
-		
-		LOG.debug("LA FECHA ACTUAL GENERADA"+fechaActual.toString());
-		
-		return fechaActual;
-	}
+	
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	private void chequeaSiValoresNoNulos(String arInicial, String arFinal,
@@ -187,7 +179,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					descarga.setDeclinacion(dec.toString());
 					descarga.setFinalizada(false);
 					/**TODO OJO QUE ESTO ES UN CAMBIO IMPORTANTE HAY QUE PROBAR SI FUNCIONA**/
-					descarga.setRutaFichero(creaRuta(tarea.getRuta(), survey.getDescripcion(),
+					descarga.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey.getDescripcion(),
 							ar.toString(), dec.toString(),tarea.getFormatoFichero().getDescipcion()));
 					descarga.setSurvey(survey);
 					descarga.setTarea(tarea);
@@ -211,27 +203,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		}
 		return descargas;
 	}
-	@Transactional(propagation = Propagation.REQUIRED)
-	private String creaRuta(String rutaBase, String survey,
-			String ascensionRecta, String declinacion, String formato) {
 
-		String ruta = rutaBase;
-		String nombreFichero = null;
-
-		if (ruta != null) {
-			if (rutaBase.charAt(rutaBase.length() - 1) != '/') {
-				rutaBase = rutaBase + "/";
-			}
-			nombreFichero = "AR" + ascensionRecta + "DEC" + declinacion
-					+ "SURV" + survey + "." + formato;
-			ruta = rutaBase + nombreFichero;
-			return ruta;
-
-		} else {
-			return null;
-		}
-
-	}
 
 
 	@Transactional(propagation = Propagation.SUPPORTS)
