@@ -27,14 +27,15 @@ public class MenuPanel extends JPanel {
 		
 		if (this.radioButtonNuevo.isSelected())
 			vent = new SurveyPanel(principal);
-		else if (this.radioButtonEditar.isSelected())
-			vent = new SurveyPanel(principal);
-		else
-			vent = new SurveyPanel(principal);
+		else {
+			vent = new TaskPanel(principal);
+			principal.setSize(1000, 400);
+		}
 		
 		principal.getContentPane().remove(0);
 		principal.getContentPane().add(vent);
 		principal.pack();
+		principal.setLocationRelativeTo(null);
 		vent.setVisible(true);
 	}
 

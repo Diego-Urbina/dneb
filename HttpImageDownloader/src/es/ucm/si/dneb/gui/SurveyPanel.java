@@ -27,7 +27,10 @@ public class SurveyPanel extends JPanel {
 	public SurveyPanel(VentanaPcpal pcpal) {
 		initComponents();
 		principal = pcpal;
-		
+		rellenarModel();
+	}
+	
+	private void rellenarModel() {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
         
