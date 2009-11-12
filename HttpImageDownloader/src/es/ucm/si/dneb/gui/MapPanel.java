@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 /**
  * @author aa
@@ -46,7 +47,7 @@ public class MapPanel extends JPanel {
 		int retval = fc.showOpenDialog(this);
 		if (retval == JFileChooser.APPROVE_OPTION) {
 			principal.ruta = fc.getSelectedFile().toString();
-			ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+			ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
             ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
             servicioCreacionTareas.crearTarea(principal.ari, principal.arf, principal.deci, principal.decf, Double.parseDouble(principal.alto), Double.parseDouble(principal.ancho), Double.parseDouble(principal.solapamiento), principal.survey1, principal.survey2, "fits", principal.ruta);
             ServicioGestionTareas servicioGestionTareas= (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");

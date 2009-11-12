@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.*;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 @Service("gestorHilos")
 public class GestorDescargas{
@@ -37,8 +38,7 @@ public class GestorDescargas{
 		
 		LOG.debug("AÑADIR HILO:"+tarea.getIdTarea());
 		
-		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-		"applicationContext.xml");
+		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorTarea");
 		gestor.setTarea(tarea);
 		gestor.setIdTarea(tarea.getIdTarea());
@@ -54,8 +54,7 @@ public class GestorDescargas{
 	public void crearHilosParaTodasLasTareas(List<Tarea> tareas) {
 		
 		LOG.debug("LLAMADA A CREAR HILOS PARA TODAS LAS DESCARGAS");
-		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-		"applicationContext.xml");
+		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		for(Tarea tarea : tareas){
 			EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorTarea");
 			gestor.setTarea(tarea);
