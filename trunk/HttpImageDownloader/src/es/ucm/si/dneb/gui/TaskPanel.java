@@ -3,7 +3,6 @@ package es.ucm.si.dneb.gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -16,6 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 
 
@@ -35,7 +35,7 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void rellenarTabla() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
         
         ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareas();

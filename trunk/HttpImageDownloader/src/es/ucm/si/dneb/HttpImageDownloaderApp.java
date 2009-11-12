@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.ucm.si.dneb.gui.VentanaPcpal;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.inicializador.ServicioInicializador;
 import es.ucm.si.dneb.test.ServicioGestionTareasTest;
 
@@ -25,7 +26,7 @@ public class HttpImageDownloaderApp {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		// TODO Auto-generated method stub
 		LOG.debug("INICIO DE LA APLICACION");
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();//new ClassPathXmlApplicationContext("applicationContext.xml");
 		ServicioInicializador servicioInicializador=(ServicioInicializador) ctx.getBean("servicioInicializador");
 		//servicioInicializador.winLookAndFeel();
 		
