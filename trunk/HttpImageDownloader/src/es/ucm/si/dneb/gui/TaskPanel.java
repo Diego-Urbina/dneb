@@ -2,6 +2,8 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.swing.*;
@@ -26,12 +28,16 @@ public class TaskPanel extends JPanel {
 	
 	private VentanaPcpal principal;
 	private DefaultTableModel modelo;
+	//private MyWorker worker;
+	private ServicioGestionTareas servicioGestionTareas;
 	
 	public TaskPanel(VentanaPcpal pcpal) {
 		initComponents();
-		
 		principal = pcpal;
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
 		rellenarTabla();
+		//crearWorker();
 	}
 	
 	private void rellenarTabla() {
@@ -54,71 +60,14 @@ public class TaskPanel extends JPanel {
         	fila[9] = tarea.getFechaUltimaActualizacion().toString();
         	fila[10] = tarea.getFormatoFichero().getDescipcion();
         	fila[11] = tarea.getRuta();
-        	/*fila[12] = tarea.getSurveys().get(0).getDescripcion();
-        	fila[13] = tarea.getSurveys().get(1).getDescripcion();*/
+        	//fila[12] = tarea.getSurveys().get(0).getDescripcion();
+        	//fila[13] = tarea.getSurveys().get(1).getDescripcion();
+        	//fila[14] = servicioGestionTareas.obtenerPorcentajeCompletado(tarea.getIdTarea());
+        	modelo.addRow(fila);
         	/*TableColumn column = tableTasks.getColumnModel().getColumn(14);
             column.setCellRenderer(new ProgressRenderer());*/
-        	modelo.addRow(fila);
         }
 	}
-	
-	/*class TestCreateAction extends AbstractAction{
-        public TestCreateAction(String label, Icon icon) {
-            super(label,icon);
-        }
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            testCreateActionPerformed(evt);
-        }
-    }
-    private void testCreateActionPerformed(ActionEvent e) {
-    	final int key = tableTasks.getModel().getRowCount();
-        SwingWorker<Integer, Integer> worker = new SwingWorker<Integer, Integer>() {
-            private int sleepDummy = new Random().nextInt(100) + 1;
-            private int lengthOfTask = 120;
-            @Override
-            protected Integer doInBackground() {
-                int current = 0;
-                while(current<lengthOfTask && !isCancelled()) {
-                    if(!tableTasks.isDisplayable()) {
-                        return -1;
-                    }
-                    current++;
-                    try {
-                        Thread.sleep(sleepDummy);
-                    }catch(InterruptedException ie) {
-                        //cancel(true);
-                        break;
-                    }
-                    publish(100 * current / lengthOfTask);
-                }
-                return sleepDummy*lengthOfTask;
-            }
-            @Override
-            protected void process(java.util.List<Integer> c) {
-            	tableTasks.getModel().setValueAt(c.get(c.size()-1), key, 2);
-            }
-            @Override
-            protected void done() {
-                String text;
-                int i = -1;
-                if(isCancelled()) {
-                    text = "Cancelled";
-                }else{
-                    try{
-                        i = get();
-                        text = (i>=0)?"Done":"Disposed";
-                    }catch(Exception ignore) {
-                        ignore.printStackTrace();
-                        text = ignore.getMessage();
-                    }
-                }
-                System.out.println(key +":"+text+"("+i+"ms)");
-            }
-        };
-        tableTasks.getModel().addTest(new Test("example", 0), worker);
-        worker.execute();
-    }*/
 
 	private void buttonVolverActionPerformed(ActionEvent e) {
 		// TODO add your code here
@@ -130,6 +79,22 @@ public class TaskPanel extends JPanel {
 		principal.pack();
 		vent.setVisible(true);
 	}
+	
+	/*private void crearWorker() {
+		if(worker == null){
+			worker = new MyWorker();
+			
+			//Agrego un Listener para el cambio de la propiedad "progress"
+			worker.addPropertyChangeListener(new PropertyChangeListener(){
+				public void propertyChange(PropertyChangeEvent evt) {
+					if ("progress".equals(evt.getPropertyName())) {
+		                 //bar.setText(evt.getNewValue() + " %");
+		            }
+				}
+			});
+		}
+		worker.execute();
+	}*/
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -189,6 +154,7 @@ public class TaskPanel extends JPanel {
 			tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 	    	tcr.setHorizontalAlignment(SwingConstants.CENTER);
+	    	tableTasks.setAutoCreateRowSorter(true);
 	    	tableTasks.getColumnModel().getColumn(0).setCellRenderer(tcr);
 	    	tableTasks.getColumnModel().getColumn(1).setCellRenderer(tcr);
 	    	tableTasks.getColumnModel().getColumn(2).setCellRenderer(tcr);
@@ -241,46 +207,58 @@ public class TaskPanel extends JPanel {
 	private JTable tableTasks;
 	private JButton buttonVolver;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
-}
+	
+	/*class MyWorker extends SwingWorker<Integer, Integer>{
 
-/*class ProgressRenderer extends DefaultTableCellRenderer {
-    private final JProgressBar b = new JProgressBar(0, 100);
-    public ProgressRenderer() {
-        super();
-        setOpaque(true);
-        b.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-    }
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        Integer i = (Integer)value;
-        String text = "Done";
-        if(i<0) {
-            text = "Canceled";
-        }else if(i<100) {
-            b.setValue(i);
-            return b;
+		@Override
+		protected Integer doInBackground() throws Exception {
+			double porcentaje;
+			while(true){
+				porcentaje = servicioGestionTareas.obtenerPorcentajeCompletado(0);
+				//bar.setValue((int) porcentaje);
+				setProgress((int) porcentaje);
+				if (porcentaje == 100.0)
+					break;
+			}
+			
+			return (int) porcentaje;
+		}
+		
+		@Override
+		protected void process() {
+            modelo.setValueAt(, 0, 14);
         }
-        super.getTableCellRendererComponent(table, text, isSelected, hasFocus, row, column);
-        return this;
-    }
+		
+		@Override
+		public void done(){
+			try {
+				lblFinish.setText(get());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}*/
+	
+	class ProgressRenderer extends DefaultTableCellRenderer {
+		private JProgressBar bar = new JProgressBar(0, 100);
+		
+	    public ProgressRenderer() {
+	        super();
+	        setOpaque(true);
+	        bar.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+	    }
+	    public Component getTableCellRendererComponent(JTable table, Object value,
+	                                                   boolean isSelected, boolean hasFocus,
+	                                                   int row, int column) {
+	        Integer i = (Integer)value;
+	        String text = "Terminada";
+	        if(i<100) {
+	        	bar.setValue(i);
+	            return bar;
+	        }
+	        super.getTableCellRendererComponent(table, text, isSelected, hasFocus, row, column);
+	        return this;
+	    }
+	}
+	
 }
-
-class Test{
-    private String name;
-    private Integer progress;
-    public Test(String name, Integer progress) {
-        this.name = name;
-        this.progress = progress;
-    }
-    public void setName(String str) {
-        name = str;
-    }
-    public void setProgress(Integer str) {
-        progress = str;
-    }
-    public String getName() {
-        return name;
-    }
-    public Integer getProgress() {
-        return progress;
-    }
-}*/
