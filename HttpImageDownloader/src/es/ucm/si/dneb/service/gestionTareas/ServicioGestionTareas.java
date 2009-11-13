@@ -21,7 +21,7 @@ public interface ServicioGestionTareas {
 	
 	public void pararTarea(long tareaId);
 	
-	public double obtenerPorcentajeCompletado(long tareaId);
+	public int obtenerPorcentajeCompletado(long tareaId);
 		
 	public List<Survey> getAllSurveys();
 	

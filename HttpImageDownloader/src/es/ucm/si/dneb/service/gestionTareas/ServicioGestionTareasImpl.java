@@ -92,7 +92,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public double obtenerPorcentajeCompletado(long tareaId) {
+	public int obtenerPorcentajeCompletado(long tareaId) {
 
 		Tarea tarea = manager.find(Tarea.class, tareaId);
 		Integer total = (Integer) manager.createNamedQuery(
