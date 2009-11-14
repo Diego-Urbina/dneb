@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
@@ -45,7 +46,7 @@ public class ServicioGestionTareasTest {
 	public static void tearDownClass() {
 	}
 	
-	@Test
+	//@Test
 	public void pruebaGeneralConHilos(){
 		/**Primero asigno al gestor de hilos todas las tareas en la base de datos**
 		 * 
@@ -74,8 +75,17 @@ public class ServicioGestionTareasTest {
 		
 		//servicioGestionTareas.reanudarTarea(tareaId);
 		/**Pruebo a pararla**/
+	}
+	@Test
+	public void testJoinFetch(){
 		
-		
+		List<Tarea> tareas=servicioGestionTareas.getTareas();
+		for(Tarea tarea: tareas){
+			List<Survey> surveys =tarea.getSurveys();
+			for(Survey survey : surveys){
+				survey.getIdSurvey();
+			}
+		}
 		
 	}
 	

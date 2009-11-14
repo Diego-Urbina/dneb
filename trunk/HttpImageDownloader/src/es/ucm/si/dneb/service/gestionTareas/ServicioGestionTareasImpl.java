@@ -210,5 +210,10 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		return descargas;
 		
 	}
+	@Override
+	public List<Tarea> getTareasPendientes() {
+		return (List<Tarea>) manager.createNamedQuery("Tarea:DameDescargasPendientesDeEstaTarea")
+		.getResultList();
+	}
 
 }
