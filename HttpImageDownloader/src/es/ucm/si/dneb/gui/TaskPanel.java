@@ -34,7 +34,7 @@ public class TaskPanel extends JPanel {
 	public TaskPanel(VentanaPcpal pcpal) {
 		initComponents();
 		principal = pcpal;
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
 		rellenarTabla();
 		//crearWorker();
