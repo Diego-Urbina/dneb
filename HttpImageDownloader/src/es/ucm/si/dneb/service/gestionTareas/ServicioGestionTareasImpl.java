@@ -92,17 +92,18 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public int obtenerPorcentajeCompletado(long tareaId) {
+	public Integer obtenerPorcentajeCompletado(long tareaId) {
 
 		Tarea tarea = manager.find(Tarea.class, tareaId);
-		Integer total = (Integer) manager.createNamedQuery(
+		Long total =(Long) manager.createNamedQuery(
 				"Descarga:dameNumeroDescargasDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
-		Integer pendientes = (Integer) manager.createNamedQuery(
+		
+		Long pendientes = (Long) manager.createNamedQuery(
 				"Descarga:dameNumeroDescargasPendientesDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
 
-		return (1 - (pendientes / total)) * 100;
+		return new Integer((int) ((1 - (pendientes / total)) * 100));
 
 	}
 	/**Detiene una tarea activa**/
@@ -215,5 +216,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		return (List<Tarea>) manager.createNamedQuery("Tarea:DameDescargasPendientesDeEstaTarea")
 		.getResultList();
 	}
-
+	
+	
+	
 }
