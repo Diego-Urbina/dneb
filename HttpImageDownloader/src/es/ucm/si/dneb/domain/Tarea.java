@@ -13,12 +13,12 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t where fechaUltimaActulizacion=?"),
-	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t where fechaCreacion=?"),
-	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t where activa=true"),
-	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t where fechaUltimaActulizacion<=?"),
+	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t join fetch t.surveysjoin fetch t.surveys where fechaUltimaActulizacion=?"),
+	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t join fetch t.surveys where fechaCreacion=?"),
+	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t join fetch t.surveys where activa=true"),
+	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t join fetch t.surveys where fechaUltimaActulizacion<=?"),
 	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.descargas d where t.idTarea=? and d.finalizada=false"),
-	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t order by fechaCreacion")
+	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t join fetch t.surveys order by fechaCreacion")
 })
 public class Tarea implements Serializable {
 	private static final long serialVersionUID = 1L;
