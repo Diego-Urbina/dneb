@@ -76,7 +76,7 @@ public class ServicioGestionTareasTest {
 		//servicioGestionTareas.reanudarTarea(tareaId);
 		/**Pruebo a pararla**/
 	}
-	@Test
+	//@Test
 	public void testJoinFetch(){
 		
 		List<Tarea> tareas=servicioGestionTareas.getTareas();
@@ -89,6 +89,11 @@ public class ServicioGestionTareasTest {
 		
 	}
 	
+	@Test
+	public void testPorcentaje(){
+		
+		Integer porcentaje=servicioGestionTareas.obtenerPorcentajeCompletado(1L);
+	}
 	
 
 }

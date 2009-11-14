@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t join fetch t.surveysjoin fetch t.surveys where fechaUltimaActulizacion=?"),
+	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t join fetch t.surveys where fechaUltimaActulizacion=?"),
 	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t join fetch t.surveys where fechaCreacion=?"),
 	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t join fetch t.surveys where activa=true"),
 	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t join fetch t.surveys where fechaUltimaActulizacion<=?"),
