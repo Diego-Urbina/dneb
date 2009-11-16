@@ -7,17 +7,37 @@ import es.ucm.si.dneb.service.image.util.Point;
 public class CalculateBookCentroid implements
 CalculateCentroid<Point, int [][]>{
 
-	@Override
+	
 	public Point giveMeTheCentroid(int[][] points) {
 		
 		Point centroid = new Point();
-		double tempX = 0, tempY = 0;
+		double centroidX = 0, centroidY = 0;
+		double tempX =0, tempY =0;
+		double total =0;
 		
-		for(int i=0 ;i<=points.length;i++){
-			for(int j=0 ;j<=points[0].length;j++){
-				
+		for(int i=points.length-1 ;i>=0;i--){
+			
+			tempY=0;
+			
+			for(int j=0 ;j<=points[0].length-1;j++){
+				tempY+=points[i][j];
+				total+=points[i][j];
 			}
+			
+			centroidY+=(points.length-i)*(tempY); 
 		}
+		
+		for(int j=0 ;j<=points.length-1;j++){
+			tempX=0;
+			for(int i=points[0].length-1 ;i>=0;i--){
+				tempX+=points[i][j];
+			}
+			centroidX+=(j+1)*(tempX);
+		}
+		
+		
+		centroid.setX((centroidX/total));
+		centroid.setY((centroidY/total));
 		
 		return centroid;
 	}
