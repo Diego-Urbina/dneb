@@ -1,6 +1,7 @@
 package es.ucm.si.dneb.test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class ServicioGestionTareasTest {
 		//servicioGestionTareas.reanudarTarea(tareaId);
 		/**Pruebo a pararla**/
 	}
-	//@Test
+	@Test
 	public void testJoinFetch(){
 		
 		List<Tarea> tareas=servicioGestionTareas.getTareas();
@@ -89,10 +90,20 @@ public class ServicioGestionTareasTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testPorcentaje(){
 		
 		Integer porcentaje=servicioGestionTareas.obtenerPorcentajeCompletado(1L);
+	}
+	
+	
+	@Test
+	public void testDameTareasSinFinalizar(){
+		ArrayList<Tarea> tareas=(ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
+		for(Tarea tarea : tareas){
+			System.out.println("IDTAREA:"+tarea.getIdTarea());
+			
+		}
 	}
 	
 
