@@ -2,7 +2,7 @@
 package es.ucm.si.dneb.domain;
 
 import java.io.Serializable;
-import java.util.Collection;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,12 +13,13 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t join fetch t.surveys where fechaUltimaActulizacion=?"),
-	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t join fetch t.surveys where fechaCreacion=?"),
-	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t join fetch t.surveys where activa=true"),
-	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t join fetch t.surveys where fechaUltimaActulizacion<=?"),
+	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t  where fechaUltimaActulizacion=?"),
+	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t  where fechaCreacion=?"),
+	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t  where activa=true"),
+	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where finalizada=false"),
+	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t  where fechaUltimaActulizacion<=?"),
 	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.descargas d where t.idTarea=? and d.finalizada=false"),
-	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t join fetch t.surveys order by fechaCreacion")
+	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion")
 })
 public class Tarea implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -58,7 +59,7 @@ public class Tarea implements Serializable {
     @Column(name="ANCHO", nullable =false)
     private double ancho;
     
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="TAREA_SURVEY_JT")
     private List<Survey> surveys;
     
