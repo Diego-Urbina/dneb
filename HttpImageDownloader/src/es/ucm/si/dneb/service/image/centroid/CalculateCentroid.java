@@ -5,6 +5,6 @@ import es.ucm.si.dneb.service.image.util.Star;
 
 public interface CalculateCentroid <P,I>{
 	
-	public P giveMeTheCentroid(I points);
+	public  P giveMeTheCentroid(I points);
 
 }
