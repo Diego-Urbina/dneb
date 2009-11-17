@@ -2,22 +2,18 @@ package es.ucm.si.dneb.service.gestionHilos;
 
 import java.util.HashMap;
 
-import java.util.LinkedList;
+
 import java.util.List;
-import java.util.Queue;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
 
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
-import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 @Service("gestorHilos")
@@ -33,7 +29,7 @@ public class GestorDescargas{
 		LOG.debug("GESTOR DESCARGAS CREADO CON CERO HILOS");
 		hilos=new HashMap<Long,Hilo>();
 	}
-	@Transactional(propagation = Propagation.REQUIRED)
+	
 	public void anadirHilo(Tarea tarea) {
 		
 		LOG.debug("AÑADIR HILO:"+tarea.getIdTarea());
@@ -50,7 +46,7 @@ public class GestorDescargas{
 		
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	
 	public void crearHilosParaTodasLasTareas(List<Tarea> tareas) {
 		
 		LOG.debug("LLAMADA A CREAR HILOS PARA TODAS LAS DESCARGAS");
@@ -68,7 +64,7 @@ public class GestorDescargas{
 		
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	
 	public void eleminarHilo(Long id) {
 		
 		
@@ -87,7 +83,7 @@ public class GestorDescargas{
 		return hilos;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	
 	public void iniciarHilo(Long idHilo) {
 		Hilo hilo=hilos.get(idHilo);
 		service.execute(hilo);
@@ -96,7 +92,6 @@ public class GestorDescargas{
 		
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
 	public void interrumpirHilo(Long idHilo) {
 		Hilo hilo=hilos.get(idHilo);
 		

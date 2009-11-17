@@ -176,18 +176,29 @@ public class EjecutorTarea {
 	public Tarea getTarea() {
 		return tarea;
 	}
-	@Transactional(propagation = Propagation.REQUIRED)
+	//@Transactional(propagation = Propagation.REQUIRED)
 	public void ejecutar(){
-		List<Descarga> descargas = manager.createNamedQuery(
-		"Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1,
-		tarea.getIdTarea()).getResultList();
+		List<Descarga> descargas = getDownloads();
 		for (Descarga descarga : descargas) {
 			startDownload(descarga);
 		}
+		endTask();
+	}
+
+	//@Transactional(propagation= Propagation.SUPPORTS)
+	private List<Descarga> getDownloads() {
+		List<Descarga> descargas = manager.createNamedQuery(
+		"Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1,
+		tarea.getIdTarea()).getResultList();
+		return descargas;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	private void endTask() {
 		tarea.setFinalizada(true);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRED)
 	private void startDownload(Descarga descarga) {
 		downloadImage(descarga.getSurvey().getDescripcion(), descarga
 		.getAscensionRecta().toString(), descarga.getDeclinacion()
