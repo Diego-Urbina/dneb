@@ -40,10 +40,11 @@ public class TaskPanel extends JPanel {
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
         
-        //ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
-        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareas();
+        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
         
         int nFila = 1;
+        TableColumn column;
+        SwingWorker<Integer, Integer> worker;
         Object [] fila = new Object[tableTasks.getColumnCount()];
         for (Tarea tarea : tareas) {
         	fila[0] = tarea.getIdTarea();
@@ -62,11 +63,12 @@ public class TaskPanel extends JPanel {
         	fila[13] = tarea.getSurveys().get(1).getDescripcion();
         	fila[14] = servicioGestionTareas.obtenerPorcentajeCompletado(tarea.getIdTarea());
         	modelo.addRow(fila);
-        	TableColumn column = tableTasks.getColumnModel().getColumn(14);
+        	column = tableTasks.getColumnModel().getColumn(14);
             column.setCellRenderer(new ProgressRenderer());
-            SwingWorker<Integer, Integer> worker = crearWorker(tarea.getIdTarea(), nFila);
+            worker = crearWorker(tarea.getIdTarea(), nFila);
             workers.put(nFila, worker);
             worker.execute();
+            nFila++;
         }
 	}
 
@@ -88,6 +90,12 @@ public class TaskPanel extends JPanel {
                 int porcentaje = servicioGestionTareas.obtenerPorcentajeCompletado(idTarea);
                 while(porcentaje < 100) {
                     publish(porcentaje);
+                    try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						break;
+					}
+                    porcentaje++;
                     porcentaje = servicioGestionTareas.obtenerPorcentajeCompletado(idTarea);
                 }
                 publish(porcentaje);
