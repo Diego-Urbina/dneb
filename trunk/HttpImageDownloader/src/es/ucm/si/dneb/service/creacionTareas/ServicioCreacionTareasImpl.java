@@ -214,7 +214,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 									.getDescipcion()));
 					descarga.setSurvey(survey);
 					descarga.setTarea(tarea);
-					descarga.setAncho((ancho * (Math.cos((dec - (alto / 2))))));
+					descarga.setAncho((ancho *  (Math.cos((dec * 2.0 * Math.PI) / 360.0))));
 
 					manager.persist(descarga);
 
