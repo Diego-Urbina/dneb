@@ -43,7 +43,7 @@ public class EjecutorTarea {
 	EntityManager manager;
 	
 	
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void downloadImage(String survey, String ascensionRecta,
 			String declinacion, String equinocio, String alto, String ancho,
 			String formato, String compresion, String ruta) {
@@ -182,15 +182,20 @@ public class EjecutorTarea {
 		"Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1,
 		tarea.getIdTarea()).getResultList();
 		for (Descarga descarga : descargas) {
-			downloadImage(descarga.getSurvey().getDescripcion(), descarga
-			.getAscensionRecta().toString(), descarga.getDeclinacion()
-			.toString(), "J2000", Double.toString(tarea.getAlto()),
-			Double.toString(descarga.getAncho()), tarea
-					.getFormatoFichero().getDescipcion(), "none",
-			descarga.getRutaFichero());
-			
-			descarga.setFinalizada(true);
+			startDownload(descarga);
 		}
 		tarea.setFinalizada(true);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private void startDownload(Descarga descarga) {
+		downloadImage(descarga.getSurvey().getDescripcion(), descarga
+		.getAscensionRecta().toString(), descarga.getDeclinacion()
+		.toString(), "J2000", Double.toString(tarea.getAlto()),
+		Double.toString(descarga.getAncho()), tarea
+				.getFormatoFichero().getDescipcion(), "none",
+		descarga.getRutaFichero());
+		
+		descarga.setFinalizada(true);
 	}
 }
