@@ -83,9 +83,10 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		GregorianCalendar calendar = new GregorianCalendar();
 		Date fechaActual = calendar.getTime();
 		tarea.setFechaUltimaActualizacion(fechaActual);
+		
+		manager.merge(tarea);
 
 		//procesoDescarga(tarea);
-
 		//gestorDescargas.anadirHilo(tarea);
 		gestorDescargas.iniciarHilo(tarea.getIdTarea());
 
@@ -117,6 +118,8 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 					"ReanudarTarea: La tareas ya está parada");
 		}
 		tarea.setActiva(false);
+		
+		manager.merge(tarea);
 
 		gestorDescargas.interrumpirHilo(tareaId);
 
@@ -124,7 +127,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Survey> getAllSurveys() {
 		List resultList = manager
 				.createNamedQuery("Survey:dameTodosLosSurveys").getResultList();
@@ -145,7 +148,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	
 	
 	
-	@Transactional(propagation = Propagation.REQUIRED)
+	//@Transactional(propagation = Propagation.REQUIRED)
 	public void iniciarTarea(long tareaId) {
 		
 		reanudarTarea(tareaId);
@@ -211,7 +214,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		return descargas;
 		
 	}
-	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Tarea> getTareasPendientes() {
 		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTodasTareasPendientes")
 		.getResultList();
