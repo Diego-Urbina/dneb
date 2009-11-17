@@ -197,5 +197,6 @@ public class EjecutorTarea {
 		descarga.getRutaFichero());
 		
 		descarga.setFinalizada(true);
+		manager.merge(descarga);
 	}
 }
