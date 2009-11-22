@@ -37,9 +37,6 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void rellenarTabla() {
-		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-        servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
-        
         ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
         
         int nFila = 1;
@@ -83,6 +80,21 @@ public class TaskPanel extends JPanel {
 		vent.setVisible(true);
 	}
 	
+	private void buttonEliminarActionPerformed(ActionEvent e) {
+		//servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+		modelo.removeRow(tableTasks.getSelectedRow());
+	}
+	
+	private void buttonPararActionPerformed(ActionEvent e) {
+		//servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+		tableTasks.setValueAt(-1, tableTasks.getSelectedRow(), 14);
+	}
+	
+	private void buttonReanudarActionPerformed(ActionEvent e) {
+		//servicioGestionTareas.reanudarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+		tableTasks.setValueAt(servicioGestionTareas.obtenerPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
+	}
+	
 	private SwingWorker<Integer, Integer> crearWorker(final long idTarea, final int nFila) {
 		SwingWorker<Integer, Integer> worker = new SwingWorker<Integer, Integer>() {
             @Override
@@ -91,11 +103,10 @@ public class TaskPanel extends JPanel {
                 while(porcentaje < 100) {
                     publish(porcentaje);
                     try {
-						Thread.sleep(100);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						break;
 					}
-                    porcentaje++;
                     porcentaje = servicioGestionTareas.obtenerPorcentajeCompletado(idTarea);
                 }
                 publish(porcentaje);
@@ -107,20 +118,7 @@ public class TaskPanel extends JPanel {
             }
             /*@Override
             protected void done() {
-                String text;
-                int i = -1;
-                if(isCancelled()) {
-                    text = "Cancelled";
-                }else{
-                    try{
-                        i = get();
-                        text = (i>=0)?"Done":"Disposed";
-                    }catch(Exception ignore) {
-                        ignore.printStackTrace();
-                        text = ignore.getMessage();
-                    }
-                }
-                System.out.println(key +":"+text+"("+i+"ms)");
+                this.cancel(true);
             }*/
         };
         
@@ -132,6 +130,9 @@ public class TaskPanel extends JPanel {
 		scrollPane = new JScrollPane();
 		tableTasks = new JTable();
 		buttonVolver = new JButton();
+		buttonEliminar = new JButton();
+		buttonParar = new JButton();
+		buttonReanudar = new JButton();
 
 		//======== this ========
 
@@ -180,7 +181,7 @@ public class TaskPanel extends JPanel {
 				cm.getColumn(13).setPreferredWidth(60);
 				cm.getColumn(14).setPreferredWidth(80);
 			}
-			tableTasks.setRowSelectionAllowed(false);
+			tableTasks.setRowSelectionAllowed(true);
 			tableTasks.setPreferredScrollableViewportSize(new Dimension(1000, 300));
 			tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
@@ -211,6 +212,33 @@ public class TaskPanel extends JPanel {
 			}
 		});
 
+		//---- buttonEliminar ----
+		buttonEliminar.setText("ELIMINAR");
+		buttonEliminar.setFont(new Font("Arial", Font.PLAIN, 11));
+		buttonEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEliminarActionPerformed(e);
+			}
+		});
+		
+		//---- buttonParar ----
+		buttonParar.setText("PARAR");
+		buttonParar.setFont(new Font("Arial", Font.PLAIN, 11));
+		buttonParar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonPararActionPerformed(e);
+			}
+		});
+		
+		//---- buttonReanudar ----
+		buttonReanudar.setText("REANUDAR");
+		buttonReanudar.setFont(new Font("Arial", Font.PLAIN, 11));
+		buttonReanudar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonReanudarActionPerformed(e);
+			}
+		});
+
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
 		layout.setHorizontalGroup(
@@ -218,7 +246,14 @@ public class TaskPanel extends JPanel {
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addComponent(buttonVolver, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createSequentialGroup()
+							.addComponent(buttonReanudar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+							.addGap(117, 117, 117)
+							.addComponent(buttonParar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+							.addGap(117, 117, 117)
+							.addComponent(buttonEliminar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+							.addGap(117, 117, 117)
+							.addComponent(buttonVolver, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
@@ -227,7 +262,11 @@ public class TaskPanel extends JPanel {
 				.addGroup(layout.createSequentialGroup()
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
 					.addGap(37, 37, 37)
-					.addComponent(buttonVolver)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(buttonVolver)
+						.addComponent(buttonEliminar)
+						.addComponent(buttonParar)
+						.addComponent(buttonReanudar))
 					.addGap(40, 40, 40))
 		);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -237,6 +276,9 @@ public class TaskPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private JTable tableTasks;
 	private JButton buttonVolver;
+	private JButton buttonEliminar;
+	private JButton buttonParar;
+	private JButton buttonReanudar;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 	
 	
@@ -253,10 +295,13 @@ public class TaskPanel extends JPanel {
 	                                                   boolean isSelected, boolean hasFocus,
 	                                                   int row, int column) {
 	        Integer i = (Integer)value;
-	        String s = i + "%";
+	        String s = "Parada";
+	        if (i != -1) {
+	        	s = i + "%";	
+	        }
 	        bar.setString(s);
-	        bar.setValue(i);
-	        return bar;
+        	bar.setValue(i);
+        	return bar;
 	    }
 	}
 	

@@ -13,11 +13,11 @@
        <class>org.jdesktop.layout.GroupLayout</class> 
        <void method="setProperty"> 
         <string>$horizontalGroup</string> 
-        <string>par l {seq l {space :::p, par c {comp buttonVolver::c:p:113:p, comp scrollPane::c:p:1000:p}, space :::x}}</string> 
+        <string>par l {seq l {space :::p, par c {seq c {comp buttonEliminar:::p:113:p, space :p:117:p, comp buttonVolver:::p:113:p}, comp scrollPane::c:p:1000:p}, space :::x}}</string> 
        </void> 
        <void method="setProperty"> 
         <string>$verticalGroup</string> 
-        <string>par l {seq l {comp scrollPane::::260:x, space :p:37:p, comp buttonVolver:::p::p, space :p:40:p}}</string> 
+        <string>par l {seq l {comp scrollPane::::260:x, space :p:37:p, par b {comp buttonVolver::b:p::p, comp buttonEliminar::b:p::p}, space :p:40:p}}</string> 
        </void> 
       </object> 
       <void property="name"> 
@@ -1102,6 +1102,26 @@
           <string>buttonVolverActionPerformed</string> 
           <boolean>true</boolean> 
          </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ELIMINAR</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object class="java.awt.Font"> 
+          <string>Arial</string> 
+          <int>0</int> 
+          <int>11</int> 
+         </object> 
+        </void> 
+        <void property="name"> 
+         <string>buttonEliminar</string> 
         </void> 
        </object> 
       </void> 
