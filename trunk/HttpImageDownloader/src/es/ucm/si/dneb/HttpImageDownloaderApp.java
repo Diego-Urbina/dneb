@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.ucm.si.dneb.gui.VentanaPcpal;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.inicializador.ServicioInicializador;
 import es.ucm.si.dneb.test.ServicioGestionTareasTest;
@@ -29,6 +30,10 @@ public class HttpImageDownloaderApp {
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();//new ClassPathXmlApplicationContext("applicationContext.xml");
 		ServicioInicializador servicioInicializador=(ServicioInicializador) ctx.getBean("servicioInicializador");
 		servicioInicializador.chequeoConsistencia();
+		
+		ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas) ctx.getBean("servicioGestionTareas");
+		servicioGestionTareas.anadirTareasAlGestor();
+		
 		//servicioInicializador.winLookAndFeel();
 		
 		VentanaPcpal vent = new VentanaPcpal();
