@@ -28,6 +28,7 @@ public class HttpImageDownloaderApp {
 		LOG.debug("INICIO DE LA APLICACION");
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();//new ClassPathXmlApplicationContext("applicationContext.xml");
 		ServicioInicializador servicioInicializador=(ServicioInicializador) ctx.getBean("servicioInicializador");
+		servicioInicializador.chequeoConsistencia();
 		//servicioInicializador.winLookAndFeel();
 		
 		VentanaPcpal vent = new VentanaPcpal();

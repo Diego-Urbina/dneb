@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.ClientProtocolException;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,13 +23,16 @@ import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 import es.ucm.si.dneb.service.gestionHilos.Hilo;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasImpl;
+import es.ucm.si.dneb.service.inicializador.ServicioInicializador;
 
 public class ServicioGestionTareasTest {
 
 	private static final Log LOG = LogFactory
 			.getLog(ServicioGestionTareasTest.class);
-	static ServicioGestionTareas servicioGestionTareas;
-	static ServicioCreacionTareas servicioCreacionTareas;
+	private static ServicioGestionTareas servicioGestionTareas;
+	private static ServicioCreacionTareas servicioCreacionTareas;
+	private static ServicioInicializador servicioInicializador;
+	
 	
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -38,6 +43,8 @@ public class ServicioGestionTareasTest {
 					.getBean("servicioGestionTareas");
 			servicioCreacionTareas=(ServicioCreacionTareas) ctx
 			.getBean("servicioCreacionTareas");
+			
+			servicioInicializador= (ServicioInicializador) ctx.getBean("servicioInicializador");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -48,36 +55,6 @@ public class ServicioGestionTareasTest {
 	}
 	
 	//@Test
-	public void pruebaGeneralConHilos(){
-		/**Primero asigno al gestor de hilos todas las tareas en la base de datos**
-		 * 
-		 */
-		servicioGestionTareas.anadirTareasAlGestor();
-		
-		/**Pinto los hilos que tiene**/
-		
-		//GestorDescargas gestor= servicioGestionTareas.getGestorHilos();
-		
-		
-		//HashMap<Long,Hilo> hilos=gestor.getHilos();
-		/**Genero una tarea**/
-		
-		servicioCreacionTareas.crearTarea("25", "43", "25", "43", 10, 10, 2,"poss1_red" , "poss1_red", "fits","D:\\");
-		
-		//servicioCreacionTareas.crearTarea(arInicial, arFinal, decInicial, decFinal, alto, ancho, solapamiento, surveyOld, surveynNew, formato, ruta);
-		
-		/**Compruebo que se asigna al gestor**/
-		
-		List<Tarea> tareas =servicioGestionTareas.getTareas();
-		
-		
-		servicioGestionTareas.iniciarTarea(tareas.get(2).getIdTarea());
-		/**Pruebo a iniciarla**/
-		
-		//servicioGestionTareas.reanudarTarea(tareaId);
-		/**Pruebo a pararla**/
-	}
-	@Test
 	public void testJoinFetch(){
 		
 		List<Tarea> tareas=servicioGestionTareas.getTareas();
@@ -97,7 +74,7 @@ public class ServicioGestionTareasTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void testDameTareasSinFinalizar(){
 		ArrayList<Tarea> tareas=(ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
 		for(Tarea tarea : tareas){
@@ -105,6 +82,57 @@ public class ServicioGestionTareasTest {
 			
 		}
 	}
+	
+	@Test
+	public void testGestionHilosAndCompany(){
+		
+		servicioInicializador.chequeoConsistencia();
+		
+		
+		HashMap<Long, Hilo> hilos;
+		
+		hilos = servicioGestionTareas.getGestorDescargas().getHilos();
+		
+		debugThreads(hilos);
+		
+		servicioGestionTareas.anadirTareasAlGestor();
+		
+		hilos = servicioGestionTareas.getGestorDescargas().getHilos();
+		
+		
+		debugThreads(hilos);
+		
+		
+		servicioGestionTareas.iniciarTarea(16);
+		
+		servicioGestionTareas.pararTarea(16);
+		
+		servicioGestionTareas.eliminarTarea(16);
+		
+		
+	}
+
+	private void debugThreads(HashMap<Long, Hilo> hilos) {
+		if(hilos!=null){
+			
+			Set<Long> keySet=hilos.keySet();
+			
+			for(Long clave: keySet){
+				
+				Hilo hilo=hilos.get(clave);
+				LOG.debug("HILO: clave=" + clave );
+				LOG.debug("HILO: id="+hilo.getId());
+			}
+			
+		}else{
+			
+			LOG.debug("HashMap<Long, Hilo> hilos :hilos nulos");
+			
+		}
+	}
+	
+	
+	
 	
 
 }

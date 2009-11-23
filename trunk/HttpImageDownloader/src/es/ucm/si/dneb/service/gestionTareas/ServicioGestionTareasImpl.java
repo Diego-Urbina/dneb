@@ -60,14 +60,13 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		 * y que así puedan ser ejecutadas a peticiçon del usuario en cualquier momento**/
 		gestorDescargas.crearHilosParaTodasLasTareas(getTareas());
 	}
+	
+	
 	/**Metodo encargado de reanudar una tarea existente. Se localiza ésta tarea mediante su id 
 	 * único.
 	 * 
 	 * No se puede reanudar una tarea que ya está activa.
 	 */
-	
-	
-	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarTarea(long tareaId) {
 
@@ -85,9 +84,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		tarea.setFechaUltimaActualizacion(fechaActual);
 		
 		manager.merge(tarea);
-
-		//procesoDescarga(tarea);
-		//gestorDescargas.anadirHilo(tarea);
+		
 		gestorDescargas.iniciarHilo(tarea.getIdTarea());
 
 	}
@@ -115,7 +112,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 		if (!tarea.isActiva()) {
 			throw new ServicioGestionTareasException(
-					"ReanudarTarea: La tareas ya está parada");
+					"PararTarea: La tareas ya está parada");
 		}
 		tarea.setActiva(false);
 		
@@ -148,26 +145,11 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	
 	
 	
-	//@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void iniciarTarea(long tareaId) {
 		
 		reanudarTarea(tareaId);
-		/*Tarea tarea = manager.find(Tarea.class, tareaId);
-
-		if (tarea.isActiva()) {
-			throw new ServicioGestionTareasException(
-					"IniciarTarea: La tareas ya está activa");
-		}
-
-		tarea.setActiva(true);
-
-		GregorianCalendar calendar = new GregorianCalendar();
-		Date fechaActual = calendar.getTime();
-		tarea.setFechaUltimaActualizacion(fechaActual);
-
-		procesoDescarga(tarea);
 		
-		gestorDescargas.iniciarHilo(tareaId);*/
 	}
 	
 	public GestorDescargas getGestorHilos() {
@@ -219,6 +201,17 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTodasTareasPendientes")
 		.getResultList();
 	}
+
+
+	public GestorDescargas getGestorDescargas() {
+		return gestorDescargas;
+	}
+
+
+	public void setGestorDescargas(GestorDescargas gestorDescargas) {
+		this.gestorDescargas = gestorDescargas;
+	}
+	
 	
 	
 	

@@ -12,18 +12,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.*;
 
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
-@Service("gestorHilos")
+@Service("gestorDescargas")
 public class GestorDescargas{
+	
+
 	
 	private static final Log LOG = LogFactory
 	.getLog(GestorDescargas.class);
 
 	private HashMap <Long,Hilo> hilos;
-	ExecutorService service = Executors.newFixedThreadPool(6);
+	ExecutorService service = Executors.newFixedThreadPool(60);
 	
 	public GestorDescargas(){
 		LOG.debug("GESTOR DESCARGAS CREADO CON CERO HILOS");
@@ -86,6 +89,7 @@ public class GestorDescargas{
 	
 	public void iniciarHilo(Long idHilo) {
 		Hilo hilo=hilos.get(idHilo);
+		
 		service.execute(hilo);
 		
 		LOG.info("INICIADO EL HILO:" +idHilo);
