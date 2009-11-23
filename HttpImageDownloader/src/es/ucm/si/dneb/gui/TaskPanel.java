@@ -81,17 +81,17 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void buttonEliminarActionPerformed(ActionEvent e) {
-		//servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+		servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 		modelo.removeRow(tableTasks.getSelectedRow());
 	}
 	
 	private void buttonPararActionPerformed(ActionEvent e) {
-		//servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+		servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 		tableTasks.setValueAt(-1, tableTasks.getSelectedRow(), 14);
 	}
 	
 	private void buttonReanudarActionPerformed(ActionEvent e) {
-		//servicioGestionTareas.reanudarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+		servicioGestionTareas.reanudarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 		tableTasks.setValueAt(servicioGestionTareas.obtenerPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
 	}
 	

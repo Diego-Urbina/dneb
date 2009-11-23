@@ -103,11 +103,26 @@ public class ServicioGestionTareasTest {
 		debugThreads(hilos);
 		
 		
-		servicioGestionTareas.iniciarTarea(16);
+		//ES IMPORTANTE HACERLO DESPUES???
 		
-		servicioGestionTareas.pararTarea(16);
+		servicioCreacionTareas.crearTarea("10", "25","10", "25", 2, 2, 5, "poss1_red", "poss1_blue", "fits","D:\\test\\");
 		
-		servicioGestionTareas.eliminarTarea(16);
+		
+		hilos = servicioGestionTareas.getGestorDescargas().getHilos();
+		
+		
+		debugThreads(hilos);
+		
+		
+		
+		//hilos.get(key)
+		//hilos.size()
+		
+		//servicioGestionTareas.iniciarTarea(16);
+		
+		//servicioGestionTareas.pararTarea(16);
+		
+		//servicioGestionTareas.eliminarTarea(16);
 		
 		
 	}
