@@ -32,6 +32,7 @@ import es.ucm.si.dneb.domain.Tarea;
 
 @Service("ejecutorTarea")
 @Scope("prototype")
+@Transactional(propagation=Propagation.SUPPORTS)
 public class EjecutorTarea {
 	
 	private static final Log LOG = LogFactory

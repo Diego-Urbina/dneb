@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 
 import es.ucm.si.dneb.domain.*;
+import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 
 
 public interface ServicioGestionTareas {
@@ -30,4 +31,6 @@ public interface ServicioGestionTareas {
 	public List<Descarga> getDescargasTarea(Long tareaId);
 	
 	public List<Tarea> getTareasPendientes();
+	
+	public GestorDescargas getGestorDescargas();
 }
