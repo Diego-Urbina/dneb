@@ -100,8 +100,12 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		Long pendientes = (Long) manager.createNamedQuery(
 				"Descarga:dameNumeroDescargasPendientesDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
-
-		return new Integer((int) ((1 - (pendientes / total)) * 100));
+		
+		double calParcial = (100 - ((pendientes*100) / (total)));
+		
+		LOG.info("EL PORCENTAJE de: " + tareaId +" "+calParcial  );
+		
+		return new Integer((int) calParcial);
 
 	}
 	/**Detiene una tarea activa**/

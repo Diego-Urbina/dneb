@@ -67,10 +67,10 @@ public class ServicioGestionTareasTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void testPorcentaje(){
 		
-		Integer porcentaje=servicioGestionTareas.obtenerPorcentajeCompletado(1L);
+		LOG.info("Y EL PORCENTAJE ES..... "+servicioGestionTareas.obtenerPorcentajeCompletado(35L));
 	}
 	
 	
@@ -83,7 +83,7 @@ public class ServicioGestionTareasTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testGestionHilosAndCompany(){
 		
 		servicioInicializador.chequeoConsistencia();
