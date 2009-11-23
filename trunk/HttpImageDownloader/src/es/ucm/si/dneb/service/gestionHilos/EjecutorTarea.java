@@ -82,15 +82,13 @@ public class EjecutorTarea {
 			/*startDownload(descarga);*/
 			serviceDownloadImage.startDownload(descarga.getIdDescarga(), tarea.getAlto(), tarea.getFormatoFichero().getDescipcion());
 		}
-		endTask();
-	}
-
-
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	private void endTask() {
 		tarea.setFinalizada(true);
+		manager.merge(tarea);
 	}
+
+
+
+	
 
 	public void setServiceDownloadImage(ServiceDownloadImage serviceDownloadImage) {
 		this.serviceDownloadImage = serviceDownloadImage;
