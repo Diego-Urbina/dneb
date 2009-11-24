@@ -16,8 +16,9 @@ import javax.persistence.Table;
 	@NamedQuery(name="PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados",query="select p from PuntosRelevantes p where procesado=false")
 })
 public class PuntosRelevantes {
+	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_PUNTO")
     private long idPunto;
 	

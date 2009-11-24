@@ -30,6 +30,7 @@ public class HttpImageDownloaderApp {
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();//new ClassPathXmlApplicationContext("applicationContext.xml");
 		ServicioInicializador servicioInicializador=(ServicioInicializador) ctx.getBean("servicioInicializador");
 		servicioInicializador.chequeoConsistencia();
+		servicioInicializador.generarTareaSobreDatosManuales();
 		
 		ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas) ctx.getBean("servicioGestionTareas");
 		servicioGestionTareas.anadirTareasAlGestor();

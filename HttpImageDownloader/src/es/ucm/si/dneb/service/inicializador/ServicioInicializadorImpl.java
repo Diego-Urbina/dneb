@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -26,6 +28,7 @@ import es.ucm.si.dneb.domain.PuntosRelevantes;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
+import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareasException;
 import es.ucm.si.dneb.util.Util;
 
 @Service("servicioInicializador")
@@ -77,15 +80,8 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 	
 	
 
-	@Override
-	public void inicializarContexto() {
-		// TODO Auto-generated method stub
-
-	}
-	public void winLookAndFeel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
-		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-
-	}
+	
+	
 	
 	@Override
 	public void initLookAndFeel(String theme) {
@@ -169,7 +165,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		List<PuntosRelevantes> puntosRelevantes=(List<PuntosRelevantes>) manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
 		
-		ResourceBundle resource= ResourceBundle.getBundle("es.ucm.si.dneb.resources");
+		ResourceBundle resource= ResourceBundle.getBundle("es.ucm.si.dneb.resources.resources");
 		String survey1=resource.getString("survey1");
 		String survey2=resource.getString("survey2");
 		
@@ -184,12 +180,27 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		String ancho=resource.getString("anchopordefecto");
 		String alto=resource.getString("altopordefecto");
 		String solapamiento=resource.getString("solpamientopordefecto");
+		
 		String formatoFichero= resource.getString("formatodefecto");
-		FormatoFichero formato = (FormatoFichero) manager.createNamedQuery("FormatoFichero:dameFormatoPorDescripcion").setParameter(1, formatoFichero).getSingleResult();
-		if(formato==null){
-			LOG.error("FORMATO NO EXISTENTE");
-			
+		
+		FormatoFichero formato;
+		
+		try {
+			formato = (FormatoFichero) manager.createNamedQuery(
+					"FormatoFichero:dameFormatoPorDescripcion").setParameter(1,
+							formatoFichero).getSingleResult();
+		} catch (NoResultException e) {
+			LOG
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
+			throw new ServicioCreacionTareasException(
+					"Prolema al ejecutar query");
+		} catch (NonUniqueResultException e) {
+			LOG
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+			throw new ServicioCreacionTareasException(
+					"Prolema al ejecutar query");
 		}
+
 		
 		Tarea tarea = new Tarea();
 		tarea.setActiva(false);
@@ -207,7 +218,10 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		tarea.setSolpamiento(Double.parseDouble(solapamiento));
 		tarea.setSurveys(surveys);
 		/**TODO**/
+		manager.persist(tarea);
+		
 		ArrayList<Descarga> descargas = new ArrayList<Descarga>();
+		
 		
 		for(PuntosRelevantes punto : puntosRelevantes){
 			
@@ -223,13 +237,19 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 				descarga.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey.getDescripcion(),
 						ar.toString(), dec.toString(),tarea.getFormatoFichero().getDescipcion()));
 				descarga.setSurvey(survey);
+				descarga.setTarea(tarea);
+				
+				manager.persist(descarga);
+				
 				descargas.add(descarga);
+				
 			}
-			
+			punto.setProcesado(true);
+			manager.persist(punto);
 		}
 		tarea.setDescargas(descargas);
 		
-		manager.persist(tarea);
+		manager.merge(tarea);
 		
 		LOG.info("FINALIZADA LA GENERACIÓN DE DESCARGAS MANUALES");
 		
