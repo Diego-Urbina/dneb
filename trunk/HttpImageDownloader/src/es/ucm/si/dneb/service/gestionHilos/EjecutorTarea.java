@@ -37,6 +37,9 @@ import es.ucm.si.dneb.service.downloadImage.ServiceDownloadImage;
 @Transactional(propagation=Propagation.SUPPORTS)
 public class EjecutorTarea {
 	
+	
+	
+	
 	private static final Log LOG = LogFactory
 	.getLog(EjecutorTarea.class);
 	private Long idTarea;
@@ -48,7 +51,7 @@ public class EjecutorTarea {
 	@Resource
 	private ServiceDownloadImage serviceDownloadImage;
 	
-	
+	volatile boolean stop=false;
 
 	public void setIdTarea(Long idTarea) {
 		this.idTarea = idTarea;
@@ -76,14 +79,24 @@ public class EjecutorTarea {
 	
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void ejecutar(){
+	public void ejecutar(Interrumpible inter){
+		/**TODO**/
 		List<Descarga> descargas = getDownloads();
 		for (Descarga descarga : descargas) {
 			/*startDownload(descarga);*/
-			serviceDownloadImage.startDownload(descarga.getIdDescarga(), tarea.getAlto(), tarea.getFormatoFichero().getDescipcion());
+			LOG.info("HILOS STOP =" + stop);
+			
+			if(inter.continuar()){
+				serviceDownloadImage.startDownload(descarga.getIdDescarga(), tarea.getAlto(), tarea.getFormatoFichero().getDescipcion());
+			}else{
+				break;
+			}
+			
 		}
-		tarea.setFinalizada(true);
-		manager.merge(tarea);
+		if(inter.continuar()){
+			tarea.setFinalizada(true);
+			manager.merge(tarea);
+		}
 	}
 
 
