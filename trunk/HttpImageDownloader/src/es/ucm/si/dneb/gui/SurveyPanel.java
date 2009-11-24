@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 /**
@@ -35,6 +36,7 @@ public class SurveyPanel extends JPanel {
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
         
+        try {
         ArrayList<Survey> surveys = (ArrayList<Survey>) servicioGestionTareas.getAllSurveys();
 		
         DefaultListModel list = new DefaultListModel();
@@ -46,6 +48,9 @@ public class SurveyPanel extends JPanel {
         listSurvey.setSelectedIndex(0);
         listSurvey2.setModel(list);
         listSurvey2.setSelectedIndex(0);
+        } catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 
 	private void buttonSiguienteActionPerformed(ActionEvent e) {

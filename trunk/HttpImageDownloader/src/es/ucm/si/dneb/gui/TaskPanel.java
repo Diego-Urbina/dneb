@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 
@@ -37,35 +38,39 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void rellenarTabla() {
-        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
-        
-        int nFila = 1;
-        TableColumn column;
-        SwingWorker<Integer, Integer> worker;
-        Object [] fila = new Object[tableTasks.getColumnCount()];
-        for (Tarea tarea : tareas) {
-        	fila[0] = tarea.getIdTarea();
-        	fila[1] = tarea.getAlto();
-        	fila[2] = tarea.getAncho();
-        	fila[3] = tarea.getArInicial();
-        	fila[4] = tarea.getArFinal();
-        	fila[5] = tarea.getDecInicial();
-        	fila[6] = tarea.getDecFinal();
-        	fila[7] = tarea.getSolpamiento();
-        	fila[8] = tarea.getFechaCreacion().toString();
-        	fila[9] = tarea.getFechaUltimaActualizacion().toString();
-        	fila[10] = tarea.getFormatoFichero().getDescipcion();
-        	fila[11] = tarea.getRuta();
-        	fila[12] = tarea.getSurveys().get(0).getDescripcion();
-        	fila[13] = tarea.getSurveys().get(1).getDescripcion();
-        	fila[14] = servicioGestionTareas.obtenerPorcentajeCompletado(tarea.getIdTarea());
-        	modelo.addRow(fila);
-        	column = tableTasks.getColumnModel().getColumn(14);
-            column.setCellRenderer(new ProgressRenderer());
-            worker = crearWorker(tarea.getIdTarea(), nFila);
-            workers.put(nFila, worker);
-            worker.execute();
-            nFila++;
+		try {
+	        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
+	        
+	        int nFila = 1;
+	        TableColumn column;
+	        SwingWorker<Integer, Integer> worker;
+	        Object [] fila = new Object[tableTasks.getColumnCount()];
+	        for (Tarea tarea : tareas) {
+	        	fila[0] = tarea.getIdTarea();
+	        	fila[1] = tarea.getAlto();
+	        	fila[2] = tarea.getAncho();
+	        	fila[3] = tarea.getArInicial();
+	        	fila[4] = tarea.getArFinal();
+	        	fila[5] = tarea.getDecInicial();
+	        	fila[6] = tarea.getDecFinal();
+	        	fila[7] = tarea.getSolpamiento();
+	        	fila[8] = tarea.getFechaCreacion().toString();
+	        	fila[9] = tarea.getFechaUltimaActualizacion().toString();
+	        	fila[10] = tarea.getFormatoFichero().getDescipcion();
+	        	fila[11] = tarea.getRuta();
+	        	fila[12] = tarea.getSurveys().get(0).getDescripcion();
+	        	fila[13] = tarea.getSurveys().get(1).getDescripcion();
+	        	fila[14] = servicioGestionTareas.obtenerPorcentajeCompletado(tarea.getIdTarea());
+	        	modelo.addRow(fila);
+	        	column = tableTasks.getColumnModel().getColumn(14);
+	            column.setCellRenderer(new ProgressRenderer());
+	            worker = crearWorker(tarea.getIdTarea(), nFila);
+	            workers.put(nFila, worker);
+	            worker.execute();
+	            nFila++;
+	        }
+		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 	}
 
@@ -81,18 +86,30 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void buttonEliminarActionPerformed(ActionEvent e) {
-		servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
-		modelo.removeRow(tableTasks.getSelectedRow());
+		try {
+			servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+			modelo.removeRow(tableTasks.getSelectedRow());
+		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 	
 	private void buttonPararActionPerformed(ActionEvent e) {
-		servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
-		tableTasks.setValueAt(-1, tableTasks.getSelectedRow(), 14);
+		try {
+			servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+			tableTasks.setValueAt(-1, tableTasks.getSelectedRow(), 14);
+		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 	
 	private void buttonReanudarActionPerformed(ActionEvent e) {
-		servicioGestionTareas.reanudarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
-		tableTasks.setValueAt(servicioGestionTareas.obtenerPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
+		try {
+			servicioGestionTareas.reanudarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+			tableTasks.setValueAt(servicioGestionTareas.obtenerPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
+		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 	
 	private SwingWorker<Integer, Integer> crearWorker(final long idTarea, final int nFila) {
@@ -116,10 +133,6 @@ public class TaskPanel extends JPanel {
             protected void process(java.util.List<Integer> c) {
             	modelo.setValueAt(c.get(c.size()-1), nFila-1, 14);
             }
-            /*@Override
-            protected void done() {
-                this.cancel(true);
-            }*/
         };
         
         return worker;
