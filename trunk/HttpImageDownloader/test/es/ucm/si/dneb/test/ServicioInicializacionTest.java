@@ -21,7 +21,7 @@ public class ServicioInicializacionTest {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					"applicationContext.xml");
 			servicioInicializador = (ServicioInicializador) ctx
-					.getBean("servicioGestionTareas");
+					.getBean("servicioInicializador");
 		}catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -35,15 +35,22 @@ public class ServicioInicializacionTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testChequeoConsistencia(){
 		
 		servicioInicializador.chequeoConsistencia();
 		
 	}
-	@Test
+	//@Test
 	public void testEleminarHistoricos(){
 		//servicioInicializador.eleminarTareasHistoricas(Date fecha);
+	}
+	
+	@Test
+	public void testcargabbdd(){
+		
+		servicioInicializador.generarTareaSobreDatosManuales();
+		
 	}
 
 }
