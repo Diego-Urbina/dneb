@@ -166,6 +166,8 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eliminarTarea(long tareaId) {
 		
+		gestorDescargas.eleminarHilo(tareaId);
+		
 		Tarea tarea = manager.find(Tarea.class, tareaId);
 
 		if(tarea==null){

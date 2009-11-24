@@ -88,6 +88,7 @@ public class TaskPanel extends JPanel {
 	private void buttonEliminarActionPerformed(ActionEvent e) {
 		try {
 			servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+			
 			modelo.removeRow(tableTasks.getSelectedRow());
 		} catch(ServicioGestionTareasException ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
