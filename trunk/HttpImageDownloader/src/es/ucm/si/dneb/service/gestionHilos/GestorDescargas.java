@@ -70,7 +70,7 @@ public class GestorDescargas{
 	
 	public void eleminarHilo(Long id) {
 		
-		/*
+		
 		Hilo hilo=hilos.get(id);
 		
 		if(hilo.isInterrupted()==false){
@@ -85,7 +85,7 @@ public class GestorDescargas{
 		
 		hilos.remove(id);
 		
-		LOG.info("ELIMINADO EL HILO:" +id);*/
+		LOG.info("ELIMINADO EL HILO:" +id);
 	}
 
 	
