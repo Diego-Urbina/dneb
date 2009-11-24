@@ -165,6 +165,10 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		List<PuntosRelevantes> puntosRelevantes=(List<PuntosRelevantes>) manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
 		
+		if(puntosRelevantes.size()==0){
+			return;
+		}
+		
 		ResourceBundle resource= ResourceBundle.getBundle("es.ucm.si.dneb.resources.resources");
 		String survey1=resource.getString("survey1");
 		String survey2=resource.getString("survey2");
