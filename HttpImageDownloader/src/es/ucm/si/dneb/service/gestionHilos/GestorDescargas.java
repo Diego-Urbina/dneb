@@ -26,7 +26,7 @@ public class GestorDescargas{
 	.getLog(GestorDescargas.class);
 
 	private HashMap <Long,Hilo> hilos;
-	ExecutorService service = Executors.newFixedThreadPool(60);
+	//ExecutorService service = Executors.newFixedThreadPool(60);
 	
 	public GestorDescargas(){
 		LOG.debug("GESTOR DESCARGAS CREADO CON CERO HILOS");
@@ -70,15 +70,22 @@ public class GestorDescargas{
 	
 	public void eleminarHilo(Long id) {
 		
-		
+		/*
 		Hilo hilo=hilos.get(id);
 		
 		if(hilo.isInterrupted()==false){
+			
+			
+			LOG.info(hilo.continuar());
+			hilo.parar();
+			LOG.info(hilo.continuar());
 			hilo.interrupt();
 		}
+		
+		
 		hilos.remove(id);
 		
-		LOG.info("ELIMINADO EL HILO:" +id);
+		LOG.info("ELIMINADO EL HILO:" +id);*/
 	}
 
 	
@@ -90,7 +97,8 @@ public class GestorDescargas{
 	public void iniciarHilo(Long idHilo) {
 		Hilo hilo=hilos.get(idHilo);
 		
-		service.execute(hilo);
+		//service.execute(hilo);
+		hilo.start();
 		
 		LOG.info("INICIADO EL HILO:" +idHilo);
 		
@@ -99,9 +107,13 @@ public class GestorDescargas{
 	public void interrumpirHilo(Long idHilo) {
 		Hilo hilo=hilos.get(idHilo);
 		
-		if(hilo.isInterrupted()==false){
-			hilo.interrupt();
-		}
+
+			/**TODO**/
+			LOG.info(hilo.continuar());
+			hilo.parar();
+			LOG.info("*************************"+hilo.continuar());
+			//hilo.interrupt();
+
 		LOG.info("INTERRUMPIDO EL HILO:" + idHilo);
 	}
 

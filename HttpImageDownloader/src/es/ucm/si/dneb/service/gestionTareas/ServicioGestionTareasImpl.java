@@ -106,7 +106,6 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		LOG.info("EL PORCENTAJE de: " + tareaId +" "+calParcial  );
 		
 		return new Integer((int) calParcial);
-
 	}
 	/**Detiene una tarea activa**/
 	@Transactional(propagation = Propagation.REQUIRED)

@@ -30,20 +30,26 @@ import org.springframework.transaction.annotation.Transactional;
 import es.ucm.si.dneb.domain.Descarga;
 import es.ucm.si.dneb.domain.Tarea;
 
-public class Hilo extends Thread {
+public class Hilo extends Interrumpible {
 	
 	private static final Log LOG = LogFactory
 	.getLog(Hilo.class);
 	
+	
+	
 	private EjecutorTarea ejecutor;
 	
 	public Hilo(){
+		
+		
 		
 		ejecutor=null;
 		
 	}
 	
 	public Hilo(EjecutorTarea ejecutor){
+		
+	
 		
 		this.ejecutor=ejecutor;
 	}
@@ -52,7 +58,7 @@ public class Hilo extends Thread {
 	
 	public void run() {
 
-		ejecutor.ejecutar();
+		ejecutor.ejecutar(this);
 		
 
 	}
@@ -66,9 +72,7 @@ public class Hilo extends Thread {
 	public EjecutorTarea getEjecutor() {
 		return ejecutor;
 	}
+	
 
-	
-	
-	
 
 }
