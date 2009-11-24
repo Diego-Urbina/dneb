@@ -21,16 +21,16 @@ public class PuntosRelevantes {
     @Column(name="ID_PUNTO")
     private long idPunto;
 	
-	@Column(name="AR", nullable =false)
+	@Column(name="ASCENCIONRECTA", nullable =false)
 	private double ascencionRecta;
 	
-	@Column(name="DEC", nullable =false)
+	@Column(name="DECLINACION", nullable =false)
 	private double declinacion;
 	
 	@Column(name="PROCESADO", nullable =false)
 	private boolean procesado;
 	
-	@Column(name="DESC", nullable =false, length=200)
+	@Column(name="DESCRIPCION", nullable =false, length=200)
 	private String descripcion;
 	
 	
