@@ -1,4 +1,5 @@
 package es.ucm.si.dneb.gui;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 /*
@@ -28,6 +29,14 @@ public class CreateNewDownload extends JPanel {
 	}
 
 	private void button4MouseClicked(MouseEvent e) {
+		// TODO add your code here
+	}
+
+	private void button5MouseClicked(MouseEvent e) {
+		// TODO add your code here
+	}
+
+	private void button6MouseClicked(MouseEvent e) {
 		// TODO add your code here
 	}
 
@@ -70,6 +79,12 @@ public class CreateNewDownload extends JPanel {
 		label13 = new JLabel();
 		label14 = new JLabel();
 		button4 = new JButton();
+		dialog1 = new JDialog();
+		label15 = new JLabel();
+		button5 = new JButton();
+		dialog2 = new JDialog();
+		label16 = new JLabel();
+		button6 = new JButton();
 
 		//======== this ========
 
@@ -324,6 +339,92 @@ public class CreateNewDownload extends JPanel {
 						.addComponent(button1))
 					.addGap(46, 46, 46))
 		);
+
+		//======== dialog1 ========
+		{
+			Container dialog1ContentPane = dialog1.getContentPane();
+
+			//---- label15 ----
+			label15.setText("LOS DATOS DE ASCENSI\u00d3N RECTA Y DECLINACI\u00d3N NO SON VALIDOS");
+
+			//---- button5 ----
+			button5.setText("OK");
+			button5.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					button5MouseClicked(e);
+				}
+			});
+
+			GroupLayout dialog1ContentPaneLayout = new GroupLayout(dialog1ContentPane);
+			dialog1ContentPane.setLayout(dialog1ContentPaneLayout);
+			dialog1ContentPaneLayout.setHorizontalGroup(
+				dialog1ContentPaneLayout.createParallelGroup()
+					.addGroup(dialog1ContentPaneLayout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(dialog1ContentPaneLayout.createParallelGroup()
+							.addGroup(dialog1ContentPaneLayout.createSequentialGroup()
+								.addComponent(label15, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+								.addContainerGap())
+							.addGroup(GroupLayout.Alignment.TRAILING, dialog1ContentPaneLayout.createSequentialGroup()
+								.addComponent(button5)
+								.addGap(176, 176, 176))))
+			);
+			dialog1ContentPaneLayout.setVerticalGroup(
+				dialog1ContentPaneLayout.createParallelGroup()
+					.addGroup(dialog1ContentPaneLayout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(label15)
+						.addGap(18, 18, 18)
+						.addComponent(button5)
+						.addContainerGap(15, Short.MAX_VALUE))
+			);
+			dialog1.pack();
+			dialog1.setLocationRelativeTo(dialog1.getOwner());
+		}
+
+		//======== dialog2 ========
+		{
+			Container dialog2ContentPane = dialog2.getContentPane();
+
+			//---- label16 ----
+			label16.setText("EL ALTO Y EL ANCHO HAN DE ESTAR COMPRENDIDOS ENTRE 1 Y 60");
+
+			//---- button6 ----
+			button6.setText("OK");
+			button6.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					button6MouseClicked(e);
+				}
+			});
+
+			GroupLayout dialog2ContentPaneLayout = new GroupLayout(dialog2ContentPane);
+			dialog2ContentPane.setLayout(dialog2ContentPaneLayout);
+			dialog2ContentPaneLayout.setHorizontalGroup(
+				dialog2ContentPaneLayout.createParallelGroup()
+					.addGroup(dialog2ContentPaneLayout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(dialog2ContentPaneLayout.createParallelGroup()
+							.addGroup(dialog2ContentPaneLayout.createSequentialGroup()
+								.addComponent(label16, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+								.addContainerGap())
+							.addGroup(GroupLayout.Alignment.TRAILING, dialog2ContentPaneLayout.createSequentialGroup()
+								.addComponent(button6)
+								.addGap(176, 176, 176))))
+			);
+			dialog2ContentPaneLayout.setVerticalGroup(
+				dialog2ContentPaneLayout.createParallelGroup()
+					.addGroup(dialog2ContentPaneLayout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(label16)
+						.addGap(18, 18, 18)
+						.addComponent(button6)
+						.addContainerGap(15, Short.MAX_VALUE))
+			);
+			dialog2.pack();
+			dialog2.setLocationRelativeTo(dialog2.getOwner());
+		}
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
@@ -365,5 +466,11 @@ public class CreateNewDownload extends JPanel {
 	private JLabel label13;
 	private JLabel label14;
 	private JButton button4;
+	private JDialog dialog1;
+	private JLabel label15;
+	private JButton button5;
+	private JDialog dialog2;
+	private JLabel label16;
+	private JButton button6;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
