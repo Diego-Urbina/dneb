@@ -73,6 +73,8 @@ public class GestorDescargas{
 		
 		Hilo hilo=hilos.get(id);
 		
+		
+		
 		if(hilo.isInterrupted()==false){
 			
 			
@@ -105,15 +107,17 @@ public class GestorDescargas{
 	}
 
 	public void interrumpirHilo(Long idHilo) {
+		
+		
+		
 		Hilo hilo=hilos.get(idHilo);
 		
-
-			/**TODO**/
-			LOG.info(hilo.continuar());
-			hilo.parar();
-			LOG.info("*************************"+hilo.continuar());
-			//hilo.interrupt();
-
+		Tarea tarea= hilo.getEjecutor().getTarea();
+		
+		this.eleminarHilo(idHilo);
+		
+		this.anadirHilo(tarea);
+		
 		LOG.info("INTERRUMPIDO EL HILO:" + idHilo);
 	}
 
