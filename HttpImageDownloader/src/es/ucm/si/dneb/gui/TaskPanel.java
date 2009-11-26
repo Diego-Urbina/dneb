@@ -41,7 +41,7 @@ public class TaskPanel extends JPanel {
 		try {
 	        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
 	        
-	        int nFila = 1;
+	        int nFila = 0;
 	        TableColumn column;
 	        SwingWorker<Integer, Integer> worker;
 	        Object [] fila = new Object[tableTasks.getColumnCount()];
@@ -87,8 +87,10 @@ public class TaskPanel extends JPanel {
 	
 	private void buttonEliminarActionPerformed(ActionEvent e) {
 		try {
+			SwingWorker w = workers.get(tableTasks.getSelectedRow());
+			if (!w.isCancelled())
+				w.cancel(true);
 			servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
-			
 			modelo.removeRow(tableTasks.getSelectedRow());
 		} catch(ServicioGestionTareasException ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -97,6 +99,9 @@ public class TaskPanel extends JPanel {
 	
 	private void buttonPararActionPerformed(ActionEvent e) {
 		try {
+			SwingWorker w = workers.get(tableTasks.getSelectedRow());
+			if (!w.isCancelled())
+				w.cancel(true);
 			servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 			tableTasks.setValueAt(-1, tableTasks.getSelectedRow(), 14);
 		} catch(ServicioGestionTareasException ex) {
@@ -106,6 +111,7 @@ public class TaskPanel extends JPanel {
 	
 	private void buttonReanudarActionPerformed(ActionEvent e) {
 		try {
+			workers.get(tableTasks.getSelectedRow()).execute();
 			servicioGestionTareas.reanudarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 			tableTasks.setValueAt(servicioGestionTareas.obtenerPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
 		} catch(ServicioGestionTareasException ex) {
@@ -132,7 +138,7 @@ public class TaskPanel extends JPanel {
             }
             @Override
             protected void process(java.util.List<Integer> c) {
-            	modelo.setValueAt(c.get(c.size()-1), nFila-1, 14);
+            	modelo.setValueAt(c.get(c.size()-1), nFila, 14);
             }
         };
         
