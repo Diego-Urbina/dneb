@@ -174,10 +174,10 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 			throw new ServicioGestionTareasException("La tarea no existe");
 		}
 		
-		if (tarea.isActiva()) {
+		/*if (tarea.isActiva()) {
 			gestorDescargas.interrumpirHilo(tarea.getIdTarea());
 			gestorDescargas.eleminarHilo(tarea.getIdTarea());
-		}
+		}*/
 		
 		List<Descarga> descargas = tarea.getDescargas();
 		
