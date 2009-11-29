@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
+ <object class="com.jformdesigner.model.FormModel"> 
+  <void property="contentType"> 
+   <string>form/swing</string> 
+  </void> 
+  <void property="root"> 
+   <object class="com.jformdesigner.model.FormRoot"> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormContainer"> 
+      <string>javax.swing.JPanel</string> 
+      <object class="com.jformdesigner.model.FormLayoutManager"> 
+       <class>org.jdesktop.layout.GroupLayout</class> 
+       <void method="setProperty"> 
+        <string>$horizontalGroup</string> 
+        <string>par l {comp separator1::t::720:x, seq t {par t {seq l {space :p:22:p, comp guardarValoresPorDefecto:::p:282:p, space :p:53:p, comp cargarValoresPorDefecto::::328:x}, seq t {par t {seq l {space :p:22:p, comp label13:::p::p, space s:::p, comp aliasNuevaConfig:::p:133:p, space ::53:x, comp label14:::p:150:p}, seq t {space :p:59:p, par l {comp label10::l:p:74:p, comp label3:::p::p, comp label6:::p::p}, space :p:39:p, par l:::p {comp ALTOINPUT::l::106:x:1, comp ruta::l::106:x:1, comp ANCHOINPUT::l:::x:1}, space ::120:x, par l {comp label4::l:p::p, comp label5:::p::p, comp label11:::p::p}}}, par l {seq {space :p:57:p, par l {comp comboBoxSURVEY1:::p:101:p, comp comboBoxSURVEY2:::p:101:p, comp formatoFichero:::p:101:p}}, seq l {space s:::p, comp comboBoxValoresPorDefecto:::p:160:p}}}}, space :p:35:p}, seq l {space :p:232:p, comp volverAlMenubutton:::p:205:p, space ::283:x}, seq l {space :::p, comp TITULO::::696:x, space :::p}}</string> 
+       </void> 
+       <void method="setProperty"> 
+        <string>$verticalGroup</string> 
+        <string>par l {seq l {space :::p, comp TITULO:::p:36:p, space :p:25:p, par l {seq l {space :p:2:p, comp label10:::p::p}, par b:l {comp ruta::b:p::p, comp label4::b:p::p, comp comboBoxSURVEY1::b:p::p}}, space :p:37:p, par b {comp ANCHOINPUT::b:p::p, comp label6::b:p::p, comp label5::b:p::p, comp comboBoxSURVEY2::b:p::p}, space :p:30:p, par b {comp ALTOINPUT::b:p::p, comp label3::b:p::p, comp label11::b:p::p, comp formatoFichero::b:p::p}, space :p:31:p, comp separator1:::p::p, space :p:32:p, par b {comp aliasNuevaConfig::b:p::p, comp label14::b:p::p, comp comboBoxValoresPorDefecto::b:p::p, comp label13::b:p::p}, space s:::p, par b {comp cargarValoresPorDefecto::b:p::p, comp guardarValoresPorDefecto::b:p::p}, space ::26:x, comp volverAlMenubutton:::p::p, space :::p}}</string> 
+       </void> 
+      </object> 
+      <void property="name"> 
+       <string>this</string> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ALTO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label3</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ALTOINPUT</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ANCHOINPUT</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ANCHO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label6</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>SURVEY 2</string> 
+        </void> 
+        <void property="name"> 
+         <string>label5</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>comboBoxSURVEY2</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>comboBoxSURVEY1</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>SURVEY 1</string> 
+        </void> 
+        <void property="name"> 
+         <string>label4</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ruta</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>formatoFichero</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>FORMATO FICHERO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label11</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>RUTA</string> 
+        </void> 
+        <void property="name"> 
+         <string>label10</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ALIAS CONFIGURACION</string> 
+        </void> 
+        <void property="name"> 
+         <string>label13</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>aliasNuevaConfig</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>VALORES POR DEFECTO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label14</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>comboBoxValoresPorDefecto</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>CARGAR VALORES POR DEFECTO</string> 
+        </void> 
+        <void property="name"> 
+         <string>cargarValoresPorDefecto</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>button2MouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>GUARDAR COMO VALORES POR DEFECTO</string> 
+        </void> 
+        <void property="name"> 
+         <string>guardarValoresPorDefecto</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>button3MouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JSeparator</string> 
+        <void property="name"> 
+         <string>separator1</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>VOLVER AL MENU</string> 
+        </void> 
+        <void property="name"> 
+         <string>volverAlMenubutton</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>button1MouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>button4MouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Configuracion de valores por defecto</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object class="com.jformdesigner.model.SwingDerivedFont"> 
+          <null/> 
+          <int>131072</int> 
+          <int>7</int> 
+          <boolean>false</boolean> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>horizontalAlignment</string> 
+         <int>0</int> 
+        </void> 
+        <void property="name"> 
+         <string>TITULO</string> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>0</int> 
+        <int>0</int> 
+       </object> 
+      </void> 
+      <void method="setProperty"> 
+       <string>size</string> 
+       <object class="java.awt.Dimension"> 
+        <int>720</int> 
+        <int>415</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

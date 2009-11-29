@@ -29,6 +29,12 @@ public class Tarea implements Serializable {
     @Column(name="ID_TAREA")
     private long idTarea;
     
+    @Column(name="ALIAS")
+    private String alias;
+    
+    @Column(name="DESCRIPCION")
+    private String descripcion;
+    
     @Column(name="FECHACREACION", nullable =false)
     private Date fechaCreacion;
     
@@ -208,6 +214,22 @@ public class Tarea implements Serializable {
 
 	public boolean isActiva() {
 		return activa;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
 	}
 
 
