@@ -28,8 +28,14 @@ public class MenuPanel extends JPanel {
 		if (this.radioButtonNuevo.isSelected())
 			vent = new SurveyPanel(principal);
 		else {
-			vent = new TaskPanel(principal);
-			principal.setSize(1000, 400);
+			if(this.radioButtonEditar.isSelected()){
+				vent = new TaskPanel(principal);
+				principal.setSize(1000, 400);
+			}else{
+				vent = new CreateNewDownload(principal);
+				principal.setSize(1000, 400);
+				
+			}
 		}
 		
 		principal.getContentPane().remove(0);
@@ -67,7 +73,7 @@ public class MenuPanel extends JPanel {
 		});
 
 		//---- radioButtonVer ----
-		radioButtonVer.setText("VER TAREAS");
+		radioButtonVer.setText("CREAR DESCARGA");
 		radioButtonVer.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		GroupLayout layout = new GroupLayout(this);

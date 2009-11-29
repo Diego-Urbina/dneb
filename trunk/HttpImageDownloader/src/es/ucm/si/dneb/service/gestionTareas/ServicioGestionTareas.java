@@ -33,4 +33,6 @@ public interface ServicioGestionTareas {
 	public List<Tarea> getTareasPendientes();
 	
 	public GestorDescargas getGestorDescargas();
+	
+	public void createSingleDownloadTask(String alias, String descripcion, Double alto, Double ancho, FormatoFichero formatoFichero, String ruta, List<Survey> surveys ,Double ar, Double dec,boolean iniciarDescarga);
 }

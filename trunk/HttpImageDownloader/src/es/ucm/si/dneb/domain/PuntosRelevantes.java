@@ -35,7 +35,6 @@ public class PuntosRelevantes {
 	private String descripcion;
 	
 	
-	
 	public long getIdPunto() {
 		return idPunto;
 	}

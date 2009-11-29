@@ -37,6 +37,7 @@ import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
+import es.ucm.si.dneb.util.Util;
 
 @Service("servicioGestionTareas")
 public class ServicioGestionTareasImpl implements ServicioGestionTareas {
@@ -215,6 +216,89 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 	public void setGestorDescargas(GestorDescargas gestorDescargas) {
 		this.gestorDescargas = gestorDescargas;
+	}
+
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void createSingleDownloadTask(String alias, String descripcion,
+			Double alto, Double ancho, FormatoFichero formatoFichero,
+			String ruta, List<Survey> surveys,Double ar, Double dec,boolean iniciarDescarga) {
+		
+		
+		Tarea tarea = new Tarea();
+		tarea.setActiva(false);
+
+		tarea.setAlias(alias);
+		tarea.setDescripcion(descripcion);
+		
+		tarea.setAlto(alto);
+		tarea.setAncho(ancho);
+		
+		tarea.setArFinal("0");
+		tarea.setArInicial("0");
+		tarea.setDecFinal("0");
+		tarea.setDecInicial("0");
+		
+		tarea.setFechaCreacion(Util.dameFechaActual());
+		tarea.setFechaUltimaActualizacion(Util.dameFechaActual());
+		
+		tarea.setFinalizada(false);
+		
+		tarea.setRuta(ruta);
+		tarea.setSolpamiento(0);
+		tarea.setSurveys(surveys);
+		tarea.setFormatoFichero(formatoFichero);
+		
+		manager.persist(tarea);
+		
+		
+		
+		
+		List<Descarga> descargas = new ArrayList<Descarga>();
+		
+		for(Survey survey : surveys){
+			
+			
+			Descarga descarga = new Descarga();
+			
+			
+			/**TODO OJO DEBERÍA DE SACAR UN ANCHO REAL??*/
+			descarga.setAncho(ancho);
+			
+			descarga.setAscensionRecta(ar.toString());
+			descarga.setDeclinacion(dec.toString());
+			
+			descarga.setFinalizada(false);
+			
+			descarga.setTarea(tarea);
+			
+			descarga.setSurvey(survey);
+			
+			descarga.setRutaFichero(Util.creaRuta(ruta, survey.getDescripcion(), ar.toString(), dec.toString(), formatoFichero.getDescipcion()));
+			
+			descargas.add(descarga);
+			
+			manager.persist(descarga);
+		
+		}
+		
+		tarea.setDescargas(descargas);
+		manager.merge(tarea);
+		
+		
+		gestorDescargas.anadirHilo(tarea);
+		
+		
+		if(iniciarDescarga==true){
+			
+			tarea.setActiva(true);
+			
+			manager.merge(tarea);
+			
+			gestorDescargas.iniciarHilo(tarea.getIdTarea());
+			
+		}
+		
 	}
 	
 	
