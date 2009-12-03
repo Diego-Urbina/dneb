@@ -197,7 +197,7 @@
          <object class="com.jformdesigner.model.FormEvent"> 
           <string>java.awt.event.MouseListener</string> 
           <string>mouseClicked</string> 
-          <string>button2MouseClicked</string> 
+          <string>cargarValoresPorDEfecto</string> 
           <boolean>true</boolean> 
          </object> 
         </void> 
@@ -217,7 +217,7 @@
          <object class="com.jformdesigner.model.FormEvent"> 
           <string>java.awt.event.MouseListener</string> 
           <string>mouseClicked</string> 
-          <string>button3MouseClicked</string> 
+          <string>guardarValoresPorDefecto</string> 
           <boolean>true</boolean> 
          </object> 
         </void> 
@@ -245,15 +245,7 @@
          <object class="com.jformdesigner.model.FormEvent"> 
           <string>java.awt.event.MouseListener</string> 
           <string>mouseClicked</string> 
-          <string>button1MouseClicked</string> 
-          <boolean>true</boolean> 
-         </object> 
-        </void> 
-        <void method="addEvent"> 
-         <object class="com.jformdesigner.model.FormEvent"> 
-          <string>java.awt.event.MouseListener</string> 
-          <string>mouseClicked</string> 
-          <string>button4MouseClicked</string> 
+          <string>volverAlMenu</string> 
           <boolean>true</boolean> 
          </object> 
         </void> 

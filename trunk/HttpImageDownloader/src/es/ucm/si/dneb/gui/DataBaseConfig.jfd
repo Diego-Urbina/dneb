@@ -138,6 +138,14 @@
         <void property="name"> 
          <string>guardar</string> 
         </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>guardar</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
        </object> 
       </void> 
       <void method="add"> 
@@ -149,6 +157,14 @@
         </void> 
         <void property="name"> 
          <string>cargarValoresActuales</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>cargarValoresActuales</string> 
+          <boolean>true</boolean> 
+         </object> 
         </void> 
        </object> 
       </void> 
