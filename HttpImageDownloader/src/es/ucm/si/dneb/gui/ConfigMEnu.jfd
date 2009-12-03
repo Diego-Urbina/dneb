@@ -13,11 +13,11 @@
        <class>org.jdesktop.layout.GroupLayout</class> 
        <void method="setProperty"> 
         <string>$horizontalGroup</string> 
-        <string>par l {seq l {space :p:124:p, par l {comp buttonSiguiente::l:p:113:p, comp radioButtonMenuConfig::l:p:205:p, par c:l {comp radioButtonNuevo:1:c:p::p, comp radioButtonEditar:1:c:p::p, comp radioButtonVer:1:c:p::p}}, space ::36:x}}</string> 
+        <string>par l {seq {par l {seq {space :p:74:p, par l:::p {comp configBaseDatos::l::124:x:1, comp configDescargas::l:p::p:1}}, seq l {space :::p, comp button2:::p:150:p, space ::76:x, comp button3:::p:150:p}}, space :::p}}</string> 
        </void> 
        <void method="setProperty"> 
         <string>$verticalGroup</string> 
-        <string>par l {seq t {space :p:32:p, comp radioButtonNuevo:2::p::p, space :p:32:p, comp radioButtonEditar:2::p::p, space :p:35:p, comp radioButtonVer:2::p::p, space ::29:x, comp radioButtonMenuConfig:::p::p, space :p:31:p, comp buttonSiguiente:::p::p, space :p:29:p}}</string> 
+        <string>par l {seq l {space :p:58:p, comp configBaseDatos:::p::p, space s:::p, comp configDescargas:::p::p, space ::137:x, par b {comp button2::b:p::p, comp button3::b:p::p}, space :::p}}</string> 
        </void> 
       </object> 
       <void property="name"> 
@@ -28,28 +28,16 @@
         <string>javax.swing.JRadioButton</string> 
         <void method="setProperty"> 
          <string>text</string> 
-         <string>NUEVA TAREA</string> 
+         <string>CONFIGURAR BASE DE DATOS</string> 
         </void> 
         <void method="setProperty"> 
          <string>$buttonGroup</string> 
          <object class="com.jformdesigner.model.FormReference"> 
-          <string>buttonGroup</string> 
-         </object> 
-        </void> 
-        <void method="setProperty"> 
-         <string>selected</string> 
-         <boolean>true</boolean> 
-        </void> 
-        <void method="setProperty"> 
-         <string>font</string> 
-         <object id="Font0" class="java.awt.Font"> 
-          <string>Arial</string> 
-          <int>0</int> 
-          <int>11</int> 
+          <string>buttonGroup1</string> 
          </object> 
         </void> 
         <void property="name"> 
-         <string>radioButtonNuevo</string> 
+         <string>configBaseDatos</string> 
         </void> 
        </object> 
       </void> 
@@ -58,20 +46,36 @@
         <string>javax.swing.JRadioButton</string> 
         <void method="setProperty"> 
          <string>text</string> 
-         <string>EDITAR TAREAS</string> 
+         <string>CREAR NUEVA CONFIG DE DESCARGA</string> 
         </void> 
         <void method="setProperty"> 
          <string>$buttonGroup</string> 
          <object class="com.jformdesigner.model.FormReference"> 
-          <string>buttonGroup</string> 
+          <string>buttonGroup1</string> 
          </object> 
         </void> 
+        <void property="name"> 
+         <string>configDescargas</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
         <void method="setProperty"> 
-         <string>font</string> 
-         <object idref="Font0"/> 
+         <string>text</string> 
+         <string>VOLVER AL MENU</string> 
         </void> 
         <void property="name"> 
-         <string>radioButtonEditar</string> 
+         <string>button2</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>volverMenu</string> 
+          <boolean>true</boolean> 
+         </object> 
         </void> 
        </object> 
       </void> 
@@ -82,68 +86,16 @@
          <string>text</string> 
          <string>SIGUIENTE</string> 
         </void> 
-        <void method="setProperty"> 
-         <string>font</string> 
-         <object idref="Font0"/> 
-        </void> 
         <void property="name"> 
-         <string>buttonSiguiente</string> 
+         <string>button3</string> 
         </void> 
         <void method="addEvent"> 
          <object class="com.jformdesigner.model.FormEvent"> 
-          <string>java.awt.event.ActionListener</string> 
-          <string>actionPerformed</string> 
-          <string>buttonSiguienteActionPerformed</string> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>siguiente</string> 
           <boolean>true</boolean> 
          </object> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JRadioButton</string> 
-        <void method="setProperty"> 
-         <string>text</string> 
-         <string>VER TAREAS</string> 
-        </void> 
-        <void method="setProperty"> 
-         <string>$buttonGroup</string> 
-         <object class="com.jformdesigner.model.FormReference"> 
-          <string>buttonGroup</string> 
-         </object> 
-        </void> 
-        <void method="setProperty"> 
-         <string>font</string> 
-         <object idref="Font0"/> 
-        </void> 
-        <void property="name"> 
-         <string>radioButtonVer</string> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JRadioButton</string> 
-        <void method="setProperty"> 
-         <string>text</string> 
-         <string>CONFIGURACION</string> 
-        </void> 
-        <void method="setProperty"> 
-         <string>$buttonGroup</string> 
-         <object class="com.jformdesigner.model.FormReference"> 
-          <string>buttonGroup</string> 
-         </object> 
-        </void> 
-        <void method="setProperty"> 
-         <string>font</string> 
-         <object class="java.awt.Font"> 
-          <string>Arial</string> 
-          <int>0</int> 
-          <int>11</int> 
-         </object> 
-        </void> 
-        <void property="name"> 
-         <string>radioButtonMenuConfig</string> 
         </void> 
        </object> 
       </void> 
@@ -160,7 +112,7 @@
       <void method="setProperty"> 
        <string>size</string> 
        <object class="java.awt.Dimension"> 
-        <int>365</int> 
+        <int>400</int> 
         <int>300</int> 
        </object> 
       </void> 
@@ -170,7 +122,7 @@
      <object class="com.jformdesigner.model.FormNonVisual"> 
       <string>javax.swing.ButtonGroup</string> 
       <void property="name"> 
-       <string>buttonGroup</string> 
+       <string>buttonGroup1</string> 
       </void> 
      </object> 
      <object class="com.jformdesigner.model.FormLayoutConstraints"> 

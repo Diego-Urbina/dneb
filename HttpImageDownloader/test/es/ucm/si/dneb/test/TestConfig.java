@@ -56,7 +56,7 @@ public class TestConfig {
 		
 	}
 	
-	@Test
+	//@Test
 	public void createNewPropertyFileTest(){
 		
 		Properties propertyFile = new Properties();

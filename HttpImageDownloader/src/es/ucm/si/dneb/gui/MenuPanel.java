@@ -32,9 +32,15 @@ public class MenuPanel extends JPanel {
 				vent = new TaskPanel(principal);
 				principal.setSize(1000, 400);
 			}else{
-				vent = new CreateNewDownload(principal);
-				principal.setSize(1000, 400);
-				
+				if(this.radioButtonVer.isSelected()){
+					vent = new CreateNewDownload(principal);
+					principal.setSize(1000, 400);
+				}else{
+					
+					vent = new ConfigMEnu(principal);
+					principal.setSize(1000, 400);
+					
+				}
 			}
 		}
 		
@@ -51,6 +57,7 @@ public class MenuPanel extends JPanel {
 		radioButtonEditar = new JRadioButton();
 		buttonSiguiente = new JButton();
 		radioButtonVer = new JRadioButton();
+		radioButtonMenuConfig = new JRadioButton();
 
 		//======== this ========
 
@@ -73,8 +80,12 @@ public class MenuPanel extends JPanel {
 		});
 
 		//---- radioButtonVer ----
-		radioButtonVer.setText("CREAR DESCARGA");
+		radioButtonVer.setText("VER TAREAS");
 		radioButtonVer.setFont(new Font("Arial", Font.PLAIN, 11));
+
+		//---- radioButtonMenuConfig ----
+		radioButtonMenuConfig.setText("CONFIGURACION");
+		radioButtonMenuConfig.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
@@ -82,27 +93,30 @@ public class MenuPanel extends JPanel {
 			layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup()
 					.addGap(124, 124, 124)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+					.addGroup(layout.createParallelGroup()
+						.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+						.addComponent(radioButtonMenuConfig, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 							.addComponent(radioButtonNuevo)
 							.addComponent(radioButtonEditar)
-							.addComponent(radioButtonVer))
-						.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(128, Short.MAX_VALUE))
+							.addComponent(radioButtonVer)))
+					.addContainerGap(36, Short.MAX_VALUE))
 		);
 		layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {radioButtonEditar, radioButtonNuevo, radioButtonVer});
 		layout.setVerticalGroup(
 			layout.createParallelGroup()
 				.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-					.addContainerGap(69, Short.MAX_VALUE)
+					.addGap(32, 32, 32)
 					.addComponent(radioButtonNuevo)
 					.addGap(32, 32, 32)
 					.addComponent(radioButtonEditar)
 					.addGap(35, 35, 35)
 					.addComponent(radioButtonVer)
-					.addGap(30, 30, 30)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+					.addComponent(radioButtonMenuConfig)
+					.addGap(31, 31, 31)
 					.addComponent(buttonSiguiente)
-					.addGap(42, 42, 42))
+					.addGap(29, 29, 29))
 		);
 		layout.linkSize(SwingConstants.VERTICAL, new Component[] {radioButtonEditar, radioButtonNuevo, radioButtonVer});
 
@@ -111,6 +125,7 @@ public class MenuPanel extends JPanel {
 		buttonGroup.add(radioButtonNuevo);
 		buttonGroup.add(radioButtonEditar);
 		buttonGroup.add(radioButtonVer);
+		buttonGroup.add(radioButtonMenuConfig);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
@@ -119,5 +134,6 @@ public class MenuPanel extends JPanel {
 	private JRadioButton radioButtonEditar;
 	private JButton buttonSiguiente;
 	private JRadioButton radioButtonVer;
+	private JRadioButton radioButtonMenuConfig;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

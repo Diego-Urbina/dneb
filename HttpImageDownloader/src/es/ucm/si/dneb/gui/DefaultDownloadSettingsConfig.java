@@ -17,15 +17,15 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		initComponents();
 	}
 
-	private void button2MouseClicked(MouseEvent e) {
+	private void cargarValoresPorDEfecto(MouseEvent e) {
 		// TODO add your code here
 	}
 
-	private void button3MouseClicked(MouseEvent e) {
+	private void guardarValoresPorDefecto(MouseEvent e) {
 		// TODO add your code here
 	}
 
-	private void button1MouseClicked(MouseEvent e) {
+	private void volverAlMenu(MouseEvent e) {
 		// TODO add your code here
 	}
 
@@ -88,7 +88,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		cargarValoresPorDefecto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				button2MouseClicked(e);
+				cargarValoresPorDEfecto(e);
 			}
 		});
 
@@ -97,7 +97,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		guardarValoresPorDefecto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				button3MouseClicked(e);
+				guardarValoresPorDefecto(e);
 			}
 		});
 
@@ -106,8 +106,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		volverAlMenubutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				button1MouseClicked(e);
-				button4MouseClicked(e);
+				volverAlMenu(e);
 			}
 		});
 

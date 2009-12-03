@@ -1,6 +1,7 @@
 package es.ucm.si.dneb.gui;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Sat Nov 28 10:27:43 CET 2009
@@ -14,6 +15,14 @@ import javax.swing.*;
 public class DataBaseConfig extends JPanel {
 	public DataBaseConfig() {
 		initComponents();
+	}
+
+	private void guardar(MouseEvent e) {
+		// TODO add your code here
+	}
+
+	private void cargarValoresActuales(MouseEvent e) {
+		// TODO add your code here
 	}
 
 	private void initComponents() {
@@ -51,9 +60,21 @@ public class DataBaseConfig extends JPanel {
 
 		//---- guardar ----
 		guardar.setText("GUARDAR");
+		guardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				guardar(e);
+			}
+		});
 
 		//---- cargarValoresActuales ----
 		cargarValoresActuales.setText("CARGAR VALORES ACTUALES");
+		cargarValoresActuales.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cargarValoresActuales(e);
+			}
+		});
 
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
