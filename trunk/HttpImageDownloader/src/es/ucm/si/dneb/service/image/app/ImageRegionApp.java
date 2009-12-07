@@ -61,9 +61,10 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		input2 = null;
 		initComponents();
 		
-		parent.setSize(1000, 700);
+		parent.setSize(500, 650);
+		parent.setExtendedState(JFrame.MAXIMIZED_BOTH);  
 		parent.setLocationRelativeTo(null);
-		parent.setMinimumSize(new Dimension(500, 350));
+		parent.setMinimumSize(new Dimension(parent.getWidth()/2, parent.getHeight()/2));
 	    
 		parent.add(this);
 		parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -262,6 +263,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private void buttonZoomMasActionPerformed(ActionEvent e) {
 		if (input1 != null && input2 != null && scale >= 10 && scale <= 1000) {
 			scale += 10;
+			angle = 0;
 	
 		    ParameterBlock pb = new ParameterBlock();
 		    InterpolationNearest in = new InterpolationNearest();
@@ -282,6 +284,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private void buttonZoomMenosActionPerformed(ActionEvent e) {
 		if (input1 != null && input2 != null && scale >= 10 && scale <= 1000) {
 			scale -= 10;
+			angle = 0;
 			
 			ParameterBlock pb = new ParameterBlock();
 		    InterpolationNearest in = new InterpolationNearest();
@@ -291,8 +294,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		    pb.add(0.0F);
 		    pb.add(0.0F);
 		    pb.add(in);
-		    PlanarImage im = JAI.create("scale", pb);
-		    display1.set(im);
+		    PlanarImage im1 = JAI.create("scale", pb);
+		    display1.set(im1);
 		    pb.addSource(input2);
 		    PlanarImage im2 = JAI.create("scale", pb);
 		    display2.set(im2);
@@ -302,6 +305,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private void buttonGirarActionPerformed(ActionEvent e) {
 		if (input1 != null && input2 != null) {
 			angle -= 90;
+			scale = 100;
 			float angleRad = (float)Math.toRadians(angle);
 			
 			// Gets the rotation center.
@@ -355,7 +359,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		String pos = "(" + e.getX() + "," + e.getY() + ") ";
+		/*String pos = "(" + e.getX() + "," + e.getY() + ") ";
 		if (e.getSource() == display1) {
 			label1.setText(pos + display1.getPixelInfo());
 			label2.setText("");
@@ -363,7 +367,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		if (e.getSource() == display2) {
 			label1.setText("");
 			label2.setText(pos + display2.getPixelInfo());
-		}
+		}*/
 	}
 	
 	@Override
