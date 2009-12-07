@@ -13,8 +13,13 @@ import javax.swing.*;
  * @author Brainrain
  */
 public class DataBaseConfig extends JPanel {
-	public DataBaseConfig() {
+	
+	private VentanaPcpal principal;
+	
+	public DataBaseConfig(VentanaPcpal pcpal) {
 		initComponents();
+		
+		principal = pcpal;
 	}
 
 	private void guardar(MouseEvent e) {

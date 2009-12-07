@@ -13,8 +13,13 @@ import javax.swing.*;
  * @author Brainrain
  */
 public class DefaultDownloadSettingsConfig extends JPanel {
-	public DefaultDownloadSettingsConfig() {
+	
+	private VentanaPcpal principal;
+	
+	public DefaultDownloadSettingsConfig(VentanaPcpal pcpal) {
 		initComponents();
+		
+		principal = pcpal;
 	}
 
 	private void cargarValoresPorDEfecto(MouseEvent e) {

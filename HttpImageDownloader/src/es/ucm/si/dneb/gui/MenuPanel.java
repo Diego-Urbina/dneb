@@ -80,7 +80,7 @@ public class MenuPanel extends JPanel {
 		});
 
 		//---- radioButtonVer ----
-		radioButtonVer.setText("VER TAREAS");
+		radioButtonVer.setText("CREAR DESCARGA");
 		radioButtonVer.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		//---- radioButtonMenuConfig ----
