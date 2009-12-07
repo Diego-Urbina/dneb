@@ -30,13 +30,24 @@ public class ConfigMEnu extends JPanel {
 	}
 
 	private void siguiente(MouseEvent e) {
+		
+		JPanel vent;
 		if(this.configBaseDatos.isSelected()){
 			
+			vent = new DataBaseConfig(principal);
+			principal.setSize(1000, 400);
 			
 		}else{
 			
-			
+			vent = new DefaultDownloadSettingsConfig(principal);
+			principal.setSize(1000, 400);
 		}
+		
+		principal.getContentPane().remove(0);
+		principal.getContentPane().add(vent);
+		principal.pack();
+		principal.setLocationRelativeTo(null);
+		vent.setVisible(true);
 	}
 
 	private void initComponents() {

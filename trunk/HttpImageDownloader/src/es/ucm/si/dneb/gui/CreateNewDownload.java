@@ -103,8 +103,14 @@ public class CreateNewDownload extends JPanel {
 	}
 
 	private void updateConfigList() {
+		
+		
 		configsList = (ArrayList<DownloadDefaultConfiguration>) serviceDownloadDefaultConfig.getDownloadConfigs();
-        
+        if(configsList.size()==0){
+        	return;
+        	
+        }
+		
         DefaultComboBoxModel comboConfigList = new DefaultComboBoxModel();
         
         for (DownloadDefaultConfiguration aux : configsList){
