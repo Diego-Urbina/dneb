@@ -49,7 +49,7 @@ public class RectStar {
 		while (i<=yBot && !extendido) {
 			int j=xLeft;
 			while (j<=xRight && !extendido) {
-				if (esBorde(i,j))
+				if (esBorde(j,i))
 					extendido = extenderArriba(i,j,imagen,umbral) || extenderAbajo(i,j,imagen,umbral) || 
 								extenderIzq(i,j,imagen,umbral) || extenderDer(i,j,imagen,umbral);
 				j++;
@@ -62,8 +62,12 @@ public class RectStar {
 		if (extendido) extender(imagen,umbral);
 	}
 	
-	private boolean esBorde(int i, int j) {
-		return (i == yTop) || (i == yBot) || (j == xLeft) || (j == xRight);
+	public boolean estaDentro(int x, int y) {
+		return (y >= yTop) && (y <= yBot) && (x >= xLeft) && (x <= xRight);
+	}
+	
+	private boolean esBorde(int x, int y) {
+		return (y == yTop) || (y == yBot) || (x == xLeft) || (x == xRight);
 	}
 	
 	private boolean extenderArriba(int i, int j, int[][] imagen, float umbral) {
@@ -105,5 +109,13 @@ public class RectStar {
 			else return false;		
 		}		
 	}
+
+	@Override
+	public String toString() {
+		return "Esquina sup izq: (" +  xLeft + "," + yTop + ")\n" + 
+			   "Esquina inf der: (" + xRight + "," + yBot + ")";
+	}
+	
+	
 
 }
