@@ -8,9 +8,6 @@ import nom.tam.fits.FitsException;
 
 public class StarFinderApp {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {		
 		try {			
 			// Cargo la imagen
@@ -31,19 +28,22 @@ public class StarFinderApp {
 			System.out.println("Width:  " + l1.getWidth());
 			System.out.println("Height:  " + l1.getHeight());
 			
-			RectStar r = new RectStar(56,151);
+			StarFinder sf = new StarFinder();
 			float umbral = 10000;
-			r.extender(l1.getArrayData(), umbral);
-			System.out.println("\n\nRecuadros\n------------------");
-			System.out.println("Esquina sup izq: (" + r.getxLeft()+","+r.getyTop()+")");
-			System.out.println("Esquina inf der: (" + r.getxRight()+","+r.getyBot()+")");
+			float brilloEstrella = 40000;
 			
-			//System.out.println(l1.getPixel(91,114));
+			sf.buscarEstrellas(l1, brilloEstrella, umbral);
+			
+			System.out.println("\n\nRecuadros\n------------------");
+			sf.printRectStars();
+			
+			//System.out.println(l1.getPixel(122,48));
+			System.out.println("Numero de estrellas encontradas: " + sf.getRecuadros().size());
+			
 		} catch (FitsException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }
