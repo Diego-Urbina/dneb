@@ -46,7 +46,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private JButton buttonAbrir, buttonSalir, buttonSeleccionar, buttonZoomMas, buttonZoomMenos, buttonGirar;
 	
 	private DisplayImageWithRegions display1, display2;
-	private PlanarImage input1, input2;
+	private PlanarImage input1, input2, scaledIm1, scaledIm2, rotatedIm1, rotatedIm2;
 	private boolean seleccionar;
 	private int scale; // la escala va del 10 al 1000%
 	private int angle; // el angulo va del 0 al 360
@@ -59,6 +59,10 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		display2 = null;
 		input1 = null;
 		input2 = null;
+		scaledIm1 = null;
+		scaledIm2 = null;
+		rotatedIm1 = null;
+		rotatedIm2 = null;
 		initComponents();
 		
 		parent.setSize(500, 650);
@@ -243,12 +247,16 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					file2 = fc.getSelectedFile().toString();
 					
 					input1 = JAI.create("fileload", file1);
+					scaledIm1 = input1;
+					rotatedIm1 = input1;
 					display1 = new DisplayImageWithRegions(input1);
 					display1.addMouseMotionListener(this);
 				    display1.addMouseListener(this);
 					jsp1.setViewportView(display1);
 					
 					input2 = JAI.create("fileload", file2);
+					scaledIm2 = input2;
+					rotatedIm2 = input2;
 					display2 = new DisplayImageWithRegions(input2);
 					display2.addMouseMotionListener(this);
 					display2.addMouseListener(this);
@@ -263,49 +271,61 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private void buttonZoomMasActionPerformed(ActionEvent e) {
 		if (input1 != null && input2 != null && scale >= 10 && scale <= 1000) {
 			scale += 10;
-			angle = 0;
+			//angle = 0;
 	
 		    ParameterBlock pb = new ParameterBlock();
 		    InterpolationNearest in = new InterpolationNearest();
-		    pb.addSource(input1);
+		    //pb.addSource(input1);
+		    pb.addSource(rotatedIm1);
 		    pb.add(scale/100f);
 		    pb.add(scale/100f);
 		    pb.add(0.0F);
 		    pb.add(0.0F);
 		    pb.add(in);
-		    PlanarImage im1 = JAI.create("scale", pb);
-		    display1.set(im1);
-		    pb.addSource(input2);
-		    PlanarImage im2 = JAI.create("scale", pb);
-		    display2.set(im2);
+		    /*PlanarImage im1 = JAI.create("scale", pb);
+		    display1.set(im1);*/
+		    scaledIm1 = JAI.create("scale", pb);
+		    display1.set(scaledIm1);
+		    //pb.addSource(input2);
+		    /*PlanarImage im2 = JAI.create("scale", pb);
+		    display2.set(im2);*/
+		    pb.addSource(rotatedIm2);
+		    scaledIm2 = JAI.create("scale", pb);
+		    display2.set(scaledIm2);
 		}
 	}
 	
 	private void buttonZoomMenosActionPerformed(ActionEvent e) {
 		if (input1 != null && input2 != null && scale >= 10 && scale <= 1000) {
 			scale -= 10;
-			angle = 0;
+			//angle = 0;
 			
 			ParameterBlock pb = new ParameterBlock();
 		    InterpolationNearest in = new InterpolationNearest();
-		    pb.addSource(input1);
+		    //pb.addSource(input1);
+		    pb.addSource(rotatedIm1);
 		    pb.add(scale/100f);
 		    pb.add(scale/100f);
 		    pb.add(0.0F);
 		    pb.add(0.0F);
 		    pb.add(in);
-		    PlanarImage im1 = JAI.create("scale", pb);
-		    display1.set(im1);
-		    pb.addSource(input2);
-		    PlanarImage im2 = JAI.create("scale", pb);
-		    display2.set(im2);
+		    /*PlanarImage im1 = JAI.create("scale", pb);
+		    display1.set(im1);*/
+		    scaledIm1 = JAI.create("scale", pb);
+		    display1.set(scaledIm1);
+		    //pb.addSource(input2);
+		    /*PlanarImage im2 = JAI.create("scale", pb);
+		    display2.set(im2);*/
+		    pb.addSource(rotatedIm2);
+		    scaledIm2 = JAI.create("scale", pb);
+		    display2.set(scaledIm2);
 		}
 	}
 	
 	private void buttonGirarActionPerformed(ActionEvent e) {
 		if (input1 != null && input2 != null) {
 			angle -= 90;
-			scale = 100;
+			//scale = 100;
 			float angleRad = (float)Math.toRadians(angle);
 			
 			// Gets the rotation center.
@@ -315,17 +335,23 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			
 			// Rotates the original image.
 			ParameterBlock pb = new ParameterBlock();
-			pb.addSource(input1);
+			//pb.addSource(input1);
+			pb.addSource(scaledIm1);
 			pb.add(centerX);
 			pb.add(centerY);
 			pb.add(angleRad);
 			pb.add(new InterpolationBilinear());
 			// Creates a new, rotated image and uses it on the DisplayJAI component
-			PlanarImage im1 = JAI.create("rotate", pb);
-		    display1.set(im1);
-			pb.addSource(input2);
-			PlanarImage im2 = JAI.create("rotate", pb);
-		    display2.set(im2);
+			/*PlanarImage im1 = JAI.create("rotate", pb);
+		    display1.set(im1);*/
+			rotatedIm1 = JAI.create("rotate", pb);
+			display1.set(rotatedIm1);
+			//pb.addSource(input2);
+			/*PlanarImage im2 = JAI.create("rotate", pb);
+		    display2.set(im2);*/
+			pb.addSource(scaledIm2);
+			rotatedIm2 = JAI.create("rotate", pb);
+			display2.set(rotatedIm2);
 		}
 	}
 
