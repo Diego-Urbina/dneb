@@ -1,19 +1,4 @@
-/*
- * Created on Jun 9, 2005
- * @author Rafael Santos (rafael.santos@lac.inpe.br)
- * 
- * Part of the Java Advanced Imaging Stuff site
- * (http://www.lac.inpe.br/~rafael.santos/Java/JAI)
- * 
- * STATUS: Complete.
- * 
- * Redistribution and usage conditions must be done under the
- * Creative Commons license:
- * English: http://creativecommons.org/licenses/by-nc-sa/2.0/br/deed.en
- * Portuguese: http://creativecommons.org/licenses/by-nc-sa/2.0/br/deed.pt
- * More information on design and applications are on the projects' page
- * (http://www.lac.inpe.br/~rafael.santos/Java/JAI).
- */
+
 package es.ucm.si.dneb.service.image.app;
 
 import java.awt.BasicStroke;
