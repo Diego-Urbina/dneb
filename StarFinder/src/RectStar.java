@@ -42,6 +42,18 @@ public class RectStar {
 		this.yBot = yBot;
 	}
 	
+	public int getWidth() {
+		return xRight - xLeft + 1;
+	}
+	
+	public int getHeight() {
+		return yBot - yTop + 1;
+	}
+	
+	public int getArea() {
+		return getWidth() * getHeight();
+	}
+	
 	public void extender(int[][] imagen, float umbral) {
 		boolean extendido = false;
 		
