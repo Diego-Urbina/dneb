@@ -15,7 +15,7 @@
 		p:location="classpath:jdbc.properties" />
 
 
-	 <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
@@ -25,6 +25,11 @@
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 		<property name="dataSource" ref="dataSource" />
+
+		<!--  <property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+		</property>-->
+
 	</bean>
 
 
@@ -40,7 +45,7 @@
 	-->
 
 	<tx:annotation-driven />
-	
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 
 		<property name="driverClassName" value="${jdbc.driverClassName}" />

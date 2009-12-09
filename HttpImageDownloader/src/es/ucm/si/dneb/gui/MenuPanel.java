@@ -33,7 +33,7 @@ public class MenuPanel extends JPanel {
 				principal.setSize(1000, 400);
 			}else{
 				if(this.radioButtonVer.isSelected()){
-					vent = new CreateNewDownload(principal);
+					//vent = new CreateNewDownload(principal);
 					principal.setSize(1000, 400);
 				}else{
 					
@@ -45,10 +45,10 @@ public class MenuPanel extends JPanel {
 		}
 		
 		principal.getContentPane().remove(0);
-		principal.getContentPane().add(vent);
+		//principal.getContentPane().add(vent);
 		principal.pack();
 		principal.setLocationRelativeTo(null);
-		vent.setVisible(true);
+		//vent.setVisible(true);
 	}
 
 	private void initComponents() {

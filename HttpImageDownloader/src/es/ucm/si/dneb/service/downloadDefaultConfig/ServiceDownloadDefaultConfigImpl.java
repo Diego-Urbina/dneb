@@ -96,6 +96,25 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 		return manager.createNamedQuery("DownloadDefaultConfiguration:dameTodasConfiguraciones")
 				.getResultList();
 	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public boolean existsConfig(String alias) {
+		
+		try{
+			DownloadDefaultConfiguration downloadDefaultConfiguration = (DownloadDefaultConfiguration) manager.createNamedQuery("DownloadDefaultConfiguration:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
+		}catch(NoResultException e){
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteConfig(Long id) {
+		
+		DownloadDefaultConfiguration downloadDefaultConfiguration =manager.find(DownloadDefaultConfiguration.class,id);
+		manager.remove(downloadDefaultConfiguration);
+	}
 	
 
 }
