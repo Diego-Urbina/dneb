@@ -22,5 +22,12 @@
 	<classpathentry kind="lib" path="lib/fits.jar"/>
 	<classpathentry kind="lib" path="lib/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/jai_core.jar"/>
+	<classpathentry kind="lib" path="lib/intellij_forms_rt.jar" sourcepath="lib/intellij_forms_rt_src.zip"/>
+	<classpathentry kind="lib" path="lib/forms.jar" sourcepath="lib/forms-src.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/DESARROLLO/workspace/HttpImageDownloader/lib/forms-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/JAXB2_20081030.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

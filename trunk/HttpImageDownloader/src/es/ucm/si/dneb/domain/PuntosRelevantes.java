@@ -1,10 +1,15 @@
 package es.ucm.si.dneb.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,6 +38,20 @@ public class PuntosRelevantes {
 	
 	@Column(name="DESCRIPCION", nullable =false, length=200)
 	private String descripcion;
+	
+	
+	@Column(name="ALTO")
+	private Double alto;
+	
+	@Column(name="ANCHO")
+	private Double ancho;
+	
+	@Column(name="PATH")
+	private String path;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="PUNTOSRELEVANTES_SURVEY_JT")
+	private List<Survey> surveys;
 	
 	
 	public long getIdPunto() {
@@ -75,5 +94,38 @@ public class PuntosRelevantes {
 		this.descripcion = descripcion;
 	}
 
+	public Double getAlto() {
+		return alto;
+	}
+
+	public void setAlto(Double alto) {
+		this.alto = alto;
+	}
+
+	public Double getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(Double ancho) {
+		this.ancho = ancho;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public List<Survey> getSurveys() {
+		return surveys;
+	}
+
+	public void setSurveys(List<Survey> surveys) {
+		this.surveys = surveys;
+	}
+	
+	
 	
 }

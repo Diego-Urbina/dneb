@@ -22,5 +22,9 @@ public interface ServiceDownloadDefaultConfig {
 	public List<FormatoFichero> getFormatosFichero();
 	
 	public List<DownloadDefaultConfiguration> getDownloadConfigs();
+	
+	public boolean existsConfig(String alias);
+	
+	public void deleteConfig(Long id);
 
 }
