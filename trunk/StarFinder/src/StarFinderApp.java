@@ -11,7 +11,7 @@ public class StarFinderApp {
 	public static void main(String[] args) {		
 		try {			
 			// Cargo la imagen
-			String filename = "kk.fits";
+			String filename = "images/pos2.fits";
 			Fits imagenFITS = new Fits(new File(filename));			
 			
 			// Obtengo el primer HDU (la imagen) y creo con el
@@ -38,7 +38,7 @@ public class StarFinderApp {
 			sf.printRectStars();
 			
 			//System.out.println(l1.getPixel(122,48));
-			System.out.println("Numero de estrellas encontradas: " + sf.getRecuadros().size());
+			System.out.println("Numero de estrellas encontradas: " + sf.getNumberOfStars());
 			
 		} catch (FitsException e1) {
 			e1.printStackTrace();
