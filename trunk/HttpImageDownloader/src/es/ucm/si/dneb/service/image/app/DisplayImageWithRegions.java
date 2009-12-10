@@ -29,6 +29,7 @@ public class DisplayImageWithRegions extends DisplayJAI
   private boolean isIndexed; // true if the image has a indexed color model.
   private short[][] lutData; // will contain the look-up table data if isIndexed is true.
   protected int width,height; // the dimensions of the image
+  private boolean onImage; // mouse is on the image
 
  /**
   * The constructor of the class, which creates the arrays and instances needed
@@ -85,6 +86,8 @@ public class DisplayImageWithRegions extends DisplayJAI
     pixelInfo = new StringBuffer(50);
     // Create the list that will hold the ROIs.
     ROIs = new ArrayList<ImageRegion>();
+    
+    onImage = false;
     }
 
  /**
@@ -99,6 +102,7 @@ public class DisplayImageWithRegions extends DisplayJAI
     if ((x >= width) || (y >= height))
       {
       pixelInfo.append("No data!");
+      onImage = false;
       return;
       }
     if (isDoubleType) // process the pixel as an array of double values
@@ -127,6 +131,7 @@ public class DisplayImageWithRegions extends DisplayJAI
         pixelInfo = pixelInfo.deleteCharAt(pixelInfo.length()-1); // erase last comma
         }
       }
+    onImage = true;
     } // end of method mouseMoved
   
  /**
@@ -170,5 +175,12 @@ public class DisplayImageWithRegions extends DisplayJAI
     {
     return ROIs.size();
     }
+  
+  /**
+   * This method returns true if the mouse is on the image, and false if not.
+   */
+  public boolean isOnImage() {
+	  return onImage;
+  }
   
   }
