@@ -155,7 +155,7 @@ public class LectorImageHDU extends LectorHDU {
 		 * el rango 0 - 65535. Los valores negativos se corresponden con
 		 * los mayores de 32767 y hay que transformarlos.
 		 */
-		arrayData = new int[width][height];
+		arrayData = new int[height][width];
 		for(int i=0; i<height; i++)
 			for(int j=0; j<width; j++) {
 				short aux = arrayDataAux[i][j];

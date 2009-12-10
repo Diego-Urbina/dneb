@@ -18,6 +18,10 @@ public class StarFinder {
 		this.recuadros = recuadros;
 	}
 	
+	public int getNumberOfStars() {
+		return recuadros.size();
+	}
+	
 	public void buscarEstrellas(LectorImageHDU l, float brilloEstrella, float umbral) {
 		int brillo;
 		for(int i=0; i<l.getHeight(); i++)
