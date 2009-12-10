@@ -68,7 +68,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		parent.setSize(500, 650);
 		parent.setExtendedState(JFrame.MAXIMIZED_BOTH);  
 		parent.setLocationRelativeTo(null);
-		parent.setMinimumSize(new Dimension(parent.getWidth()/2, parent.getHeight()/2));
+		parent.setMinimumSize(new Dimension(500, 650));
 	    
 		parent.add(this);
 		parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
