@@ -40,54 +40,12 @@ public class DisplayImageWithRegions extends DisplayJAI
   public DisplayImageWithRegions(RenderedImage image)
     {
     super(image); // calls the constructor for DisplayJAI
-    readIterator = RandomIterFactory.create(image, null); // creates the iterator
-    // Get some data about the image
-    width = image.getWidth();
-    height = image.getHeight();
-    int dataType = image.getSampleModel().getDataType(); // gets the data type
-    switch(dataType)
-      {
-      case DataBuffer.TYPE_BYTE:
-      case DataBuffer.TYPE_SHORT:
-      case DataBuffer.TYPE_USHORT:
-      case DataBuffer.TYPE_INT: isDoubleType = false; break;
-      case DataBuffer.TYPE_FLOAT:
-      case DataBuffer.TYPE_DOUBLE: isDoubleType = true; break;
-      }
-    // Depending on the image data type, allocate the double or the int array.
-    if (isDoubleType) dpixel = new double[image.getSampleModel().getNumBands()];
-    else ipixel = new int[image.getSampleModel().getNumBands()];
-    // Is the image color model indexed ?
-    isIndexed = (image.getColorModel() instanceof IndexColorModel);
-    if (isIndexed)
-      {
-      // Retrieve the index color model of the image.
-      IndexColorModel icm = (IndexColorModel)image.getColorModel();
-      // Get the number of elements in each band of the colormap.
-      int mapSize = icm.getMapSize();
-      // Allocate an array for the lookup table data.
-      byte[][] templutData = new byte[3][mapSize];
-      // Load the lookup table data from the IndexColorModel.
-      icm.getReds(templutData[0]);
-      icm.getGreens(templutData[1]);
-      icm.getBlues(templutData[2]);
-      // Load the lookup table data into a short array to avoid negative numbers.
-      lutData = new short[3][mapSize];
-      for(int entry=0;entry<mapSize;entry++)
-        {
-        lutData[0][entry] = templutData[0][entry] > 0 ? templutData[0][entry] : (short)(templutData[0][entry]+256);
-        lutData[1][entry] = templutData[1][entry] > 0 ? templutData[1][entry] : (short)(templutData[1][entry]+256);
-        lutData[2][entry] = templutData[2][entry] > 0 ? templutData[2][entry] : (short)(templutData[2][entry]+256);
-        }
-      }
-    // Registers the mouse motion listener.
-    addMouseMotionListener(this);
-    // Create the StringBuffer instance for the pixel information.
-    pixelInfo = new StringBuffer(50);
+    allData(image);
+    
     // Create the list that will hold the ROIs.
     ROIs = new ArrayList<ImageRegion>();
-    
-    onImage = false;
+    // Registers the mouse motion listener.
+    addMouseMotionListener(this);
     }
 
  /**
@@ -181,6 +139,61 @@ public class DisplayImageWithRegions extends DisplayJAI
    */
   public boolean isOnImage() {
 	  return onImage;
+  }
+  
+  /**
+   * This method overrides the antecesor
+   */
+  public void set(RenderedImage im) {
+	  super.set(im);
+	  allData(im);
+  }
+  
+  private void allData(RenderedImage image) {
+	  readIterator = RandomIterFactory.create(image, null); // creates the iterator
+	    // Get some data about the image
+	    width = image.getWidth();
+	    height = image.getHeight();
+	    int dataType = image.getSampleModel().getDataType(); // gets the data type
+	    switch(dataType)
+	      {
+	      case DataBuffer.TYPE_BYTE:
+	      case DataBuffer.TYPE_SHORT:
+	      case DataBuffer.TYPE_USHORT:
+	      case DataBuffer.TYPE_INT: isDoubleType = false; break;
+	      case DataBuffer.TYPE_FLOAT:
+	      case DataBuffer.TYPE_DOUBLE: isDoubleType = true; break;
+	      }
+	    // Depending on the image data type, allocate the double or the int array.
+	    if (isDoubleType) dpixel = new double[image.getSampleModel().getNumBands()];
+	    else ipixel = new int[image.getSampleModel().getNumBands()];
+	    // Is the image color model indexed ?
+	    isIndexed = (image.getColorModel() instanceof IndexColorModel);
+	    if (isIndexed)
+	      {
+	      // Retrieve the index color model of the image.
+	      IndexColorModel icm = (IndexColorModel)image.getColorModel();
+	      // Get the number of elements in each band of the colormap.
+	      int mapSize = icm.getMapSize();
+	      // Allocate an array for the lookup table data.
+	      byte[][] templutData = new byte[3][mapSize];
+	      // Load the lookup table data from the IndexColorModel.
+	      icm.getReds(templutData[0]);
+	      icm.getGreens(templutData[1]);
+	      icm.getBlues(templutData[2]);
+	      // Load the lookup table data into a short array to avoid negative numbers.
+	      lutData = new short[3][mapSize];
+	      for(int entry=0;entry<mapSize;entry++)
+	        {
+	        lutData[0][entry] = templutData[0][entry] > 0 ? templutData[0][entry] : (short)(templutData[0][entry]+256);
+	        lutData[1][entry] = templutData[1][entry] > 0 ? templutData[1][entry] : (short)(templutData[1][entry]+256);
+	        lutData[2][entry] = templutData[2][entry] > 0 ? templutData[2][entry] : (short)(templutData[2][entry]+256);
+	        }
+	      }
+	    
+	    // Create the StringBuffer instance for the pixel information.
+	    pixelInfo = new StringBuffer(50);
+	    onImage = false;
   }
   
   }

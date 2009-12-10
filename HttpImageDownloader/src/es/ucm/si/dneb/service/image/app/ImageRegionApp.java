@@ -41,7 +41,7 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
 	
 	private JScrollPane jsp1, jsp2;
-	private JLabel label1, label2;
+	private JLabel label;
 	private JPanel panel;
 	private JButton buttonAbrir, buttonSalir, buttonSeleccionar, buttonZoomMas, buttonZoomMenos, buttonGirar;
 	
@@ -68,7 +68,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		parent.setSize(500, 650);
 		parent.setExtendedState(JFrame.MAXIMIZED_BOTH);  
 		parent.setLocationRelativeTo(null);
-		parent.setMinimumSize(new Dimension(500, 650));
+		parent.setMinimumSize(new Dimension(105, 330));
 	    
 		parent.add(this);
 		parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,20 +98,12 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    add(jsp2, c);
 	    
 	    
-	    label1 = new JLabel();
+	    label = new JLabel();
 	    c.gridx = 0;
 	    c.gridy = 1;
-	    c.fill = GridBagConstraints.NONE;
-	    c.anchor = GridBagConstraints.CENTER;
+	    c.gridwidth = 3;
 	    c.weighty = 0.0;
-	    c.weightx = 0.0;
-	    add(label1, c);
-	    
-	    
-	    label2 = new JLabel();
-	    c.gridx = 1;
-	    c.gridy = 1;
-	    add(label2, c);
+	    add(label, c);
 	    
 	    
 	    panel = new JPanel();
@@ -215,7 +207,10 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		
 	    c.gridx = 2;
 	    c.gridy = 0;
-	    c.gridheight = 2;
+	    c.gridwidth = 1;
+	    c.gridheight = 1;
+	    c.fill = GridBagConstraints.NONE;
+	    c.weightx = 0.0;
 	    add(panel, c);
 	    
 	    
@@ -282,9 +277,17 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		    pb.add(new InterpolationNearest());
 		    scaledIm1 = JAI.create("scale", pb);
 		    display1.set(scaledIm1);
+		    /*display1 = new DisplayImageWithRegions(scaledIm1);
+			display1.addMouseMotionListener(this);
+		    display1.addMouseListener(this);
+			jsp1.setViewportView(display1);*/
 		    pb.addSource(rotatedIm2);
 		    scaledIm2 = JAI.create("scale", pb);
 		    display2.set(scaledIm2);
+		    /*display2 = new DisplayImageWithRegions(scaledIm2);
+			display2.addMouseMotionListener(this);
+			display2.addMouseListener(this);
+			jsp2.setViewportView(display2);*/
 		}
 	}
 	
@@ -364,21 +367,18 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		/*String pos = "(" + e.getX() + "," + e.getY() + ") ";
-		if (e.getSource() == display1) {
-			label1.setText(pos + display1.getPixelInfo());
-			label2.setText("");
-		}
-		if (e.getSource() == display2) {
-			label1.setText("");
-			label2.setText(pos + display2.getPixelInfo());
-		}*/
+		String pos = "(" + e.getX() + "," + e.getY() + ") ";
+		if (e.getSource() == display1)
+			label.setText(pos + display1.getPixelInfo());
+		if (e.getSource() == display2)
+			label.setText(pos + display2.getPixelInfo());
 	}
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// Create shapes, then ROIShapes, then ImageRegions.
-		if (seleccionar && (display1.isOnImage() || display2.isOnImage())) {
+		if (seleccionar && ((display1.isOnImage() && e.getSource() == display1)
+				|| (display2.isOnImage() && e.getSource() == display2))) {
 			int width = 10;
 			int height = 10;
 		    int x = e.getX() - width/2;
