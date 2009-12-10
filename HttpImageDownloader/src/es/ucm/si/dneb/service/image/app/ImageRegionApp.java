@@ -378,7 +378,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// Create shapes, then ROIShapes, then ImageRegions.
-		if (seleccionar) {
+		if (seleccionar && (display1.isOnImage() || display2.isOnImage())) {
 			int width = 10;
 			int height = 10;
 		    int x = e.getX() - width/2;
