@@ -365,7 +365,6 @@ public class CreateNewDownload extends JPanel {
 		INICIARDESCARGAALCREAR = new JCheckBox();
 		ruta = new JTextField();
 		label10 = new JLabel();
-		crearDescarga = new JButton();
 		formatoFichero = new JComboBox();
 		label11 = new JLabel();
 		label12 = new JLabel();
@@ -381,7 +380,7 @@ public class CreateNewDownload extends JPanel {
 		aliasNuevaConfig = new JTextField();
 		label13 = new JLabel();
 		label14 = new JLabel();
-		volverAlMenubutton = new JButton();
+		crearDescarga = new JButton();
 
 		//======== this ========
 		setLayout(new GridLayoutManager(16, 5, new Insets(5, 5, 5, 5), 5, -1));
@@ -530,20 +529,6 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
-		//---- crearDescarga ----
-		crearDescarga.setText("CREAR DESCARGA");
-		crearDescarga.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				crearDescargaEvent(e);
-			}
-		});
-		add(crearDescarga, new GridConstraints(15, 3, 1, 2,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
 		add(formatoFichero, new GridConstraints(7, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -658,15 +643,15 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 
-		//---- volverAlMenubutton ----
-		volverAlMenubutton.setText("VOLVER AL MENU");
-		volverAlMenubutton.addMouseListener(new MouseAdapter() {
+		//---- crearDescarga ----
+		crearDescarga.setText("CREAR DESCARGA");
+		crearDescarga.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				volverAlMenuEvent(e);
+				crearDescargaEvent(e);
 			}
 		});
-		add(volverAlMenubutton, new GridConstraints(15, 0, 1, 3,
+		add(crearDescarga, new GridConstraints(15, 2, 1, 2,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -703,7 +688,6 @@ public class CreateNewDownload extends JPanel {
 	private JCheckBox INICIARDESCARGAALCREAR;
 	private JTextField ruta;
 	private JLabel label10;
-	private JButton crearDescarga;
 	private JComboBox formatoFichero;
 	private JLabel label11;
 	private JLabel label12;
@@ -719,6 +703,6 @@ public class CreateNewDownload extends JPanel {
 	private JTextField aliasNuevaConfig;
 	private JLabel label13;
 	private JLabel label14;
-	private JButton volverAlMenubutton;
+	private JButton crearDescarga;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

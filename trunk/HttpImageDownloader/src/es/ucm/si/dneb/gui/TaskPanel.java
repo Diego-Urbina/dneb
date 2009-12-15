@@ -74,16 +74,8 @@ public class TaskPanel extends JPanel {
         }
 	}
 
-	private void buttonVolverActionPerformed(ActionEvent e) {
-		// TODO add your code here
-		JPanel vent = new MenuPanel(principal);
-		principal.setSize(390, 300);
-		principal.setLocationRelativeTo(null);
-		principal.getContentPane().remove(0);
-		principal.getContentPane().add(vent);
-		principal.pack();
-		vent.setVisible(true);
-	}
+
+
 	
 	private void buttonEliminarActionPerformed(ActionEvent e) {
 		try {
@@ -226,11 +218,7 @@ public class TaskPanel extends JPanel {
 		//---- buttonVolver ----
 		buttonVolver.setText("VOLVER");
 		buttonVolver.setFont(new Font("Arial", Font.PLAIN, 11));
-		buttonVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonVolverActionPerformed(e);
-			}
-		});
+		buttonVolver.setVisible(false);
 
 		//---- buttonEliminar ----
 		buttonEliminar.setText("ELIMINAR");
