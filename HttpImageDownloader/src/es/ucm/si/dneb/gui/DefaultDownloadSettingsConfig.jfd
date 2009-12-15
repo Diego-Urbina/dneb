@@ -464,45 +464,6 @@
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JButton</string> 
-        <void method="setProperty"> 
-         <string>text</string> 
-         <string>VOLVER AL MENU</string> 
-        </void> 
-        <void property="name"> 
-         <string>volverAlMenubutton</string> 
-        </void> 
-        <void method="addEvent"> 
-         <object class="com.jformdesigner.model.FormEvent"> 
-          <string>java.awt.event.MouseListener</string> 
-          <string>mouseClicked</string> 
-          <string>volverAlMenu</string> 
-          <boolean>true</boolean> 
-         </object> 
-        </void> 
-       </object> 
-       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
-        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
-        <void method="setProperty"> 
-         <string>column</string> 
-         <int>1</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>row</string> 
-         <int>8</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>colSpan</string> 
-         <int>2</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>fill</string> 
-         <int>1</int> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JLabel</string> 
         <void method="setProperty"> 
          <string>text</string> 

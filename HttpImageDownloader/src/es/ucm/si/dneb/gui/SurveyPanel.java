@@ -66,14 +66,7 @@ public class SurveyPanel extends JPanel {
 		vent.setVisible(true);
 	}
 
-	private void buttonAnteriorActionPerformed(ActionEvent e) {
-		// TODO add your code here
-		JPanel vent = new MenuPanel(principal);
-		principal.getContentPane().remove(0);
-		principal.getContentPane().add(vent);
-		principal.pack();
-		vent.setVisible(true);
-	}
+	
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -83,7 +76,6 @@ public class SurveyPanel extends JPanel {
 		listSurvey = new JList();
 		scrollPaneSurvey2 = new JScrollPane();
 		listSurvey2 = new JList();
-		buttonAnterior = new JButton();
 
 		//======== this ========
 		setPreferredSize(new Dimension(365, 300));
@@ -122,25 +114,10 @@ public class SurveyPanel extends JPanel {
 			scrollPaneSurvey2.setViewportView(listSurvey2);
 		}
 
-		//---- buttonAnterior ----
-		buttonAnterior.setText("ANTERIOR");
-		buttonAnterior.setFont(new Font("Arial", Font.PLAIN, 11));
-		buttonAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonAnteriorActionPerformed(e);
-			}
-		});
-
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
 		layout.setHorizontalGroup(
 			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addGap(28, 28, 28)
-					.addComponent(buttonAnterior, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-					.addGap(76, 76, 76)
-					.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
 				.addGroup(GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
 					.addGap(10, 10, 10)
 					.addComponent(scrollPaneSurvey, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
@@ -151,6 +128,10 @@ public class SurveyPanel extends JPanel {
 					.addGap(110, 110, 110)
 					.addComponent(labelSurvey, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
 					.addGap(435, 435, 435))
+				.addGroup(layout.createSequentialGroup()
+					.addGap(118, 118, 118)
+					.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(456, Short.MAX_VALUE))
 		);
 		layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {labelSurvey, scrollPaneSurvey});
 		layout.setVerticalGroup(
@@ -162,11 +143,9 @@ public class SurveyPanel extends JPanel {
 					.addGroup(layout.createParallelGroup()
 						.addComponent(scrollPaneSurvey, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(scrollPaneSurvey2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
-					.addGap(50, 50, 50)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(buttonSiguiente)
-						.addComponent(buttonAnterior))
-					.addContainerGap(54, Short.MAX_VALUE))
+					.addGap(49, 49, 49)
+					.addComponent(buttonSiguiente)
+					.addContainerGap(52, Short.MAX_VALUE))
 		);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
@@ -178,6 +157,5 @@ public class SurveyPanel extends JPanel {
 	private JList listSurvey;
 	private JScrollPane scrollPaneSurvey2;
 	private JList listSurvey2;
-	private JButton buttonAnterior;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

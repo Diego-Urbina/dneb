@@ -243,13 +243,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 		JOptionPane.showMessageDialog(this, mensaje);
 	}
 
-	private void volverAlMenu(MouseEvent e) {
-		JPanel vent = new MenuPanel(principal);
-		principal.getContentPane().remove(0);
-		principal.getContentPane().add(vent);
-		principal.pack();
-		vent.setVisible(true);
-	}
+	
 
 	private void elminarConfiguracionMouseClicked(MouseEvent e) {
 		// TODO add your code here
@@ -298,7 +292,6 @@ String aliasConfig = aliasNuevaConfig.getText();
 		comboBoxValoresPorDefecto = new JComboBox();
 		guardarValoresPorDefecto = new JButton();
 		separator1 = new JSeparator();
-		volverAlMenubutton = new JButton();
 		TITULO = new JLabel();
 		cargarValoresPorDefecto = new JButton();
 		elminarConfiguracion = new JButton();
@@ -438,20 +431,6 @@ String aliasConfig = aliasNuevaConfig.getText();
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 
-		//---- volverAlMenubutton ----
-		volverAlMenubutton.setText("VOLVER AL MENU");
-		volverAlMenubutton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				volverAlMenu(e);
-			}
-		});
-		add(volverAlMenubutton, new GridConstraints(8, 1, 1, 2,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
 		//---- TITULO ----
 		TITULO.setText("Configuracion de valores por defecto");
 		TITULO.setFont(TITULO.getFont().deriveFont(TITULO.getFont().getStyle() & ~Font.ITALIC, TITULO.getFont().getSize() + 7f));
@@ -519,7 +498,6 @@ String aliasConfig = aliasNuevaConfig.getText();
 	private JComboBox comboBoxValoresPorDefecto;
 	private JButton guardarValoresPorDefecto;
 	private JSeparator separator1;
-	private JButton volverAlMenubutton;
 	private JLabel TITULO;
 	private JButton cargarValoresPorDefecto;
 	private JButton elminarConfiguracion;
