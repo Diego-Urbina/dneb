@@ -26,7 +26,9 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 public class CreateNewDownload extends JPanel {
 	
 	//private VentanaPcpal principal;
-	private JTabbedPane tabbedPane1;
+	private VentanaPcpal principal;
+	
+	private int position;
 	
 	private static final long serialVersionUID = 1459331863481818480L;
 	
@@ -37,7 +39,9 @@ public class CreateNewDownload extends JPanel {
 	private ArrayList<FormatoFichero> formatosFichero; 
 	private ArrayList<DownloadDefaultConfiguration> configsList;
 	
-	public CreateNewDownload(JTabbedPane tabbedPane1) {
+	public CreateNewDownload(VentanaPcpal pcpal,int position) {
+		principal = pcpal;
+		this.position=position;
 		initComponents();
 		//this.principal=principal;
 		this.rellenarModel();
@@ -185,15 +189,21 @@ public class CreateNewDownload extends JPanel {
 		
 		///boolean mostrar = this.visualizarAlTerminarDescarga.isSelected();
 		
-		/****/
 		
-		servicioGestionTareas.createSingleDownloadTask(alias,description ,height,weight, formatosFichero.get(formatoSeleccionado),path, selectedSurveys, ar, dec,iniciarDescarga);
+		try{
+			servicioGestionTareas.createSingleDownloadTask(alias,description ,height,weight, formatosFichero.get(formatoSeleccionado),path, selectedSurveys, ar, dec,iniciarDescarga);
+			
+		}catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 		
-		//JPanel vent = new MenuPanel(principal);
-		//principal.getContentPane().remove(0);
-		//principal.getContentPane().add(vent);
-		//principal.pack();
-		//vent.setVisible(true);
+		principal.getPane().remove(position);
+		
+		JOptionPane.showMessageDialog(null,"Descarga creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
+		
+		
+		
+		
 	}
 
 	private void cargarValoresDefectoEvent(MouseEvent e) {
@@ -383,7 +393,7 @@ public class CreateNewDownload extends JPanel {
 		crearDescarga = new JButton();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(16, 5, new Insets(5, 5, 5, 5), 5, -1));
+		setLayout(new GridLayoutManager(16, 5, new Insets(60, 60, 60, 60), 5, -1));
 
 		//---- label1 ----
 		label1.setText("ALIAS");

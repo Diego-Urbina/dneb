@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import com.intellij.uiDesigner.core.*;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -25,9 +27,11 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 public class SurveyPanel extends JPanel {
 	
 	private VentanaPcpal principal;
+	private int position;
 	
-	public SurveyPanel(VentanaPcpal pcpal) {
+	public SurveyPanel(VentanaPcpal pcpal, int position) {
 		initComponents();
+		this.position=position;
 		principal = pcpal;
 		rellenarModel();
 	}
@@ -54,15 +58,20 @@ public class SurveyPanel extends JPanel {
 	}
 
 	private void buttonSiguienteActionPerformed(ActionEvent e) {
-		// TODO add your code here
         
 		principal.survey1 = (String) this.listSurvey.getSelectedValue();
 		principal.survey2 = (String) this.listSurvey2.getSelectedValue();
 		
-		JPanel vent = new MapPanel(principal);
-		principal.getContentPane().remove(0);
-		principal.getContentPane().add(vent);
-		principal.pack();
+		JTabbedPane pane = principal.getPane();
+        
+		JPanel vent = new MapPanel(principal,position);
+		
+		principal.getPane().setComponentAt(position, vent);
+		
+		principal.initTabComponent(position);
+	
+		setVisible(true);
+		
 		vent.setVisible(true);
 	}
 
@@ -79,11 +88,17 @@ public class SurveyPanel extends JPanel {
 
 		//======== this ========
 		setPreferredSize(new Dimension(365, 300));
+		setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), 5, -1));
 
 		//---- labelSurvey ----
 		labelSurvey.setText("SURVEY");
 		labelSurvey.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSurvey.setFont(new Font("Arial", Font.PLAIN, 14));
+		add(labelSurvey, new GridConstraints(0, 0, 1, 2,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
 		//---- buttonSiguiente ----
 		buttonSiguiente.setText("SIGUIENTE");
@@ -93,6 +108,11 @@ public class SurveyPanel extends JPanel {
 				buttonSiguienteActionPerformed(e);
 			}
 		});
+		add(buttonSiguiente, new GridConstraints(2, 0, 1, 2,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
 		//======== scrollPaneSurvey ========
 		{
@@ -101,8 +121,14 @@ public class SurveyPanel extends JPanel {
 			listSurvey.setVisibleRowCount(5);
 			listSurvey.setFont(new Font("Arial", Font.PLAIN, 11));
 			listSurvey.setSelectedIndex(0);
+			listSurvey.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPaneSurvey.setViewportView(listSurvey);
 		}
+		add(scrollPaneSurvey, new GridConstraints(1, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
 		//======== scrollPaneSurvey2 ========
 		{
@@ -111,42 +137,14 @@ public class SurveyPanel extends JPanel {
 			listSurvey2.setVisibleRowCount(5);
 			listSurvey2.setFont(new Font("Arial", Font.PLAIN, 11));
 			listSurvey2.setSelectedIndex(0);
+			listSurvey2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPaneSurvey2.setViewportView(listSurvey2);
 		}
-
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
-		layout.setHorizontalGroup(
-			layout.createParallelGroup()
-				.addGroup(GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-					.addGap(10, 10, 10)
-					.addComponent(scrollPaneSurvey, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-					.addGap(54, 54, 54)
-					.addComponent(scrollPaneSurvey2, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-					.addGap(339, 339, 339))
-				.addGroup(layout.createSequentialGroup()
-					.addGap(110, 110, 110)
-					.addComponent(labelSurvey, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-					.addGap(435, 435, 435))
-				.addGroup(layout.createSequentialGroup()
-					.addGap(118, 118, 118)
-					.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(456, Short.MAX_VALUE))
-		);
-		layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {labelSurvey, scrollPaneSurvey});
-		layout.setVerticalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addGap(27, 27, 27)
-					.addComponent(labelSurvey, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addGap(36, 36, 36)
-					.addGroup(layout.createParallelGroup()
-						.addComponent(scrollPaneSurvey, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPaneSurvey2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
-					.addGap(49, 49, 49)
-					.addComponent(buttonSiguiente)
-					.addContainerGap(52, Short.MAX_VALUE))
-		);
+		add(scrollPaneSurvey2, new GridConstraints(1, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 

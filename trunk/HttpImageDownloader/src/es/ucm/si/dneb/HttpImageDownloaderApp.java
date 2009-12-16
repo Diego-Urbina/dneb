@@ -16,7 +16,7 @@ public class HttpImageDownloaderApp {
 	private static final Log LOG = LogFactory
 	.getLog(HttpImageDownloaderApp.class);
 	/**
-	 * @param args
+	 * @param args size
 	 * @throws UnsupportedLookAndFeelException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 

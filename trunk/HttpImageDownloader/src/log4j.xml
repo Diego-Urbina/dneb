@@ -18,7 +18,7 @@
 	</appender>
 
 	<appender name="ERRORFILE" class="org.apache.log4j.RollingFileAppender">
-		<param name="maxFileSize" value="1000KB" />
+		<param name="maxFileSize" value="10KB" />
 		<param name="maxBackupIndex" value="10" />
 		<param name="File" value="error.log" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -29,9 +29,13 @@
 			<param name="LevelMax" value="error" />
 		</filter>
 	</appender>
+	
+	<logger name="es.ucm.si.dneb">
+  		<level value="debug"/> 
+	</logger>
 
 	<root>
-		<priority value="info" />
+		<priority value="error" />
 		<appender-ref ref="LOGFILE" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ERRORFILE" />

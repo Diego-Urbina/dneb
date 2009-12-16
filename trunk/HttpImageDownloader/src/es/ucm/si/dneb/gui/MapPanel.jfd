@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_16" class="java.beans.XMLDecoder"> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
  <object class="com.jformdesigner.model.FormModel"> 
   <void property="contentType"> 
    <string>form/swing</string> 
@@ -10,14 +10,27 @@
      <object class="com.jformdesigner.model.FormContainer"> 
       <string>javax.swing.JPanel</string> 
       <object class="com.jformdesigner.model.FormLayoutManager"> 
-       <class>org.jdesktop.layout.GroupLayout</class> 
+       <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
        <void method="setProperty"> 
-        <string>$horizontalGroup</string> 
-        <string>par l {seq l {space :p:35:p, comp buttonAnterior:::p:113:p, space ::67:x, comp buttonSiguiente:::p:113:p, space :p:37:p}, seq {space :::p, par l {comp labelARI::l:p:73:p, comp labelDECI::l:p:73:p}, space :::x, par l {comp textFieldARI:1:l:p:80:p, comp textFieldDECI:1:l:p:80:p}, space :p:13:p, par l {comp labelARF:2:l:p:73:p, comp labelDECF:2:l:p:73:p}, space :::p, par l:::p {comp textFieldDECF:1:l::70:x:1, comp textFieldARF:1:l:p::p:1}, space :::p}, seq t {space :::p, par l {seq l {comp labelAlto:::p:73:p, space :::x, comp textFieldAlto:1::p:80:p}, seq l {comp labelAncho:::p:73:p, space :::x, comp textFieldAncho:1::p:80:p}}, space :p:13:p, par t {comp labelEq:2:t:p:73:p, comp labelSolap:2::p:91:p}, space :::p, par l {comp comboBoxEq:1:t:p::p, comp textFieldSolap:1:t:p:52:p:1}, space :::p}}</string> 
+        <string>$columnCount</string> 
+        <int>4</int> 
        </void> 
        <void method="setProperty"> 
-        <string>$verticalGroup</string> 
-        <string>par l {seq l {par l {seq {space :37:37:p, par b {comp textFieldARI:3:b:p::p, comp labelARI:4:b:p::p}, space s:::p, par b {comp textFieldDECI:4:b:p::p, comp labelDECI:4:b:p::p}}, seq l {space :p:35:p, par l {seq l {comp labelARF:4::p::p, space s:::p, comp labelDECF:4::p::p}, seq l {comp textFieldARF:3::p::p, space s:::p, comp textFieldDECF:4::p::p}}}}, space s:::p, par l {seq l {space :2:2:2, par b {comp textFieldAlto:4:b:p::p, comp labelAlto:4:b:p::p}, space s:::p, par b {comp textFieldAncho:4:b:p::p, comp labelAncho:4:b:p::p}}, seq l {par c {comp labelEq:4:c:p::p, comp comboBoxEq:4:c:p::p}, space s:::p, par b {comp textFieldSolap:4:b:p::p, comp labelSolap:4:b:p::p}}}, space ::70:x, par b {comp buttonAnterior::b:p::p, comp buttonSiguiente::b:p::p}, space :p:26:p}}</string> 
+        <string>$rowCount</string> 
+        <int>5</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>hGap</string> 
+        <int>5</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>margin</string> 
+        <object class="java.awt.Insets"> 
+         <int>20</int> 
+         <int>20</int> 
+         <int>20</int> 
+         <int>20</int> 
+        </object> 
        </void> 
       </object> 
       <void property="name"> 
@@ -38,6 +51,17 @@
          <string>textFieldARI</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -48,6 +72,17 @@
         </void> 
         <void property="name"> 
          <string>textFieldARF</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
@@ -62,6 +97,21 @@
          <string>textFieldDECI</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -72,6 +122,21 @@
         </void> 
         <void property="name"> 
          <string>textFieldDECF</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
@@ -86,6 +151,21 @@
          <string>textFieldAlto</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -98,6 +178,21 @@
          <string>textFieldAncho</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -108,6 +203,21 @@
         </void> 
         <void property="name"> 
          <string>textFieldSolap</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
@@ -134,6 +244,21 @@
          </object> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -158,6 +283,17 @@
          </object> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -178,6 +314,9 @@
          <string>labelARI</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -192,6 +331,13 @@
         </void> 
         <void property="name"> 
          <string>labelDECI</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
@@ -210,6 +356,13 @@
          <string>labelAlto</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -224,6 +377,13 @@
         </void> 
         <void property="name"> 
          <string>labelAncho</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
         </void> 
        </object> 
       </void> 
@@ -242,6 +402,17 @@
          <string>labelEq</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -256,6 +427,13 @@
         </void> 
         <void property="name"> 
          <string>labelARF</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
         </void> 
        </object> 
       </void> 
@@ -274,6 +452,17 @@
          <string>labelDECF</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -288,6 +477,17 @@
         </void> 
         <void property="name"> 
          <string>labelSolap</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
         </void> 
        </object> 
       </void> 
@@ -314,6 +514,21 @@
         </void> 
         <void property="name"> 
          <string>comboBoxEq</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
