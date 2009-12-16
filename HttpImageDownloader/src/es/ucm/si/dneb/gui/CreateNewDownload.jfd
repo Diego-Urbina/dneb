@@ -26,10 +26,10 @@
        <void method="setProperty"> 
         <string>margin</string> 
         <object class="java.awt.Insets"> 
-         <int>5</int> 
-         <int>5</int> 
-         <int>5</int> 
-         <int>5</int> 
+         <int>60</int> 
+         <int>60</int> 
+         <int>60</int> 
+         <int>60</int> 
         </object> 
        </void> 
       </object> 

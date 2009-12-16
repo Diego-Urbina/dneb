@@ -10,14 +10,18 @@
      <object class="com.jformdesigner.model.FormContainer"> 
       <string>javax.swing.JPanel</string> 
       <object class="com.jformdesigner.model.FormLayoutManager"> 
-       <class>org.jdesktop.layout.GroupLayout</class> 
+       <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
        <void method="setProperty"> 
-        <string>$horizontalGroup</string> 
-        <string>par l {seq c {space :10:10:10, comp scrollPaneSurvey:1::p:114:p, space :p:54:p, comp scrollPaneSurvey2:::p:142:p, space :339:339:339}, seq l {space :p:110:p, comp labelSurvey:1:::142:x:1, space :p:435:p}, seq l {space :p:118:p, comp buttonSiguiente:::p:113:p, space ::456:x}}</string> 
+        <string>$columnCount</string> 
+        <int>2</int> 
        </void> 
        <void method="setProperty"> 
-        <string>$verticalGroup</string> 
-        <string>par l {seq l {space :p:27:p, comp labelSurvey:::p:28:p, space :p:36:p, par l {comp scrollPaneSurvey::l:p::p, comp scrollPaneSurvey2:::p:84:p}, space :p:49:p, comp buttonSiguiente:::p::p, space ::52:x}}</string> 
+        <string>$rowCount</string> 
+        <int>3</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>hGap</string> 
+        <int>5</int> 
        </void> 
       </object> 
       <void method="setProperty"> 
@@ -53,6 +57,13 @@
          <string>labelSurvey</string> 
         </void> 
        </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
@@ -79,6 +90,17 @@
           <string>buttonSiguienteActionPerformed</string> 
           <boolean>true</boolean> 
          </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
         </void> 
        </object> 
       </void> 
@@ -110,10 +132,21 @@
            <string>selectedIndex</string> 
            <int>0</int> 
           </void> 
+          <void method="setProperty"> 
+           <string>selectionMode</string> 
+           <int>0</int> 
+          </void> 
           <void property="name"> 
            <string>listSurvey</string> 
           </void> 
          </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
@@ -141,10 +174,25 @@
            <string>selectedIndex</string> 
            <int>0</int> 
           </void> 
+          <void method="setProperty"> 
+           <string>selectionMode</string> 
+           <int>0</int> 
+          </void> 
           <void property="name"> 
            <string>listSurvey2</string> 
           </void> 
          </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 

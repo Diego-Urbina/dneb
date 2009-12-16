@@ -17,13 +17,10 @@ public class VentanaPcpal extends JFrame{
 	public VentanaPcpal(){
 		super("kk");
 		
-		//this.setLayout()
 		this.getContentPane().setLayout(new BorderLayout());
 	    initComponents();
 	    
 	    initIcons();
-		
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    this.getContentPane().add(pane);
 			    
@@ -33,16 +30,20 @@ public class VentanaPcpal extends JFrame{
         
 	    pane.add("DENEB",new BackgroundPanel(pane));
 	    
+	    this.setIconImage(Toolkit.getDefaultToolkit().getImage("images/staricon2.jpg"));
 	    
 	    this.initTabComponent(pane.getTabCount()-1);
 		
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setSize(200,200);
+	    
 	    setLocationRelativeTo(null);
+	    
+	    this.setExtendedState(Frame.MAXIMIZED_BOTH); 
+	    
 	    setVisible(true);
 
 	}
-	 private void initTabComponent(int i) {
+	 public void initTabComponent(int i) {
 	        pane.setTabComponentAt(i,
 	                 new ButtonTabComponent(pane));
 	}  
@@ -68,9 +69,11 @@ public class VentanaPcpal extends JFrame{
 
 
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
-		pane.add("Nueva Tarea",new SurveyPanel(this) );
+		pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
 		this.initTabComponent(pane.getTabCount()-1);
-		this.pack();
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -78,15 +81,18 @@ public class VentanaPcpal extends JFrame{
 		JPanel vent = new TaskPanel(this);
 		pane.addTab("Gestor de tareas", vent);
 		this.initTabComponent(pane.getTabCount()-1);
-		this.pack();
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
 	private void crearDescargaActionPerformed(ActionEvent e) {
-		JPanel vent = new CreateNewDownload(pane);
+		JPanel vent = new CreateNewDownload(this,pane.getTabCount());
 		pane.addTab("Nueva Descarga", vent);
 		this.initTabComponent(pane.getTabCount()-1);
-		this.pack();
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -94,7 +100,8 @@ public class VentanaPcpal extends JFrame{
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig(this);
 		pane.addTab("Configurar Descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
-		this.pack();
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -102,7 +109,8 @@ public class VentanaPcpal extends JFrame{
 		DataBaseConfig dataBaseConfig = new DataBaseConfig(this);
 		pane.addTab("Configurar Base de Datos", dataBaseConfig);
 		this.initTabComponent(pane.getTabCount()-1);
-		this.pack();
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -110,19 +118,30 @@ public class VentanaPcpal extends JFrame{
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig(this);
 		pane.addTab("Configurar Descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
-		this.pack();
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
 	private void importBBDDActionPerformed(ActionEvent e) {
 		// TODO add your code here
+		
+		
 	}
 
 	private void importXMLActionPerformed(ActionEvent e) {
 		// TODO add your code here
 	}
 
+	
+	
 
+	public JTabbedPane getPane() {
+		return pane;
+	}
+	public void setPane(JTabbedPane pane) {
+		this.pane = pane;
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		menuBar1 = new JMenuBar();
