@@ -33,6 +33,7 @@ public class SurveyPanel extends JPanel {
 		initComponents();
 		this.position=position;
 		principal = pcpal;
+		buttonSiguiente.setIcon(new ImageIcon("images/next_icon.png"));
 		rellenarModel();
 	}
 	

@@ -34,6 +34,9 @@ public class MapPanel extends JPanel {
 		initComponents();
 		this.position=position;
 		principal = pcpal;
+		
+		this.buttonAnterior.setIcon(new ImageIcon("images/back_icon.png"));
+		this.buttonSiguiente.setIcon(new ImageIcon("images/next_icon.png"));
 	}
 
 	private void buttonSiguienteActionPerformed(ActionEvent e) {

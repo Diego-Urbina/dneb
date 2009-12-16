@@ -40,6 +40,10 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		
 		this.rellenarModel();
 		
+		this.elminarConfiguracion.setIcon(new ImageIcon("images/deleteicon.png"));
+		this.cargarValoresPorDefecto.setIcon(new ImageIcon("images/load-icon.jpg"));
+		this.guardarValoresPorDefecto.setIcon(new ImageIcon("images/save-icon.jpg"));
+		
 		principal = pcpal;
 	}
 	

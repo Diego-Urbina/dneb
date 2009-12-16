@@ -34,7 +34,21 @@ public class TaskPanel extends JPanel {
 		principal = pcpal;
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
-		rellenarTabla();
+		
+        initIcons();
+        
+        this.buttonReanudar.setSize(50, 300);
+        this.buttonParar.setSize(50, 300);
+        this.buttonEliminar.setSize(50, 300);
+        
+        
+        rellenarTabla();
+	}
+
+	private void initIcons() {
+		this.buttonReanudar.setIcon(new ImageIcon("images/starticon.jpg"));
+        this.buttonParar.setIcon(new ImageIcon("images/stop_icon.png"));
+        this.buttonEliminar.setIcon(new ImageIcon("images/deleteicon.png"));
 	}
 	
 	private void rellenarTabla() {
