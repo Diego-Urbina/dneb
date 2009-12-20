@@ -43,8 +43,14 @@ public class CreateNewDownload extends JPanel {
 		principal = pcpal;
 		this.position=position;
 		initComponents();
+		
+		initIcons();
 		//this.principal=principal;
 		this.rellenarModel();
+	}
+
+	private void initIcons() {
+		this.button1.setIcon(new ImageIcon("images/load-icon-2.jpg"));
 	}
 	
 	private void rellenarModel() {
@@ -380,6 +386,7 @@ public class CreateNewDownload extends JPanel {
 		label12 = new JLabel();
 		formatoCoordenadas = new JComboBox();
 		separator1 = new JSeparator();
+		button1 = new JButton();
 		separator2 = new JSeparator();
 		cargarValoresPorDefecto = new JButton();
 		separator3 = new JSeparator();
@@ -397,7 +404,7 @@ public class CreateNewDownload extends JPanel {
 
 		//---- label1 ----
 		label1.setText("ALIAS");
-		add(label1, new GridConstraints(3, 0, 1, 2,
+		add(label1, new GridConstraints(3, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -410,7 +417,7 @@ public class CreateNewDownload extends JPanel {
 
 		//---- label2 ----
 		label2.setText("DESCRIPCION");
-		add(label2, new GridConstraints(4, 0, 1, 2,
+		add(label2, new GridConstraints(4, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -475,7 +482,7 @@ public class CreateNewDownload extends JPanel {
 
 		//---- label7 ----
 		label7.setText("ASCENSION RECTA");
-		add(label7, new GridConstraints(6, 0, 1, 2,
+		add(label7, new GridConstraints(6, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -534,7 +541,7 @@ public class CreateNewDownload extends JPanel {
 
 		//---- label10 ----
 		label10.setText("RUTA");
-		add(label10, new GridConstraints(7, 0, 1, 2,
+		add(label10, new GridConstraints(7, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -573,6 +580,20 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
+
+		//---- button1 ----
+		button1.setToolTipText("Seleccione ruta");
+		button1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				rutaMouseClicked(e);
+			}
+		});
+		add(button1, new GridConstraints(7, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_FIXED,
+			GridConstraints.SIZEPOLICY_FIXED,
+			new Dimension(25, 25), null, new Dimension(25, 25)));
 		add(separator2, new GridConstraints(9, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -703,6 +724,7 @@ public class CreateNewDownload extends JPanel {
 	private JLabel label12;
 	private JComboBox formatoCoordenadas;
 	private JSeparator separator1;
+	private JButton button1;
 	private JSeparator separator2;
 	private JButton cargarValoresPorDefecto;
 	private JSeparator separator3;
