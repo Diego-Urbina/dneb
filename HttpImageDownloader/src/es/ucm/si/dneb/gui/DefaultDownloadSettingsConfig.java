@@ -39,12 +39,16 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		initComponents();
 		
 		this.rellenarModel();
-		
+		this.initIcons();
 		this.elminarConfiguracion.setIcon(new ImageIcon("images/deleteicon.png"));
 		this.cargarValoresPorDefecto.setIcon(new ImageIcon("images/load-icon.jpg"));
 		this.guardarValoresPorDefecto.setIcon(new ImageIcon("images/save-icon.jpg"));
 		
 		principal = pcpal;
+	}
+	
+	private void initIcons() {
+		this.button1.setIcon(new ImageIcon("images/load-icon-2.jpg"));
 	}
 	
 	private void rellenarModel() {
@@ -297,11 +301,12 @@ String aliasConfig = aliasNuevaConfig.getText();
 		guardarValoresPorDefecto = new JButton();
 		separator1 = new JSeparator();
 		TITULO = new JLabel();
+		button1 = new JButton();
 		cargarValoresPorDefecto = new JButton();
 		elminarConfiguracion = new JButton();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(9, 5, new Insets(5, 5, 5, 5), 3, 1));
+		setLayout(new GridLayoutManager(9, 6, new Insets(5, 5, 5, 5), 3, 1));
 
 		//---- label3 ----
 		label3.setText("ALTO");
@@ -310,12 +315,12 @@ String aliasConfig = aliasNuevaConfig.getText();
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(ALTOINPUT, new GridConstraints(3, 1, 1, 1,
+		add(ALTOINPUT, new GridConstraints(3, 2, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(ANCHOINPUT, new GridConstraints(2, 1, 1, 1,
+		add(ANCHOINPUT, new GridConstraints(2, 2, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -331,17 +336,17 @@ String aliasConfig = aliasNuevaConfig.getText();
 
 		//---- label5 ----
 		label5.setText("SURVEY 2");
-		add(label5, new GridConstraints(2, 2, 1, 1,
+		add(label5, new GridConstraints(2, 3, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxSURVEY2, new GridConstraints(2, 3, 1, 1,
+		add(comboBoxSURVEY2, new GridConstraints(2, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxSURVEY1, new GridConstraints(1, 3, 1, 1,
+		add(comboBoxSURVEY1, new GridConstraints(1, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -349,7 +354,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 
 		//---- label4 ----
 		label4.setText("SURVEY 1");
-		add(label4, new GridConstraints(1, 2, 1, 1,
+		add(label4, new GridConstraints(1, 3, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -363,12 +368,12 @@ String aliasConfig = aliasNuevaConfig.getText();
 				rutaMouseClicked(e);
 			}
 		});
-		add(ruta, new GridConstraints(1, 1, 1, 1,
+		add(ruta, new GridConstraints(1, 2, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(formatoFichero, new GridConstraints(3, 3, 1, 1,
+		add(formatoFichero, new GridConstraints(3, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -376,7 +381,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 
 		//---- label11 ----
 		label11.setText("FORMATO FICHERO");
-		add(label11, new GridConstraints(3, 2, 1, 1,
+		add(label11, new GridConstraints(3, 3, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -397,7 +402,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(aliasNuevaConfig, new GridConstraints(5, 1, 1, 1,
+		add(aliasNuevaConfig, new GridConstraints(5, 2, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -405,12 +410,12 @@ String aliasConfig = aliasNuevaConfig.getText();
 
 		//---- label14 ----
 		label14.setText("VALORES POR DEFECTO");
-		add(label14, new GridConstraints(5, 2, 1, 1,
+		add(label14, new GridConstraints(5, 3, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxValoresPorDefecto, new GridConstraints(5, 3, 1, 1,
+		add(comboBoxValoresPorDefecto, new GridConstraints(5, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -424,12 +429,12 @@ String aliasConfig = aliasNuevaConfig.getText();
 				guardarValoresPorDefecto(e);
 			}
 		});
-		add(guardarValoresPorDefecto, new GridConstraints(6, 0, 1, 2,
+		add(guardarValoresPorDefecto, new GridConstraints(6, 0, 1, 3,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(separator1, new GridConstraints(4, 0, 1, 4,
+		add(separator1, new GridConstraints(4, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -439,11 +444,24 @@ String aliasConfig = aliasNuevaConfig.getText();
 		TITULO.setText("Configuracion de valores por defecto");
 		TITULO.setFont(TITULO.getFont().deriveFont(TITULO.getFont().getStyle() & ~Font.ITALIC, TITULO.getFont().getSize() + 7f));
 		TITULO.setHorizontalAlignment(SwingConstants.CENTER);
-		add(TITULO, new GridConstraints(0, 0, 1, 4,
+		add(TITULO, new GridConstraints(0, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
+
+		//---- button1 ----
+		button1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				rutaMouseClicked(e);
+			}
+		});
+		add(button1, new GridConstraints(1, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_FIXED,
+			GridConstraints.SIZEPOLICY_FIXED,
+			new Dimension(25, 25), new Dimension(25, 25), new Dimension(25, 25)));
 
 		//---- cargarValoresPorDefecto ----
 		cargarValoresPorDefecto.setText("CARGAR CONFIGURACION");
@@ -453,7 +471,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 				cargarValoresPorDEfecto(e);
 			}
 		});
-		add(cargarValoresPorDefecto, new GridConstraints(6, 2, 1, 1,
+		add(cargarValoresPorDefecto, new GridConstraints(6, 3, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -467,7 +485,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 				elminarConfiguracionMouseClicked(e);
 			}
 		});
-		add(elminarConfiguracion, new GridConstraints(6, 3, 1, 1,
+		add(elminarConfiguracion, new GridConstraints(6, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -503,6 +521,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 	private JButton guardarValoresPorDefecto;
 	private JSeparator separator1;
 	private JLabel TITULO;
+	private JButton button1;
 	private JButton cargarValoresPorDefecto;
 	private JButton elminarConfiguracion;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables

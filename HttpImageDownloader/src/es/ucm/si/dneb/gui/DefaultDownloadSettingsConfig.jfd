@@ -13,7 +13,7 @@
        <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
        <void method="setProperty"> 
         <string>$columnCount</string> 
-        <int>5</int> 
+        <int>6</int> 
        </void> 
        <void method="setProperty"> 
         <string>$rowCount</string> 
@@ -70,7 +70,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>1</int> 
+         <int>2</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -93,7 +93,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>1</int> 
+         <int>2</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -139,7 +139,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>2</int> 
+         <int>3</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -158,7 +158,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>3</int> 
+         <int>4</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -181,7 +181,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>3</int> 
+         <int>4</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -208,7 +208,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>2</int> 
+         <int>3</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -239,7 +239,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>1</int> 
+         <int>2</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -262,7 +262,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>3</int> 
+         <int>4</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -289,7 +289,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>2</int> 
+         <int>3</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -346,7 +346,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>1</int> 
+         <int>2</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -373,7 +373,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>2</int> 
+         <int>3</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -392,7 +392,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>3</int> 
+         <int>4</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -431,7 +431,7 @@
         </void> 
         <void method="setProperty"> 
          <string>colSpan</string> 
-         <int>2</int> 
+         <int>3</int> 
         </void> 
         <void method="setProperty"> 
          <string>fill</string> 
@@ -454,7 +454,7 @@
         </void> 
         <void method="setProperty"> 
          <string>colSpan</string> 
-         <int>4</int> 
+         <int>5</int> 
         </void> 
         <void method="setProperty"> 
          <string>fill</string> 
@@ -490,7 +490,63 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>colSpan</string> 
-         <int>4</int> 
+         <int>5</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void property="name"> 
+         <string>button1</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>rutaMouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>hSizePolicy</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>vSizePolicy</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>minimumSize</string> 
+         <object class="java.awt.Dimension"> 
+          <int>25</int> 
+          <int>25</int> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>preferredSize</string> 
+         <object class="java.awt.Dimension"> 
+          <int>25</int> 
+          <int>25</int> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>maximumSize</string> 
+         <object class="java.awt.Dimension"> 
+          <int>25</int> 
+          <int>25</int> 
+         </object> 
         </void> 
        </object> 
       </void> 
@@ -517,7 +573,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>2</int> 
+         <int>3</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
@@ -552,7 +608,7 @@
         <class>com.intellij.uiDesigner.core.GridConstraints</class> 
         <void method="setProperty"> 
          <string>column</string> 
-         <int>3</int> 
+         <int>4</int> 
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
