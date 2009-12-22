@@ -1,4 +1,3 @@
-
 package es.ucm.si.dneb.service.image.app;
 
 import java.awt.BasicStroke;

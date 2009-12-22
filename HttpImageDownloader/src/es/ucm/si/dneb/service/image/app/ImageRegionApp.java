@@ -1,4 +1,3 @@
-
 package es.ucm.si.dneb.service.image.app;
 
 import java.awt.Color;
@@ -35,7 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
-import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 
 
 public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
@@ -43,16 +41,14 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private JScrollPane jsp1, jsp2;
 	private JLabel label;
 	private JPanel panel;
-	private JButton buttonAbrir, buttonSalir, buttonSeleccionar, buttonZoomMas, buttonZoomMenos, buttonGirar;
+	private JButton buttonAbrir, buttonSalir, buttonBuscar, buttonZoomMas, buttonZoomMenos, buttonGirar;
 	
 	private DisplayImageWithRegions display1, display2;
 	private PlanarImage input1, input2, scaledIm1, scaledIm2, rotatedIm1, rotatedIm2;
-	private boolean seleccionar;
 	private int scale; // la escala va del 10 al 1000%
 	private int angle; // el angulo va del 0 al 360
 	
 	public ImageRegionApp(JFrame parent) {
-		seleccionar = false;
 		scale = 100;
 		angle = 0;
 		display1 = null;
@@ -123,24 +119,13 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			}
 		});
 	    
-	    buttonSeleccionar = new JButton();
-	    icon = new ImageIcon("images/seleccionar.gif");
-	    buttonSeleccionar.setIcon(icon);
-	    buttonSeleccionar.setToolTipText("Seleccionar puntos de la imagen con cuadrados");
-	    buttonSeleccionar.addActionListener(new ActionListener() {
+	    buttonBuscar = new JButton();
+	    icon = new ImageIcon("images/buscar.gif");
+	    buttonBuscar.setIcon(icon);
+	    buttonBuscar.setToolTipText("Buscar estrellas en la imagen y marcarlas con cuadrados");
+	    buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (input1 != null && input2 != null) {
-					if (!seleccionar) {
-						seleccionar = true;
-						buttonSeleccionar.setIcon(new ImageIcon("images/parar.gif"));
-						buttonSeleccionar.setToolTipText("Dejar de seleccionar puntos de la imagen");
-					}
-					else {
-						seleccionar = false;
-						buttonSeleccionar.setIcon(new ImageIcon("images/seleccionar.gif"));
-						buttonSeleccionar.setToolTipText("Seleccionar puntos de la imagen con cuadrados");
-					}
-				}
+				buttonBuscarActionPerformed(e);
 			}
 		});
 	    
@@ -188,7 +173,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		   layout.createSequentialGroup()
 		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 		           .addComponent(buttonAbrir)
-		           .addComponent(buttonSeleccionar)
+		           .addComponent(buttonBuscar)
 		           .addComponent(buttonZoomMas)
 		           .addComponent(buttonZoomMenos)
 		           .addComponent(buttonGirar)
@@ -198,7 +183,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		layout.setVerticalGroup(
 		   layout.createSequentialGroup()
 		      .addComponent(buttonAbrir)
-		      .addComponent(buttonSeleccionar)
+		      .addComponent(buttonBuscar)
 		      .addComponent(buttonZoomMas)
 		      .addComponent(buttonZoomMenos)
 		      .addComponent(buttonGirar)
@@ -258,7 +243,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					jsp2.setViewportView(display2);
 				}
 			}
-		} catch(ServicioGestionTareasException ex) {
+		} catch(Exception ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 	}
@@ -309,6 +294,10 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		    scaledIm2 = JAI.create("scale", pb);
 		    display2.set(scaledIm2);
 		}
+	}
+	
+	private void buttonBuscarActionPerformed(ActionEvent e) {
+		
 	}
 	
 	private void buttonGirarActionPerformed(ActionEvent e) {
@@ -377,8 +366,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// Create shapes, then ROIShapes, then ImageRegions.
-		if (seleccionar && ((display1.isOnImage() && e.getSource() == display1)
-				|| (display2.isOnImage() && e.getSource() == display2))) {
+		if ((display1.isOnImage() && e.getSource() == display1)
+				|| (display2.isOnImage() && e.getSource() == display2)) {
 			int width = 10;
 			int height = 10;
 		    int x = e.getX() - width/2;
