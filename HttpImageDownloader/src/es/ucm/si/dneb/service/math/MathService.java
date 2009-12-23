@@ -4,6 +4,6 @@ public interface MathService{
 	
 	public Distance calculateDecimalDistance(Double ar1, Double dec1,Double ar2,Double dec2);
 	
-	
+	public double[][] transform(double image[][], double scale,double rotation,double verticalTranslation,double horizontalTranslation);
 
 }

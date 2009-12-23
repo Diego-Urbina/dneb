@@ -52,4 +52,18 @@ public class MathServiceImpl implements MathService{
 		return Math.toDegrees(rad);
 	}
 
+	@Override
+	public double[][] transform(double[][] image, double scale,double rotation, double verticalTranslation,double horizontalTranslation) {
+		
+		
+		
+		
+		
+		return null;
+	}
+	
+	public double[][] pixelTransform(double[][] image, double scale,double rotation, double verticalTranslation,double horizontalTranslation){
+		return null;
+	}
+
 }
