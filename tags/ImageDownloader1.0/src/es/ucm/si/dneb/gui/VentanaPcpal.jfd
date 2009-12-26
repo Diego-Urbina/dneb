@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
+ <object class="com.jformdesigner.model.FormModel"> 
+  <void property="contentType"> 
+   <string>form/swing</string> 
+  </void> 
+  <void property="root"> 
+   <object class="com.jformdesigner.model.FormRoot"> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormWindow"> 
+      <string>javax.swing.JFrame</string> 
+      <object class="com.jformdesigner.model.FormLayoutManager"> 
+       <class>com.jformdesigner.runtime.NullLayout</class> 
+      </object> 
+      <void method="setProperty"> 
+       <string>iconImage</string> 
+       <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+      </void> 
+      <void method="setProperty"> 
+       <string>title</string> 
+       <string>DNEB (DETECCIÓN DE NUEVAS ESTRELLAS BINARIAS)</string> 
+      </void> 
+      <void method="setProperty"> 
+       <string>$sizePolicy</string> 
+       <int>1</int> 
+      </void> 
+      <void property="menuBar"> 
+       <object class="com.jformdesigner.model.FormContainer"> 
+        <string>javax.swing.JMenuBar</string> 
+        <object class="com.jformdesigner.model.FormLayoutManager"> 
+         <class>javax.swing.JMenuBar</class> 
+        </object> 
+        <void property="name"> 
+         <string>menuBar1</string> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JMenu</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>javax.swing.JMenu</class> 
+          </object> 
+          <void method="setProperty"> 
+           <string>icon</string> 
+           <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+          </void> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>TAREAS</string> 
+          </void> 
+          <void property="name"> 
+           <string>menu1</string> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>CREAR UNA NUEVA TAREA</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>crearNuevaTarea</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>crearNuevaTareaActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>GESTOR DE TAREAS</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>gestorTareas</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>gestorTareasActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JMenu</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>javax.swing.JMenu</class> 
+          </object> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>DESCARGAS</string> 
+          </void> 
+          <void method="setProperty"> 
+           <string>icon</string> 
+           <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+          </void> 
+          <void property="name"> 
+           <string>menu2</string> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>CREAR UNA DESCARGA</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>crearDescarga</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>crearDescargaActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>CREAR CONFIGURARION DE DESCARGA</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>gestionarDescargasConfig</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>gestionarDescargasConfigActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JMenu</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>javax.swing.JMenu</class> 
+          </object> 
+          <void method="setProperty"> 
+           <string>icon</string> 
+           <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+          </void> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>CONFIGURACION</string> 
+          </void> 
+          <void property="name"> 
+           <string>menu3</string> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>CONFIGURAR CONEXIÓN DE BASE DE DATOS</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>configBBDD</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>configBBDDActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>CREAR CONFIGURACION DE DESCARGA</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>configDownload</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>configDownloadActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JMenu</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>javax.swing.JMenu</class> 
+          </object> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>IMPORTAR DATOS</string> 
+          </void> 
+          <void method="setProperty"> 
+           <string>icon</string> 
+           <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+          </void> 
+          <void property="name"> 
+           <string>menu4</string> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>DESDE BBDD</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>importBBDD</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>importBBDDActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>DESDE XML</string> 
+            </void> 
+            <void method="setProperty"> 
+             <string>icon</string> 
+             <object class="com.jformdesigner.model.FormObject" field="NULL_VALUE"/> 
+            </void> 
+            <void property="name"> 
+             <string>importXML</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>importXMLActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void property="name"> 
+       <string>this</string> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>0</int> 
+        <int>0</int> 
+       </object> 
+      </void> 
+      <void method="setProperty"> 
+       <string>size</string> 
+       <object class="java.awt.Dimension"> 
+        <int>400</int> 
+        <int>300</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 
