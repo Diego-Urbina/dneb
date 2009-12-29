@@ -104,9 +104,6 @@ public class LectorImageHDU extends LectorHDU {
 		this.filename = filename;
 	}
 
-
-
-
 	@Override
 	public void printArrayData() throws FitsException {
 		// Obtengo la matriz de pixeles (Data)
@@ -119,9 +116,6 @@ public class LectorImageHDU extends LectorHDU {
 		}
 		System.out.println("\n");
 	}	
-	
-	
-	
 	
 	private void arreglarMatriz(short[][] arrayDataAux) {
 		/* Simetrica de la matriz respecto del

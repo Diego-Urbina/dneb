@@ -1,11 +1,9 @@
 package es.ucm.si.dneb.service.image.app;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -13,6 +11,12 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferInt;
+import java.awt.image.Raster;
+import java.awt.image.RenderedImage;
+import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +26,9 @@ import javax.media.jai.InterpolationBilinear;
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
-import javax.media.jai.ROIShape;
+import javax.media.jai.RasterFactory;
+import javax.media.jai.RenderedImageAdapter;
+import javax.media.jai.TiledImage;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -34,6 +40,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
+
+import nom.tam.fits.BasicHDU;
+import nom.tam.fits.Fits;
+import nom.tam.util.ArrayFuncs;
+import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
+import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 
 
 public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
@@ -47,6 +59,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private PlanarImage input1, input2, scaledIm1, scaledIm2, rotatedIm1, rotatedIm2;
 	private int scale; // la escala va del 10 al 1000%
 	private int angle; // el angulo va del 0 al 360
+	private LectorImageHDU l1, l2;
 	
 	public ImageRegionApp(JFrame parent) {
 		scale = 100;
@@ -59,6 +72,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		scaledIm2 = null;
 		rotatedIm1 = null;
 		rotatedIm2 = null;
+		l1 = null;
+		l2 = null;
 		initComponents();
 		
 		parent.setSize(500, 650);
@@ -211,9 +226,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	
 	private void buttonAbrirActionPerformed(ActionEvent e) {
 		FiltreExtensible filtre = new FiltreExtensible("Imagenes");
-		filtre.addExtension(".jpg");
-		filtre.addExtension(".png");
-		filtre.addExtension(".gif");
+		filtre.addExtension("kk.fits");
 		JFileChooser fc = new JFileChooser(".");
 		fc.addChoosableFileFilter(filtre);
 		
@@ -226,7 +239,11 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 				if (retval == JFileChooser.APPROVE_OPTION) {
 					file2 = fc.getSelectedFile().toString();
 					
-					input1 = JAI.create("fileload", file1);
+					Fits imagenFITS = new Fits(new File(file1));			
+					BasicHDU imageHDU = imagenFITS.getHDU(0);
+					l1 = new LectorImageHDU(imageHDU, file1);
+					//input1 = createPlanarImage(l1.getArrayData(), l1.getWidth(), l1.getHeight(), 1);
+					input1 = JAI.create("fileload", "kk.png");
 					scaledIm1 = input1;
 					rotatedIm1 = input1;
 					display1 = new DisplayImageWithRegions(input1);
@@ -234,7 +251,11 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 				    display1.addMouseListener(this);
 					jsp1.setViewportView(display1);
 					
-					input2 = JAI.create("fileload", file2);
+					imagenFITS = new Fits(new File(file2));
+					imageHDU = imagenFITS.getHDU(0);
+					l2 = new LectorImageHDU(imageHDU, file1);
+					//input2 = createPlanarImage(l2.getArrayData(), l2.getWidth(), l2.getHeight(), 1);
+					input2 = JAI.create("fileload", "kk.png");
 					scaledIm2 = input2;
 					rotatedIm2 = input2;
 					display2 = new DisplayImageWithRegions(input2);
@@ -246,6 +267,33 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		} catch(Exception ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+	}
+	
+	private PlanarImage createPlanarImage(int[][] arrayData, int width, int height, int numBands) {
+		int len = width * height;
+
+		// create a float sample model
+		SampleModel sampleModel = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_INT, width, height, numBands);
+
+		// create a compatible ColorModel
+		ColorModel colourModel = PlanarImage.createColorModel(sampleModel);
+		
+		// create a TiledImage using the int SampleModel
+		TiledImage tiledImage = new TiledImage(0, 0, width, height, 0, 0, sampleModel, colourModel);
+		
+		// create a DataBuffer from the int[][] array
+		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(arrayData);
+		DataBufferInt dataBuffer = new DataBufferInt(arrayDataAplanado, len);
+		
+		// create a Raster
+		Raster raster = RasterFactory.createWritableRaster(sampleModel, dataBuffer, new Point(0, 0));
+
+		// set the TiledImage data to that of the Raster
+		tiledImage.setData(raster);
+		
+		RenderedImageAdapter img = new RenderedImageAdapter((RenderedImage)tiledImage);
+
+		return img;
 	}
 	
 	private void buttonZoomMasActionPerformed(ActionEvent e) {
@@ -262,17 +310,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		    pb.add(new InterpolationNearest());
 		    scaledIm1 = JAI.create("scale", pb);
 		    display1.set(scaledIm1);
-		    /*display1 = new DisplayImageWithRegions(scaledIm1);
-			display1.addMouseMotionListener(this);
-		    display1.addMouseListener(this);
-			jsp1.setViewportView(display1);*/
 		    pb.addSource(rotatedIm2);
 		    scaledIm2 = JAI.create("scale", pb);
 		    display2.set(scaledIm2);
-		    /*display2 = new DisplayImageWithRegions(scaledIm2);
-			display2.addMouseMotionListener(this);
-			display2.addMouseListener(this);
-			jsp2.setViewportView(display2);*/
 		}
 	}
 	
@@ -297,7 +337,15 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	}
 	
 	private void buttonBuscarActionPerformed(ActionEvent e) {
-		
+		StarFinder sf1 = new StarFinder(), sf2 = new StarFinder();
+		float umbral = 10000;
+		float brilloEstrella = 40000;
+		sf1.buscarEstrellas(l1, brilloEstrella, umbral);
+		sf1.printRectStars(input1, display1);
+		sf2.buscarEstrellas(l2, brilloEstrella, umbral);
+		sf2.printRectStars(input2, display2);
+		jsp1.repaint();
+		jsp2.repaint();
 	}
 	
 	private void buttonGirarActionPerformed(ActionEvent e) {
@@ -364,31 +412,10 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	}
 	
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// Create shapes, then ROIShapes, then ImageRegions.
-		if ((display1.isOnImage() && e.getSource() == display1)
-				|| (display2.isOnImage() && e.getSource() == display2)) {
-			int width = 10;
-			int height = 10;
-		    int x = e.getX() - width/2;
-		    int y = e.getY() - height/2;
-		    Shape s = new Rectangle(x, y, width, height);
-		    ImageRegion r1 = new ImageRegion(input1,new ROIShape(s));
-		    ImageRegion r2 = new ImageRegion(input2,new ROIShape(s));
-		    r1.setBorderColor(new Color(255,255,0));
-		    r2.setBorderColor(new Color(255,255,0));
-		    
-		    display1.addImageRegion(r1);
-		    display2.addImageRegion(r2);
-		    
-		    jsp1.repaint();
-		    jsp2.repaint();
-		}
-	}
+	public void mousePressed(MouseEvent e) {}
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
+	public void mouseClicked(MouseEvent e) {}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {}
