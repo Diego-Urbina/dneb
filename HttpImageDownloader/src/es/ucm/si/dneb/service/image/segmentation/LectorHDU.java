@@ -14,8 +14,6 @@ public abstract class LectorHDU {
 		header = h;
 	}
 	
-	
-		
 	public Header getHeader() {
 		return header;
 	}
@@ -23,10 +21,6 @@ public abstract class LectorHDU {
 	public void setHeader(Header header) {
 		this.header = header;
 	}
-
-
-
-
 
 	/**
 	 * Imprime todos los pares atributo-valor de la

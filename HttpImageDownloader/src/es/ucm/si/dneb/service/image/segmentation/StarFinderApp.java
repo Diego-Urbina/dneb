@@ -37,9 +37,8 @@ public class StarFinderApp {
 			sf.buscarEstrellas(l1, brilloEstrella, umbral);
 			
 			System.out.println("\n\nRecuadros\n------------------");
-			sf.printRectStars();
+			//sf.printRectStars();
 			
-			//System.out.println(l1.getPixel(122,48));
 			System.out.println("Numero de estrellas encontradas: " + sf.getNumberOfStars());
 			
 		} catch (FitsException e1) {
