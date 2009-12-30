@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
+ <object class="com.jformdesigner.model.FormModel"> 
+  <void property="contentType"> 
+   <string>form/swing</string> 
+  </void> 
+  <void property="root"> 
+   <object class="com.jformdesigner.model.FormRoot"> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormContainer"> 
+      <string>javax.swing.JPanel</string> 
+      <object class="com.jformdesigner.model.FormLayoutManager"> 
+       <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
+       <void method="setProperty"> 
+        <string>$columnCount</string> 
+        <int>5</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>$rowCount</string> 
+        <int>16</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>hGap</string> 
+        <int>5</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>margin</string> 
+        <object class="java.awt.Insets"> 
+         <int>60</int> 
+         <int>60</int> 
+         <int>60</int> 
+         <int>60</int> 
+        </object> 
+       </void> 
+      </object> 
+      <void property="name"> 
+       <string>this</string> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ALIAS</string> 
+        </void> 
+        <void property="name"> 
+         <string>label1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ALIASINPUT</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>DESCRIPCION</string> 
+        </void> 
+        <void property="name"> 
+         <string>label2</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>DESCRIPTIONINPUT</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ALTOINPUT</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ALTO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label3</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>5</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ANCHOINPUT</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>SURVEY 1</string> 
+        </void> 
+        <void property="name"> 
+         <string>label4</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>SURVEY 2</string> 
+        </void> 
+        <void property="name"> 
+         <string>label5</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ANCHO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label6</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>5</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>ARINPUT</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>DECINPUT</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ASCENSION RECTA</string> 
+        </void> 
+        <void property="name"> 
+         <string>label7</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>DECLINACION</string> 
+        </void> 
+        <void property="name"> 
+         <string>label8</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>PANTALLA DE CREACIÓN DE DESCARGAS</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object class="com.jformdesigner.model.SwingDerivedFont"> 
+          <null/> 
+          <int>0</int> 
+          <int>10</int> 
+          <boolean>false</boolean> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>horizontalAlignment</string> 
+         <int>0</int> 
+        </void> 
+        <void property="name"> 
+         <string>label9</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>comboBoxSURVEY1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>comboBoxSURVEY2</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JCheckBox</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>INICIAR DESCARGA UNA VEZ CREADA </string> 
+        </void> 
+        <void property="name"> 
+         <string>INICIARDESCARGAALCREAR</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>13</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>3</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void method="setProperty"> 
+         <string>editable</string> 
+         <boolean>false</boolean> 
+        </void> 
+        <void method="setProperty"> 
+         <string>toolTipText</string> 
+         <string>PULSE PARA SELECCIONAR UN DIRECTORIO.</string> 
+        </void> 
+        <void property="name"> 
+         <string>ruta</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>rutaMouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>7</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>RUTA</string> 
+        </void> 
+        <void property="name"> 
+         <string>label10</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>7</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>formatoFichero</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>7</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>FORMATO FICHERO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label11</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>7</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>FORMATO COORDENADAS</string> 
+        </void> 
+        <void property="name"> 
+         <string>label12</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>8</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void method="setProperty"> 
+         <string>enabled</string> 
+         <boolean>false</boolean> 
+        </void> 
+        <void property="name"> 
+         <string>formatoCoordenadas</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>8</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JSeparator</string> 
+        <void property="name"> 
+         <string>separator1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>toolTipText</string> 
+         <string>Seleccione ruta</string> 
+        </void> 
+        <void property="name"> 
+         <string>button1</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>rutaMouseClicked</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>7</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>hSizePolicy</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>vSizePolicy</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>minimumSize</string> 
+         <object class="java.awt.Dimension"> 
+          <int>25</int> 
+          <int>25</int> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>maximumSize</string> 
+         <object class="java.awt.Dimension"> 
+          <int>25</int> 
+          <int>25</int> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JSeparator</string> 
+        <void property="name"> 
+         <string>separator2</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>9</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>CARGAR VALORES POR DEFECTO</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>toolTipText</string> 
+         <string>PULSE AQUI PARA CARGAR LA CONFIGURACION POR DEFECTO SELECCIONADA</string> 
+        </void> 
+        <void property="name"> 
+         <string>cargarValoresPorDefecto</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>cargarValoresDefectoEvent</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>11</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JSeparator</string> 
+        <void property="name"> 
+         <string>separator3</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>12</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>GUARDAR COMO VALORES POR DEFECTO</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>toolTipText</string> 
+         <string>PULSE AQUI PARA GUARDAR SU CONFIGURACIÓN CON EL ALIAS DESIGNADO</string> 
+        </void> 
+        <void property="name"> 
+         <string>guardarValoresPorDefecto</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>guardarValoresPorDefectoEvent</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>11</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JSeparator</string> 
+        <void property="name"> 
+         <string>separator4</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>14</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JCheckBox</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>VISUALIZAR AL TERMINAR DESCARGA</string> 
+        </void> 
+        <void property="name"> 
+         <string>visualizarAlTerminarDescarga</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>13</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JComboBox</string> 
+        <void property="name"> 
+         <string>comboBoxValoresPorDefecto</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>aliasNuevaConfig</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>ALIAS CONFIGURACION</string> 
+        </void> 
+        <void property="name"> 
+         <string>label13</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>VALORES POR DEFECTO</string> 
+        </void> 
+        <void property="name"> 
+         <string>label14</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>CREAR DESCARGA</string> 
+        </void> 
+        <void property="name"> 
+         <string>crearDescarga</string> 
+        </void> 
+        <void method="addEvent"> 
+         <object class="com.jformdesigner.model.FormEvent"> 
+          <string>java.awt.event.MouseListener</string> 
+          <string>mouseClicked</string> 
+          <string>crearDescargaEvent</string> 
+          <boolean>true</boolean> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>15</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>40</int> 
+        <int>0</int> 
+       </object> 
+      </void> 
+      <void method="setProperty"> 
+       <string>size</string> 
+       <object class="java.awt.Dimension"> 
+        <int>765</int> 
+        <int>705</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 
