@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import es.ucm.si.dneb.service.image.app.ImageRegionApp;
+
 
 public class VentanaPcpal extends JFrame{
 	
@@ -51,6 +53,7 @@ public class VentanaPcpal extends JFrame{
 	private void initIcons(){
 		
 		ImageIcon taskIcon = new ImageIcon("images/TASKICON.JPG");
+		this.menu5.setIcon(new ImageIcon("images/Utilitiesicon.png"));
 		this.menu4.setIcon(new ImageIcon("images/import.png"));
 		this.menu2.setIcon(new ImageIcon("images/download_icon3.jpg"));
 		this.menu3.setIcon(new ImageIcon("images/Config-icon.png"));
@@ -142,6 +145,25 @@ public class VentanaPcpal extends JFrame{
 	public void setPane(JTabbedPane pane) {
 		this.pane = pane;
 	}
+
+	private void visualizadorActionPerformed(ActionEvent e) {
+		// TODO add your code here
+		
+		ImageRegionApp config = new ImageRegionApp(this);
+		pane.addTab("Configurar Descargas", config);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
+	}
+
+	private void buscarActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
+
+	private void posicionActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		menuBar1 = new JMenuBar();
@@ -157,12 +179,16 @@ public class VentanaPcpal extends JFrame{
 		menu4 = new JMenu();
 		importBBDD = new JMenuItem();
 		importXML = new JMenuItem();
+		menu5 = new JMenu();
+		visualizador = new JMenuItem();
+		buscar = new JMenuItem();
+		posicion = new JMenuItem();
 
 		//======== this ========
 		setIconImage(null);
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
-		//Container contentPane = getContentPane();
-		//contentPane.setLayout(null);
+		Container contentPane = getContentPane();
+		
 
 		//======== menuBar1 ========
 		{
@@ -274,10 +300,43 @@ public class VentanaPcpal extends JFrame{
 				menu4.add(importXML);
 			}
 			menuBar1.add(menu4);
+
+			//======== menu5 ========
+			{
+				menu5.setText("UTILIDADES");
+
+				//---- visualizador ----
+				visualizador.setText("VISUALIZADOR");
+				visualizador.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						visualizadorActionPerformed(e);
+					}
+				});
+				menu5.add(visualizador);
+
+				//---- buscar ----
+				buscar.setText("B\u00daSQUEDA ESTRELLAS BINARIAS");
+				buscar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						buscarActionPerformed(e);
+					}
+				});
+				menu5.add(buscar);
+
+				//---- posicion ----
+				posicion.setText("CALCULAR POSICION");
+				posicion.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						posicionActionPerformed(e);
+					}
+				});
+				menu5.add(posicion);
+			}
+			menuBar1.add(menu5);
 		}
 		setJMenuBar(menuBar1);
-		
-		/*{ // compute preferred size
+
+		{ // compute preferred size
 			Dimension preferredSize = new Dimension();
 			for(int i = 0; i < contentPane.getComponentCount(); i++) {
 				Rectangle bounds = contentPane.getComponent(i).getBounds();
@@ -291,7 +350,7 @@ public class VentanaPcpal extends JFrame{
 			contentPane.setPreferredSize(preferredSize);
 		}
 		setSize(400, 300);
-		setLocationRelativeTo(getOwner());*/
+		setLocationRelativeTo(getOwner());
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
@@ -309,5 +368,9 @@ public class VentanaPcpal extends JFrame{
 	private JMenu menu4;
 	private JMenuItem importBBDD;
 	private JMenuItem importXML;
+	private JMenu menu5;
+	private JMenuItem visualizador;
+	private JMenuItem buscar;
+	private JMenuItem posicion;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
