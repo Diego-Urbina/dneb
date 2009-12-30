@@ -44,6 +44,7 @@ import javax.swing.filechooser.FileFilter;
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import nom.tam.util.ArrayFuncs;
+import es.ucm.si.dneb.gui.VentanaPcpal;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 
@@ -60,6 +61,19 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private int scale; // la escala va del 10 al 1000%
 	private int angle; // el angulo va del 0 al 360
 	private LectorImageHDU l1, l2;
+	
+	private VentanaPcpal principal;
+	private int position;
+	
+	public ImageRegionApp(VentanaPcpal pcpal,int position) {
+		principal = pcpal;
+		this.position=position;
+		initComponents();
+		
+		//initIcons();
+		//this.principal=principal;
+		//this.rellenarModel();
+	}
 	
 	public ImageRegionApp(JFrame parent) {
 		scale = 100;
