@@ -91,7 +91,7 @@ public class Tarea implements Serializable {
     private FormatoFichero formatoFichero;
     
     @OneToMany(mappedBy="tarea")
-    private List<Descarga> descargas;
+    private List<Imagen> imagens;
 
 	public long getIdTarea() {
 		return idTarea;
@@ -169,12 +169,12 @@ public class Tarea implements Serializable {
 		return serialVersionUID;
 	}
 
-	public void setDescargas(List<Descarga> descargas) {
-		this.descargas = descargas;
+	public void setDescargas(List<Imagen> imagens) {
+		this.imagens = imagens;
 	}
 
-	public List<Descarga> getDescargas() {
-		return descargas;
+	public List<Imagen> getDescargas() {
+		return imagens;
 	}
 
 

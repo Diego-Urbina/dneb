@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.PuntosRelevantes;
 import es.ucm.si.dneb.domain.Survey;
@@ -67,10 +67,10 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		for(Tarea tarea: tareas){
 			if(tarea.isActiva()==false && tarea.isFinalizada()==true){
 				
-				List<Descarga> descargas=tarea.getDescargas();
+				List<Imagen> imagens=tarea.getDescargas();
 				
-				for(Descarga descarga :descargas){
-					manager.remove(descarga);
+				for(Imagen imagen :imagens){
+					manager.remove(imagen);
 				}
 				
 				manager.remove(tarea);	
@@ -224,34 +224,34 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		/**TODO**/
 		manager.persist(tarea);
 		
-		ArrayList<Descarga> descargas = new ArrayList<Descarga>();
+		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
 		
 		
 		for(PuntosRelevantes punto : puntosRelevantes){
 			
 			for(Survey survey : surveys){
 			
-				Descarga descarga = new Descarga();
-				descarga.setAncho(Double.parseDouble(ancho));
+				Imagen imagen = new Imagen();
+				imagen.setAncho(Double.parseDouble(ancho));
 				String ar =new Double(punto.getAscencionRecta()).toString();
-				descarga.setAscensionRecta(ar);
+				imagen.setAscensionRecta(ar);
 				String dec = new Double(punto.getDeclinacion()).toString();
-				descarga.setDeclinacion(dec);
-				descarga.setFinalizada(false);
-				descarga.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey.getDescripcion(),
+				imagen.setDeclinacion(dec);
+				imagen.setFinalizada(false);
+				imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey.getDescripcion(),
 						ar.toString(), dec.toString(),tarea.getFormatoFichero().getDescipcion()));
-				descarga.setSurvey(survey);
-				descarga.setTarea(tarea);
+				imagen.setSurvey(survey);
+				imagen.setTarea(tarea);
 				
-				manager.persist(descarga);
+				manager.persist(imagen);
 				
-				descargas.add(descarga);
+				imagens.add(imagen);
 				
 			}
 			punto.setProcesado(true);
 			manager.persist(punto);
 		}
-		tarea.setDescargas(descargas);
+		tarea.setDescargas(imagens);
 		
 		manager.merge(tarea);
 		

@@ -205,7 +205,7 @@ public class CreateNewDownload extends JPanel {
 		
 		principal.getPane().remove(position);
 		
-		JOptionPane.showMessageDialog(null,"Descarga creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
+		JOptionPane.showMessageDialog(null,"Imagen creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
 		
 		
 		

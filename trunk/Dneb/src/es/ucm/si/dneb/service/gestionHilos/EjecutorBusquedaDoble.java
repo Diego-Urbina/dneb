@@ -1,8 +1,24 @@
 package es.ucm.si.dneb.service.gestionHilos;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import es.ucm.si.dneb.domain.Tarea;
 
+@Service("ejecutorBusquedaDoble")
+@Scope("prototype")
+@Transactional(propagation=Propagation.SUPPORTS)
 public class EjecutorBusquedaDoble implements EjecutorTarea{
+	
+	private static final Log LOG = LogFactory
+    .getLog(EjecutorBusquedaDoble.class);
+    private Long idTarea;
+    private Tarea tarea;
+    
 
 	@Override
 	public void ejecutar(Interrumpible inter) {
@@ -10,28 +26,31 @@ public class EjecutorBusquedaDoble implements EjecutorTarea{
 		
 	}
 
-	@Override
+
 	public Long getIdTarea() {
-		// TODO Auto-generated method stub
-		return null;
+		return idTarea;
 	}
 
-	@Override
-	public Tarea getTarea() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
 	public void setIdTarea(Long idTarea) {
-		// TODO Auto-generated method stub
-		
+		this.idTarea = idTarea;
 	}
 
-	@Override
-	public void setTarea(Tarea tarea) {
-		// TODO Auto-generated method stub
-		
+
+	public Tarea getTarea() {
+		return tarea;
 	}
+
+
+	public void setTarea(Tarea tarea) {
+		this.tarea = tarea;
+	}
+
+
+	public static Log getLog() {
+		return LOG;
+	}
+
+	
 
 }

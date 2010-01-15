@@ -28,7 +28,7 @@ public interface ServicioGestionTareas {
 	
 	public List<Tarea> getTareas();
 	
-	public List<Descarga> getDescargasTarea(Long tareaId);
+	public List<Imagen> getDescargasTarea(Long tareaId);
 	
 	public List<Tarea> getTareasPendientes();
 	

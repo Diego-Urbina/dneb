@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.gestionHilos.EjecutorTarea;
 
 @Service("serviceDownloadImage")
@@ -41,16 +41,16 @@ public class ServiceDownloadImageImpl  implements es.ucm.si.dneb.service.downloa
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void startDownload(Long idDescarga,double alto,String formatoFichero) {
 		
-		Descarga descarga = manager.find(Descarga.class, idDescarga);
+		Imagen imagen = manager.find(Imagen.class, idDescarga);
 		
-		downloadImage(descarga.getSurvey().getDescripcion(), descarga
-		.getAscensionRecta().toString(), descarga.getDeclinacion()
+		downloadImage(imagen.getSurvey().getDescripcion(), imagen
+		.getAscensionRecta().toString(), imagen.getDeclinacion()
 		.toString(), "J2000", Double.toString(alto),
-		Double.toString(descarga.getAncho()), formatoFichero, "none",
-		descarga.getRutaFichero());
+		Double.toString(imagen.getAncho()), formatoFichero, "none",
+		imagen.getRutaFichero());
 		
-		descarga.setFinalizada(true);
-		manager.merge(descarga);
+		imagen.setFinalizada(true);
+		manager.merge(imagen);
 		
 		
 	}

@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
 import org.springframework.transaction.annotation.*;
-import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
@@ -95,11 +95,11 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 		Tarea tarea = manager.find(Tarea.class, tareaId);
 		Long total =(Long) manager.createNamedQuery(
-				"Descarga:dameNumeroDescargasDeUnaTarea")
+				"Imagen:dameNumeroDescargasDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
 		
 		Long pendientes = (Long) manager.createNamedQuery(
-				"Descarga:dameNumeroDescargasPendientesDeUnaTarea")
+				"Imagen:dameNumeroDescargasPendientesDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
 		if (total==0){
 			
@@ -184,17 +184,17 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 			gestorDescargas.eleminarHilo(tarea.getIdTarea());
 		}*/
 		
-		List<Descarga> descargas = tarea.getDescargas();
+		List<Imagen> imagens = tarea.getDescargas();
 		
-		for(Descarga descarga : descargas){
-			manager.remove(descarga);
+		for(Imagen imagen : imagens){
+			manager.remove(imagen);
 		}
 			
 		manager.remove(tarea);
 
 	}
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Descarga> getDescargasTarea(Long tareaId) {
+	public List<Imagen> getDescargasTarea(Long tareaId) {
 		Tarea tarea = manager.find(Tarea.class, tareaId);
 
 		if(tarea==null){
@@ -202,8 +202,8 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		}
 		
 		
-		List<Descarga> descargas = tarea.getDescargas();
-		return descargas;
+		List<Imagen> imagens = tarea.getDescargas();
+		return imagens;
 		
 	}
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -258,35 +258,35 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 		
 		
-		List<Descarga> descargas = new ArrayList<Descarga>();
+		List<Imagen> imagens = new ArrayList<Imagen>();
 		
 		for(Survey survey : surveys){
 			
 			
-			Descarga descarga = new Descarga();
+			Imagen imagen = new Imagen();
 			
 			
 			/**TODO OJO DEBERÍA DE SACAR UN ANCHO REAL??*/
-			descarga.setAncho(ancho);
+			imagen.setAncho(ancho);
 			
-			descarga.setAscensionRecta(ar.toString());
-			descarga.setDeclinacion(dec.toString());
+			imagen.setAscensionRecta(ar.toString());
+			imagen.setDeclinacion(dec.toString());
 			
-			descarga.setFinalizada(false);
+			imagen.setFinalizada(false);
 			
-			descarga.setTarea(tarea);
+			imagen.setTarea(tarea);
 			
-			descarga.setSurvey(survey);
+			imagen.setSurvey(survey);
 			
-			descarga.setRutaFichero(Util.creaRuta(ruta, survey.getDescripcion(), ar.toString(), dec.toString(), formatoFichero.getDescipcion()));
+			imagen.setRutaFichero(Util.creaRuta(ruta, survey.getDescripcion(), ar.toString(), dec.toString(), formatoFichero.getDescipcion()));
 			
-			descargas.add(descarga);
+			imagens.add(imagen);
 			
-			manager.persist(descarga);
+			manager.persist(imagen);
 		
 		}
 		
-		tarea.setDescargas(descargas);
+		tarea.setDescargas(imagens);
 		manager.merge(tarea);
 		
 		
