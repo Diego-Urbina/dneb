@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.downloadImage.ServiceDownloadImage;
 

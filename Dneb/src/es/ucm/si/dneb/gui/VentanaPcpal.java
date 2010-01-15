@@ -92,7 +92,7 @@ public class VentanaPcpal extends JFrame{
 
 	private void crearDescargaActionPerformed(ActionEvent e) {
 		JPanel vent = new CreateNewDownload(this,pane.getTabCount());
-		pane.addTab("Nueva Descarga", vent);
+		pane.addTab("Nueva Imagen", vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);

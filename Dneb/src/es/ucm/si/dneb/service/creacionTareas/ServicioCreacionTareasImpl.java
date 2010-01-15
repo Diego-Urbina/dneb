@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Descarga;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
@@ -132,9 +132,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			LOG.error("NO SE HA PODIDO PERSISTIR LA TAREA");
 
 		}
-		List<Descarga> descargas = crearDescargas(tarea);
+		List<Imagen> imagens = crearDescargas(tarea);
 
-		tarea.setDescargas(descargas);
+		tarea.setDescargas(imagens);
 		try {
 			manager.merge(tarea);
 		} catch (RuntimeException e) {
@@ -163,9 +163,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<Descarga> crearDescargas(Tarea tarea) {
+	public List<Imagen> crearDescargas(Tarea tarea) {
 
-		ArrayList<Descarga> descargas = new ArrayList<Descarga>();
+		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
 
 		String ariniS = tarea.getArInicial();
 		Double arini = Double.parseDouble(ariniS);
@@ -200,28 +200,28 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 				for (Survey survey : surveys) {
 
-					Descarga descarga = new Descarga();
-					descarga.setAscensionRecta(ar.toString());
-					descarga.setDeclinacion(dec.toString());
-					descarga.setFinalizada(false);
+					Imagen imagen = new Imagen();
+					imagen.setAscensionRecta(ar.toString());
+					imagen.setDeclinacion(dec.toString());
+					imagen.setFinalizada(false);
 					/**
 					 * TODO OJO QUE ESTO ES UN CAMBIO IMPORTANTE HAY QUE PROBAR
 					 * SI FUNCIONA
 					 **/
-					descarga.setRutaFichero(Util.creaRuta(tarea.getRuta(),
+					imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(),
 							survey.getDescripcion(), ar.toString(), dec
 									.toString(), tarea.getFormatoFichero()
 									.getDescipcion()));
-					descarga.setSurvey(survey);
-					descarga.setTarea(tarea);
-					descarga.setAncho((ancho *  (Math.cos((dec * 2.0 * Math.PI) / 360.0))));
+					imagen.setSurvey(survey);
+					imagen.setTarea(tarea);
+					imagen.setAncho((ancho *  (Math.cos((dec * 2.0 * Math.PI) / 360.0))));
 
-					manager.persist(descarga);
+					manager.persist(imagen);
 
-					descargas.add(descarga);
+					imagens.add(imagen);
 
 					LOG.debug("AÑADIDA LA DESCARGA DEL SURVEY:"
-							+ descarga.getSurvey().getDescripcion());
+							+ imagen.getSurvey().getDescripcion());
 
 				}
 
@@ -233,7 +233,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			ar = calculaAr(ar, solap, anchoreal);
 
 		}
-		return descargas;
+		return imagens;
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
