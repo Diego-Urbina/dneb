@@ -17,10 +17,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name="PUNTOSRELEVANTES")
 @NamedQueries({
-	@NamedQuery(name="PuntosRelevantes:dameTodosPuntosRelevantes",query="select p from PuntosRelevantes p"),
-	@NamedQuery(name="PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados",query="select p from PuntosRelevantes p where procesado=false")
+	@NamedQuery(name="CargaDatos:dameTodosPuntosRelevantes",query="select p from CargaDatos p"),
+	@NamedQuery(name="CargaDatos:dameTodosPuntosRelevantesNoProcesados",query="select p from CargaDatos p where procesado=false")
 })
-public class PuntosRelevantes {
+public class CargaDatos {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

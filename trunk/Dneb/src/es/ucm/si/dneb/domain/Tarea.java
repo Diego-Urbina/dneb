@@ -16,7 +16,7 @@ import javax.persistence.*;
 	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t  where activa=true"),
 	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where finalizada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t  where fechaUltimaActulizacion<=?"),
-	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.imagens d where t.idTarea=? and d.finalizada=false"),
+	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.imagens d where t.idTarea=? and d.descargada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion")
 })
 public class Tarea implements Serializable {
@@ -40,14 +40,11 @@ public class Tarea implements Serializable {
     @Column(name="FECHACREACION", nullable =false)
     private Date fechaCreacion;
     
-    @Column(name="FINALIZADA", nullable =false)
+    @Column(name="DESCARGA_FINALIZADA", nullable =false)
     private boolean descargaFinalizada;
     
-     
-    
-    @Column(name="ACTIVA", nullable =false)
+    @Column(name="DESCARGA_ACTIVA", nullable =false)
     private boolean descargaActiva;
-    
     
     @Column(name="FECHAULTACTUALIZACION")
     private Date fechaUltimaActualizacion;
@@ -73,6 +70,8 @@ public class Tarea implements Serializable {
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="TAREA_SURVEY_JT")
     private List<Survey> surveys;
+    
+    
     
     @Column(name="SOLAPAMIENTO")
     private double solapamiento;

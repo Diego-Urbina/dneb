@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.FormatoFichero;
-import es.ucm.si.dneb.domain.PuntosRelevantes;
+import es.ucm.si.dneb.domain.CargaDatos;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
@@ -163,9 +163,9 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		LOG.info("GENERANDO DATOS MANUALES DE DESCARGA");
 		
-		List<PuntosRelevantes> puntosRelevantes=(List<PuntosRelevantes>) manager.createNamedQuery("PuntosRelevantes:dameTodosPuntosRelevantesNoProcesados").getResultList();
+		List<CargaDatos> cargaDatos=(List<CargaDatos>) manager.createNamedQuery("CargaDatos:dameTodosPuntosRelevantesNoProcesados").getResultList();
 		
-		if(puntosRelevantes.size()==0){
+		if(cargaDatos.size()==0){
 			return;
 		}
 		
@@ -227,7 +227,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
 		
 		
-		for(PuntosRelevantes punto : puntosRelevantes){
+		for(CargaDatos punto : cargaDatos){
 			
 			for(Survey survey : surveys){
 			
