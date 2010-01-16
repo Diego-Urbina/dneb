@@ -203,7 +203,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					Imagen imagen = new Imagen();
 					imagen.setAscensionRecta(ar.toString());
 					imagen.setDeclinacion(dec.toString());
-					imagen.setFinalizada(false);
+					imagen.setDescargada(false);
 					/**
 					 * TODO OJO QUE ESTO ES UN CAMBIO IMPORTANTE HAY QUE PROBAR
 					 * SI FUNCIONA
@@ -211,7 +211,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(),
 							survey.getDescripcion(), ar.toString(), dec
 									.toString(), tarea.getFormatoFichero()
-									.getDescipcion()));
+									.getAlias()));
 					imagen.setSurvey(survey);
 					imagen.setTarea(tarea);
 					imagen.setAncho((ancho *  (Math.cos((dec * 2.0 * Math.PI) / 360.0))));

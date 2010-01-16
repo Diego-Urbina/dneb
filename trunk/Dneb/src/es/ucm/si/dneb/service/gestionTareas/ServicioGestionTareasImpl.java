@@ -272,13 +272,13 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 			imagen.setAscensionRecta(ar.toString());
 			imagen.setDeclinacion(dec.toString());
 			
-			imagen.setFinalizada(false);
+			imagen.setDescargada(false);
 			
 			imagen.setTarea(tarea);
 			
 			imagen.setSurvey(survey);
 			
-			imagen.setRutaFichero(Util.creaRuta(ruta, survey.getDescripcion(), ar.toString(), dec.toString(), formatoFichero.getDescipcion()));
+			imagen.setRutaFichero(Util.creaRuta(ruta, survey.getDescripcion(), ar.toString(), dec.toString(), formatoFichero.getAlias()));
 			
 			imagens.add(imagen);
 			

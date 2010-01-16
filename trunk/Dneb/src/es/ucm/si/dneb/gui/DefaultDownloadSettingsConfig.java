@@ -13,7 +13,7 @@ import com.intellij.uiDesigner.core.*;
  * Created by JFormDesigner on Sat Nov 28 10:41:50 CET 2009
  */
 
-import es.ucm.si.dneb.domain.DownloadDefaultConfiguration;
+import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig;
@@ -33,7 +33,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 	private ServicioGestionTareas servicioGestionTareas;
 	private ArrayList<Survey> surveys;
 	private ArrayList<FormatoFichero> formatosFichero;
-	private ArrayList<DownloadDefaultConfiguration> configsList;
+	private ArrayList<DownloadConfig> configsList;
 	
 	public DefaultDownloadSettingsConfig(VentanaPcpal pcpal) {
 		initComponents();
@@ -93,7 +93,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
         
         
         for (FormatoFichero aux : formatosFichero){
-        	listFormato.addElement(aux.getDescipcion());
+        	listFormato.addElement(aux.getAlias());
         }
         
         this.formatoFichero.setModel(listFormato);
@@ -114,7 +114,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 	private void updateConfigList() {
 		
 		
-		configsList = (ArrayList<DownloadDefaultConfiguration>) serviceDownloadDefaultConfig.getDownloadConfigs();
+		configsList = (ArrayList<DownloadConfig>) serviceDownloadDefaultConfig.getDownloadConfigs();
         if(configsList.size()==0){
         	return;
         	
@@ -122,7 +122,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		
         DefaultComboBoxModel comboConfigList = new DefaultComboBoxModel();
         
-        for (DownloadDefaultConfiguration aux : configsList){
+        for (DownloadConfig aux : configsList){
         	comboConfigList.addElement(aux.getAlias());
         }
         
@@ -135,7 +135,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 	private void cargarValoresPorDEfecto(MouseEvent e) {
 		int configDefault = this.comboBoxValoresPorDefecto.getSelectedIndex();
 		 
-		DownloadDefaultConfiguration selectedDownloadDefaultConfiguration = configsList.get(configDefault);
+		DownloadConfig selectedDownloadDefaultConfiguration = configsList.get(configDefault);
 		
 		if(selectedDownloadDefaultConfiguration.getAlto()!=null){
 			this.ALTOINPUT.setText(selectedDownloadDefaultConfiguration.getAlto().toString());
@@ -161,7 +161,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 			
 			FormatoFichero aux= formatosFichero.get(i);
 			
-			if(aux.getDescipcion().equals(formFich.getDescipcion())){
+			if(aux.getAlias().equals(formFich.getAlias())){
 				formatoFichero.setSelectedIndex(i);
 			}
 		}
@@ -194,12 +194,12 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 String aliasConfig = aliasNuevaConfig.getText();
 		
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration= new DownloadDefaultConfiguration();
+		DownloadConfig downloadConfig= new DownloadConfig();
 		
 		
 		
 		if(!this.aliasNuevaConfig.getText().equals("")){
-			downloadDefaultConfiguration.setAlias(this.aliasNuevaConfig.getText());
+			downloadConfig.setAlias(this.aliasNuevaConfig.getText());
 		}else{
 			showAlertMessage("INTRODUZCA UN ALIAS DE CONFIGURACION");
 			return;
@@ -213,19 +213,19 @@ String aliasConfig = aliasNuevaConfig.getText();
 		}
 		
 		if(!this.ALTOINPUT.getText().equals("")){
-			downloadDefaultConfiguration.setAlto(Double.valueOf(this.ALTOINPUT.getText()));	
+			downloadConfig.setAlto(Double.valueOf(this.ALTOINPUT.getText()));	
 		}
 		
 		if(!this.ANCHOINPUT.getText().equals("")){
-			downloadDefaultConfiguration.setAncho(Double.valueOf(this.ANCHOINPUT.getText()));
+			downloadConfig.setAncho(Double.valueOf(this.ANCHOINPUT.getText()));
 		}
 		
 		int formatoSeleccionado = this.formatoFichero.getSelectedIndex();
 		
-		downloadDefaultConfiguration.setFormatoFichero(formatosFichero.get(formatoSeleccionado));
+		downloadConfig.setFormatoFichero(formatosFichero.get(formatoSeleccionado));
 		
 		if(!this.ruta.getText().equals("")){
-			downloadDefaultConfiguration.setPath(this.ruta.getText());
+			downloadConfig.setPath(this.ruta.getText());
 		}
 		
 		int survey1 = this.comboBoxSURVEY1.getSelectedIndex();
@@ -238,10 +238,10 @@ String aliasConfig = aliasNuevaConfig.getText();
 	
 		
 		
-		downloadDefaultConfiguration.setSurveys(selectedSurveys);
+		downloadConfig.setSurveys(selectedSurveys);
 		
 		
-		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadDefaultConfiguration);
+		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);
 		
 		updateConfigList();
 
@@ -257,7 +257,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 		// TODO add your code here
 		int configDefault = this.comboBoxValoresPorDefecto.getSelectedIndex();
 		 
-		DownloadDefaultConfiguration selectedDownloadDefaultConfiguration = configsList.get(configDefault);
+		DownloadConfig selectedDownloadDefaultConfiguration = configsList.get(configDefault);
 		
 		serviceDownloadDefaultConfig.deleteConfig(selectedDownloadDefaultConfiguration.getId());
 		

@@ -237,9 +237,9 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 				imagen.setAscensionRecta(ar);
 				String dec = new Double(punto.getDeclinacion()).toString();
 				imagen.setDeclinacion(dec);
-				imagen.setFinalizada(false);
+				imagen.setDescargada(false);
 				imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey.getDescripcion(),
-						ar.toString(), dec.toString(),tarea.getFormatoFichero().getDescipcion()));
+						ar.toString(), dec.toString(),tarea.getFormatoFichero().getAlias()));
 				imagen.setSurvey(survey);
 				imagen.setTarea(tarea);
 				

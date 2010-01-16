@@ -23,7 +23,8 @@ public class FormatoFichero {
     @Column(name="ID_FORMATO_FICHERO")
     private long idFormatoFichero;
 	
-	private String descipcion;
+	private String alias;
+	private String description;
 	
 	
 	@OneToMany(mappedBy="formatoFichero")
@@ -31,12 +32,12 @@ public class FormatoFichero {
 	
 	
 	
-	public void setDescipcion(String descipcion) {
-		this.descipcion = descipcion;
+	public void setAlias(String descipcion) {
+		this.alias = descipcion;
 	}
 
-	public String getDescipcion() {
-		return descipcion;
+	public String getAlias() {
+		return alias;
 	}
 
 	public void setIdFormatoFichero(long idFormatoFichero) {
@@ -53,6 +54,14 @@ public class FormatoFichero {
 
 	public Collection<Tarea> getTareas() {
 		return tareas;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 	
 	

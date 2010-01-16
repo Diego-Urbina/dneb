@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import es.ucm.si.dneb.domain.DownloadDefaultConfiguration;
+import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.service.configurations.ServicePropertyFilesConfiguration;
@@ -44,42 +44,42 @@ public class ServicioConfigDownloadTest {
 	//@Test
 	public void testSave(){
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration = new DownloadDefaultConfiguration();
+		DownloadConfig downloadConfig = new DownloadConfig();
 		
-		downloadDefaultConfiguration.setAlias("prueba2");
-		downloadDefaultConfiguration.setAlto(30d);
-		downloadDefaultConfiguration.setAncho(30d);
+		downloadConfig.setAlias("prueba2");
+		downloadConfig.setAlto(30d);
+		downloadConfig.setAncho(30d);
 		
 		List<Survey> surveys= serviceDownloadDefaultConfig.getAllSurveys();
 		FormatoFichero formatoFichero= serviceDownloadDefaultConfig.getFormatosFichero().get(0);
-		downloadDefaultConfiguration.setFormatoFichero(formatoFichero);
-		downloadDefaultConfiguration.setPath("d:/");
-		downloadDefaultConfiguration.setSurveys(surveys);
+		downloadConfig.setFormatoFichero(formatoFichero);
+		downloadConfig.setPath("d:/");
+		downloadConfig.setSurveys(surveys);
 		
-		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadDefaultConfiguration);
+		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);
 	}
 	
 	@Test
 	public void testLoadOK(){
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration  =serviceDownloadDefaultConfig.loadDownloadDefaultConfiguration("prueba1");
+		DownloadConfig downloadConfig  =serviceDownloadDefaultConfig.loadDownloadDefaultConfiguration("prueba1");
 		
-		LOG.info(downloadDefaultConfiguration.getAlias());
-		LOG.info(downloadDefaultConfiguration.getAlto());
-		LOG.info(downloadDefaultConfiguration.getAncho());
-		LOG.info(downloadDefaultConfiguration.getFormatoFichero().getDescipcion());
+		LOG.info(downloadConfig.getAlias());
+		LOG.info(downloadConfig.getAlto());
+		LOG.info(downloadConfig.getAncho());
+		LOG.info(downloadConfig.getFormatoFichero().getAlias());
 	}
 	
 	
 	@Test
 	public void testLoadFAIL(){
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration  =serviceDownloadDefaultConfig.loadDownloadDefaultConfiguration("prue");
+		DownloadConfig downloadConfig  =serviceDownloadDefaultConfig.loadDownloadDefaultConfiguration("prue");
 		
-		LOG.info(downloadDefaultConfiguration.getAlias());
-		LOG.info(downloadDefaultConfiguration.getAlto());
-		LOG.info(downloadDefaultConfiguration.getAncho());
-		LOG.info(downloadDefaultConfiguration.getFormatoFichero().getDescipcion());
+		LOG.info(downloadConfig.getAlias());
+		LOG.info(downloadConfig.getAlto());
+		LOG.info(downloadConfig.getAncho());
+		LOG.info(downloadConfig.getFormatoFichero().getAlias());
 	}
 	
 }

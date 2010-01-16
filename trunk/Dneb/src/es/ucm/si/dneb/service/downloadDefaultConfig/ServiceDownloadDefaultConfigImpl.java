@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.DownloadDefaultConfiguration;
+import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
@@ -30,14 +30,14 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 
 	@Transactional(propagation= Propagation.REQUIRED)
 	public void createNewDownloadDefaultConfig(
-			DownloadDefaultConfiguration downloadDefaultConfiguration) {
+			DownloadConfig downloadConfig) {
 		
-		String alias = downloadDefaultConfiguration.getAlias();
+		String alias = downloadConfig.getAlias();
 		boolean error = true;
 		
 		try{
 			
-			downloadDefaultConfiguration = (DownloadDefaultConfiguration) manager.createNamedQuery("DownloadDefaultConfiguration:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
+			downloadConfig = (DownloadConfig) manager.createNamedQuery("DownloadConfig:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
 		
 		}catch(NoResultException e){
 			
@@ -46,7 +46,7 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 		}
 		
 		if(!error){
-			manager.persist(downloadDefaultConfiguration);
+			manager.persist(downloadConfig);
 		}else{
 			
 			throw new ServiceDownloadDefaultConfigException("Ya existe una configuracion con ese alias");
@@ -55,13 +55,13 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 	}
 
 	@Transactional(propagation= Propagation.SUPPORTS)
-	public DownloadDefaultConfiguration loadDownloadDefaultConfiguration(String alias) {
+	public DownloadConfig loadDownloadDefaultConfiguration(String alias) {
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration;
+		DownloadConfig downloadConfig;
 		
 		try{
 			
-			downloadDefaultConfiguration = (DownloadDefaultConfiguration) manager.createNamedQuery("DownloadDefaultConfiguration:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
+			downloadConfig = (DownloadConfig) manager.createNamedQuery("DownloadConfig:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
 		
 		}catch(NoResultException e){
 			
@@ -73,7 +73,7 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 			
 		}
 		
-		return downloadDefaultConfiguration;
+		return downloadConfig;
 	}
 	
 	
@@ -92,8 +92,8 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<DownloadDefaultConfiguration> getDownloadConfigs() {
-		return manager.createNamedQuery("DownloadDefaultConfiguration:dameTodasConfiguraciones")
+	public List<DownloadConfig> getDownloadConfigs() {
+		return manager.createNamedQuery("DownloadConfig:dameTodasConfiguraciones")
 				.getResultList();
 	}
 
@@ -101,7 +101,7 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 	public boolean existsConfig(String alias) {
 		
 		try{
-			DownloadDefaultConfiguration downloadDefaultConfiguration = (DownloadDefaultConfiguration) manager.createNamedQuery("DownloadDefaultConfiguration:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
+			DownloadConfig downloadConfig = (DownloadConfig) manager.createNamedQuery("DownloadConfig:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
 		}catch(NoResultException e){
 			return false;
 		}
@@ -112,8 +112,8 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteConfig(Long id) {
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration =manager.find(DownloadDefaultConfiguration.class,id);
-		manager.remove(downloadDefaultConfiguration);
+		DownloadConfig downloadConfig =manager.find(DownloadConfig.class,id);
+		manager.remove(downloadConfig);
 	}
 	
 

@@ -16,15 +16,14 @@ import javax.persistence.*;
 	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t  where activa=true"),
 	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where finalizada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t  where fechaUltimaActulizacion<=?"),
-	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.descargas d where t.idTarea=? and d.finalizada=false"),
+	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.imagens d where t.idTarea=? and d.finalizada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion")
 })
 public class Tarea implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public Tarea(){
-		this.ejecucionActiva=false;
-		this.ejecucionFinalizada=false;
+		
 	}
 	
     @Id
@@ -49,11 +48,6 @@ public class Tarea implements Serializable {
     @Column(name="ACTIVA", nullable =false)
     private boolean descargaActiva;
     
-    @Column(name="EJECUCION_ACTIVA",nullable =false)
-    private boolean ejecucionActiva;
-    
-    @Column(name="EJECUCION_FINALIZADA",nullable =false)
-    private boolean ejecucionFinalizada;
     
     @Column(name="FECHAULTACTUALIZACION")
     private Date fechaUltimaActualizacion;
@@ -243,21 +237,7 @@ public class Tarea implements Serializable {
 		return descripcion;
 	}
 
-	public void setEjecucionActiva(boolean ejecucionActiva) {
-		this.ejecucionActiva = ejecucionActiva;
-	}
 
-	public boolean isEjecucionActiva() {
-		return ejecucionActiva;
-	}
-
-	public void setEjecucionFinalizada(boolean ejecucionFinalizada) {
-		this.ejecucionFinalizada = ejecucionFinalizada;
-	}
-
-	public boolean isEjecucionFinalizada() {
-		return ejecucionFinalizada;
-	}
 
     
     

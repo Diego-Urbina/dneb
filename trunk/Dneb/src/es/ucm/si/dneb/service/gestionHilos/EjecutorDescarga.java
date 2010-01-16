@@ -85,7 +85,7 @@ public class EjecutorDescarga implements EjecutorTarea{
                     LOG.info("HILOS STOP =" + stop);
                     
                     if(inter.continuar()){
-                            serviceDownloadImage.startDownload(imagen.getIdDescarga(), tarea.getAlto(), tarea.getFormatoFichero().getDescipcion());
+                            serviceDownloadImage.startDownload(imagen.getIdDescarga(), tarea.getAlto(), tarea.getFormatoFichero().getAlias());
                     }else{
                             break;
                     }
