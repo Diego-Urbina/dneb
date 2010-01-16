@@ -49,7 +49,7 @@ public class ServiceDownloadImageImpl  implements es.ucm.si.dneb.service.downloa
 		Double.toString(imagen.getAncho()), formatoFichero, "none",
 		imagen.getRutaFichero());
 		
-		imagen.setFinalizada(true);
+		imagen.setDescargada(true);
 		manager.merge(imagen);
 		
 		

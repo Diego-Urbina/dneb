@@ -70,7 +70,7 @@ public class TaskPanel extends JPanel {
 	        	fila[7] = tarea.getSolpamiento();
 	        	fila[8] = tarea.getFechaCreacion().toString();
 	        	fila[9] = tarea.getFechaUltimaActualizacion().toString();
-	        	fila[10] = tarea.getFormatoFichero().getDescipcion();
+	        	fila[10] = tarea.getFormatoFichero().getAlias();
 	        	fila[11] = tarea.getRuta();
 	        	fila[12] = tarea.getSurveys().get(0).getDescripcion();
 	        	fila[13] = tarea.getSurveys().get(1).getDescripcion();

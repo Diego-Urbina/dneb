@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Imagen:dameNumeroDescargasDeUnaTarea",query="select count(*) from Imagen d where tarea=?"),
-	@NamedQuery(name="Imagen:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Imagen d where tarea=? and finalizada=false")
+	@NamedQuery(name="Imagen:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Imagen d where tarea=? and descargada=false")
 })
-@Table(name="DESCARGA")
+@Table(name="IMAGEN")
 public class Imagen {
 	
 	public Imagen(){
@@ -30,12 +30,12 @@ public class Imagen {
 	@JoinColumn(name="Survey_ID_FK",nullable=false)
 	private Survey survey;
 	
-	private boolean finalizada;
+	private boolean descargada;
 	
 	@Column(name="ANALIZADADOBLE", nullable =false)
 	private boolean descargaAnalizadaEstrellaDoble; 
 	
-	private Date fechaFinalizacion;
+	private Date fechaDescarga;
 	
 	private String rutaFichero;
 	
@@ -81,20 +81,20 @@ public class Imagen {
 
 
 
-	public void setFinalizada(boolean finalizada) {
-		this.finalizada = finalizada;
+	public void setDescargada(boolean finalizada) {
+		this.descargada = finalizada;
 	}
 
-	public boolean isFinalizada() {
-		return finalizada;
+	public boolean isDescargada() {
+		return descargada;
 	}
 
-	public void setFechaFinalizacion(Date fechaFinalizacion) {
-		this.fechaFinalizacion = fechaFinalizacion;
+	public void setFechaDescarga(Date fechaFinalizacion) {
+		this.fechaDescarga = fechaFinalizacion;
 	}
 
-	public Date getFechaFinalizacion() {
-		return fechaFinalizacion;
+	public Date getFechaDescarga() {
+		return fechaDescarga;
 	}
 
 	public void setRutaFichero(String rutaFichero) {

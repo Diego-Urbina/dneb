@@ -17,10 +17,10 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="DownloadDefaultConfiguration:dameConfiguracionPorAlias",query="select c from DownloadDefaultConfiguration c where alias=?"),
-	@NamedQuery(name="DownloadDefaultConfiguration:dameTodasConfiguraciones",query="select c from DownloadDefaultConfiguration c")
+	@NamedQuery(name="DownloadConfig:dameConfiguracionPorAlias",query="select c from DownloadConfig c where alias=?"),
+	@NamedQuery(name="DownloadConfig:dameTodasConfiguraciones",query="select c from DownloadConfig c")
 })
-public class DownloadDefaultConfiguration {
+public class DownloadConfig {
 	
 	
 	@Id

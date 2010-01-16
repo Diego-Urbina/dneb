@@ -9,7 +9,7 @@ import com.intellij.uiDesigner.core.*;
 
 import org.springframework.context.ApplicationContext;
 
-import es.ucm.si.dneb.domain.DownloadDefaultConfiguration;
+import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 
@@ -37,7 +37,7 @@ public class CreateNewDownload extends JPanel {
 	
 	private ArrayList<Survey> surveys;
 	private ArrayList<FormatoFichero> formatosFichero; 
-	private ArrayList<DownloadDefaultConfiguration> configsList;
+	private ArrayList<DownloadConfig> configsList;
 	
 	public CreateNewDownload(VentanaPcpal pcpal,int position) {
 		principal = pcpal;
@@ -95,7 +95,7 @@ public class CreateNewDownload extends JPanel {
         
         
         for (FormatoFichero aux : formatosFichero){
-        	listFormato.addElement(aux.getDescipcion());
+        	listFormato.addElement(aux.getAlias());
         }
         
         this.formatoFichero.setModel(listFormato);
@@ -116,7 +116,7 @@ public class CreateNewDownload extends JPanel {
 	private void updateConfigList() {
 		
 		
-		configsList = (ArrayList<DownloadDefaultConfiguration>) serviceDownloadDefaultConfig.getDownloadConfigs();
+		configsList = (ArrayList<DownloadConfig>) serviceDownloadDefaultConfig.getDownloadConfigs();
         if(configsList.size()==0){
         	return;
         	
@@ -124,7 +124,7 @@ public class CreateNewDownload extends JPanel {
 		
         DefaultComboBoxModel comboConfigList = new DefaultComboBoxModel();
         
-        for (DownloadDefaultConfiguration aux : configsList){
+        for (DownloadConfig aux : configsList){
         	comboConfigList.addElement(aux.getAlias());
         }
         
@@ -216,7 +216,7 @@ public class CreateNewDownload extends JPanel {
 		
 		int configDefault = this.comboBoxValoresPorDefecto.getSelectedIndex();
 		 
-		DownloadDefaultConfiguration selectedDownloadDefaultConfiguration = configsList.get(configDefault);
+		DownloadConfig selectedDownloadDefaultConfiguration = configsList.get(configDefault);
 		
 		if(selectedDownloadDefaultConfiguration.getAlto()!=null){
 			this.ALTOINPUT.setText(selectedDownloadDefaultConfiguration.getAlto().toString());
@@ -242,7 +242,7 @@ public class CreateNewDownload extends JPanel {
 			
 			FormatoFichero aux= formatosFichero.get(i);
 			
-			if(aux.getDescipcion().equals(formFich.getDescipcion())){
+			if(aux.getAlias().equals(formFich.getAlias())){
 				formatoFichero.setSelectedIndex(i);
 			}
 		}
@@ -275,12 +275,12 @@ public class CreateNewDownload extends JPanel {
 		String aliasConfig = aliasNuevaConfig.getText();
 		
 		
-		DownloadDefaultConfiguration downloadDefaultConfiguration= new DownloadDefaultConfiguration();
+		DownloadConfig downloadConfig= new DownloadConfig();
 		
 		
 		
 		if(!this.aliasNuevaConfig.getText().equals("")){
-			downloadDefaultConfiguration.setAlias(this.aliasNuevaConfig.getText());
+			downloadConfig.setAlias(this.aliasNuevaConfig.getText());
 		}else{
 			showAlertMessage("INTRODUZCA UN ALIAS DE CONFIGURACION");
 			return;
@@ -294,19 +294,19 @@ public class CreateNewDownload extends JPanel {
 		}
 		
 		if(!this.ALTOINPUT.getText().equals("")){
-			downloadDefaultConfiguration.setAlto(Double.valueOf(this.ALTOINPUT.getText()));	
+			downloadConfig.setAlto(Double.valueOf(this.ALTOINPUT.getText()));	
 		}
 		
 		if(!this.ANCHOINPUT.getText().equals("")){
-			downloadDefaultConfiguration.setAncho(Double.valueOf(this.ANCHOINPUT.getText()));
+			downloadConfig.setAncho(Double.valueOf(this.ANCHOINPUT.getText()));
 		}
 		
 		int formatoSeleccionado = this.formatoFichero.getSelectedIndex();
 		
-		downloadDefaultConfiguration.setFormatoFichero(formatosFichero.get(formatoSeleccionado));
+		downloadConfig.setFormatoFichero(formatosFichero.get(formatoSeleccionado));
 		
 		if(!this.ruta.getText().equals("")){
-			downloadDefaultConfiguration.setPath(this.ruta.getText());
+			downloadConfig.setPath(this.ruta.getText());
 		}
 		
 		int survey1 = this.comboBoxSURVEY1.getSelectedIndex();
@@ -319,10 +319,10 @@ public class CreateNewDownload extends JPanel {
 	
 		
 		
-		downloadDefaultConfiguration.setSurveys(selectedSurveys);
+		downloadConfig.setSurveys(selectedSurveys);
 		
 		
-		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadDefaultConfiguration);
+		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);
 		
 		updateConfigList();
 		
