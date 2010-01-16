@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Imagen {
 	
 	public Imagen(){
-		this.descargaAnalizadaEstrellaDoble=false;
+		
 	}
 	
 	@Id
@@ -22,26 +22,27 @@ public class Imagen {
     @Column(name="ID_DESCARGA")
     private long idDescarga;
 	
+	@Column(name="AR", nullable =false)
 	private String ascensionRecta;
 	
+	@Column(name="DECLI", nullable =false)
 	private String declinacion;
 	
 	@ManyToOne
 	@JoinColumn(name="Survey_ID_FK",nullable=false)
 	private Survey survey;
 	
+	@Column(name="DESCARGADA", nullable =false)
 	private boolean descargada;
 	
-	@Column(name="ANALIZADADOBLE", nullable =false)
-	private boolean descargaAnalizadaEstrellaDoble; 
-	
+	@Column(name="FECHA_DESCARGA")
 	private Date fechaDescarga;
 	
+	 @Column(name="RUTA")
 	private String rutaFichero;
 	
+	 @Column(name="ANCHO")
 	private Double ancho;
-	
-	
 
 	@ManyToOne
     @JoinColumn(name="TAREA_ID_FK",nullable=false)
@@ -121,14 +122,7 @@ public class Imagen {
 		return ancho;
 	}
 
-	public void setDescargaAnalizadaEstrellaDoble(
-			boolean descargaAnalizadaEstrellaDoble) {
-		this.descargaAnalizadaEstrellaDoble = descargaAnalizadaEstrellaDoble;
-	}
 
-	public boolean isDescargaAnalizadaEstrellaDoble() {
-		return descargaAnalizadaEstrellaDoble;
-	}
 	
 	
 }

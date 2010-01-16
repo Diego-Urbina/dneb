@@ -19,6 +19,7 @@ public class Survey {
 	@Column(name="DESCRIPCION",nullable=false,unique=true)
 	private String descripcion;
 	
+	
 	@ManyToMany(mappedBy="surveys")
 	private Collection<Tarea> tareas;
 
