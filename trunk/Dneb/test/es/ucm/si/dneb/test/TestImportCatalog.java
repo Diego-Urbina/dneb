@@ -41,7 +41,7 @@ public class TestImportCatalog {
 		
 	}
 	
-	@Test
+	
 	public void loadDataToStringTest(){
 		 ArrayList<String> bob = importDoubleStarCatalog.loadCatalogToString("D:/DESARROLLO/eclipseworkspace/Dneb/docs/wds.txt");
 	        for (int i=0; i<bob.size(); i++)
@@ -50,5 +50,11 @@ public class TestImportCatalog {
 		
 	}
 	
+	@Test
+	public void loadDataToDDBB(){
+		
+		importDoubleStarCatalog.loadCatalog("D:/DESARROLLO/eclipseworkspace/Dneb/docs/wds.txt");
+	
+	}
 
 }
