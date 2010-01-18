@@ -242,6 +242,21 @@
           </object> 
           <void method="setProperty"> 
            <string>text</string> 
+           <string>EXPORTAR DATOS</string> 
+          </void> 
+          <void property="name"> 
+           <string>menu6</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JMenu</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>javax.swing.JMenu</class> 
+          </object> 
+          <void method="setProperty"> 
+           <string>text</string> 
            <string>IMPORTAR DATOS</string> 
           </void> 
           <void method="setProperty"> 
@@ -294,6 +309,26 @@
               <string>java.awt.event.ActionListener</string> 
               <string>actionPerformed</string> 
               <string>importXMLActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>IMPORTAR CATÁLOGO ESTRELLAS DOBLES</string> 
+            </void> 
+            <void property="name"> 
+             <string>menuCatalogoED</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>menuCatalogoEDActionPerformed</string> 
               <boolean>true</boolean> 
              </object> 
             </void> 
