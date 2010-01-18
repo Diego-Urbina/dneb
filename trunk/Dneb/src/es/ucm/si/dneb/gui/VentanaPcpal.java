@@ -164,6 +164,10 @@ public class VentanaPcpal extends JFrame{
 	private void posicionActionPerformed(ActionEvent e) {
 		// TODO add your code here
 	}
+
+	private void menuCatalogoEDActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		menuBar1 = new JMenuBar();
@@ -176,9 +180,11 @@ public class VentanaPcpal extends JFrame{
 		menu3 = new JMenu();
 		configBBDD = new JMenuItem();
 		configDownload = new JMenuItem();
+		menu6 = new JMenu();
 		menu4 = new JMenu();
 		importBBDD = new JMenuItem();
 		importXML = new JMenuItem();
+		menuCatalogoED = new JMenuItem();
 		menu5 = new JMenu();
 		visualizador = new JMenuItem();
 		buscar = new JMenuItem();
@@ -274,6 +280,12 @@ public class VentanaPcpal extends JFrame{
 			}
 			menuBar1.add(menu3);
 
+			//======== menu6 ========
+			{
+				menu6.setText("EXPORTAR DATOS");
+			}
+			menuBar1.add(menu6);
+
 			//======== menu4 ========
 			{
 				menu4.setText("IMPORTAR DATOS");
@@ -298,6 +310,15 @@ public class VentanaPcpal extends JFrame{
 					}
 				});
 				menu4.add(importXML);
+
+				//---- menuCatalogoED ----
+				menuCatalogoED.setText("IMPORTAR CAT\u00c1LOGO ESTRELLAS DOBLES");
+				menuCatalogoED.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						menuCatalogoEDActionPerformed(e);
+					}
+				});
+				menu4.add(menuCatalogoED);
 			}
 			menuBar1.add(menu4);
 
@@ -365,9 +386,11 @@ public class VentanaPcpal extends JFrame{
 	private JMenu menu3;
 	private JMenuItem configBBDD;
 	private JMenuItem configDownload;
+	private JMenu menu6;
 	private JMenu menu4;
 	private JMenuItem importBBDD;
 	private JMenuItem importXML;
+	private JMenuItem menuCatalogoED;
 	private JMenu menu5;
 	private JMenuItem visualizador;
 	private JMenuItem buscar;
