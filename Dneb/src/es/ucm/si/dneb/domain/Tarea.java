@@ -13,8 +13,8 @@ import javax.persistence.*;
 @NamedQueries({
 	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t  where fechaUltimaActulizacion=?"),
 	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t  where fechaCreacion=?"),
-	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t  where activa=true"),
-	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where finalizada=false"),
+	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t  where descargaActiva=true"),
+	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where descargaFinalizada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t  where fechaUltimaActulizacion<=?"),
 	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.imagens d where t.idTarea=? and d.descargada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion")

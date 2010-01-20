@@ -1,7 +1,15 @@
 package es.ucm.si.dneb.service.gestionHilos;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import es.ucm.si.dneb.domain.Tarea;
 
+@Service("ejecutorCalculoPosicion")
+@Scope("prototype")
+@Transactional(propagation=Propagation.SUPPORTS)
 public class EjecutorCalculoPosicion implements EjecutorTarea{
 
 	@Override

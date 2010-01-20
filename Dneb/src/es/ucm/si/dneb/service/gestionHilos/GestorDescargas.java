@@ -18,29 +18,23 @@ import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 @Service("gestorDescargas")
-public class GestorDescargas implements GestorHilos{
-	
-
-	HashMap <Long,Hilo> hilos;
-	
+public class GestorDescargas extends GestorHilos{
 	
 	private static final Log LOG = LogFactory
 	.getLog(GestorDescargas.class);
-
 	
-	//ExecutorService service = Executors.newFixedThreadPool(60);
-	
-	public GestorDescargas(){
-		LOG.debug("GESTOR DESCARGAS CREADO CON CERO HILOS");
-		hilos=new HashMap<Long,Hilo>();
+	public GestorDescargas() {
+		super();
+		super.setNombreGestor("GESTOR DESCARGAS");
 	}
-	
+
+
 	public void anadirHilo(Tarea tarea) {
 		
 		LOG.debug("AÑADIR HILO:"+tarea.getIdTarea());
 		
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorTarea");
+		EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorDescarga");
 		gestor.setTarea(tarea);
 		gestor.setIdTarea(tarea.getIdTarea());
 		
@@ -57,7 +51,7 @@ public class GestorDescargas implements GestorHilos{
 		LOG.debug("LLAMADA A CREAR HILOS PARA TODAS LAS DESCARGAS");
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		for(Tarea tarea : tareas){
-			EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorTarea");
+			EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorDescarga");
 			gestor.setTarea(tarea);
 			gestor.setIdTarea(tarea.getIdTarea());
 			
@@ -70,65 +64,4 @@ public class GestorDescargas implements GestorHilos{
 	}
 
 	
-	public void eleminarHilo(Long id) {
-		
-		
-		Hilo hilo=hilos.get(id);
-		
-		
-		
-		if(hilo.isInterrupted()==false){
-			
-			
-			LOG.info(hilo.continuar());
-			hilo.parar();
-			LOG.info(hilo.continuar());
-			hilo.interrupt();
-		}
-		
-		
-		hilos.remove(id);
-		
-		LOG.info("ELIMINADO EL HILO:" +id);
-	}
-
-	
-	public HashMap<Long, Hilo> getHilos() {
-		return hilos;
-	}
-
-	
-	public void iniciarHilo(Long idHilo) {
-		Hilo hilo=hilos.get(idHilo);
-		
-		//service.execute(hilo);
-		hilo.start();
-		
-		LOG.info("INICIADO EL HILO:" +idHilo);
-		
-	}
-
-	public void interrumpirHilo(Long idHilo) {
-		
-		
-		
-		Hilo hilo=hilos.get(idHilo);
-		
-		Tarea tarea= hilo.getEjecutor().getTarea();
-		
-		this.eleminarHilo(idHilo);
-		
-		this.anadirHilo(tarea);
-		
-		LOG.info("INTERRUMPIDO EL HILO:" + idHilo);
-	}
-
-
-	public void setHilos(HashMap<Long, Hilo> hilos) {
-		this.hilos = hilos;
-		
-	}
-	
-
-
 }
