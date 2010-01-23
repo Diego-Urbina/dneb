@@ -1,6 +1,7 @@
 package es.ucm.si.dneb.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -47,6 +48,10 @@ public class Imagen {
 	@ManyToOne
     @JoinColumn(name="TAREA_ID_FK",nullable=false)
 	private Tarea tarea;
+	
+	@ManyToMany
+    @JoinTable(name="PROCESAMIENTO_IMAGEN_JT")
+    private List<ProcesamientoImagen> procesamientoImagen;
 
 	public void setIdDescarga(long idDescarga) {
 		this.idDescarga = idDescarga;
@@ -120,6 +125,14 @@ public class Imagen {
 
 	public Double getAncho() {
 		return ancho;
+	}
+
+	public void setProcesamientoImagen(List<ProcesamientoImagen> procesamientoImagen) {
+		this.procesamientoImagen = procesamientoImagen;
+	}
+
+	public List<ProcesamientoImagen> getProcesamientoImagen() {
+		return procesamientoImagen;
 	}
 
 
