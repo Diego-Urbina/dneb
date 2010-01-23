@@ -36,7 +36,7 @@ public class InformacionRelevante {
 	private TipoInformacionRelevante tipoInformacionRelevante;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="INFO_IMAGEN_JT")
+	@JoinTable(name="INFOREL_IMAGEN_JT")
 	private List<Imagen> imagenes;
 	
 

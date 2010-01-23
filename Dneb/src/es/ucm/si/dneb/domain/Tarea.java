@@ -71,7 +71,9 @@ public class Tarea implements Serializable {
     @JoinTable(name="TAREA_SURVEY_JT")
     private List<Survey> surveys;
     
-    
+    @ManyToMany
+    @JoinTable(name="TAREA_PROCESAMIENTO_JT")
+    private List<TareaProcesamiento> tareasProcesamiento;
     
     @Column(name="SOLAPAMIENTO")
     private double solapamiento;
@@ -234,6 +236,14 @@ public class Tarea implements Serializable {
 
 	public String getDescripcion() {
 		return descripcion;
+	}
+
+	public void setTareasProcesamiento(List<TareaProcesamiento> tareasProcesamiento) {
+		this.tareasProcesamiento = tareasProcesamiento;
+	}
+
+	public List<TareaProcesamiento> getTareasProcesamiento() {
+		return tareasProcesamiento;
 	}
 
 

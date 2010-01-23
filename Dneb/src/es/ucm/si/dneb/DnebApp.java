@@ -11,10 +11,10 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.inicializador.ServicioInicializador;
 
-public class HttpImageDownloaderApp {
+public class DnebApp {
 	
 	private static final Log LOG = LogFactory
-	.getLog(HttpImageDownloaderApp.class);
+	.getLog(DnebApp.class);
 	/**
 	 * @param args size
 	 * @throws UnsupportedLookAndFeelException 
