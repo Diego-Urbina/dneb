@@ -9,57 +9,56 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 @Service("gestorCalculoPosicion")
-public class GestorCalculoPosicion extends GestorHilos{
+public class GestorCalculoPosicion implements GestorHilos<TareaProcesamiento>{
 	
 	
-	HashMap <Long,Hilo> hilos;
+	private HashMap <Long,Hilo> hilos;
 	
 	private static final Log LOG = LogFactory
 	.getLog(GestorCalculoPosicion.class);
 	
-	
-	
-	public GestorCalculoPosicion() {
-		super();
-		super.setNombreGestor("GESTOR CALCULO POSICION");
-	}
-
-	@Override
-	public void anadirHilo(Tarea tarea) {
-		LOG.debug("AÑADIR HILO:"+tarea.getIdTarea());
-		
-		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorCalculoPosicion");
-		gestor.setTarea(tarea);
-		gestor.setIdTarea(tarea.getIdTarea());
-		
-		Hilo hilo = new Hilo(gestor);
-		hilos.put(tarea.getIdTarea(), hilo);
-		
-		LOG.info("HILO CREADO:"+ tarea.getIdTarea());
+	public GestorCalculoPosicion(){
 		
 	}
 
 	@Override
-	public void crearHilosParaTodasLasTareas(List<Tarea> tareas) {
-		LOG.debug("LLAMADA A CREAR HILOS PARA TODAS LAS DESCARGAS");
-		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		for(Tarea tarea : tareas){
-			EjecutorTarea gestor=(EjecutorTarea)ctx.getBean("ejecutorCalculoPosicion");
-			gestor.setTarea(tarea);
-			gestor.setIdTarea(tarea.getIdTarea());
-			
-			Hilo hilo = new Hilo(gestor);
-			hilos.put(tarea.getIdTarea(), hilo);
-		}
-		
-		LOG.info("TAREAS CREADAS PARA TODAS LAS DESCARGAS");
+	public void anadirHilo(TareaProcesamiento t) {
+		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
+	public void eleminarHilo(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void iniciarHilo(Long idHilo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void interrumpirHilo(Long idHilo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setHilos(HashMap <Long,Hilo> hilos) {
+		this.hilos = hilos;
+	}
+
+	public HashMap <Long,Hilo> getHilos() {
+		return hilos;
+	}
+	
+	
+	
 
 	
 
