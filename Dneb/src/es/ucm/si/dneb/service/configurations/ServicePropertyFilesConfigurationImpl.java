@@ -14,9 +14,9 @@ public class ServicePropertyFilesConfigurationImpl implements es.ucm.si.dneb.ser
 
 	@Override
 	public ResourceBundle loadDataBaseConfiguration() {
-		ResourceBundle dataBaseProperties = ResourceBundle.getBundle("jdbc");
+		ResourceBundle dBProp = ResourceBundle.getBundle("jdbc");
 		
-		return dataBaseProperties;
+		return dBProp;
 	}
 
 

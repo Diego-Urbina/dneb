@@ -1,9 +1,6 @@
 package es.ucm.si.dneb.service.gestionTareas;
 
-import java.io.IOException;
 import java.util.List;
-
-import org.apache.http.client.ClientProtocolException;
 
 import es.ucm.si.dneb.domain.*;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;

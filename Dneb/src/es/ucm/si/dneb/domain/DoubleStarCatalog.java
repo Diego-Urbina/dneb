@@ -78,7 +78,7 @@ public class DoubleStarCatalog {
 	private String notes;
 	
 	@Column(name="ARCH_COORD_2000")
-	private String ArcsecondCoordinates2000;
+	private String arcsecondCoordinates2000;
 
 	public long getId() {
 		return id;
@@ -241,12 +241,14 @@ public class DoubleStarCatalog {
 	}
 
 	public String getArcsecondCoordinates2000() {
-		return ArcsecondCoordinates2000;
+		return arcsecondCoordinates2000;
 	}
 
 	public void setArcsecondCoordinates2000(String arcsecondCoordinates2000) {
-		ArcsecondCoordinates2000 = arcsecondCoordinates2000;
+		this.arcsecondCoordinates2000 = arcsecondCoordinates2000;
 	}
+
+	
 	
 	
 }

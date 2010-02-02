@@ -3,12 +3,19 @@ package es.ucm.si.dneb.service.image.segmentation;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import es.ucm.si.dneb.service.importData.ImportDoubleStarCatalogImpl;
+
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 
 
 public class StarFinderApp {
+	
+	private static final  Log LOG = LogFactory.getLog(StarFinderApp.class);
 
 	public static void main(String[] args) {		
 		try {			
@@ -21,14 +28,14 @@ public class StarFinderApp {
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
 			LectorImageHDU l1 = new LectorImageHDU(imageHDU, filename);
 			
-			System.out.println("Atributos imagen\n------------------");
-			System.out.println("Filename:  " + l1.getFilename());
-			System.out.println("Min:  " + l1.getMin());
-			System.out.println("Max:  " + l1.getMax());
-			System.out.println("Average:  " + l1.getAverage());
-			System.out.println("Scale:  " + l1.getScale());
-			System.out.println("Width:  " + l1.getWidth());
-			System.out.println("Height:  " + l1.getHeight());
+			LOG.debug("Atributos imagen\n------------------");
+			LOG.debug("Filename:  " + l1.getFilename());
+			LOG.debug("Min:  " + l1.getMin());
+			LOG.debug("Max:  " + l1.getMax());
+			LOG.debug("Average:  " + l1.getAverage());
+			LOG.debug("Scale:  " + l1.getScale());
+			LOG.debug("Width:  " + l1.getWidth());
+			LOG.debug("Height:  " + l1.getHeight());
 			
 			StarFinder sf = new StarFinder();
 			float umbral = 10000;

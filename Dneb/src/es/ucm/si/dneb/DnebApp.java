@@ -34,6 +34,7 @@ public class DnebApp {
 		servicioGestionTareas.anadirTareasAlGestor();
 		
 		
+		
 		VentanaPcpal vent = new VentanaPcpal();
 	}
 

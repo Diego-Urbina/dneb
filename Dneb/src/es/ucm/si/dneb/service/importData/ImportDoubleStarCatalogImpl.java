@@ -56,7 +56,7 @@ public class ImportDoubleStarCatalogImpl implements ImportDoubleStarCatalog{
 		        }
 		        catch (IOException e)
 		        {
-		            System.out.println(e);
+		            LOG.debug(e);
 		            return null;
 		        }
 
