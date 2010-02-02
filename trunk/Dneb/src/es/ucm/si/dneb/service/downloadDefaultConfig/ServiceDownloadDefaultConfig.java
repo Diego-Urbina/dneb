@@ -2,13 +2,9 @@ package es.ucm.si.dneb.service.downloadDefaultConfig;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Tarea;
 
 public interface ServiceDownloadDefaultConfig {
 	

@@ -1,6 +1,6 @@
 package es.ucm.si.dneb.service.image.centroid;
 
-import java.util.ArrayList;
+
 
 import es.ucm.si.dneb.service.image.util.Point;
 

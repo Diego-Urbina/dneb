@@ -9,11 +9,16 @@ import java.util.Iterator;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.ROIShape;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
 
 
 public class StarFinder {
+	
+	private static final  Log LOG = LogFactory.getLog(StarFinder.class);
 
 	private ArrayList<RectStar> recuadros;
 	
@@ -63,7 +68,7 @@ public class StarFinder {
 		Iterator<RectStar> it = recuadros.iterator();
 		while (it.hasNext()) {
 			RectStar r = it.next();		
-			System.out.println(r.toString()+"\n");
+			LOG.debug(r.toString()+"\n");
 			Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 		    ImageRegion ir = new ImageRegion(input,new ROIShape(s));
 		    ir.setBorderColor(new Color(255,255,0));

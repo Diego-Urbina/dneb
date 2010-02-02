@@ -24,7 +24,7 @@ public class ImageRegion
   private Color borderColor,fillColor; // Colors to draw/paint this polygon.
   private Stroke stroke;
   // Some convenience fields (we just need to get their values once).
-  private int width,height,dimensions,numberOfPixels;
+  private int dimensions,numberOfPixels;
   private Rectangle polygonBounds;
   // Fields to iterate on the image.
   private RandomIter iterator;
@@ -40,8 +40,8 @@ public class ImageRegion
     {
     image = i;
     roi = r;
-    width = image.getWidth();
-    height = image.getHeight();
+    //width = image.getWidth();
+    //height = image.getHeight();
     dimensions = image.getNumBands();
     // Get an iterator for the image.
     iterator = RandomIterFactory.create(image, null);

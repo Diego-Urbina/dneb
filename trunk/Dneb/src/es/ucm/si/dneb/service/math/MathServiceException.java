@@ -2,6 +2,11 @@ package es.ucm.si.dneb.service.math;
 
 public class MathServiceException extends RuntimeException{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1272042815958005269L;
+
 	public MathServiceException() {
 		super();
 			

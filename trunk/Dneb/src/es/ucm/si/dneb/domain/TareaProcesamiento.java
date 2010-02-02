@@ -1,10 +1,7 @@
 package es.ucm.si.dneb.domain;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +17,7 @@ public class TareaProcesamiento {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
-    private long id;
+    private long idTarea;
 	
 	private String alias;
 	
@@ -36,24 +33,18 @@ public class TareaProcesamiento {
     private boolean activa;
     
     @Column(name="ULTACTUALIZACION")
-    private Date fechaUltimaActualizacion;
+    private Date fechaUltimaAct;
 	
 	@ManyToMany(mappedBy="tareasProcesamiento")
 	private List<Tarea> tareas;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 
 	public String getAlias() {
 		return alias;
 	}
 
-	public void setAlias(String alias) {
+	public void setAlias(final String alias) {
 		this.alias = alias;
 	}
 
@@ -61,7 +52,7 @@ public class TareaProcesamiento {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -69,7 +60,7 @@ public class TareaProcesamiento {
 		return fechaCreacion;
 	}
 
-	public void setFechaCreacion(Date fechaCreacion) {
+	public void setFechaCreacion(final Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 
@@ -77,7 +68,7 @@ public class TareaProcesamiento {
 		return finalizada;
 	}
 
-	public void setFinalizada(boolean finalizada) {
+	public void setFinalizada(final boolean finalizada) {
 		this.finalizada = finalizada;
 	}
 
@@ -85,16 +76,26 @@ public class TareaProcesamiento {
 		return activa;
 	}
 
-	public void setActiva(boolean activa) {
+	public void setActiva(final boolean activa) {
 		this.activa = activa;
 	}
 
-	public Date getFechaUltimaActualizacion() {
-		return fechaUltimaActualizacion;
+	
+
+	public long getIdTarea() {
+		return idTarea;
 	}
 
-	public void setFechaUltimaActualizacion(Date fechaUltimaActualizacion) {
-		this.fechaUltimaActualizacion = fechaUltimaActualizacion;
+	public void setIdTarea(long idTarea) {
+		this.idTarea = idTarea;
+	}
+
+	public Date getFechaUltimaAct() {
+		return fechaUltimaAct;
+	}
+
+	public void setFechaUltimaAct(Date fechaUltimaAct) {
+		this.fechaUltimaAct = fechaUltimaAct;
 	}
 
 	public void setTareas(List<Tarea> tareas) {

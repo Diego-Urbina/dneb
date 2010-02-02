@@ -8,8 +8,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import es.ucm.si.dneb.service.configurations.ServicePropertyFilesConfiguration;
-import es.ucm.si.dneb.test.TestConfig;
+
 
 public class MathServiceTest {
 	

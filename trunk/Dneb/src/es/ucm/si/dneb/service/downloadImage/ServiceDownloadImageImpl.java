@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.service.gestionHilos.EjecutorTarea;
+
 
 @Service("serviceDownloadImage")
 public class ServiceDownloadImageImpl  implements es.ucm.si.dneb.service.downloadImage.ServiceDownloadImage{

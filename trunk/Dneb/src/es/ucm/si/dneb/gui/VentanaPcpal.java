@@ -57,6 +57,9 @@ public class VentanaPcpal extends JFrame{
 		this.menu4.setIcon(new ImageIcon("images/import.png"));
 		this.menu2.setIcon(new ImageIcon("images/download_icon3.jpg"));
 		this.menu3.setIcon(new ImageIcon("images/Config-icon.png"));
+		
+		this.menu6.setIcon(new ImageIcon("images/export.png"));
+		this.menu7.setIcon(new ImageIcon("images/help_icon.jpg"));
 		this.menu1.setIcon(taskIcon);
 		
 		this.configBBDD.setIcon(new ImageIcon("images/database_icon.png"));
@@ -67,7 +70,11 @@ public class VentanaPcpal extends JFrame{
 		this.gestionarDescargasConfig.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));
 		this.gestorTareas.setIcon(new ImageIcon("images/vista-taskmanager-icon.png"));
 		this.importBBDD.setIcon(new ImageIcon("images/Database Insert.jpg"));
-		this.importXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));		
+		this.importXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
+		
+		this.buscar.setIcon(new ImageIcon("images/Process Icon.jpg"));	
+		this.posicion.setIcon(new ImageIcon("images/Process Icon.jpg"));
+		this.menuItem3.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 	}
 
 
@@ -189,12 +196,16 @@ public class VentanaPcpal extends JFrame{
 		visualizador = new JMenuItem();
 		buscar = new JMenuItem();
 		posicion = new JMenuItem();
+		menuItem3 = new JMenuItem();
+		menu7 = new JMenu();
+		menuItem2 = new JMenuItem();
+		menuItem1 = new JMenuItem();
 
 		//======== this ========
 		setIconImage(null);
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
-		
+
 
 		//======== menuBar1 ========
 		{
@@ -352,8 +363,26 @@ public class VentanaPcpal extends JFrame{
 					}
 				});
 				menu5.add(posicion);
+
+				//---- menuItem3 ----
+				menuItem3.setText("CONSULTAR CAT\u00c1LOGO");
+				menu5.add(menuItem3);
 			}
 			menuBar1.add(menu5);
+
+			//======== menu7 ========
+			{
+				menu7.setText("AYUDA");
+
+				//---- menuItem2 ----
+				menuItem2.setText("IMPORTAR CAT\u00c1LOGO");
+				menu7.add(menuItem2);
+
+				//---- menuItem1 ----
+				menuItem1.setText("DNEB");
+				menu7.add(menuItem1);
+			}
+			menuBar1.add(menu7);
 		}
 		setJMenuBar(menuBar1);
 
@@ -395,5 +424,9 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem visualizador;
 	private JMenuItem buscar;
 	private JMenuItem posicion;
+	private JMenuItem menuItem3;
+	private JMenu menu7;
+	private JMenuItem menuItem2;
+	private JMenuItem menuItem1;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

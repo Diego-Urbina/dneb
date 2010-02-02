@@ -474,7 +474,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		 
 		   public void addExtension(String extension){
 		      if(extension == null){
-		         throw new NullPointerException("La extensión no puede ser null.");
+		         throw new RuntimeException("La extensión no puede ser null.");
 		      }
 		      extensions.add(extension);
 		   }

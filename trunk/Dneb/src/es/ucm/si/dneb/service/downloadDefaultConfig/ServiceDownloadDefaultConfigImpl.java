@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Tarea;
 
 
 @Service("serviceDownloadDefaultConfig")
@@ -114,6 +113,10 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 		
 		DownloadConfig downloadConfig =manager.find(DownloadConfig.class,id);
 		manager.remove(downloadConfig);
+	}
+
+	public static Log getLog() {
+		return LOG;
 	}
 	
 

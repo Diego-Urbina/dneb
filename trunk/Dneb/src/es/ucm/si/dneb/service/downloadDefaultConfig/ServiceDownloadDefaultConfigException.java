@@ -2,6 +2,11 @@ package es.ucm.si.dneb.service.downloadDefaultConfig;
 
 public class ServiceDownloadDefaultConfigException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7492256030705931397L;
+
 	public ServiceDownloadDefaultConfigException() {
 		super();
 		// TODO Auto-generated constructor stub

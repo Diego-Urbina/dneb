@@ -5,10 +5,7 @@ import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.service.inicializador.ServicioInicializadorImpl;
 
 public class Util {
 	

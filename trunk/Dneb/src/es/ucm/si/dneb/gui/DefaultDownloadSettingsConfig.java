@@ -54,7 +54,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 	private void rellenarModel() {
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		serviceDownloadDefaultConfig = (ServiceDownloadDefaultConfig)ctx.getBean("serviceDownloadDefaultConfig");
-		setServicioGestionTareas((ServicioGestionTareas) ctx.getBean("servicioGestionTareas"));
+		servicioGestionTareas=((ServicioGestionTareas) ctx.getBean("servicioGestionTareas"));
 		
         try {
         	
