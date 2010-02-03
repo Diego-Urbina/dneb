@@ -240,7 +240,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	
 	private void buttonAbrirActionPerformed(ActionEvent e) {
 		FiltreExtensible filtre = new FiltreExtensible("Imagenes");
-		filtre.addExtension("dss_search.fits");
+		filtre.addExtension(".fits");
 		JFileChooser fc = new JFileChooser(".");
 		fc.addChoosableFileFilter(filtre);
 		
@@ -256,8 +256,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					Fits imagenFITS = new Fits(new File(file1));			
 					BasicHDU imageHDU = imagenFITS.getHDU(0);
 					l1 = new LectorImageHDU(imageHDU, file1);
-					//input1 = createPlanarImage(l1.getArrayData(), l1.getWidth(), l1.getHeight(), 1);
-					input1 = JAI.create("fileload", "dss_search.gif");
+					input1 = createPlanarImage(l1.getArrayData(), l1.getWidth(), l1.getHeight(), 1);
+					
+					//input1 = JAI.create("fileload", "dss_search.gif");
 					scaledIm1 = input1;
 					rotatedIm1 = input1;
 					display1 = new DisplayImageWithRegions(input1);
@@ -268,8 +269,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					imagenFITS = new Fits(new File(file2));
 					imageHDU = imagenFITS.getHDU(0);
 					l2 = new LectorImageHDU(imageHDU, file1);
-					//input2 = createPlanarImage(l2.getArrayData(), l2.getWidth(), l2.getHeight(), 1);
-					input2 = JAI.create("fileload", "dss_search.gif");
+					input2 = createPlanarImage(l2.getArrayData(), l2.getWidth(), l2.getHeight(), 1);
+					
+					//input2 = JAI.create("fileload", "dss_search.gif");
 					scaledIm2 = input2;
 					rotatedIm2 = input2;
 					display2 = new DisplayImageWithRegions(input2);
