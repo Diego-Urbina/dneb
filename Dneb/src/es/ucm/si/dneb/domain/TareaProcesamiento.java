@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -38,7 +40,9 @@ public class TareaProcesamiento {
 	@ManyToMany(mappedBy="tareasProcesamiento")
 	private List<Tarea> tareas;
 
-	
+	 @ManyToOne
+	 @JoinColumn(name="TIPO_PROC",nullable=false) 
+	 private TipoProcesamiento tipoProcesamiento;
 
 	public String getAlias() {
 		return alias;
@@ -104,6 +108,14 @@ public class TareaProcesamiento {
 
 	public List<Tarea> getTareas() {
 		return tareas;
+	}
+
+	public void setTipoProcesamiento(TipoProcesamiento tipoProcesamiento) {
+		this.tipoProcesamiento = tipoProcesamiento;
+	}
+
+	public TipoProcesamiento getTipoProcesamiento() {
+		return tipoProcesamiento;
 	}
 
 	
