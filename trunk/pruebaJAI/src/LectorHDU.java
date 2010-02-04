@@ -50,7 +50,7 @@ public abstract class LectorHDU {
 	 * Imprime la matriz de datos
 	 * @throws FitsException
 	 */
-	public abstract void printArray() throws FitsException;
+	public abstract void printArrayData() throws FitsException;
 	
 	
 	/**
