@@ -134,6 +134,14 @@ public class DisplayImageWithRegions extends DisplayJAI
     }
   
   /**
+   * This method delete all ROIs.
+   */
+   public void deleteROIs()
+     {
+     ROIs.clear();
+     }
+  
+  /**
    * This method returns true if the mouse is on the image, and false if not.
    */
   public boolean isOnImage() {
