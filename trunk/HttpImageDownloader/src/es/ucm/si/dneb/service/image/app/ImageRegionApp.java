@@ -15,19 +15,14 @@ import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
-import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
-import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.jai.InterpolationBilinear;
-import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
-import javax.media.jai.RenderedImageAdapter;
 import javax.media.jai.TiledImage;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
@@ -39,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 
 import nom.tam.fits.BasicHDU;
@@ -52,14 +48,11 @@ import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
 	
 	private JScrollPane jsp1, jsp2;
-	private JLabel label;
-	private JPanel panel;
-	private JButton buttonAbrir, buttonSalir, buttonBuscar, buttonZoomMas, buttonZoomMenos, buttonGirar;
+	private JLabel labelPosicion;
+	private JTextField textFieldUmbral, textFieldBrillo;
 	
 	private DisplayImageWithRegions display1, display2;
-	private PlanarImage input1, input2, scaledIm1, scaledIm2, rotatedIm1, rotatedIm2;
-	private int scale; // la escala va del 10 al 1000%
-	private int angle; // el angulo va del 0 al 360
+	private PlanarImage input1, input2;
 	private LectorImageHDU l1, l2;
 	
 	private VentanaPcpal principal;
@@ -69,23 +62,13 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		principal = pcpal;
 		this.position=position;
 		initComponents();
-		
-		//initIcons();
-		//this.principal=principal;
-		//this.rellenarModel();
 	}
 	
 	public ImageRegionApp(JFrame parent) {
-		scale = 100;
-		angle = 0;
 		display1 = null;
 		display2 = null;
 		input1 = null;
 		input2 = null;
-		scaledIm1 = null;
-		scaledIm2 = null;
-		rotatedIm1 = null;
-		rotatedIm2 = null;
 		l1 = null;
 		l2 = null;
 		initComponents();
@@ -123,22 +106,22 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    add(jsp2, c);
 	    
 	    
-	    label = new JLabel();
+	    labelPosicion = new JLabel();
 	    c.gridx = 0;
 	    c.gridy = 1;
 	    c.gridwidth = 3;
 	    c.weighty = 0.0;
-	    add(label, c);
+	    add(labelPosicion, c);
 	    
 	    
-	    panel = new JPanel();
+	    JPanel panel = new JPanel();
 	    GroupLayout layout = new GroupLayout(panel);
 	    panel.setLayout(layout);
 	    
 	    layout.setAutoCreateGaps(true);
 	    layout.setAutoCreateContainerGaps(true);
 	    
-	    buttonAbrir = new JButton();
+	    JButton buttonAbrir = new JButton();
 	    Icon icon = new ImageIcon("images/abrir.gif");
 	    buttonAbrir.setIcon(icon);
 	    buttonAbrir.setToolTipText("Abrir imagenes");
@@ -148,7 +131,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			}
 		});
 	    
-	    buttonBuscar = new JButton();
+	    JButton buttonBuscar = new JButton();
 	    icon = new ImageIcon("images/buscar.gif");
 	    buttonBuscar.setIcon(icon);
 	    buttonBuscar.setToolTipText("Buscar estrellas en la imagen y marcarlas con cuadrados");
@@ -158,65 +141,36 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			}
 		});
 	    
-	    buttonSalir = new JButton();
-	    icon = new ImageIcon("images/salir.gif");
-	    buttonSalir.setIcon(icon);
-	    buttonSalir.setToolTipText("Salir del programa");
-	    buttonSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-	    
-	    buttonZoomMas = new JButton();
-	    icon = new ImageIcon("images/zoom+.gif");
-	    buttonZoomMas.setIcon(icon);
-	    buttonZoomMas.setToolTipText("Acercar la imagen");
-	    buttonZoomMas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonZoomMasActionPerformed(e);
-			}
-		});
-	    
-	    buttonZoomMenos = new JButton();
-	    icon = new ImageIcon("images/zoom-.gif");
-	    buttonZoomMenos.setIcon(icon);
-	    buttonZoomMenos.setToolTipText("Alejar la imagen");
-	    buttonZoomMenos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonZoomMenosActionPerformed(e);
-			}
-		});
-	    
-	    buttonGirar = new JButton();
-	    icon = new ImageIcon("images/girar.gif");
-	    buttonGirar.setIcon(icon);
-	    buttonGirar.setToolTipText("Girar la imagen");
-	    buttonGirar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonGirarActionPerformed(e);
-			}
-		});
+	    JLabel labelUmbral = new JLabel("Umbral");
+	    JLabel labelBrillo = new JLabel("Brillo");
+	    textFieldUmbral = new JTextField("10000");
+	    textFieldBrillo = new JTextField("40000");
 	    
 	    layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
-		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 		           .addComponent(buttonAbrir)
 		           .addComponent(buttonBuscar)
-		           .addComponent(buttonZoomMas)
-		           .addComponent(buttonZoomMenos)
-		           .addComponent(buttonGirar)
-		           .addComponent(buttonSalir))
+		           .addGap(20, 20, 20)
+		           .addGroup(layout.createSequentialGroup()
+		        		   .addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+		        		   .addComponent(textFieldUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+		           .addGroup(layout.createSequentialGroup()
+		           .addComponent(labelBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+		           .addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
 		);
 	    
 		layout.setVerticalGroup(
 		   layout.createSequentialGroup()
 		      .addComponent(buttonAbrir)
 		      .addComponent(buttonBuscar)
-		      .addComponent(buttonZoomMas)
-		      .addComponent(buttonZoomMenos)
-		      .addComponent(buttonGirar)
-		      .addComponent(buttonSalir)
+		      .addGap(20, 20, 20)
+		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		    		  .addComponent(labelUmbral)
+		    		  .addComponent(textFieldUmbral))
+		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		    		  .addComponent(labelBrillo)
+		    		  .addComponent(textFieldBrillo))
 		);
 		
 	    c.gridx = 2;
@@ -252,15 +206,15 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 				retval = fc.showOpenDialog(this);
 				if (retval == JFileChooser.APPROVE_OPTION) {
 					file2 = fc.getSelectedFile().toString();
+					File dir = new File("Temp");
+					dir.mkdir();
 					
 					Fits imagenFITS = new Fits(new File(file1));			
 					BasicHDU imageHDU = imagenFITS.getHDU(0);
 					l1 = new LectorImageHDU(imageHDU, file1);
-					input1 = createPlanarImage(l1.getArrayData(), l1.getWidth(), l1.getHeight(), 1);
-					
-					//input1 = JAI.create("fileload", "dss_search.gif");
-					scaledIm1 = input1;
-					rotatedIm1 = input1;
+					PlanarImage im = createPlanarImage(l1);
+					JAI.create("filestore",im,"Temp/im1.png","PNG");
+					input1 = JAI.create("fileload", "Temp/im1.png");
 					display1 = new DisplayImageWithRegions(input1);
 					display1.addMouseMotionListener(this);
 				    display1.addMouseListener(this);
@@ -269,15 +223,16 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					imagenFITS = new Fits(new File(file2));
 					imageHDU = imagenFITS.getHDU(0);
 					l2 = new LectorImageHDU(imageHDU, file1);
-					input2 = createPlanarImage(l2.getArrayData(), l2.getWidth(), l2.getHeight(), 1);
-					
-					//input2 = JAI.create("fileload", "dss_search.gif");
-					scaledIm2 = input2;
-					rotatedIm2 = input2;
+					im = createPlanarImage(l2);
+					JAI.create("filestore",im,"Temp/im2.png","PNG");
+					input2 = JAI.create("fileload", "Temp/im2.png");
 					display2 = new DisplayImageWithRegions(input2);
 					display2.addMouseMotionListener(this);
 					display2.addMouseListener(this);
 					jsp2.setViewportView(display2);
+					
+					borrarDirectorio(dir);
+					
 				}
 			}
 		} catch(Exception ex) {
@@ -285,108 +240,59 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
         }
 	}
 	
-	private PlanarImage createPlanarImage(int[][] arrayData, int width, int height, int numBands) {
-		int len = width * height;
-
-		// create a float sample model
-		SampleModel sampleModel = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_INT, width, height, numBands);
-
-		// create a compatible ColorModel
-		ColorModel colourModel = PlanarImage.createColorModel(sampleModel);
+	private void borrarDirectorio(File dir) {
+		File[] ficheros = dir.listFiles();
+		File aux = null;
+		for (int i = 0; i < ficheros.length; i++)
+			aux = ficheros[i];
+			if (aux.isDirectory())
+				borrarDirectorio(aux);
+			else
+				aux.delete();
 		
-		// create a TiledImage using the int SampleModel
-		TiledImage tiledImage = new TiledImage(0, 0, width, height, 0, 0, sampleModel, colourModel);
+		dir.delete();
+	}
+	
+	private PlanarImage createPlanarImage(LectorImageHDU l) {
+		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
 		
-		// create a DataBuffer from the int[][] array
-		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(arrayData);
-		DataBufferInt dataBuffer = new DataBufferInt(arrayDataAplanado, len);
-		
-		// create a Raster
-		Raster raster = RasterFactory.createWritableRaster(sampleModel, dataBuffer, new Point(0, 0));
-
-		// set the TiledImage data to that of the Raster
+		// Codigo copiado de internet q no entiendo pero q me sirve para
+		// guardar la imagen en PNG
+		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
+		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l1.getWidth(), l.getHeight(), 1);
+		ColorModel cm = PlanarImage.createColorModel(sm);
+		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new Point(0,0));
+		TiledImage tiledImage = new TiledImage(0,0,l.getWidth(),l.getHeight(),0,0,sm,cm);
 		tiledImage.setData(raster);
 		
-		RenderedImageAdapter img = new RenderedImageAdapter((RenderedImage)tiledImage);
-
-		return img;
-	}
-	
-	private void buttonZoomMasActionPerformed(ActionEvent e) {
-		if (input1 != null && input2 != null && scale >= 10 && scale <= 1000) {
-			scale += 10;
-			angle = 0;
-	
-		    ParameterBlock pb = new ParameterBlock();
-		    pb.addSource(rotatedIm1);
-		    pb.add(scale/100f);
-		    pb.add(scale/100f);
-		    pb.add(0.0F);
-		    pb.add(0.0F);
-		    pb.add(new InterpolationNearest());
-		    scaledIm1 = JAI.create("scale", pb);
-		    display1.set(scaledIm1);
-		    pb.addSource(rotatedIm2);
-		    scaledIm2 = JAI.create("scale", pb);
-		    display2.set(scaledIm2);
-		}
-	}
-	
-	private void buttonZoomMenosActionPerformed(ActionEvent e) {
-		if (input1 != null && input2 != null && scale >= 10 && scale <= 1000) {
-			scale -= 10;
-			angle = 0;
-			
-			ParameterBlock pb = new ParameterBlock();
-		    pb.addSource(rotatedIm1);
-		    pb.add(scale/100f);
-		    pb.add(scale/100f);
-		    pb.add(0.0F);
-		    pb.add(0.0F);
-		    pb.add(new InterpolationNearest());
-		    scaledIm1 = JAI.create("scale", pb);
-		    display1.set(scaledIm1);
-		    pb.addSource(rotatedIm2);
-		    scaledIm2 = JAI.create("scale", pb);
-		    display2.set(scaledIm2);
-		}
+		return tiledImage;
 	}
 	
 	private void buttonBuscarActionPerformed(ActionEvent e) {
 		StarFinder sf1 = new StarFinder(), sf2 = new StarFinder();
-		float umbral = 10000;
-		float brilloEstrella = 40000;
-		sf1.buscarEstrellas(l1, brilloEstrella, umbral);
-		sf1.printRectStars(input1, display1);
-		sf2.buscarEstrellas(l2, brilloEstrella, umbral);
-		sf2.printRectStars(input2, display2);
-		jsp1.repaint();
-		jsp2.repaint();
-	}
-	
-	private void buttonGirarActionPerformed(ActionEvent e) {
-		if (input1 != null && input2 != null) {
-			angle = (angle - 90) % 360;
-			scale = 100;
-			float angleRad = (float)Math.toRadians(angle);
+		float umbral, brilloEstrella;
+		try {
+			if (l1 == null || l2 == null)
+				throw new Exception("Debe cargar primero dos imágenes");
+				
+			umbral = Float.parseFloat(textFieldUmbral.getText());
+			brilloEstrella = Float.parseFloat(textFieldBrillo.getText());
 			
-			// Gets the rotation center.
-			float centerX; float centerY;
-			centerX = scaledIm1.getWidth()/2f;
-			centerY = scaledIm1.getHeight()/2f;
+			if (umbral <= 0 || brilloEstrella <= 0)
+				throw new Exception("Los parámetros deben ser mayores que 0");
 			
-			// Rotates the original image.
-			ParameterBlock pb = new ParameterBlock();
-			pb.addSource(scaledIm1);
-			pb.add(centerX);
-			pb.add(centerY);
-			pb.add(angleRad);
-			pb.add(new InterpolationBilinear());
-			rotatedIm1 = JAI.create("rotate", pb);
-			display1.set(rotatedIm1);
-			pb.addSource(scaledIm2);
-			rotatedIm2 = JAI.create("rotate", pb);
-			display2.set(rotatedIm2);
+			sf1.buscarEstrellas(l1, brilloEstrella, umbral);
+			display1.deleteROIs();
+			sf1.printRectStars(input1, display1);
+			sf2.buscarEstrellas(l2, brilloEstrella, umbral);
+			display2.deleteROIs();
+			sf2.printRectStars(input2, display2);
+			jsp1.repaint();
+			jsp2.repaint();
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(null, "Los parámetros deben ser numéricos");
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 	}
 
@@ -422,9 +328,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	public void mouseMoved(MouseEvent e) {
 		String pos = "(" + e.getX() + "," + e.getY() + ") ";
 		if (e.getSource() == display1)
-			label.setText(pos + display1.getPixelInfo());
+			labelPosicion.setText(pos + display1.getPixelInfo());
 		if (e.getSource() == display2)
-			label.setText(pos + display2.getPixelInfo());
+			labelPosicion.setText(pos + display2.getPixelInfo());
 	}
 	
 	@Override
@@ -476,7 +382,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		 
 		   public void addExtension(String extension){
 		      if(extension == null){
-		         throw new NullPointerException("La extensión no puede ser null.");
+		         throw new RuntimeException("La extensión no puede ser null.");
 		      }
 		      extensions.add(extension);
 		   }
