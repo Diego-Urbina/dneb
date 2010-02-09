@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,7 +33,10 @@ public class ProcesamientoImagen {
 
 	@ManyToMany(mappedBy = "procesamientoImagen")
 	private List<Imagen> imagenes;
-
+	
+	@ManyToOne
+    @JoinColumn(name="PROC_ID_FK",nullable=false)
+	private TareaProcesamiento tareaProcesamiento;
 	
 	
 	public long getId() {
@@ -80,6 +85,14 @@ public class ProcesamientoImagen {
 
 	public List<Imagen> getImagenes() {
 		return imagenes;
+	}
+
+	public void setTareaProcesamiento(TareaProcesamiento tareaProcesamiento) {
+		this.tareaProcesamiento = tareaProcesamiento;
+	}
+
+	public TareaProcesamiento getTareaProcesamiento() {
+		return tareaProcesamiento;
 	}
 	
 	

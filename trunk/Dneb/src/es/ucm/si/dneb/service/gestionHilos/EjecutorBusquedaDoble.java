@@ -25,6 +25,19 @@ public class EjecutorBusquedaDoble implements EjecutorTarea{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Object getCore() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	public Long getIdTarea() {
@@ -50,6 +63,18 @@ public class EjecutorBusquedaDoble implements EjecutorTarea{
 	public static Log getLog() {
 		return LOG;
 	}
+	@Override
+	public void setCore(Object core) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 	
 

@@ -32,15 +32,17 @@ import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.downloadImage.ServiceDownloadImage;
 
-public interface EjecutorTarea{
+public interface EjecutorTarea<Core>{
 	
 	public void ejecutar(Interrumpible inter);
 	
-	public void setIdTarea(Long idTarea);
+	public Long getId();
 	
-	public Long getIdTarea();
+	public void setId(Long id);
 	
-	public void setTarea(Tarea tarea);
+	public Core getCore();
 	
-	public Tarea getTarea();
+	public void setCore(Core core);
+	
+	
 }

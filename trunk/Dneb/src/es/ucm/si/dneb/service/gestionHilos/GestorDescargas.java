@@ -28,9 +28,9 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 		LOG.debug("AÑADIR HILO:" + tarea.getIdTarea());
 
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorTarea gestor = (EjecutorTarea) ctx.getBean("ejecutorDescarga");
-		gestor.setTarea(tarea);
-		gestor.setIdTarea(tarea.getIdTarea());
+		EjecutorDescarga gestor = (EjecutorDescarga) ctx.getBean("ejecutorDescarga");
+		gestor.setCore(tarea);
+		gestor.setId(tarea.getIdTarea());
 
 		Hilo hilo = new Hilo(gestor);
 		hilos.put(tarea.getIdTarea(), hilo);
@@ -44,10 +44,11 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 		LOG.debug("LLAMADA A CREAR HILOS PARA TODAS LAS DESCARGAS");
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		for (Tarea tarea : tareas) {
-			EjecutorTarea gestor = (EjecutorTarea) ctx
+			EjecutorTarea<Tarea> gestor = (EjecutorTarea<Tarea>) ctx
 					.getBean("ejecutorDescarga");
-			gestor.setTarea(tarea);
-			gestor.setIdTarea(tarea.getIdTarea());
+			///gestor.setTarea(tarea);
+			gestor.setCore(tarea);
+			gestor.setId(tarea.getIdTarea());
 
 			Hilo hilo = new Hilo(gestor);
 			hilos.put(tarea.getIdTarea(), hilo);
@@ -90,13 +91,14 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 
 	@Override
 	public void interrumpirHilo(Long idHilo) {
+		
 		Hilo hilo = hilos.get(idHilo);
 
-		Tarea tarea = hilo.getEjecutor().getTarea();
+		//Tarea tarea = hilo.getEjecutor().getTarea();
 
 		this.eleminarHilo(idHilo);
 
-		this.anadirHilo(tarea);
+		//this.anadirHilo(tarea);
 
 		LOG.info("GESTOR   nombreGestor INTERRUMPIDO EL HILO:" + idHilo);
 

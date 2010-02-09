@@ -22,6 +22,8 @@ public class GestorBusquedaDobles implements GestorHilos<TareaProcesamiento>{
 	
 	public GestorBusquedaDobles(){
 		
+		hilos = new HashMap<Long, Hilo>();
+		
 	}
 
 	@Override
@@ -54,6 +56,10 @@ public class GestorBusquedaDobles implements GestorHilos<TareaProcesamiento>{
 
 	public HashMap <Long,Hilo> getHilos() {
 		return hilos;
+	}
+
+	public static Log getLog() {
+		return LOG;
 	}
 	
 	
