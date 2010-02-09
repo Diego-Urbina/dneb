@@ -231,8 +231,6 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					display2.addMouseListener(this);
 					jsp2.setViewportView(display2);
 					
-					borrarDirectorio(dir);
-					
 				}
 			}
 		} catch(Exception ex) {
@@ -240,24 +238,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
         }
 	}
 	
-	private void borrarDirectorio(File dir) {
-		File[] ficheros = dir.listFiles();
-		File aux = null;
-		for (int i = 0; i < ficheros.length; i++)
-			aux = ficheros[i];
-			if (aux.isDirectory())
-				borrarDirectorio(aux);
-			else
-				aux.delete();
-		
-		dir.delete();
-	}
-	
 	private PlanarImage createPlanarImage(LectorImageHDU l) {
 		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
 		
-		// Codigo copiado de internet q no entiendo pero q me sirve para
-		// guardar la imagen en PNG
 		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
 		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l1.getWidth(), l.getHeight(), 1);
 		ColorModel cm = PlanarImage.createColorModel(sm);
