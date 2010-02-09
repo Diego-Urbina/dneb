@@ -13,6 +13,16 @@ public class VentanaPcpal extends JFrame{
 	private static final long serialVersionUID = -1633763922217208939L;
 	String survey1, survey2, ari, deci, arf, decf, eq, alto, ancho, solapamiento, ruta;
 	
+	//Control del número de pestañas de seguimiento abiertas
+	int numTaskPanels=0;
+	int maxTaskPanels=1;
+	
+	int numProcesDobles=0;
+	int maxProcesDobles=1;
+	
+	int numProcesDist=0;
+	int maxProcesDist=1;
+	
 	
 	private JTabbedPane  pane= new JTabbedPane();
 	

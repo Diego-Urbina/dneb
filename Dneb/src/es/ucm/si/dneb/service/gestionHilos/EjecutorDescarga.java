@@ -35,7 +35,7 @@ import es.ucm.si.dneb.service.downloadImage.ServiceDownloadImage;
 @Service("ejecutorDescarga")
 @Scope("prototype")
 @Transactional(propagation=Propagation.SUPPORTS)
-public class EjecutorDescarga implements EjecutorTarea{
+public class EjecutorDescarga implements EjecutorTarea<Tarea>{
 
 	 
     private static final Log LOG = LogFactory
@@ -51,19 +51,19 @@ public class EjecutorDescarga implements EjecutorTarea{
     
     volatile boolean stop=false;
 
-    public void setIdTarea(Long idTarea) {
+    public void setId(Long id) {
             this.idTarea = idTarea;
     }
 
-    public Long getIdTarea() {
+    public Long getId() {
             return idTarea;
     }
 
-    public void setTarea(Tarea tarea) {
+    public void setCore(Tarea tarea) {
             this.tarea = tarea;
     }
 
-    public Tarea getTarea() {
+    public Tarea getCore() {
             return tarea;
     }
     
@@ -108,5 +108,7 @@ public class EjecutorDescarga implements EjecutorTarea{
     public ServiceDownloadImage getServiceDownloadImage() {
             return serviceDownloadImage;
     }
+
+
 
 }
