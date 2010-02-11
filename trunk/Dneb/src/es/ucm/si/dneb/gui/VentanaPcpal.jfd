@@ -247,6 +247,26 @@
           <void property="name"> 
            <string>menu6</string> 
           </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>Exportar datos relevantes(XML)</string> 
+            </void> 
+            <void property="name"> 
+             <string>exportRelevantXML</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>exportRelevantXMLActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
          </object> 
         </void> 
         <void method="add"> 
@@ -417,7 +437,15 @@
              <string>CONSULTAR CATÁLOGO</string> 
             </void> 
             <void property="name"> 
-             <string>menuItem3</string> 
+             <string>consultarCatalogo</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>consultarCatalogoActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
             </void> 
            </object> 
           </void> 
@@ -444,7 +472,15 @@
              <string>IMPORTAR CATÁLOGO</string> 
             </void> 
             <void property="name"> 
-             <string>menuItem2</string> 
+             <string>importInfo</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>importInfoActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
             </void> 
            </object> 
           </void> 
@@ -456,7 +492,15 @@
              <string>DNEB</string> 
             </void> 
             <void property="name"> 
-             <string>menuItem1</string> 
+             <string>dnebInfo</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>dnebInfoActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
             </void> 
            </object> 
           </void> 
