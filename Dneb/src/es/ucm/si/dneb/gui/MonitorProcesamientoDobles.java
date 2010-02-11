@@ -26,7 +26,7 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
-public class ProcesamientoDobles extends JPanel{
+public class MonitorProcesamientoDobles extends JPanel{
 	
 	
 	private static final long serialVersionUID = 2891828746598298710L;
@@ -35,7 +35,7 @@ public class ProcesamientoDobles extends JPanel{
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
 	private ServicioGestionProcesamientos servicioGestionProcesamientos;
 	
-	public ProcesamientoDobles(VentanaPcpal pcpal) {
+	public MonitorProcesamientoDobles(VentanaPcpal pcpal) {
 		
 		initComponents();
 		principal = pcpal;

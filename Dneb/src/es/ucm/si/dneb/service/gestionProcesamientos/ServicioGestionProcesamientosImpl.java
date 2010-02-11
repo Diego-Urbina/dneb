@@ -16,7 +16,7 @@ import es.ucm.si.dneb.domain.TipoProcesamiento;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionException;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 
-@Service("ServicioGestionProcesamientos")
+@Service("servicioGestionProcesamientos")
 public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesamientos{
 	
 	@PersistenceContext
@@ -52,7 +52,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<TareaProcesamiento> getProcesamientosDistancia() {
 		
-		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 2);
+		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 2L);
 		
 		return manager.createNamedQuery("TareaProcesamiento.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
 		
@@ -62,7 +62,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<TareaProcesamiento> getProcesamientosDobles() {
 		
-		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 1);
+		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 1L);
 		
 		return manager.createNamedQuery("TareaProcesamiento.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
 		

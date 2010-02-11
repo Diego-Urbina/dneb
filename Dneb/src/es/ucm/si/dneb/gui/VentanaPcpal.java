@@ -14,14 +14,18 @@ public class VentanaPcpal extends JFrame{
 	String survey1, survey2, ari, deci, arf, decf, eq, alto, ancho, solapamiento, ruta;
 	
 	//Control del número de pestañas de seguimiento abiertas
-	int numTaskPanels=0;
-	int maxTaskPanels=1;
+	private MonitorProcesamientoDistancias procesamientoDistancias;
+	private MonitorProcesamientoDobles procesamientoDobles;
+	private TaskPanel taskPanel;
 	
-	int numProcesDobles=0;
-	int maxProcesDobles=1;
+	private int numTaskPanels=0;
+	private int maxTaskPanels=1;
 	
-	int numProcesDist=0;
-	int maxProcesDist=1;
+	private int numProcesDobles=0;
+	private int maxProcesDobles=1;
+	
+	private int numProcesDist=0;
+	private int maxProcesDist=1;
 	
 	
 	private JTabbedPane  pane= new JTabbedPane();
@@ -84,9 +88,12 @@ public class VentanaPcpal extends JFrame{
 		
 		this.buscar.setIcon(new ImageIcon("images/Process Icon.jpg"));	
 		this.posicion.setIcon(new ImageIcon("images/Process Icon.jpg"));
-		this.menuItem3.setIcon(new ImageIcon("images/catalogIcon.jpg"));
+		this.consultarCatalogo.setIcon(new ImageIcon("images/catalogIcon.jpg"));
+		
+		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
+		this.dnebInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
 	}
-
+	
 
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
 		pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
@@ -98,13 +105,18 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void gestorTareasActionPerformed(ActionEvent e) {
-		JPanel vent = new TaskPanel(this);
-		pane.addTab("Gestor de tareas", vent);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
+		if(numTaskPanels<maxTaskPanels){
+			JPanel vent = new TaskPanel(this);
+			pane.addTab("Gestor de tareas", vent);
+			this.initTabComponent(pane.getTabCount()-1);
+			pane.setSelectedIndex(pane.getTabCount()-1);
+			
+			this.setExtendedState(Frame.MAXIMIZED_BOTH);
+			setVisible(true);
+			
+			//this.numTaskPanels++;
+		}
 	}
 
 	private void crearDescargaActionPerformed(ActionEvent e) {
@@ -144,7 +156,15 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void importBBDDActionPerformed(ActionEvent e) {
-		// TODO add your code here
+
+		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD(this);
+		pane.addTab("Configurar Descargas", imptBBDD);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
+		
+		
 		
 		
 	}
@@ -166,25 +186,80 @@ public class VentanaPcpal extends JFrame{
 	private void visualizadorActionPerformed(ActionEvent e) {
 		// TODO add your code here
 		
+		
 		ImageRegionApp config = new ImageRegionApp(this);
 		pane.addTab("Configurar Descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
+		
+		
 	}
 
 	private void buscarActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		if(numProcesDobles<maxProcesDobles){
+			MonitorProcesamientoDobles prDobles= new MonitorProcesamientoDobles(this);
+			pane.addTab("Monitor Búsqueda dobles", prDobles);
+			this.initTabComponent(pane.getTabCount()-1);
+			pane.setSelectedIndex(pane.getTabCount()-1);
+			this.setExtendedState(Frame.MAXIMIZED_BOTH);
+			setVisible(true);
+			
+			//this.numProcesDobles++;
+		}
 	}
 
 	private void posicionActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		if(numProcesDist<maxProcesDist){
+			MonitorProcesamientoDistancias prDist= new MonitorProcesamientoDistancias(this);
+			pane.addTab("Monitor Cálculo distancias", prDist);
+			this.initTabComponent(pane.getTabCount()-1);
+			pane.setSelectedIndex(pane.getTabCount()-1);
+			this.setExtendedState(Frame.MAXIMIZED_BOTH);
+			setVisible(true);
+			
+			//this.numProcesDist++;
+		}
 	}
 
 	private void menuCatalogoEDActionPerformed(ActionEvent e) {
+		
+		ImportarCatalogo importarCatalogo = new ImportarCatalogo();
+		
+		pane.addTab("Importar catálogo", importarCatalogo);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
+	}
+
+	private void exportRelevantXMLActionPerformed(ActionEvent e) {
 		// TODO add your code here
 	}
+
+	private void consultarCatalogoActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
+
+	private void importInfoActionPerformed(ActionEvent e) {
+		
+		WdsHelp wdsHelp = new WdsHelp();
+		
+		pane.addTab("WDSC", wdsHelp);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
+	}
+
+	private void dnebInfoActionPerformed(ActionEvent e) {
+		// TODO add your code here
+		pane.add("DENEB",new BackgroundPanel(pane));
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		menuBar1 = new JMenuBar();
@@ -198,6 +273,7 @@ public class VentanaPcpal extends JFrame{
 		configBBDD = new JMenuItem();
 		configDownload = new JMenuItem();
 		menu6 = new JMenu();
+		exportRelevantXML = new JMenuItem();
 		menu4 = new JMenu();
 		importBBDD = new JMenuItem();
 		importXML = new JMenuItem();
@@ -206,16 +282,16 @@ public class VentanaPcpal extends JFrame{
 		visualizador = new JMenuItem();
 		buscar = new JMenuItem();
 		posicion = new JMenuItem();
-		menuItem3 = new JMenuItem();
+		consultarCatalogo = new JMenuItem();
 		menu7 = new JMenu();
-		menuItem2 = new JMenuItem();
-		menuItem1 = new JMenuItem();
+		importInfo = new JMenuItem();
+		dnebInfo = new JMenuItem();
 
 		//======== this ========
 		setIconImage(null);
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
-
+		
 
 		//======== menuBar1 ========
 		{
@@ -304,6 +380,15 @@ public class VentanaPcpal extends JFrame{
 			//======== menu6 ========
 			{
 				menu6.setText("EXPORTAR DATOS");
+
+				//---- exportRelevantXML ----
+				exportRelevantXML.setText("Exportar datos relevantes(XML)");
+				exportRelevantXML.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						exportRelevantXMLActionPerformed(e);
+					}
+				});
+				menu6.add(exportRelevantXML);
 			}
 			menuBar1.add(menu6);
 
@@ -374,9 +459,14 @@ public class VentanaPcpal extends JFrame{
 				});
 				menu5.add(posicion);
 
-				//---- menuItem3 ----
-				menuItem3.setText("CONSULTAR CAT\u00c1LOGO");
-				menu5.add(menuItem3);
+				//---- consultarCatalogo ----
+				consultarCatalogo.setText("CONSULTAR CAT\u00c1LOGO");
+				consultarCatalogo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						consultarCatalogoActionPerformed(e);
+					}
+				});
+				menu5.add(consultarCatalogo);
 			}
 			menuBar1.add(menu5);
 
@@ -384,13 +474,23 @@ public class VentanaPcpal extends JFrame{
 			{
 				menu7.setText("AYUDA");
 
-				//---- menuItem2 ----
-				menuItem2.setText("IMPORTAR CAT\u00c1LOGO");
-				menu7.add(menuItem2);
+				//---- importInfo ----
+				importInfo.setText("IMPORTAR CAT\u00c1LOGO");
+				importInfo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						importInfoActionPerformed(e);
+					}
+				});
+				menu7.add(importInfo);
 
-				//---- menuItem1 ----
-				menuItem1.setText("DNEB");
-				menu7.add(menuItem1);
+				//---- dnebInfo ----
+				dnebInfo.setText("DNEB");
+				dnebInfo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dnebInfoActionPerformed(e);
+					}
+				});
+				menu7.add(dnebInfo);
 			}
 			menuBar1.add(menu7);
 		}
@@ -414,6 +514,27 @@ public class VentanaPcpal extends JFrame{
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
+	public void setProcesamientoDistancias(MonitorProcesamientoDistancias procesamientoDistancias) {
+		this.procesamientoDistancias = procesamientoDistancias;
+	}
+	public MonitorProcesamientoDistancias getProcesamientoDistancias() {
+		return procesamientoDistancias;
+	}
+
+	public void setProcesamientoDobles(MonitorProcesamientoDobles procesamientoDobles) {
+		this.procesamientoDobles = procesamientoDobles;
+	}
+	public MonitorProcesamientoDobles getProcesamientoDobles() {
+		return procesamientoDobles;
+	}
+
+	public void setTaskPanel(TaskPanel taskPanel) {
+		this.taskPanel = taskPanel;
+	}
+	public TaskPanel getTaskPanel() {
+		return taskPanel;
+	}
+
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JMenuBar menuBar1;
 	private JMenu menu1;
@@ -426,6 +547,7 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem configBBDD;
 	private JMenuItem configDownload;
 	private JMenu menu6;
+	private JMenuItem exportRelevantXML;
 	private JMenu menu4;
 	private JMenuItem importBBDD;
 	private JMenuItem importXML;
@@ -434,9 +556,9 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem visualizador;
 	private JMenuItem buscar;
 	private JMenuItem posicion;
-	private JMenuItem menuItem3;
+	private JMenuItem consultarCatalogo;
 	private JMenu menu7;
-	private JMenuItem menuItem2;
-	private JMenuItem menuItem1;
+	private JMenuItem importInfo;
+	private JMenuItem dnebInfo;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

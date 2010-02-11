@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PUNTOSRELEVANTES")
+@Table(name="CARGA_DATOS")
 @NamedQueries({
 	@NamedQuery(name="CargaDatos:dameTodosPuntosRelevantes",query="select p from CargaDatos p"),
 	@NamedQuery(name="CargaDatos:dameTodosPuntosRelevantesNoProcesados",query="select p from CargaDatos p where procesado=false")

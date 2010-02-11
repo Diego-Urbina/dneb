@@ -10,14 +10,14 @@
      <object class="com.jformdesigner.model.FormContainer"> 
       <string>javax.swing.JPanel</string> 
       <object class="com.jformdesigner.model.FormLayoutManager"> 
-       <class>org.jdesktop.layout.GroupLayout</class> 
+       <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
        <void method="setProperty"> 
-        <string>$horizontalGroup</string> 
-        <string>par l {seq {space :::p, par t {comp titulo::l::376:x, seq t {comp ruta::::222:x:1, space :::p, par l:::p {comp importar::l:::x:1, comp cargar::l:p:147:p:1}}}, space :::p}}</string> 
+        <string>$columnCount</string> 
+        <int>10</int> 
        </void> 
        <void method="setProperty"> 
-        <string>$verticalGroup</string> 
-        <string>par l {seq l {space :::p, comp titulo:::p:42:p, space :p:75:p, par b {comp ruta::b:p::p, comp cargar::b:p::p}, space :::p, comp importar:::p::p, space :p:111:p}}</string> 
+        <string>$rowCount</string> 
+        <int>10</int> 
        </void> 
       </object> 
       <void property="name"> 
@@ -28,35 +28,63 @@
         <string>javax.swing.JLabel</string> 
         <void method="setProperty"> 
          <string>text</string> 
-         <string>Importar Catálogo de Estrellas Dobles</string> 
+         <string>Importar Datos desde BBDD</string> 
         </void> 
         <void method="setProperty"> 
          <string>horizontalAlignment</string> 
          <int>0</int> 
         </void> 
-        <void method="setProperty"> 
-         <string>font</string> 
-         <object class="com.jformdesigner.model.SwingDerivedFont"> 
-          <null/> 
-          <int>1</int> 
-          <int>6</int> 
-          <boolean>false</boolean> 
-         </object> 
-        </void> 
         <void property="name"> 
-         <string>titulo</string> 
+         <string>label1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>10</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
         </void> 
        </object> 
       </void> 
       <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JTextField</string> 
-        <void method="setProperty"> 
-         <string>editable</string> 
-         <boolean>false</boolean> 
-        </void> 
+       <object class="com.jformdesigner.model.FormContainer"> 
+        <string>javax.swing.JScrollPane</string> 
+        <object class="com.jformdesigner.model.FormLayoutManager"> 
+         <class>javax.swing.JScrollPane</class> 
+        </object> 
         <void property="name"> 
-         <string>ruta</string> 
+         <string>scrollPane1</string> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JTable</string> 
+          <void property="name"> 
+           <string>table1</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>8</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>rowSpan</string> 
+         <int>3</int> 
         </void> 
        </object> 
       </void> 
@@ -65,31 +93,7 @@
         <string>javax.swing.JButton</string> 
         <void method="setProperty"> 
          <string>text</string> 
-         <string>Abrir fichero</string> 
-        </void> 
-        <void property="name"> 
-         <string>cargar</string> 
-        </void> 
-        <void method="addEvent"> 
-         <object class="com.jformdesigner.model.FormEvent"> 
-          <string>java.awt.event.ActionListener</string> 
-          <string>actionPerformed</string> 
-          <string>cargarActionPerformed</string> 
-          <boolean>true</boolean> 
-         </object> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JButton</string> 
-        <void method="setProperty"> 
-         <string>text</string> 
-         <string>Importar</string> 
-        </void> 
-        <void method="setProperty"> 
-         <string>toolTipText</string> 
-         <string>Importar borrando el catálogo actual</string> 
+         <string>Generar Tarea Con Datos Seleccionados</string> 
         </void> 
         <void property="name"> 
          <string>importar</string> 
@@ -101,6 +105,17 @@
           <string>importarActionPerformed</string> 
           <boolean>true</boolean> 
          </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
         </void> 
        </object> 
       </void> 

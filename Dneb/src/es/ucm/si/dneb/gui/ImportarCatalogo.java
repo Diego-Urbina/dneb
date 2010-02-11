@@ -3,9 +3,15 @@ package es.ucm.si.dneb.gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import org.springframework.context.ApplicationContext;
 /*
  * Created by JFormDesigner on Tue Feb 02 17:35:35 CET 2010
  */
+
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
+import es.ucm.si.dneb.service.importData.ImportDoubleStarCatalog;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 
 
@@ -13,16 +19,39 @@ import javax.swing.*;
  * @author Brainrain
  */
 public class ImportarCatalogo extends JPanel {
+	
+	private ImportDoubleStarCatalog imporCatalog;
+	
 	public ImportarCatalogo() {
 		initComponents();
+		
+		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
+		
+		imporCatalog= (ImportDoubleStarCatalog) ctx.getBean("importDoubleStarCatalog");
 	}
 
 	private void cargarActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setAcceptAllFileFilterUsed(false);
+		int retval = fc.showOpenDialog(this);
+		try {
+			if (retval == JFileChooser.APPROVE_OPTION) {
+				this.ruta.setText( fc.getSelectedFile().toString());
+			}
+		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }		
 	}
 
 	private void importarActionPerformed(ActionEvent e) {
-		// TODO add your code here
+
+		imporCatalog.loadCatalog(ruta.getText());
+		
+		JOptionPane.showMessageDialog(null,"Catálogo importado", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
+		
+		
 	}
 
 	private void initComponents() {
@@ -31,8 +60,6 @@ public class ImportarCatalogo extends JPanel {
 		ruta = new JTextField();
 		cargar = new JButton();
 		importar = new JButton();
-		textField1 = new JTextField();
-		label1 = new JLabel();
 
 		//======== this ========
 
@@ -61,53 +88,44 @@ public class ImportarCatalogo extends JPanel {
 			}
 		});
 
-		//---- textField1 ----
-		textField1.setEditable(false);
-
-		//---- label1 ----
-		label1.setText("\u00daltima vez que se import\u00f3 un cat\u00e1logo ");
-
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
 		layout.setHorizontalGroup(
 			layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(layout.createParallelGroup()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+						.addComponent(titulo, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
 						.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-								.addComponent(titulo, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-								.addGroup(layout.createSequentialGroup()
-									.addGroup(layout.createParallelGroup()
-										.addComponent(ruta, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-										.addComponent(label1, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
-									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-									.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-										.addComponent(textField1)
-										.addComponent(cargar, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))))
-							.addContainerGap())
-						.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-							.addComponent(importar)
-							.addGap(156, 156, 156))))
+							.addComponent(ruta, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+								.addComponent(importar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(cargar, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap())
 		);
 		layout.setVerticalGroup(
 			layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(titulo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-					.addGap(18, 18, 18)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(textField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(label1))
-					.addGap(37, 37, 37)
+					.addGap(75, 75, 75)
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(ruta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(cargar))
-					.addGap(98, 98, 98)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addComponent(importar)
-					.addGap(20, 20, 20))
+					.addGap(111, 111, 111))
 		);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
+	}
+
+	public void setImporCatalog(ImportDoubleStarCatalog imporCatalog) {
+		this.imporCatalog = imporCatalog;
+	}
+
+	public ImportDoubleStarCatalog getImporCatalog() {
+		return imporCatalog;
 	}
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -115,7 +133,5 @@ public class ImportarCatalogo extends JPanel {
 	private JTextField ruta;
 	private JButton cargar;
 	private JButton importar;
-	private JTextField textField1;
-	private JLabel label1;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
