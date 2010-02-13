@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
+ <object class="com.jformdesigner.model.FormModel"> 
+  <void property="contentType"> 
+   <string>form/swing</string> 
+  </void> 
+  <void property="root"> 
+   <object class="com.jformdesigner.model.FormRoot"> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormContainer"> 
+      <string>javax.swing.JPanel</string> 
+      <object class="com.jformdesigner.model.FormLayoutManager"> 
+       <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
+       <void method="setProperty"> 
+        <string>$columnCount</string> 
+        <int>27</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>$rowCount</string> 
+        <int>24</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>margin</string> 
+        <object class="java.awt.Insets"> 
+         <int>0</int> 
+         <int>0</int> 
+         <int>0</int> 
+         <int>20</int> 
+        </object> 
+       </void> 
+      </object> 
+      <void property="name"> 
+       <string>this</string> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>GENERAR TAREAS MEDIANTE CONSULTAS EN EL DSWC</string> 
+        </void> 
+        <void property="name"> 
+         <string>label1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>20</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>rowSpan</string> 
+         <int>2</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Limite num obs</string> 
+        </void> 
+        <void property="name"> 
+         <string>label2</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>textField1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>3</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Distancia máxima</string> 
+        </void> 
+        <void property="name"> 
+         <string>label6</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>12</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>textField5</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>14</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>7</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Primera obs</string> 
+        </void> 
+        <void property="name"> 
+         <string>label3</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>textField2</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>3</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Velocidad mínima</string> 
+        </void> 
+        <void property="name"> 
+         <string>label7</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>12</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>textField6</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>14</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>7</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Ultima obs</string> 
+        </void> 
+        <void property="name"> 
+         <string>label4</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>8</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>textField3</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>8</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>3</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Magnitud mínima</string> 
+        </void> 
+        <void property="name"> 
+         <string>label5</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JTextField</string> 
+        <void property="name"> 
+         <string>textField4</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>2</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>3</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Consultar</string> 
+        </void> 
+        <void property="name"> 
+         <string>button1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>12</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>10</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>6</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormContainer"> 
+        <string>javax.swing.JScrollPane</string> 
+        <object class="com.jformdesigner.model.FormLayoutManager"> 
+         <class>javax.swing.JScrollPane</class> 
+        </object> 
+        <void property="name"> 
+         <string>scrollPane1</string> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JTable</string> 
+          <void property="name"> 
+           <string>table1</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>13</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>18</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>rowSpan</string> 
+         <int>7</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JList</string> 
+        <void method="setProperty"> 
+         <string>visibleRowCount</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object class="java.awt.Font"> 
+          <string>Arial</string> 
+          <int>0</int> 
+          <int>11</int> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>selectedIndex</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>border</string> 
+         <object class="javax.swing.border.BevelBorder"> 
+          <int>1</int> 
+          <null/> 
+          <null/> 
+          <null/> 
+          <null/> 
+         </object> 
+        </void> 
+        <void property="name"> 
+         <string>listSurvey</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>20</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>colSpan</string> 
+         <int>7</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JButton</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Generar Tarea</string> 
+        </void> 
+        <void property="name"> 
+         <string>button2</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>8</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>22</int> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>15</int> 
+        <int>0</int> 
+       </object> 
+      </void> 
+      <void method="setProperty"> 
+       <string>size</string> 
+       <object class="java.awt.Dimension"> 
+        <int>810</int> 
+        <int>560</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

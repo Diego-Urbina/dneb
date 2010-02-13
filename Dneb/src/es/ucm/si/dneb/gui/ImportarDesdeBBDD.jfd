@@ -90,6 +90,95 @@
       </void> 
       <void method="add"> 
        <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>SURVEYS</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>horizontalAlignment</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object class="java.awt.Font"> 
+          <string>Arial</string> 
+          <int>0</int> 
+          <int>14</int> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>background</string> 
+         <object class="java.awt.Color"> 
+          <int>204</int> 
+          <int>255</int> 
+          <int>255</int> 
+          <int>255</int> 
+         </object> 
+        </void> 
+        <void property="name"> 
+         <string>labelSurvey</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JList</string> 
+        <void method="setProperty"> 
+         <string>visibleRowCount</string> 
+         <int>5</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>font</string> 
+         <object class="java.awt.Font"> 
+          <string>Arial</string> 
+          <int>0</int> 
+          <int>11</int> 
+         </object> 
+        </void> 
+        <void method="setProperty"> 
+         <string>selectedIndex</string> 
+         <int>0</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>border</string> 
+         <object class="javax.swing.border.BevelBorder"> 
+          <int>1</int> 
+          <null/> 
+          <null/> 
+          <null/> 
+          <null/> 
+         </object> 
+        </void> 
+        <void property="name"> 
+         <string>listSurvey</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>column</string> 
+         <int>4</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>6</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JButton</string> 
         <void method="setProperty"> 
          <string>text</string> 
@@ -115,7 +204,7 @@
         </void> 
         <void method="setProperty"> 
          <string>row</string> 
-         <int>6</int> 
+         <int>8</int> 
         </void> 
        </object> 
       </void> 

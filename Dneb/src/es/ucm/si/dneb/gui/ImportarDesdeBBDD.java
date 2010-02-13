@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.table.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import com.intellij.uiDesigner.core.*;
  */
 
 import es.ucm.si.dneb.domain.CargaDatos;
+import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.gui.TaskPanel.ProgressRenderer;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
@@ -35,20 +37,37 @@ public class ImportarDesdeBBDD extends JPanel {
 	private DefaultTableModel modelo;
 	
 	private ImportDDBBData importDDBBData;
+	private ServicioGestionTareas servicioGestionTareas;
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
-
+	
+	int posicion;
 	
 	public ImportarDesdeBBDD() {
 		initComponents();
 	}
-	public ImportarDesdeBBDD(VentanaPcpal pcpal) {
+	public ImportarDesdeBBDD(VentanaPcpal pcpal,int position) {
 		
 		initComponents();
 		initTable();
 		principal = pcpal;
 		
+		posicion=position;
+		
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		importDDBBData= (ImportDDBBData) ctx.getBean("importDDBBData");
+		
+        this.servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
+        
+      
+        ArrayList<Survey> surveys = (ArrayList<Survey>) servicioGestionTareas.getAllSurveys();
+		
+        DefaultListModel list = new DefaultListModel();
+        for (Survey aux : surveys){
+        	list.addElement(aux.getDescripcion());
+        }
+        
+        listSurvey.setModel(list);
+        listSurvey.setSelectedIndex(0);
 		
         rellenarTabla();
 	}
@@ -56,6 +75,19 @@ public class ImportarDesdeBBDD extends JPanel {
 
 	private void importarActionPerformed(ActionEvent e) {
 		// TODO add your code here
+		
+		Object[] survStrings= this.listSurvey.getSelectedValues();
+		
+		List<Survey> surveys= new ArrayList<Survey>();
+		
+		for(int i=0; i< survStrings.length;i++){
+			
+			Survey survey=importDDBBData.getSurveyByDesc((String) survStrings[i]);
+			
+			surveys.add(survey);
+			
+		}
+		
 		
 		int seleccionados []= tableTasks.getSelectedRows();
 		
@@ -66,7 +98,12 @@ public class ImportarDesdeBBDD extends JPanel {
 			
 		}
 		
-		importDDBBData.generarTarea(datosACargar);
+		importDDBBData.generarTarea(datosACargar,surveys);
+		
+		principal.getPane().remove(posicion);
+		
+		JOptionPane.showMessageDialog(null,"Datos importados satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
+		
 		
 	}
 	
@@ -159,6 +196,8 @@ public class ImportarDesdeBBDD extends JPanel {
 		label1 = new JLabel();
 		scrollPane1 = new JScrollPane();
 		table1 = new JTable();
+		labelSurvey = new JLabel();
+		listSurvey = new JList();
 		importar = new JButton();
 
 		//======== this ========
@@ -183,6 +222,28 @@ public class ImportarDesdeBBDD extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 
+		//---- labelSurvey ----
+		labelSurvey.setText("SURVEYS");
+		labelSurvey.setHorizontalAlignment(SwingConstants.CENTER);
+		labelSurvey.setFont(new Font("Arial", Font.PLAIN, 14));
+		labelSurvey.setBackground(new Color(204, 255, 255));
+		add(labelSurvey, new GridConstraints(5, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- listSurvey ----
+		listSurvey.setVisibleRowCount(5);
+		listSurvey.setFont(new Font("Arial", Font.PLAIN, 11));
+		listSurvey.setSelectedIndex(0);
+		listSurvey.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		add(listSurvey, new GridConstraints(6, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
 		//---- importar ----
 		importar.setText("Generar Tarea Con Datos Seleccionados");
 		importar.addActionListener(new ActionListener() {
@@ -190,7 +251,7 @@ public class ImportarDesdeBBDD extends JPanel {
 				importarActionPerformed(e);
 			}
 		});
-		add(importar, new GridConstraints(6, 4, 1, 1,
+		add(importar, new GridConstraints(8, 4, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -202,6 +263,8 @@ public class ImportarDesdeBBDD extends JPanel {
 	private JLabel label1;
 	private JScrollPane scrollPane1;
 	private JTable table1;
+	private JLabel labelSurvey;
+	private JList listSurvey;
 	private JButton importar;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
