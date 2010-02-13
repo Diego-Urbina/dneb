@@ -8,20 +8,21 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import es.ucm.si.dneb.domain.ProcesamientoImagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
-@Service("gestorCalculoPosicion")
-public class GestorCalculoPosicion implements GestorHilos<TareaProcesamiento>{
+@Service("gestorProcesamientos")
+public class GestorProcesamientos implements GestorHilos<TareaProcesamiento>{
 	
 	
 	private Map<Long,Hilo> hilos;
 	
 	private static final Log LOG = LogFactory
-	.getLog(GestorCalculoPosicion.class);
+	.getLog(GestorProcesamientos.class);
 	
-	public GestorCalculoPosicion(){
+	public GestorProcesamientos(){
 		
 		hilos = new HashMap<Long, Hilo>();
 		
@@ -33,9 +34,10 @@ public class GestorCalculoPosicion implements GestorHilos<TareaProcesamiento>{
 		LOG.debug("AÑADIR HILO:" + tareaProc.getIdTarea());
 
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorCalculoPosicion gestor = (EjecutorCalculoPosicion) ctx.getBean("ejecutorCalculoPosicion");
-		//gestor.set(tareaProc);
-		//gestor.setIdTarea(tareaProc.getIdTarea());
+		EjecutorProcesamiento gestor = (EjecutorProcesamiento) ctx.getBean("ejecutorProcesamiento");
+		
+		gestor.setCore(tareaProc);
+		gestor.setId(tareaProc.getIdTarea());
 
 		Hilo hilo = new Hilo(gestor);
 		hilos.put(tareaProc.getIdTarea(), hilo);
@@ -82,11 +84,11 @@ public class GestorCalculoPosicion implements GestorHilos<TareaProcesamiento>{
 		
 		Hilo hilo = hilos.get(idHilo);
 
-		//Tarea tarea = hilo.getEjecutor().getTarea();
+		TareaProcesamiento tarProc = (TareaProcesamiento) hilo.getEjecutor().getCore();
 
 		this.eleminarHilo(idHilo);
 
-		//this.anadirHilo(tarea);
+		this.anadirHilo(tarProc);
 
 		LOG.info("GESTOR   nombreGestor INTERRUMPIDO EL HILO:" + idHilo);
 		

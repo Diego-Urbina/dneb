@@ -52,7 +52,7 @@ public class EjecutorDescarga implements EjecutorTarea<Tarea>{
     volatile boolean stop=false;
 
     public void setId(Long id) {
-            this.idTarea = idTarea;
+            this.idTarea = id;
     }
 
     public Long getId() {
