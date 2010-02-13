@@ -9,15 +9,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.configurations.ServicePropertyFilesConfiguration;
-import es.ucm.si.dneb.service.gestionHilos.GestorBusquedaDobles;
-import es.ucm.si.dneb.service.gestionHilos.GestorCalculoPosicion;
+
+import es.ucm.si.dneb.service.gestionHilos.GestorProcesamientos;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 
 public class TestGestoresHilos {
 	
 	private static GestorDescargas gestorDescargas;
-	private static GestorCalculoPosicion gestorCalculoPosicion;
-	private static GestorBusquedaDobles gestorBusquedaDobles;
+	private static GestorProcesamientos gestorProcesamientos;
+	//private static GestorBusquedaDobles gestorBusquedaDobles;
 	
 	private static final Log LOG = LogFactory.getLog(TestGestoresHilos.class);
 	
@@ -29,8 +29,8 @@ public class TestGestoresHilos {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					"applicationContext.xml");
 			gestorDescargas = (GestorDescargas) ctx.getBean("gestorDescargas");
-			gestorCalculoPosicion = (GestorCalculoPosicion) ctx.getBean("gestorCalculoPosicion");
-			gestorBusquedaDobles = (GestorBusquedaDobles) ctx.getBean("gestorBusquedaDobles");
+			gestorProcesamientos = (GestorProcesamientos) ctx.getBean("gestorCalculoPosicion");
+			//gestorBusquedaDobles = (GestorBusquedaDobles) ctx.getBean("gestorBusquedaDobles");
 			
 		}catch (Throwable e) {
 			e.printStackTrace();
@@ -47,8 +47,8 @@ public class TestGestoresHilos {
 		gestorDescargas.anadirHilo(tarea);
 		
 		LOG.debug("GESTOR DESCARGAS"+gestorDescargas.getHilos().size());
-		LOG.debug("GESTOR bd"+gestorBusquedaDobles.getHilos().size());
-		LOG.debug("GESTOR cp"+gestorCalculoPosicion.getHilos().size());
+		//LOG.debug("GESTOR bd"+gestorBusquedaDobles.getHilos().size());
+		LOG.debug("GESTOR cp"+gestorProcesamientos.getHilos().size());
 		
 		
 	}

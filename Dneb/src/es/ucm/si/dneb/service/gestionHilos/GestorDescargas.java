@@ -28,7 +28,7 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 		LOG.debug("AÑADIR HILO:" + tarea.getIdTarea());
 
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorDescarga gestor = (EjecutorDescarga) ctx.getBean("ejecutorDescarga");
+		EjecutorTarea<Tarea> gestor = (EjecutorTarea<Tarea>) ctx.getBean("ejecutorDescarga");
 		gestor.setCore(tarea);
 		gestor.setId(tarea.getIdTarea());
 

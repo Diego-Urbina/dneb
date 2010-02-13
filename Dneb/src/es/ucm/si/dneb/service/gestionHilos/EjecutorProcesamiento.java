@@ -5,68 +5,40 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.ucm.si.dneb.domain.ProcesamientoImagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
 
 @Service("ejecutorCalculoPosicion")
 @Scope("prototype")
 @Transactional(propagation=Propagation.SUPPORTS)
-public class EjecutorCalculoPosicion implements EjecutorTarea{
+public class EjecutorProcesamiento implements EjecutorTarea<TareaProcesamiento>{
 	
 	
 	private TareaProcesamiento tareaProcesamiento;
 	private Long tareaProcesamientoId ;
-	
-
 	
 	@Override
 	public void ejecutar(Interrumpible inter) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public void setTareaProcesamiento(TareaProcesamiento tareaProcesamiento) {
-		this.tareaProcesamiento = tareaProcesamiento;
-	}
-
-	public TareaProcesamiento getTareaProcesamiento() {
-		return tareaProcesamiento;
-	}
-
-	public void setTareaProcesamientoId(Long tareaProcesamientoId) {
-		this.tareaProcesamientoId = tareaProcesamientoId;
-	}
-
-	public Long getTareaProcesamientoId() {
-		return tareaProcesamientoId;
-	}
-
 	@Override
-	public Object getCore() {
-		// TODO Auto-generated method stub
-		return null;
+	public TareaProcesamiento getCore() {
+		return this.tareaProcesamiento;
 	}
-
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.tareaProcesamientoId;
 	}
-
 	@Override
-	public void setCore(Object core) {
-		// TODO Auto-generated method stub
-		
+	public void setCore(TareaProcesamiento core) {
+		this.tareaProcesamiento=core;
 	}
-
 	@Override
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
-		
+		this.tareaProcesamientoId=id;
 	}
-
 	
-
 	
-
 }
