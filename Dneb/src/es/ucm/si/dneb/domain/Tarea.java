@@ -71,8 +71,7 @@ public class Tarea implements Serializable {
     @JoinTable(name="TAREA_SURVEY_JT")
     private List<Survey> surveys;
     
-    @ManyToMany
-    @JoinTable(name="TAREA_PROCESAMIENTO_JT")
+    @OneToMany(mappedBy="tarea")
     private List<TareaProcesamiento> tareasProcesamiento;
     
     @Column(name="SOLAPAMIENTO")

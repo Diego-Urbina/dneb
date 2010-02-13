@@ -49,8 +49,7 @@ public class Imagen {
     @JoinColumn(name="TAREA_ID_FK",nullable=false)
 	private Tarea tarea;
 	
-	@ManyToMany
-    @JoinTable(name="PROCESAMIENTO_IMAGEN_JT")
+	@OneToMany(mappedBy="imagen")
     private List<ProcesamientoImagen> procesamientoImagen;
 
 	public void setIdDescarga(long idDescarga) {
