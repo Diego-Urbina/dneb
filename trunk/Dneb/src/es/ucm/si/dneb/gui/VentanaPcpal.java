@@ -92,6 +92,9 @@ public class VentanaPcpal extends JFrame{
 		
 		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
 		this.dnebInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
+		
+		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
+		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
 	}
 	
 
@@ -157,7 +160,7 @@ public class VentanaPcpal extends JFrame{
 
 	private void importBBDDActionPerformed(ActionEvent e) {
 
-		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD(this);
+		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD(this,pane.getTabCount());
 		pane.addTab("Configurar Descargas", imptBBDD);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -239,7 +242,14 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void consultarCatalogoActionPerformed(ActionEvent e) {
-		// TODO add your code here
+
+		ConsultarCatalogo consultarCatalogo = new ConsultarCatalogo();
+		
+		pane.addTab("Consultar catálogo", consultarCatalogo);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
 	}
 
 	private void importInfoActionPerformed(ActionEvent e) {
