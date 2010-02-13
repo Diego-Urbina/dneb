@@ -31,8 +31,9 @@ public class ProcesamientoImagen {
 	@Column(name = "FECHA_PROCESAMIENTO")
 	private Date fechaProcesamiento;
 
-	@ManyToMany(mappedBy = "procesamientoImagen")
-	private List<Imagen> imagenes;
+	@ManyToOne
+	@JoinColumn(name="IMG_ID_FK",nullable=false)
+	private Imagen imagen;
 	
 	@ManyToOne
     @JoinColumn(name="PROC_ID_FK",nullable=false)
@@ -79,13 +80,9 @@ public class ProcesamientoImagen {
 		this.fechaProcesamiento = fechaProcesamiento;
 	}
 
-	public void setImagenes(List<Imagen> imagenes) {
-		this.imagenes = imagenes;
-	}
+	
 
-	public List<Imagen> getImagenes() {
-		return imagenes;
-	}
+	
 
 	public void setTareaProcesamiento(TareaProcesamiento tareaProcesamiento) {
 		this.tareaProcesamiento = tareaProcesamiento;
@@ -93,6 +90,14 @@ public class ProcesamientoImagen {
 
 	public TareaProcesamiento getTareaProcesamiento() {
 		return tareaProcesamiento;
+	}
+
+	public void setImagen(Imagen imagen) {
+		this.imagen = imagen;
+	}
+
+	public Imagen getImagen() {
+		return imagen;
 	}
 	
 	

@@ -29,8 +29,10 @@ public class TareaProcesamiento {
     @Column(name="ID")
     private long idTarea;
 	
+	@Column(name="ALIAS")
 	private String alias;
 	
+	@Column(name="DESCRIPCION")
 	private String description;
 	
     @Column(name="FECHACREACION", nullable =false)
@@ -45,12 +47,13 @@ public class TareaProcesamiento {
     @Column(name="ULTACTUALIZACION")
     private Date fechaUltimaAct;
 	
-	@ManyToMany(mappedBy="tareasProcesamiento")
-	private List<Tarea> tareas;
+	@ManyToOne
+	@JoinColumn(name="TAREA",nullable=false)
+	private Tarea tarea;
 
-	 @ManyToOne
-	 @JoinColumn(name="TIPO_PROC",nullable=false) 
-	 private TipoProcesamiento tipoProcesamiento;
+	@ManyToOne
+	@JoinColumn(name="TIPO_PROC",nullable=false) 
+	private TipoProcesamiento tipoProcesamiento;
 
 	public String getAlias() {
 		return alias;
@@ -110,14 +113,7 @@ public class TareaProcesamiento {
 		this.fechaUltimaAct = fechaUltimaAct;
 	}
 
-	public void setTareas(List<Tarea> tareas) {
-		this.tareas = tareas;
-	}
-
-	public List<Tarea> getTareas() {
-		return tareas;
-	}
-
+	
 	public void setTipoProcesamiento(TipoProcesamiento tipoProcesamiento) {
 		this.tipoProcesamiento = tipoProcesamiento;
 	}
@@ -125,6 +121,19 @@ public class TareaProcesamiento {
 	public TipoProcesamiento getTipoProcesamiento() {
 		return tipoProcesamiento;
 	}
+
+	public Tarea getTarea() {
+		return tarea;
+	}
+
+	public void setTarea(Tarea tarea) {
+		this.tarea = tarea;
+	}
+	
+	
+
+
+	
 
 	
 	
