@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -50,6 +51,9 @@ public class TareaProcesamiento {
 	@ManyToOne
 	@JoinColumn(name="TAREA",nullable=false)
 	private Tarea tarea;
+	
+	@OneToMany(mappedBy="tareaProcesamiento")
+	private List<ProcesamientoImagen> procesamientoImagenes;
 
 	@ManyToOne
 	@JoinColumn(name="TIPO_PROC",nullable=false) 
@@ -128,6 +132,14 @@ public class TareaProcesamiento {
 
 	public void setTarea(Tarea tarea) {
 		this.tarea = tarea;
+	}
+
+	public void setProcesamientoImagenes(List<ProcesamientoImagen> procesamientoImagenes) {
+		this.procesamientoImagenes = procesamientoImagenes;
+	}
+
+	public List<ProcesamientoImagen> getProcesamientoImagenes() {
+		return procesamientoImagenes;
 	}
 	
 	
