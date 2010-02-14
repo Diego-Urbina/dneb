@@ -1,7 +1,10 @@
 package es.ucm.si.dneb.service.gestionProcesamientos;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,16 +14,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.ProcesamientoImagen;
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.domain.TipoProcesamiento;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionException;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
+import es.ucm.si.dneb.service.gestionHilos.GestorProcesamientos;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 
 @Service("servicioGestionProcesamientos")
 public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesamientos{
 	
 	@PersistenceContext
 	EntityManager manager;
+	
+	@Resource
+	private GestorProcesamientos gestorProcesamientos;
 	
 	private static final Log LOG = LogFactory
 	.getLog(ServicioGestionProcesamientosImpl.class);
@@ -68,22 +79,74 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 	}
 
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void eliminarProcesamiento(Long idProcesamiento) {
-		// TODO Auto-generated method stub
 		
+		gestorProcesamientos.eleminarHilo(idProcesamiento);
+		
+		TareaProcesamiento proc = manager.find(TareaProcesamiento.class, idProcesamiento);
+
+		if(proc==null){
+			throw new ServicioGestionTareasException("La tarea no existe");
+		}
+		
+		List<ProcesamientoImagen> procsImags=proc.getProcesamientoImagenes();
+		
+		for(ProcesamientoImagen imagen : procsImags){
+			manager.remove(imagen);
+		}
+			
+		manager.remove(proc);
+	
 	}
 
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void pararProcesamiento(Long idProcesamiento) {
-		// TODO Auto-generated method stub
+		
+		TareaProcesamiento tarea = manager.find(TareaProcesamiento.class, idProcesamiento);
+
+		if (!tarea.isActiva()) {
+			throw new ServicioGestionTareasException(
+					"PararTarea: La tareas ya está parada");
+		}
+		tarea.setActiva(false);
+		
+		manager.merge(tarea);
+
+		gestorProcesamientos.interrumpirHilo(idProcesamiento);
+
 		
 	}
 
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarProcesamiento(Long idProcesamiento) {
-		// TODO Auto-generated method stub
 		
+		TareaProcesamiento tareaProc= manager.find(TareaProcesamiento.class, idProcesamiento);
+		
+		if(tareaProc.isActiva()){
+			throw new ServicioGestionProcesamientosException(
+			"ReanudarTarea: El procesamiento ya está activa");
+		}
+		/**Se marca el procesamiento como activo**/
+		tareaProc.setActiva(true);
+
+		GregorianCalendar calendar = new GregorianCalendar();
+		Date fechaActual = calendar.getTime();
+		tareaProc.setFechaUltimaAct(fechaActual);
+		
+		manager.merge(tareaProc);
+		
+		gestorProcesamientos.iniciarHilo(tareaProc.getIdTarea());
+
+		
+	}
+
+	public void setGestorProcesamientos(GestorProcesamientos gestorProcesamientos) {
+		this.gestorProcesamientos = gestorProcesamientos;
+	}
+
+	public GestorProcesamientos getGestorProcesamientos() {
+		return gestorProcesamientos;
 	}
 	
 	
