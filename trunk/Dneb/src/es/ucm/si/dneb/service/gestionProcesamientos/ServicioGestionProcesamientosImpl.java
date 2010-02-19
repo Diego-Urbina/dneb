@@ -14,13 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ProcesamientoImagen;
-import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.domain.TipoProcesamiento;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionException;
-import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.gestionHilos.GestorProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 
@@ -140,6 +137,12 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 
 		
 	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<String> getTiposProcesamiento() {
+		return manager.createNamedQuery("TipoProcesamiento:dameTiposProcesamiento")
+		.getResultList();
+	}
 
 	public void setGestorProcesamientos(GestorProcesamientos gestorProcesamientos) {
 		this.gestorProcesamientos = gestorProcesamientos;
@@ -149,8 +152,4 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		return gestorProcesamientos;
 	}
 	
-	
-	
-	
-
 }

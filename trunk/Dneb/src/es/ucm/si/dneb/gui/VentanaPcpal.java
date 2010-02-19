@@ -44,7 +44,7 @@ public class VentanaPcpal extends JFrame{
         
 	    pane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
         
-	    pane.add("DENEB",new BackgroundPanel(pane));
+	    pane.add("DNEB",new BackgroundPanel(pane));
 	    
 	    this.setIconImage(Toolkit.getDefaultToolkit().getImage("images/staricon2.jpg"));
 	    
@@ -121,6 +121,15 @@ public class VentanaPcpal extends JFrame{
 			//this.numTaskPanels++;
 		}
 	}
+	
+	private void crearProcesamientoActionPerformed(ActionEvent e) {
+		JPanel panel = new CrearProcesamiento();
+		pane.addTab("Crear procesamientos", panel);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
+	}
 
 	private void crearDescargaActionPerformed(ActionEvent e) {
 		JPanel vent = new CreateNewDownload(this,pane.getTabCount());
@@ -167,17 +176,11 @@ public class VentanaPcpal extends JFrame{
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 		
-		
-		
-		
 	}
 
 	private void importXMLActionPerformed(ActionEvent e) {
 		// TODO add your code here
 	}
-
-	
-	
 
 	public JTabbedPane getPane() {
 		return pane;
@@ -265,7 +268,7 @@ public class VentanaPcpal extends JFrame{
 
 	private void dnebInfoActionPerformed(ActionEvent e) {
 		// TODO add your code here
-		pane.add("DENEB",new BackgroundPanel(pane));
+		pane.add("DNEB",new BackgroundPanel(pane));
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
