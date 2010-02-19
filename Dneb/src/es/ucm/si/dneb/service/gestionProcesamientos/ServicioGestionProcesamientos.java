@@ -18,7 +18,7 @@ public interface ServicioGestionProcesamientos {
 	
 	public void reanudarProcesamiento(Long idProcesamiento);
 	
-	
+	public List<String> getTiposProcesamiento();
 	
 
 }

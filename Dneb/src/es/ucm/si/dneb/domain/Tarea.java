@@ -17,7 +17,8 @@ import javax.persistence.*;
 	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where descargaFinalizada=false"),
 	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t  where fechaUltimaActulizacion<=?"),
 	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.imagens d where t.idTarea=? and d.descargada=false"),
-	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion")
+	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion"),
+	@NamedQuery(name="Tarea:DameTareasFinalizadas",query="select t from Tarea t where descargaFinalizada=true")
 })
 public class Tarea implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -291,7 +291,10 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 	}
 	
-	
-	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Tarea> getTareasFinalizadas() {
+		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTareasFinalizadas")
+		.getResultList();
+	}
 	
 }
