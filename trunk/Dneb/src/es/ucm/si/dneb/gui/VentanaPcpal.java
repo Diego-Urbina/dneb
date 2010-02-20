@@ -122,7 +122,7 @@ public class VentanaPcpal extends JFrame{
 	}
 	
 	private void crearProcesamientoActionPerformed(ActionEvent e) {
-		JPanel panel = new CrearProcesamiento();
+		JPanel panel = new CrearProcesamiento(this);
 		pane.addTab("Crear procesamientos", panel);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -189,8 +189,6 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void visualizadorActionPerformed(ActionEvent e) {
-		// TODO add your code here
-		
 		
 		ImageRegionApp config = new ImageRegionApp(this);
 		pane.addTab("Configurar Descargas", config);
@@ -271,6 +269,13 @@ public class VentanaPcpal extends JFrame{
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
+
+	private void nueProcEstDobActionPerformed(ActionEvent e) {
+		pane.add("DNEB",new CrearProcesamiento(this));
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
 	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -292,6 +297,7 @@ public class VentanaPcpal extends JFrame{
 		menuCatalogoED = new JMenuItem();
 		menu5 = new JMenu();
 		visualizador = new JMenuItem();
+		nueProcEstDob = new JMenuItem();
 		buscar = new JMenuItem();
 		posicion = new JMenuItem();
 		consultarCatalogo = new JMenuItem();
@@ -304,7 +310,6 @@ public class VentanaPcpal extends JFrame{
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
 		
-
 		//======== menuBar1 ========
 		{
 
@@ -453,6 +458,15 @@ public class VentanaPcpal extends JFrame{
 				});
 				menu5.add(visualizador);
 
+				//---- nueProcEstDob ----
+				nueProcEstDob.setText("CREAR PROCESAMIENTO");
+				nueProcEstDob.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						nueProcEstDobActionPerformed(e);
+					}
+				});
+				menu5.add(nueProcEstDob);
+
 				//---- buscar ----
 				buscar.setText("B\u00daSQUEDA ESTRELLAS BINARIAS");
 				buscar.addActionListener(new ActionListener() {
@@ -566,6 +580,7 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem menuCatalogoED;
 	private JMenu menu5;
 	private JMenuItem visualizador;
+	private JMenuItem nueProcEstDob;
 	private JMenuItem buscar;
 	private JMenuItem posicion;
 	private JMenuItem consultarCatalogo;
