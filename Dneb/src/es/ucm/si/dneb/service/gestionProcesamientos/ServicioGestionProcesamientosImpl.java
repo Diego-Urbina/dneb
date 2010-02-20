@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.ucm.si.dneb.domain.Parametro;
 import es.ucm.si.dneb.domain.ProcesamientoImagen;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.domain.TipoProcesamiento;
@@ -138,6 +139,13 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void crearProcesamiento(TareaProcesamiento procesamiento) {
+		
+		manager.persist(procesamiento);
+		
+	}
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<String> getTiposProcesamiento() {
 		return manager.createNamedQuery("TipoProcesamiento:dameTiposProcesamiento")
@@ -151,5 +159,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	public GestorProcesamientos getGestorProcesamientos() {
 		return gestorProcesamientos;
 	}
+
+	
 	
 }

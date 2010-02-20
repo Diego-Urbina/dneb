@@ -58,6 +58,10 @@ public class TareaProcesamiento {
 	@ManyToOne
 	@JoinColumn(name="TIPO_PROC",nullable=false) 
 	private TipoProcesamiento tipoProcesamiento;
+	
+	@OneToMany(mappedBy="tareaProcesamiento")
+	private List<Parametro> parametros;
+
 
 	public String getAlias() {
 		return alias;
@@ -140,6 +144,14 @@ public class TareaProcesamiento {
 
 	public List<ProcesamientoImagen> getProcesamientoImagenes() {
 		return procesamientoImagenes;
+	}
+
+	public void setParametros(List<Parametro> parametros) {
+		this.parametros = parametros;
+	}
+
+	public List<Parametro> getParametros() {
+		return parametros;
 	}
 	
 	
