@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,7 +29,12 @@ public class TipoParametro {
 	
 	@OneToMany(mappedBy="tipoParametro")
 	private List<Parametro> parametros;
+	
+	@ManyToOne
+	@JoinColumn(name="TIPO_PROC_ID_FK",nullable=false) 
+	private TipoProcesamiento tipoProcesamiento;
 
+	
 	public long getIdTipoParametro() {
 		return idTipoParametro;
 	}
@@ -58,6 +65,14 @@ public class TipoParametro {
 
 	public List<Parametro> getParametros() {
 		return parametros;
+	}
+
+	public void setTipoProcesamiento(TipoProcesamiento tipoProcesamiento) {
+		this.tipoProcesamiento = tipoProcesamiento;
+	}
+
+	public TipoProcesamiento getTipoProcesamiento() {
+		return tipoProcesamiento;
 	}
 	
 	

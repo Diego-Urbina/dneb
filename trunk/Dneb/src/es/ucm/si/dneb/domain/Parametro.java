@@ -27,7 +27,12 @@ public class Parametro {
 	@ManyToOne
 	@JoinColumn(name="TIP_PARAM",nullable=false) 
 	private TipoParametro tipoParametro;
+	
+	@ManyToOne
+	@JoinColumn(name="PROC",nullable=false) 
+	private TareaProcesamiento tareaProcesamiento;
 
+	
 	public long getIdParametro() {
 		return idParametro;
 	}
@@ -58,6 +63,14 @@ public class Parametro {
 
 	public void setTipoParametro(TipoParametro tipoParametro) {
 		this.tipoParametro = tipoParametro;
+	}
+
+	public void setTareaProcesamiento(TareaProcesamiento tareaProcesamiento) {
+		this.tareaProcesamiento = tareaProcesamiento;
+	}
+
+	public TareaProcesamiento getTareaProcesamiento() {
+		return tareaProcesamiento;
 	}
 	
 	

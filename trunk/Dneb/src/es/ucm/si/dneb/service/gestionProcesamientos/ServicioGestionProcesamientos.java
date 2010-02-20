@@ -2,6 +2,7 @@ package es.ucm.si.dneb.service.gestionProcesamientos;
 
 import java.util.List;
 
+import es.ucm.si.dneb.domain.Parametro;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
 
 public interface ServicioGestionProcesamientos {
@@ -19,6 +20,9 @@ public interface ServicioGestionProcesamientos {
 	public void reanudarProcesamiento(Long idProcesamiento);
 	
 	public List<String> getTiposProcesamiento();
+	
+	public void crearProcesamiento(TareaProcesamiento procesamiento );
+	
 	
 
 }
