@@ -24,7 +24,9 @@ import javax.swing.table.TableColumnModel;
 
 import org.springframework.context.ApplicationContext;
 
+import es.ucm.si.dneb.domain.ProcesamientoImagen;
 import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
@@ -83,6 +85,41 @@ public class CrearProcesamiento extends JPanel {
 	
 	private void buttonSiguienteActionPerformed(ActionEvent e) {
 		// crear procesamiento
+		
+		TareaProcesamiento procesamiento=new TareaProcesamiento();
+		
+		procesamiento.setActiva(false);
+		
+		//LA IDEA ES PORDERLOS DAR NORMBRE EN LA INTERFAZ PERO TMP ES PRIORITARIO
+		procesamiento.setAlias("DEF_ALIAS");
+		procesamiento.setDescription("DEF_PROC");
+		
+		//procesamiento.setFechaCreacion(fechaCreacion);
+		
+		procesamiento.setFechaUltimaAct(null);
+		procesamiento.setFinalizada(false);
+		//procesamiento.setParametros(parametros);
+		//procesamiento.setTarea(tarea);
+		//procesamiento.setTipoProcesamiento(tipoProcesamiento);
+		
+		ArrayList<ProcesamientoImagen> procesamientoImagenes= new ArrayList<ProcesamientoImagen>();
+		
+		/*for(Imagen imagen: imagenesTarea){
+			
+			ProcesamientoImagen procesamientoImagen= new ProcesamientoImagen();
+			procesamientoImagen.setImagen(imagen);
+			
+			procesamientoImagenes.add(imagen);
+			
+		}*/
+		procesamiento.setProcesamientoImagenes(procesamientoImagenes);
+		
+		
+		//TODO FALTA RELLENAR EL PROCESAMIENTO CON LOS DATOS INTRODUCIDOS
+		
+		//OJO TMB HAY QUE ASIGNARLE LOS PARÁMETROS
+		
+		servicioGestionProcesamientos.crearProcesamiento(procesamiento);
 	}
 	
 	private void cbTipoProcActionPerformed(ActionEvent e) {
