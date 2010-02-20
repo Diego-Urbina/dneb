@@ -42,7 +42,11 @@ public class CrearProcesamiento extends JPanel {
 	private JTextField textFieldUmbral, textFieldBrillo;
 	private JLabel labelUmbral, labelBrillo;
 	
-	public CrearProcesamiento() {
+	private VentanaPcpal principal;
+	
+	public CrearProcesamiento(VentanaPcpal pcpal) {
+		
+		this.principal=pcpal;
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
 		servicioGestionProcesamientos = (ServicioGestionProcesamientos)ctx.getBean("servicioGestionProcesamientos");
