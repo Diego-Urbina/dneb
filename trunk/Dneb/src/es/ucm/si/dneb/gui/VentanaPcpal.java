@@ -109,7 +109,7 @@ public class VentanaPcpal extends JFrame{
 
 	private void gestorTareasActionPerformed(ActionEvent e) {
 		
-		if(numTaskPanels<maxTaskPanels){
+		
 			JPanel vent = new TaskPanel(this);
 			pane.addTab("Gestor de tareas", vent);
 			this.initTabComponent(pane.getTabCount()-1);
@@ -118,8 +118,7 @@ public class VentanaPcpal extends JFrame{
 			this.setExtendedState(Frame.MAXIMIZED_BOTH);
 			setVisible(true);
 			
-			//this.numTaskPanels++;
-		}
+		
 	}
 	
 	private void crearProcesamientoActionPerformed(ActionEvent e) {
