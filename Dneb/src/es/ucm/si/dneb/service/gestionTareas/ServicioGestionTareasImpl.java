@@ -182,14 +182,15 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Imagen> getDescargasTarea(Long tareaId) {
 		Tarea tarea = manager.find(Tarea.class, tareaId);
-
+			/*
 		if(tarea==null){
 			throw new ServicioGestionTareasException("La tarea no existe");
 		}
-		
-		
 		List<Imagen> imagens = tarea.getDescargas();
-		return imagens;
+		
+		return imagens;*/
+		
+		return manager.createNamedQuery("Imagen:dameImagenesDeUnaTarea").setParameter(1, tarea).getResultList();
 		
 	}
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -295,6 +296,13 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	public List<Tarea> getTareasFinalizadas() {
 		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTareasFinalizadas")
 		.getResultList();
+	}
+
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Tarea getTareaById(long id) {
+		
+		return manager.find(Tarea.class,id);
 	}
 	
 }

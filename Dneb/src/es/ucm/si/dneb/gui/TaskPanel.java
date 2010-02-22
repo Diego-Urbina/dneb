@@ -16,6 +16,7 @@ import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
+import es.ucm.si.dneb.util.ProgressRenderer;
 
 
 
@@ -85,7 +86,6 @@ public class TaskPanel extends JPanel {
 	            column.setCellRenderer(new ProgressRenderer());
 	            worker = crearWorker(tarea.getIdTarea(), nFila);
 	            workers.put(nFila, worker);
-	            worker.execute();
 	            nFila++;
 	        }
 		} catch(ServicioGestionTareasException ex) {
@@ -307,29 +307,5 @@ public class TaskPanel extends JPanel {
 	private JButton buttonParar;
 	private JButton buttonReanudar;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
-	
-	
-	class ProgressRenderer extends DefaultTableCellRenderer {
-		private JProgressBar bar = new JProgressBar(0, 100);
-		
-	    public ProgressRenderer() {
-	        super();
-	        setOpaque(true);
-	        bar.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-	        bar.setStringPainted(true);
-	    }
-	    public Component getTableCellRendererComponent(JTable table, Object value,
-	                                                   boolean isSelected, boolean hasFocus,
-	                                                   int row, int column) {
-	        Integer i = (Integer)value;
-	        String s = "Parada";
-	        if (i != -1) {
-	        	s = i + "%";	
-	        }
-	        bar.setString(s);
-        	bar.setValue(i);
-        	return bar;
-	    }
-	}
 	
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Imagen:dameNumeroDescargasDeUnaTarea",query="select count(*) from Imagen d where tarea=?"),
+	@NamedQuery(name="Imagen:dameImagenesDeUnaTarea",query="select d from Imagen d where tarea=?"),
 	@NamedQuery(name="Imagen:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Imagen d where tarea=? and descargada=false")
 })
 @Table(name="IMAGEN")

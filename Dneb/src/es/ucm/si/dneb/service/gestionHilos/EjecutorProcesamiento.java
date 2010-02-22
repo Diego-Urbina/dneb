@@ -20,7 +20,7 @@ import es.ucm.si.dneb.domain.TareaProcesamiento;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicion;
 
-@Service("ejecutorCalculoPosicion")
+@Service("ejecutorProcesamiento")
 @Scope("prototype")
 @Transactional(propagation=Propagation.SUPPORTS)
 public class EjecutorProcesamiento implements EjecutorTarea<TareaProcesamiento>{
@@ -41,22 +41,36 @@ public class EjecutorProcesamiento implements EjecutorTarea<TareaProcesamiento>{
     EntityManager manager;
 	
 	private List<ProcesamientoImagen> getDownloads() {
-		//TODO
-		return null;
+		
+		return manager.createNamedQuery("TareaProcesamiento.getAllProcesamientoImagen").setParameter(1, this.tareaProcesamiento).getResultList();
+		
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void ejecutar(Interrumpible inter) {
 		
 		 List<ProcesamientoImagen> imagens = getDownloads();
+		 
          for (ProcesamientoImagen imagen : imagens) {
                  
         	 
                  if(inter.continuar()){
                 	 if(this.tareaProcesamiento.getTipoProcesamiento().getIdTipoProcesamiento()==1){
-                		 
-                		//TODO serviceBusquedaDobles
-                		 
+                		
+                		
+                		ProcesamientoImagen procImg1=manager.find(ProcesamientoImagen.class,imagen.getId());
+                		//Buscamos la gemela pero con otro survey
+                		
+                		List<ProcesamientoImagen> procImgs= manager.createNamedQuery("TareaProcesamiento.getImagenesGemelas").setParameter(1, procImg1.getTareaProcesamiento()).setParameter(2, procImg1.getImagen().getAscensionRecta()).setParameter(3, procImg1.getImagen().getDeclinacion()).getResultList();
+                		if((!procImgs.get(0).isFinalizada()) && (!procImgs.get(1).isFinalizada())){
+                			serviceBusquedaDobles.iniciarProcesamiento(procImgs);
+                			
+                		
+                		}
+                		
+                		
+                		
+                		
                 	 }else{
                 		 
                 		//TODO serviceCalculoPosicion

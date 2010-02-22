@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.ucm.si.dneb.domain.Parametro;
 import es.ucm.si.dneb.domain.ProcesamientoImagen;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
+import es.ucm.si.dneb.domain.TipoParametro;
 import es.ucm.si.dneb.domain.TipoProcesamiento;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionException;
 import es.ucm.si.dneb.service.gestionHilos.GestorProcesamientos;
@@ -35,7 +36,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	.getLog(ServicioGestionProcesamientosImpl.class);
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Long getPorcentajeCompletado(Long idProcesamiento) {
+	public Integer getPorcentajeCompletado(Long idProcesamiento) {
 		
 		TareaProcesamiento tareaProcesamiento = manager.find(TareaProcesamiento.class,idProcesamiento);
 		
@@ -55,7 +56,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 		LOG.debug("Procesamiento con id:"+idProcesamiento+" completado al:"+completado);
 		
-		return completado*100;
+		return new Integer((int) completado*100);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -134,7 +135,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 		manager.merge(tareaProc);
 		
-		gestorProcesamientos.iniciarHilo(tareaProc.getIdTarea());
+		gestorProcesamientos.iniciarHilo(tareaProc.getIdProcesamiento());
 
 		
 	}
@@ -143,6 +144,15 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	public void crearProcesamiento(TareaProcesamiento procesamiento) {
 		
 		manager.persist(procesamiento);
+		
+		for(ProcesamientoImagen procImg : procesamiento.getProcesamientoImagenes()){
+			manager.persist(procImg);
+		}
+		for(Parametro parametro : procesamiento.getParametros()){
+			manager.persist(parametro);
+		}
+		
+		
 		
 	}
 	
@@ -160,6 +170,22 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		return gestorProcesamientos;
 	}
 
-	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public TipoProcesamiento getTipoProcesamientoByAlias(String alias) {
+		
+		List<TipoProcesamiento> tipoProcesamientos = manager.createNamedQuery("TipoProcesamiento:dameTipoPorAlias").setParameter(1,alias).getResultList();
+		
+		return tipoProcesamientos.get(0);
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public TipoParametro getTipoParametroById(Long idParametro) {
+		return manager.find(TipoParametro.class, idParametro);
+	}
+
+	@Override
+	public List<TareaProcesamiento> getProcesamientos() {
+		return manager.createNamedQuery("TareaProcesamiento.getAllProcesamientos").getResultList();
+	}
 	
 }

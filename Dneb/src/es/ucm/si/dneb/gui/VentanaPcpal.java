@@ -14,18 +14,14 @@ public class VentanaPcpal extends JFrame{
 	String survey1, survey2, ari, deci, arf, decf, eq, alto, ancho, solapamiento, ruta;
 	
 	//Control del número de pestañas de seguimiento abiertas
-	private MonitorProcesamientoDistancias procesamientoDistancias;
-	private MonitorProcesamientoDobles procesamientoDobles;
+	private MonitorProcesamiento procesamientoDobles;
 	private TaskPanel taskPanel;
 	
 	private int numTaskPanels=0;
 	private int maxTaskPanels=1;
 	
-	private int numProcesDobles=0;
-	private int maxProcesDobles=1;
-	
-	private int numProcesDist=0;
-	private int maxProcesDist=1;
+	private int numProces=0;
+	private int maxProces=1;
 	
 	
 	private JTabbedPane  pane= new JTabbedPane();
@@ -87,7 +83,6 @@ public class VentanaPcpal extends JFrame{
 		this.importXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
 		
 		this.buscar.setIcon(new ImageIcon("images/Process Icon.jpg"));	
-		this.posicion.setIcon(new ImageIcon("images/Process Icon.jpg"));
 		this.consultarCatalogo.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		
 		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
@@ -201,29 +196,12 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void buscarActionPerformed(ActionEvent e) {
-		if(numProcesDobles<maxProcesDobles){
-			MonitorProcesamientoDobles prDobles= new MonitorProcesamientoDobles(this);
-			pane.addTab("Monitor Búsqueda dobles", prDobles);
-			this.initTabComponent(pane.getTabCount()-1);
-			pane.setSelectedIndex(pane.getTabCount()-1);
-			this.setExtendedState(Frame.MAXIMIZED_BOTH);
-			setVisible(true);
-			
-			//this.numProcesDobles++;
-		}
-	}
-
-	private void posicionActionPerformed(ActionEvent e) {
-		if(numProcesDist<maxProcesDist){
-			MonitorProcesamientoDistancias prDist= new MonitorProcesamientoDistancias(this);
-			pane.addTab("Monitor Cálculo distancias", prDist);
-			this.initTabComponent(pane.getTabCount()-1);
-			pane.setSelectedIndex(pane.getTabCount()-1);
-			this.setExtendedState(Frame.MAXIMIZED_BOTH);
-			setVisible(true);
-			
-			//this.numProcesDist++;
-		}
+		MonitorProcesamiento prDobles= new MonitorProcesamiento(this);
+		pane.addTab("Monitor Búsqueda dobles", prDobles);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
 	}
 
 	private void menuCatalogoEDActionPerformed(ActionEvent e) {
@@ -264,14 +242,14 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void dnebInfoActionPerformed(ActionEvent e) {
-		// TODO add your code here
+
 		pane.add("DNEB",new BackgroundPanel(pane));
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
 	private void nueProcEstDobActionPerformed(ActionEvent e) {
-		pane.add("DNEB",new CrearProcesamiento(this));
+		pane.add("CREAR PROCESAMIENTO",new CrearProcesamiento(this));
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
@@ -299,7 +277,6 @@ public class VentanaPcpal extends JFrame{
 		visualizador = new JMenuItem();
 		nueProcEstDob = new JMenuItem();
 		buscar = new JMenuItem();
-		posicion = new JMenuItem();
 		consultarCatalogo = new JMenuItem();
 		menu7 = new JMenu();
 		importInfo = new JMenuItem();
@@ -310,6 +287,7 @@ public class VentanaPcpal extends JFrame{
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
 		
+
 		//======== menuBar1 ========
 		{
 
@@ -468,22 +446,13 @@ public class VentanaPcpal extends JFrame{
 				menu5.add(nueProcEstDob);
 
 				//---- buscar ----
-				buscar.setText("B\u00daSQUEDA ESTRELLAS BINARIAS");
+				buscar.setText("MONITOR DE PROCESAMIENTOS");
 				buscar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						buscarActionPerformed(e);
 					}
 				});
 				menu5.add(buscar);
-
-				//---- posicion ----
-				posicion.setText("CALCULAR POSICION");
-				posicion.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						posicionActionPerformed(e);
-					}
-				});
-				menu5.add(posicion);
 
 				//---- consultarCatalogo ----
 				consultarCatalogo.setText("CONSULTAR CAT\u00c1LOGO");
@@ -540,17 +509,10 @@ public class VentanaPcpal extends JFrame{
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
-	public void setProcesamientoDistancias(MonitorProcesamientoDistancias procesamientoDistancias) {
-		this.procesamientoDistancias = procesamientoDistancias;
-	}
-	public MonitorProcesamientoDistancias getProcesamientoDistancias() {
-		return procesamientoDistancias;
-	}
-
-	public void setProcesamientoDobles(MonitorProcesamientoDobles procesamientoDobles) {
+	public void setProcesamientoDobles(MonitorProcesamiento procesamientoDobles) {
 		this.procesamientoDobles = procesamientoDobles;
 	}
-	public MonitorProcesamientoDobles getProcesamientoDobles() {
+	public MonitorProcesamiento getProcesamientoDobles() {
 		return procesamientoDobles;
 	}
 
@@ -582,7 +544,6 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem visualizador;
 	private JMenuItem nueProcEstDob;
 	private JMenuItem buscar;
-	private JMenuItem posicion;
 	private JMenuItem consultarCatalogo;
 	private JMenu menu7;
 	private JMenuItem importInfo;

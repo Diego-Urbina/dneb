@@ -3,6 +3,9 @@ package es.ucm.si.dneb.service.gestionHilos;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -16,6 +19,8 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 @Service("gestorProcesamientos")
 public class GestorProcesamientos implements GestorHilos<TareaProcesamiento>{
 	
+	@PersistenceContext
+	EntityManager manager;
 	
 	private Map<Long,Hilo> hilos;
 	
@@ -31,16 +36,16 @@ public class GestorProcesamientos implements GestorHilos<TareaProcesamiento>{
 	@Override
 	public void anadirHilo(TareaProcesamiento tareaProc) {
 		
-		LOG.debug("AÑADIR HILO:" + tareaProc.getIdTarea());
+		LOG.debug("AÑADIR HILO:" + tareaProc.getIdProcesamiento());
 
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorProcesamiento gestor = (EjecutorProcesamiento) ctx.getBean("ejecutorProcesamiento");
+		EjecutorTarea gestor = (EjecutorTarea) ctx.getBean("ejecutorProcesamiento");
 		
 		gestor.setCore(tareaProc);
-		gestor.setId(tareaProc.getIdTarea());
+		gestor.setId(tareaProc.getIdProcesamiento());
 
 		Hilo hilo = new Hilo(gestor);
-		hilos.put(tareaProc.getIdTarea(), hilo);
+		hilos.put(tareaProc.getIdProcesamiento(), hilo);
 
 		//LOG.info("HILO CREADO:" + tarea.getIdTarea());
 		
@@ -72,6 +77,14 @@ public class GestorProcesamientos implements GestorHilos<TareaProcesamiento>{
 	public void iniciarHilo(Long idHilo) {
 		
 		Hilo hilo = hilos.get(idHilo);
+		
+		if(hilo==null){
+			
+			TareaProcesamiento tp=manager.find(TareaProcesamiento.class, idHilo);
+			this.anadirHilo(tp);
+			hilo = hilos.get(idHilo);
+			
+		}
 
 		hilo.start();
 

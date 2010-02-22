@@ -19,7 +19,7 @@ public class Parametro {
     private long idParametro;
 	
 	@Column(name="VAL_NUM")
-	private Long valorNum;
+	private Double valorNum;
 	
 	@Column(name="VAL_ALFA")
 	private String valorAlfa;
@@ -41,11 +41,11 @@ public class Parametro {
 		this.idParametro = idParametro;
 	}
 
-	public Long getValorNum() {
+	public Double getValorNum() {
 		return valorNum;
 	}
 
-	public void setValorNum(Long valorNum) {
+	public void setValorNum(Double valorNum) {
 		this.valorNum = valorNum;
 	}
 
