@@ -20,7 +20,6 @@ import com.intellij.uiDesigner.core.*;
 import es.ucm.si.dneb.domain.CargaDatos;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.gui.TaskPanel.ProgressRenderer;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.importData.ImportDDBBData;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;

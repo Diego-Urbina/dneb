@@ -20,13 +20,13 @@ import org.springframework.context.ApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
-import es.ucm.si.dneb.gui.TaskPanel.ProgressRenderer;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
+import es.ucm.si.dneb.util.ProgressRenderer;
 
-public class MonitorProcesamientoDobles extends JPanel{
+public class MonitorProcesamiento extends JPanel{
 	
 	
 	private static final long serialVersionUID = 2891828746598298710L;
@@ -35,7 +35,7 @@ public class MonitorProcesamientoDobles extends JPanel{
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
 	private ServicioGestionProcesamientos servicioGestionProcesamientos;
 	
-	public MonitorProcesamientoDobles(VentanaPcpal pcpal) {
+	public MonitorProcesamiento(VentanaPcpal pcpal) {
 		
 		initComponents();
 		principal = pcpal;
@@ -43,6 +43,7 @@ public class MonitorProcesamientoDobles extends JPanel{
         servicioGestionProcesamientos = (ServicioGestionProcesamientos)ctx.getBean("servicioGestionProcesamientos");
 		
         initIcons();
+        
         
         this.buttonReanudar.setSize(50, 300);
         this.buttonParar.setSize(50, 300);
@@ -60,34 +61,36 @@ public class MonitorProcesamientoDobles extends JPanel{
 	
 	private void rellenarTabla() {
 		try {
-	        ArrayList<TareaProcesamiento> tareas = (ArrayList<TareaProcesamiento>) servicioGestionProcesamientos.getProcesamientosDobles();
+	        ArrayList<TareaProcesamiento> tareas = (ArrayList<TareaProcesamiento>) servicioGestionProcesamientos.getProcesamientos();
 	        
 	        int nFila = 0;
 	        TableColumn column;
 	        SwingWorker<Integer, Integer> worker;
 	        Object [] fila = new Object[tableTasks.getColumnCount()];
-	        for (TareaProcesamiento tarea : tareas) {
-	        	fila[0] = tarea.getIdTarea();
-	        	/*//fila[1] = tarea.getAlto();
-	        	fila[2] = tarea.getAncho();
-	        	fila[3] = tarea.getArInicial();
-	        	fila[4] = tarea.getArFinal();
-	        	fila[5] = tarea.getDecInicial();
-	        	fila[6] = tarea.getDecFinal();
-	        	fila[7] = tarea.getSolpamiento();
-	        	fila[8] = tarea.getFechaCreacion().toString();
-	        	fila[9] = tarea.getFechaUltimaActualizacion().toString();
-	        	fila[10] = tarea.getFormatoFichero().getAlias();
-	        	fila[11] = tarea.getRuta();
-	        	fila[12] = tarea.getSurveys().get(0).getDescripcion();
-	        	fila[13] = tarea.getSurveys().get(1).getDescripcion();
-	        	fila[14] = servicioGestionTareas.obtenerPorcentajeCompletado(tarea.getIdTarea());
-	        */	modelo.addRow(fila);
-	        	column = tableTasks.getColumnModel().getColumn(14);
+	        for (TareaProcesamiento procesamiento : tareas) {
+	        	
+	        	fila[0] = procesamiento.getIdProcesamiento();
+	        	fila[1] = procesamiento.getTarea().getAlto();
+	        	fila[2] = procesamiento.getTarea().getAncho();
+	        	fila[3] = procesamiento.getTarea().getArInicial();
+	        	fila[4] = procesamiento.getTarea().getArFinal();
+	        	fila[5] = procesamiento.getTarea().getDecInicial();
+	        	fila[6] = procesamiento.getTarea().getDecFinal();
+	        	fila[7] = procesamiento.getTarea().getSolpamiento();
+	        	fila[8] = procesamiento.getFechaCreacion().toString();
+	        	fila[9] = procesamiento.getTarea().getFechaUltimaActualizacion().toString();
+	        	fila[10] = procesamiento.getTarea().getFormatoFichero().getAlias();
+	        	fila[11] = procesamiento.getTarea().getRuta();
+	        	fila[12] = procesamiento.getTarea().getSurveys().get(0).getDescripcion();
+	        	fila[13] = procesamiento.getTarea().getSurveys().get(1).getDescripcion();
+	        	fila[14] = procesamiento.getTipoProcesamiento().getAlias();
+	        	fila[15] = servicioGestionProcesamientos.getPorcentajeCompletado(procesamiento.getIdProcesamiento());
+	        	
+	        	modelo.addRow(fila);
+	        	column = tableTasks.getColumnModel().getColumn(15);
 	            column.setCellRenderer(new ProgressRenderer());
-	            worker = crearWorker(tarea.getIdTarea(), nFila);
+	            worker = crearWorker(procesamiento.getIdProcesamiento(), nFila);
 	            workers.put(nFila, worker);
-	            worker.execute();
 	            nFila++;
 	        }
 		} catch(ServicioGestionTareasException ex) {
@@ -124,7 +127,7 @@ public class MonitorProcesamientoDobles extends JPanel{
 	
 	private void buttonReanudarActionPerformed(ActionEvent e) {
 		try {
-			workers.get(tableTasks.getSelectedRow()).execute();
+			//workers.get(tableTasks.getSelectedRow()).execute();
 			servicioGestionProcesamientos.reanudarProcesamiento((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 			tableTasks.setValueAt(servicioGestionProcesamientos.getPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
 		} catch(ServicioGestionTareasException ex) {
@@ -177,14 +180,14 @@ public class MonitorProcesamientoDobles extends JPanel{
 				new Object[][] {
 				},
 				new String[] {
-					"Iden", "Alto", "Ancho", "ARI", "ARF", "DECI", "DECF", "Solapamiento", "Fecha Creacion", "Fecha Actualizacion", "Formato", "Ruta", "Survey 1", "Survey 2", "Completada"
+					"Iden", "Alto", "Ancho", "ARI", "ARF", "DECI", "DECF", "Solapamiento", "Fecha Creacion", "Fecha Actualizacion", "Formato", "Ruta", "Survey 1", "Survey 2", "Tipo","Completada"
 				}
 			) {
 				Class[] columnTypes = new Class[] {
-						Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
+						Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
 				};
 				boolean[] columnEditable = new boolean[] {
-					false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+					false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
 				};
 				@Override
 				public Class<?> getColumnClass(int columnIndex) {
@@ -209,10 +212,11 @@ public class MonitorProcesamientoDobles extends JPanel{
 				cm.getColumn(8).setPreferredWidth(145);
 				cm.getColumn(9).setPreferredWidth(145);
 				cm.getColumn(10).setPreferredWidth(55);
-				cm.getColumn(11).setPreferredWidth(107);
+				cm.getColumn(11).setPreferredWidth(60);
 				cm.getColumn(12).setPreferredWidth(60);
 				cm.getColumn(13).setPreferredWidth(60);
-				cm.getColumn(14).setPreferredWidth(80);
+				cm.getColumn(14).setPreferredWidth(47);
+				cm.getColumn(15).setPreferredWidth(80);
 			}
 			tableTasks.setRowSelectionAllowed(true);
 			tableTasks.setPreferredScrollableViewportSize(new Dimension(1000, 300));
@@ -233,6 +237,7 @@ public class MonitorProcesamientoDobles extends JPanel{
 	    	tableTasks.getColumnModel().getColumn(10).setCellRenderer(tcr);
 	    	tableTasks.getColumnModel().getColumn(12).setCellRenderer(tcr);
 	    	tableTasks.getColumnModel().getColumn(13).setCellRenderer(tcr);
+	    	tableTasks.getColumnModel().getColumn(14).setCellRenderer(tcr);
 			scrollPane.setViewportView(tableTasks);
 		}
 
@@ -309,29 +314,5 @@ public class MonitorProcesamientoDobles extends JPanel{
 	private JButton buttonParar;
 	private JButton buttonReanudar;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
-	
-	
-	class ProgressRenderer extends DefaultTableCellRenderer {
-		private JProgressBar bar = new JProgressBar(0, 100);
-		
-	    public ProgressRenderer() {
-	        super();
-	        setOpaque(true);
-	        bar.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-	        bar.setStringPainted(true);
-	    }
-	    public Component getTableCellRendererComponent(JTable table, Object value,
-	                                                   boolean isSelected, boolean hasFocus,
-	                                                   int row, int column) {
-	        Integer i = (Integer)value;
-	        String s = "Parada";
-	        if (i != -1) {
-	        	s = i + "%";	
-	        }
-	        bar.setString(s);
-        	bar.setValue(i);
-        	return bar;
-	    }
-	}
 
 }

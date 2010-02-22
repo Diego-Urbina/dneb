@@ -8,6 +8,7 @@ import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 
 public interface ServicioGestionTareas {
 	
+	public Tarea getTareaById(long id);
 	
 	public void iniciarTarea(long tareaId);
 	

@@ -2,13 +2,13 @@ package es.ucm.si.dneb.domain;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,6 +19,10 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="TareaProcesamiento.getNumeroProcesamientoCompletados",query="select count(*) from ProcesamientoImagen p where p.tareaProcesamiento=? and p.finalizada=true"),
 	@NamedQuery(name="TareaProcesamiento.getProcesamientosByType",query="select t from TareaProcesamiento t where t.tipoProcesamiento=?"),
+	@NamedQuery(name="TareaProcesamiento.getImagenesGemelas",query="select p from  ProcesamientoImagen p where tareaProcesamiento=? and imagen.ascensionRecta=? and imagen.declinacion=?"),
+	@NamedQuery(name="TareaProcesamiento.getTareaProcesamientoActivo",query="select t from TareaProcesamiento t where t.activa=true"),
+	@NamedQuery(name="TareaProcesamiento.getAllProcesamientoImagen",query="select p from ProcesamientoImagen p where p.tareaProcesamiento=? "),
+	@NamedQuery(name="TareaProcesamiento.getAllProcesamientos",query="select t from TareaProcesamiento t"),
 	@NamedQuery(name="TareaProcesamiento.getNumeroProcesamientos",query="select count(*) from ProcesamientoImagen p where p.tareaProcesamiento=?")
 	
 })
@@ -28,7 +32,7 @@ public class TareaProcesamiento {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
-    private long idTarea;
+    private long idProcesamiento;
 	
 	@Column(name="ALIAS")
 	private String alias;
@@ -105,13 +109,7 @@ public class TareaProcesamiento {
 
 	
 
-	public long getIdTarea() {
-		return idTarea;
-	}
 
-	public void setIdTarea(long idTarea) {
-		this.idTarea = idTarea;
-	}
 
 	public Date getFechaUltimaAct() {
 		return fechaUltimaAct;
@@ -152,6 +150,14 @@ public class TareaProcesamiento {
 
 	public List<Parametro> getParametros() {
 		return parametros;
+	}
+
+	public void setIdProcesamiento(long idProcesamiento) {
+		this.idProcesamiento = idProcesamiento;
+	}
+
+	public long getIdProcesamiento() {
+		return idProcesamiento;
 	}
 	
 	

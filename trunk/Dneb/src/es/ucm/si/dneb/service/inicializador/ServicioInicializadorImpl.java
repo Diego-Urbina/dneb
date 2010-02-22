@@ -23,6 +23,7 @@ import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.CargaDatos;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.TareaProcesamiento;
 
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareasException;
 import es.ucm.si.dneb.util.Util;
@@ -47,10 +48,21 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 			
 			if(tarea.isActiva()==true){
 				tarea.setActiva(false);
+				manager.merge(tarea);
 			}
 			
 		}
 		
+		List<TareaProcesamiento> procTareas=manager.createNamedQuery("TareaProcesamiento.getTareaProcesamientoActivo").getResultList();
+		
+		for(TareaProcesamiento procesamiento: procTareas){
+			
+			if(procesamiento.isActiva()){
+				procesamiento.setActiva(false);
+				manager.merge(procesamiento);
+				
+			}
+		}
 		
 	}
 	

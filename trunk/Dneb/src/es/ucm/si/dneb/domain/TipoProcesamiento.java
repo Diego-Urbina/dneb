@@ -15,7 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="TIP_PROC")
 @NamedQueries({
-	@NamedQuery(name="TipoProcesamiento:dameTiposProcesamiento",query="select t.descripcion from TipoProcesamiento t")
+	@NamedQuery(name="TipoProcesamiento:dameTiposProcesamiento",query="select t.alias from TipoProcesamiento t"),
+	@NamedQuery(name="TipoProcesamiento:dameTipoPorAlias",query="select t from TipoProcesamiento t where t.alias=?")
 })
 public class TipoProcesamiento {
 	
@@ -26,8 +27,10 @@ public class TipoProcesamiento {
     @Column(name="ID_TIP_PROC")
     private long idTipoProcesamiento;
 	
+	@Column(name="ALIAS",nullable=false,unique=true)
 	private String alias;
 	
+	@Column(name="DESCRIPCION",unique=true)
 	private String descripcion;
 	
 	@OneToMany(mappedBy="tipoProcesamiento")

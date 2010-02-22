@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -24,6 +27,8 @@ import javax.swing.table.TableColumnModel;
 
 import org.springframework.context.ApplicationContext;
 
+import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.Parametro;
 import es.ucm.si.dneb.domain.ProcesamientoImagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.TareaProcesamiento;
@@ -84,42 +89,85 @@ public class CrearProcesamiento extends JPanel {
 	}
 	
 	private void buttonSiguienteActionPerformed(ActionEvent e) {
-		// crear procesamiento
+		// crear procesamiento 
 		
-		TareaProcesamiento procesamiento=new TareaProcesamiento();
+		try {
 		
-		procesamiento.setActiva(false);
-		
-		//LA IDEA ES PORDERLOS DAR NORMBRE EN LA INTERFAZ PERO TMP ES PRIORITARIO
-		procesamiento.setAlias("DEF_ALIAS");
-		procesamiento.setDescription("DEF_PROC");
-		
-		//procesamiento.setFechaCreacion(fechaCreacion);
-		
-		procesamiento.setFechaUltimaAct(null);
-		procesamiento.setFinalizada(false);
-		//procesamiento.setParametros(parametros);
-		//procesamiento.setTarea(tarea);
-		//procesamiento.setTipoProcesamiento(tipoProcesamiento);
-		
-		ArrayList<ProcesamientoImagen> procesamientoImagenes= new ArrayList<ProcesamientoImagen>();
-		
-		/*for(Imagen imagen: imagenesTarea){
+			ArrayList<Parametro> parametros = new ArrayList<Parametro>();
+			TareaProcesamiento procesamiento=new TareaProcesamiento();
+			String tipoProc = (String) cbTipoProc.getSelectedItem();
 			
-			ProcesamientoImagen procesamientoImagen= new ProcesamientoImagen();
-			procesamientoImagen.setImagen(imagen);
+			if (tipoProc.equals("Procesamiento busqueda dobles")) {
+				double brillo = Double.parseDouble(textFieldBrillo.getText());
+				double umbral = Double.parseDouble(textFieldUmbral.getText());
+				
+				if (umbral <= 0 || brillo <= 0)
+					throw new Exception("Los parámetros deben ser mayores que 0");
+				
+				Parametro p1 = new Parametro(), p2 = new Parametro();
+				
+				p1.setTareaProcesamiento(procesamiento);
+				p1.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(1L));
+				p1.setValorNum(brillo);
+				
+				p2.setTareaProcesamiento(procesamiento);
+				p2.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(2L));
+				p2.setValorNum(umbral);
+				
+				parametros.add(p1);
+				parametros.add(p2);
+			}
 			
-			procesamientoImagenes.add(imagen);
+			if (tipoProc.equals("Procesamiento calculo distancia")) {
+				// cuando hayan parametros se hara
+			}
 			
-		}*/
-		procesamiento.setProcesamientoImagenes(procesamientoImagenes);
-		
-		
-		//TODO FALTA RELLENAR EL PROCESAMIENTO CON LOS DATOS INTRODUCIDOS
-		
-		//OJO TMB HAY QUE ASIGNARLE LOS PARÁMETROS
-		
-		servicioGestionProcesamientos.crearProcesamiento(procesamiento);
+			procesamiento.setActiva(false);
+			
+			//LA IDEA ES PORDERLOS DAR NORMBRE EN LA INTERFAZ PERO TMP ES PRIORITARIO
+			procesamiento.setAlias("DEF_ALIAS");
+			procesamiento.setDescription("DEF_PROC");
+			
+			GregorianCalendar calendar = new GregorianCalendar();
+			Date fechaActual = calendar.getTime();
+			procesamiento.setFechaCreacion(fechaActual);
+			
+			procesamiento.setFechaUltimaAct(null);
+			procesamiento.setFinalizada(false);
+			
+			Tarea tarea=servicioGestionTareas.getTareaById((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+			procesamiento.setTarea(tarea);
+			
+			procesamiento.setTipoProcesamiento(servicioGestionProcesamientos.getTipoProcesamientoByAlias(tipoProc));
+			
+			ArrayList<ProcesamientoImagen> procesamientoImagenes= new ArrayList<ProcesamientoImagen>();
+			
+			List<Imagen> descargas = servicioGestionTareas.getDescargasTarea(tarea.getIdTarea());
+			
+			for(Imagen imagen: descargas){
+				
+				ProcesamientoImagen procesamientoImagen= new ProcesamientoImagen();
+				procesamientoImagen.setImagen(imagen);
+				procesamientoImagen.setFinalizada(false);
+				procesamientoImagen.setTareaProcesamiento(procesamiento);
+				
+				procesamientoImagenes.add(procesamientoImagen);
+				
+			}
+			procesamiento.setProcesamientoImagenes(procesamientoImagenes);
+			
+			procesamiento.setParametros(parametros);
+			
+			//TODO FALTA RELLENAR EL PROCESAMIENTO CON LOS DATOS INTRODUCIDOS
+			
+			//OJO TMB HAY QUE ASIGNARLE LOS PARÁMETROS
+			
+			servicioGestionProcesamientos.crearProcesamiento(procesamiento);
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(null, "El valor de los parámetros es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void cbTipoProcActionPerformed(ActionEvent e) {
