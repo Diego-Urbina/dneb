@@ -1,5 +1,10 @@
 package es.ucm.si.dneb.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 import java.util.List;
 
@@ -17,26 +22,40 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="INFO_REL")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "description",
+    "fecha",
+    "tipoInformacionRelevante",
+    "imagenes"
+})
+@XmlRootElement(name = "InformacionRelevante")
 public class InformacionRelevante {
 	
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
+    @XmlElement(required = true)
     private long id;
 	
 	@Column(name="DESCRIPCION")
+	@XmlElement(required = true)
 	private String description;
 	
-	 @Column(name="FECHA",nullable =false)
+	@Column(name="FECHA",nullable =false)
+	@XmlElement(required = true)
 	private Date fecha;
 
 	@ManyToOne
     @JoinColumn(name="TIP_INF_REL_FK",nullable=false)
+    @XmlElement(required = true)
 	private TipoInformacionRelevante tipoInformacionRelevante;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="INFOREL_IMAGEN_JT")
+	@XmlElement(required = true)
 	private List<Imagen> imagenes;
 	
 
