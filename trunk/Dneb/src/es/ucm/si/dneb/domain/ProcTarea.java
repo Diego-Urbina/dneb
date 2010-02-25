@@ -17,17 +17,17 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="TareaProcesamiento.getNumeroProcesamientoCompletados",query="select count(*) from ProcesamientoImagen p where p.tareaProcesamiento=? and p.finalizada=true"),
-	@NamedQuery(name="TareaProcesamiento.getProcesamientosByType",query="select t from TareaProcesamiento t where t.tipoProcesamiento=?"),
-	@NamedQuery(name="TareaProcesamiento.getImagenesGemelas",query="select p from  ProcesamientoImagen p where tareaProcesamiento=? and imagen.ascensionRecta=? and imagen.declinacion=?"),
-	@NamedQuery(name="TareaProcesamiento.getTareaProcesamientoActivo",query="select t from TareaProcesamiento t where t.activa=true"),
-	@NamedQuery(name="TareaProcesamiento.getAllProcesamientoImagen",query="select p from ProcesamientoImagen p where p.tareaProcesamiento=? "),
-	@NamedQuery(name="TareaProcesamiento.getAllProcesamientos",query="select t from TareaProcesamiento t"),
-	@NamedQuery(name="TareaProcesamiento.getNumeroProcesamientos",query="select count(*) from ProcesamientoImagen p where p.tareaProcesamiento=?")
+	@NamedQuery(name="ProcTarea.getNumeroProcesamientoCompletados",query="select count(*) from ProcImagen p where p.procTarea=? and p.finalizada=true"),
+	@NamedQuery(name="ProcTarea.getProcesamientosByType",query="select t from ProcTarea t where t.tipoProcesamiento=?"),
+	@NamedQuery(name="ProcTarea.getImagenesGemelas",query="select p from  ProcImagen p where procTarea=? and imagen.ascensionRecta=? and imagen.declinacion=?"),
+	@NamedQuery(name="ProcTarea.getTareaProcesamientoActivo",query="select t from ProcTarea t where t.activa=true"),
+	@NamedQuery(name="ProcTarea.getAllProcesamientoImagen",query="select p from ProcImagen p where p.procTarea=? "),
+	@NamedQuery(name="ProcTarea.getAllProcesamientos",query="select t from ProcTarea t"),
+	@NamedQuery(name="ProcTarea.getNumeroProcesamientos",query="select count(*) from ProcImagen p where p.procTarea=?")
 	
 })
 @Table(name="TAREA_PROCESAMIENTO")
-public class TareaProcesamiento {
+public class ProcTarea {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,15 +56,15 @@ public class TareaProcesamiento {
 	@JoinColumn(name="TAREA",nullable=false)
 	private Tarea tarea;
 	
-	@OneToMany(mappedBy="tareaProcesamiento")
-	private List<ProcesamientoImagen> procesamientoImagenes;
+	@OneToMany(mappedBy="procTarea")
+	private List<ProcImagen> procesamientoImagenes;
 
 	@ManyToOne
 	@JoinColumn(name="TIPO_PROC",nullable=false) 
 	private TipoProcesamiento tipoProcesamiento;
 	
-	@OneToMany(mappedBy="tareaProcesamiento")
-	private List<Parametro> parametros;
+	@OneToMany(mappedBy="procTarea")
+	private List<ParamProcTarea> paramProcTareas;
 
 
 	public String getAlias() {
@@ -136,20 +136,20 @@ public class TareaProcesamiento {
 		this.tarea = tarea;
 	}
 
-	public void setProcesamientoImagenes(List<ProcesamientoImagen> procesamientoImagenes) {
+	public void setProcesamientoImagenes(List<ProcImagen> procesamientoImagenes) {
 		this.procesamientoImagenes = procesamientoImagenes;
 	}
 
-	public List<ProcesamientoImagen> getProcesamientoImagenes() {
+	public List<ProcImagen> getProcesamientoImagenes() {
 		return procesamientoImagenes;
 	}
 
-	public void setParametros(List<Parametro> parametros) {
-		this.parametros = parametros;
+	public void setParametros(List<ParamProcTarea> paramProcTareas) {
+		this.paramProcTareas = paramProcTareas;
 	}
 
-	public List<Parametro> getParametros() {
-		return parametros;
+	public List<ParamProcTarea> getParametros() {
+		return paramProcTareas;
 	}
 
 	public void setIdProcesamiento(long idProcesamiento) {

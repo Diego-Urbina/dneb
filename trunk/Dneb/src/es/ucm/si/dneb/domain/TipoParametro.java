@@ -28,11 +28,10 @@ public class TipoParametro {
 	private String descripcion;
 	
 	@OneToMany(mappedBy="tipoParametro")
-	private List<Parametro> parametros;
+	private List<ParamProcTarea> paramProcTareas;
 	
-	@ManyToOne
-	@JoinColumn(name="TIPO_PROC_ID_FK",nullable=false) 
-	private TipoProcesamiento tipoProcesamiento;
+	@OneToMany(mappedBy="tipoParametro")
+	private List<ParamImg> paramImgs;
 
 	
 	public long getIdTipoParametro() {
@@ -59,21 +58,22 @@ public class TipoParametro {
 		this.descripcion = descripcion;
 	}
 
-	public void setParametros(List<Parametro> parametros) {
-		this.parametros = parametros;
+	public void setParametros(List<ParamProcTarea> paramProcTareas) {
+		this.paramProcTareas = paramProcTareas;
 	}
 
-	public List<Parametro> getParametros() {
-		return parametros;
+	public List<ParamProcTarea> getParametros() {
+		return paramProcTareas;
 	}
 
-	public void setTipoProcesamiento(TipoProcesamiento tipoProcesamiento) {
-		this.tipoProcesamiento = tipoProcesamiento;
+	public void setParamImgs(List<ParamImg> paramImgs) {
+		this.paramImgs = paramImgs;
 	}
 
-	public TipoProcesamiento getTipoProcesamiento() {
-		return tipoProcesamiento;
+	public List<ParamImg> getParamImgs() {
+		return paramImgs;
 	}
+
 	
 	
 	

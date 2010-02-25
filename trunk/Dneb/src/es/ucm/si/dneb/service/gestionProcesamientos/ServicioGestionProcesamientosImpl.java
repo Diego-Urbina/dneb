@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Parametro;
-import es.ucm.si.dneb.domain.ProcesamientoImagen;
-import es.ucm.si.dneb.domain.TareaProcesamiento;
+import es.ucm.si.dneb.domain.ParamProcTarea;
+import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.domain.TipoParametro;
 import es.ucm.si.dneb.domain.TipoProcesamiento;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionException;
@@ -38,18 +38,18 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Integer getPorcentajeCompletado(Long idProcesamiento) {
 		
-		TareaProcesamiento tareaProcesamiento = manager.find(TareaProcesamiento.class,idProcesamiento);
+		ProcTarea procTarea = manager.find(ProcTarea.class,idProcesamiento);
 		
-		List <Long> terminados = manager.createNamedQuery("TareaProcesamiento.getNumeroProcesamientoCompletados").setParameter(1, tareaProcesamiento).getResultList();
+		List <Long> terminados = manager.createNamedQuery("ProcTarea.getNumeroProcesamientoCompletados").setParameter(1, procTarea).getResultList();
 		if(terminados.size()!=1){
-			LOG.error("Poblema ejecuntado query:TareaProcesamiento.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
-			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:TareaProcesamiento.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
+			LOG.error("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
+			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
 		}
 		
-		List <Long> total = manager.createNamedQuery("TareaProcesamiento.getNumeroProcesamientos").setParameter(1, tareaProcesamiento).getResultList();
+		List <Long> total = manager.createNamedQuery("ProcTarea.getNumeroProcesamientos").setParameter(1, procTarea).getResultList();
 		if(total.size()!=1){
-			LOG.error("Poblema ejecuntado query:TareaProcesamiento.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+total.size());
-			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:TareaProcesamiento.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
+			LOG.error("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+total.size());
+			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
 		}
 		
 		long completado= terminados.get(0)/total.get(0);
@@ -60,21 +60,21 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<TareaProcesamiento> getProcesamientosDistancia() {
+	public List<ProcTarea> getProcesamientosDistancia() {
 		
 		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 2L);
 		
-		return manager.createNamedQuery("TareaProcesamiento.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
+		return manager.createNamedQuery("ProcTarea.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
 		
 		
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<TareaProcesamiento> getProcesamientosDobles() {
+	public List<ProcTarea> getProcesamientosDobles() {
 		
 		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 1L);
 		
-		return manager.createNamedQuery("TareaProcesamiento.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
+		return manager.createNamedQuery("ProcTarea.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
 		
 	}
 
@@ -83,15 +83,15 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 		gestorProcesamientos.eleminarHilo(idProcesamiento);
 		
-		TareaProcesamiento proc = manager.find(TareaProcesamiento.class, idProcesamiento);
+		ProcTarea proc = manager.find(ProcTarea.class, idProcesamiento);
 
 		if(proc==null){
 			throw new ServicioGestionTareasException("La tarea no existe");
 		}
 		
-		List<ProcesamientoImagen> procsImags=proc.getProcesamientoImagenes();
+		List<ProcImagen> procsImags=proc.getProcesamientoImagenes();
 		
-		for(ProcesamientoImagen imagen : procsImags){
+		for(ProcImagen imagen : procsImags){
 			manager.remove(imagen);
 		}
 			
@@ -102,7 +102,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void pararProcesamiento(Long idProcesamiento) {
 		
-		TareaProcesamiento tarea = manager.find(TareaProcesamiento.class, idProcesamiento);
+		ProcTarea tarea = manager.find(ProcTarea.class, idProcesamiento);
 
 		if (!tarea.isActiva()) {
 			throw new ServicioGestionTareasException(
@@ -120,7 +120,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarProcesamiento(Long idProcesamiento) {
 		
-		TareaProcesamiento tareaProc= manager.find(TareaProcesamiento.class, idProcesamiento);
+		ProcTarea tareaProc= manager.find(ProcTarea.class, idProcesamiento);
 		
 		if(tareaProc.isActiva()){
 			throw new ServicioGestionProcesamientosException(
@@ -141,15 +141,15 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void crearProcesamiento(TareaProcesamiento procesamiento) {
+	public void crearProcesamiento(ProcTarea procesamiento) {
 		
 		manager.persist(procesamiento);
 		
-		for(ProcesamientoImagen procImg : procesamiento.getProcesamientoImagenes()){
+		for(ProcImagen procImg : procesamiento.getProcesamientoImagenes()){
 			manager.persist(procImg);
 		}
-		for(Parametro parametro : procesamiento.getParametros()){
-			manager.persist(parametro);
+		for(ParamProcTarea paramProcTarea : procesamiento.getParametros()){
+			manager.persist(paramProcTarea);
 		}
 		
 		
@@ -184,8 +184,8 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	}
 
 	@Override
-	public List<TareaProcesamiento> getProcesamientos() {
-		return manager.createNamedQuery("TareaProcesamiento.getAllProcesamientos").getResultList();
+	public List<ProcTarea> getProcesamientos() {
+		return manager.createNamedQuery("ProcTarea.getAllProcesamientos").getResultList();
 	}
 	
 }

@@ -2,19 +2,20 @@ package es.ucm.si.dneb.domain;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="PROCESAMIENTO_IMAGEN")
-public class ProcesamientoImagen {
+public class ProcImagen {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,7 +38,11 @@ public class ProcesamientoImagen {
 	
 	@ManyToOne
     @JoinColumn(name="PROC_ID_FK",nullable=false)
-	private TareaProcesamiento tareaProcesamiento;
+	private ProcTarea procTarea;
+	
+	@OneToMany(mappedBy="procImagen")
+	private List<ParamImg> params;
+	
 	
 	
 	public long getId() {
@@ -84,12 +89,12 @@ public class ProcesamientoImagen {
 
 	
 
-	public void setTareaProcesamiento(TareaProcesamiento tareaProcesamiento) {
-		this.tareaProcesamiento = tareaProcesamiento;
+	public void setTareaProcesamiento(ProcTarea procTarea) {
+		this.procTarea = procTarea;
 	}
 
-	public TareaProcesamiento getTareaProcesamiento() {
-		return tareaProcesamiento;
+	public ProcTarea getTareaProcesamiento() {
+		return procTarea;
 	}
 
 	public void setImagen(Imagen imagen) {
@@ -98,6 +103,14 @@ public class ProcesamientoImagen {
 
 	public Imagen getImagen() {
 		return imagen;
+	}
+
+	public void setParams(List<ParamImg> params) {
+		this.params = params;
+	}
+
+	public List<ParamImg> getParams() {
+		return params;
 	}
 	
 	

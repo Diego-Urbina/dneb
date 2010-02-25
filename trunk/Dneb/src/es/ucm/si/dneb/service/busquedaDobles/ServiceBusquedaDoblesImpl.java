@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Parametro;
-import es.ucm.si.dneb.domain.ProcesamientoImagen;
+import es.ucm.si.dneb.domain.ParamProcTarea;
+import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 
@@ -33,7 +33,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	.getLog(ServiceBusquedaDoblesImpl.class);
 		
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void iniciarProcesamiento(List<ProcesamientoImagen> procImgs) {
+	public void iniciarProcesamiento(List<ProcImagen> procImgs) {
 		// TODO Auto-generated method stub
 		
 		
@@ -46,13 +46,13 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
 			LectorImageHDU l = new LectorImageHDU(imageHDU, filename1);
 			StarFinder sf = new StarFinder();
-			List<Parametro> parametros = procImgs.get(0).getTareaProcesamiento().getParametros();
+			List<ParamProcTarea> paramProcTareas = procImgs.get(0).getTareaProcesamiento().getParametros();
 			double brillo = 0, umbral = 0;
-			for (int i = 0; i < parametros.size(); i++) {
-				if (parametros.get(i).getTipoParametro().getIdTipoParametro() == 1) // brillo
-					brillo = parametros.get(i).getValorNum();
-				if (parametros.get(i).getTipoParametro().getIdTipoParametro() == 2) // umbral
-					umbral = parametros.get(i).getValorNum();
+			for (int i = 0; i < paramProcTareas.size(); i++) {
+				if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 1) // brillo
+					brillo = paramProcTareas.get(i).getValorNum();
+				if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 2) // umbral
+					umbral = paramProcTareas.get(i).getValorNum();
 			}
 			sf.buscarEstrellas(l, new Float(brillo), new Float(umbral));
 			System.out.println("Numero de estrellas encontradas: " + sf.getNumberOfStars());
