@@ -28,10 +28,10 @@ import javax.swing.table.TableColumnModel;
 import org.springframework.context.ApplicationContext;
 
 import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.domain.Parametro;
-import es.ucm.si.dneb.domain.ProcesamientoImagen;
+import es.ucm.si.dneb.domain.ParamProcTarea;
+import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.domain.TareaProcesamiento;
+import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
@@ -93,8 +93,8 @@ public class CrearProcesamiento extends JPanel {
 		
 		try {
 		
-			ArrayList<Parametro> parametros = new ArrayList<Parametro>();
-			TareaProcesamiento procesamiento=new TareaProcesamiento();
+			ArrayList<ParamProcTarea> paramProcTareas = new ArrayList<ParamProcTarea>();
+			ProcTarea procesamiento=new ProcTarea();
 			String tipoProc = (String) cbTipoProc.getSelectedItem();
 			
 			if (tipoProc.equals("Procesamiento busqueda dobles")) {
@@ -104,7 +104,7 @@ public class CrearProcesamiento extends JPanel {
 				if (umbral <= 0 || brillo <= 0)
 					throw new Exception("Los parámetros deben ser mayores que 0");
 				
-				Parametro p1 = new Parametro(), p2 = new Parametro();
+				ParamProcTarea p1 = new ParamProcTarea(), p2 = new ParamProcTarea();
 				
 				p1.setTareaProcesamiento(procesamiento);
 				p1.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(1L));
@@ -114,8 +114,8 @@ public class CrearProcesamiento extends JPanel {
 				p2.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(2L));
 				p2.setValorNum(umbral);
 				
-				parametros.add(p1);
-				parametros.add(p2);
+				paramProcTareas.add(p1);
+				paramProcTareas.add(p2);
 			}
 			
 			if (tipoProc.equals("Procesamiento calculo distancia")) {
@@ -140,23 +140,23 @@ public class CrearProcesamiento extends JPanel {
 			
 			procesamiento.setTipoProcesamiento(servicioGestionProcesamientos.getTipoProcesamientoByAlias(tipoProc));
 			
-			ArrayList<ProcesamientoImagen> procesamientoImagenes= new ArrayList<ProcesamientoImagen>();
+			ArrayList<ProcImagen> procesamientoImagenes= new ArrayList<ProcImagen>();
 			
 			List<Imagen> descargas = servicioGestionTareas.getDescargasTarea(tarea.getIdTarea());
 			
 			for(Imagen imagen: descargas){
 				
-				ProcesamientoImagen procesamientoImagen= new ProcesamientoImagen();
-				procesamientoImagen.setImagen(imagen);
-				procesamientoImagen.setFinalizada(false);
-				procesamientoImagen.setTareaProcesamiento(procesamiento);
+				ProcImagen procImagen= new ProcImagen();
+				procImagen.setImagen(imagen);
+				procImagen.setFinalizada(false);
+				procImagen.setTareaProcesamiento(procesamiento);
 				
-				procesamientoImagenes.add(procesamientoImagen);
+				procesamientoImagenes.add(procImagen);
 				
 			}
 			procesamiento.setProcesamientoImagenes(procesamientoImagenes);
 			
-			procesamiento.setParametros(parametros);
+			procesamiento.setParametros(paramProcTareas);
 			
 			//TODO FALTA RELLENAR EL PROCESAMIENTO CON LOS DATOS INTRODUCIDOS
 			

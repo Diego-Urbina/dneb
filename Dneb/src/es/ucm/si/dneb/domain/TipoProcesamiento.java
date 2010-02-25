@@ -34,7 +34,7 @@ public class TipoProcesamiento {
 	private String descripcion;
 	
 	@OneToMany(mappedBy="tipoProcesamiento")
-	private Collection<TareaProcesamiento> tareaProcesamientos;
+	private Collection<ProcTarea> procTareas;
 
 	public long getIdTipoProcesamiento() {
 		return idTipoProcesamiento;
@@ -60,13 +60,13 @@ public class TipoProcesamiento {
 		this.descripcion = descripcion;
 	}
 
-	public Collection<TareaProcesamiento> getTareaProcesamientos() {
-		return tareaProcesamientos;
+	public Collection<ProcTarea> getTareaProcesamientos() {
+		return procTareas;
 	}
 
 	public void setTareaProcesamientos(
-			Collection<TareaProcesamiento> tareaProcesamientos) {
-		this.tareaProcesamientos = tareaProcesamientos;
+			Collection<ProcTarea> procTareas) {
+		this.procTareas = procTareas;
 	}
 	
 	

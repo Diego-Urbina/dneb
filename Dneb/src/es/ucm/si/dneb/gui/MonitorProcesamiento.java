@@ -19,7 +19,7 @@ import javax.swing.table.*;
 import org.springframework.context.ApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.domain.TareaProcesamiento;
+import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
@@ -61,13 +61,13 @@ public class MonitorProcesamiento extends JPanel{
 	
 	private void rellenarTabla() {
 		try {
-	        ArrayList<TareaProcesamiento> tareas = (ArrayList<TareaProcesamiento>) servicioGestionProcesamientos.getProcesamientos();
+	        ArrayList<ProcTarea> tareas = (ArrayList<ProcTarea>) servicioGestionProcesamientos.getProcesamientos();
 	        
 	        int nFila = 0;
 	        TableColumn column;
 	        SwingWorker<Integer, Integer> worker;
 	        Object [] fila = new Object[tableTasks.getColumnCount()];
-	        for (TareaProcesamiento procesamiento : tareas) {
+	        for (ProcTarea procesamiento : tareas) {
 	        	
 	        	fila[0] = procesamiento.getIdProcesamiento();
 	        	fila[1] = procesamiento.getTarea().getAlto();

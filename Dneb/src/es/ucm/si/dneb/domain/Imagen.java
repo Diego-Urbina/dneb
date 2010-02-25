@@ -40,10 +40,10 @@ public class Imagen {
 	@Column(name="FECHA_DESCARGA")
 	private Date fechaDescarga;
 	
-	 @Column(name="RUTA")
+	@Column(name="RUTA")
 	private String rutaFichero;
 	
-	 @Column(name="ANCHO")
+	@Column(name="ANCHO")
 	private Double ancho;
 
 	@ManyToOne
@@ -51,7 +51,8 @@ public class Imagen {
 	private Tarea tarea;
 	
 	@OneToMany(mappedBy="imagen")
-    private List<ProcesamientoImagen> procesamientoImagen;
+    private List<ProcImagen> procImagen;
+	
 
 	public void setIdDescarga(long idDescarga) {
 		this.idDescarga = idDescarga;
@@ -127,12 +128,12 @@ public class Imagen {
 		return ancho;
 	}
 
-	public void setProcesamientoImagen(List<ProcesamientoImagen> procesamientoImagen) {
-		this.procesamientoImagen = procesamientoImagen;
+	public void setProcesamientoImagen(List<ProcImagen> procImagen) {
+		this.procImagen = procImagen;
 	}
 
-	public List<ProcesamientoImagen> getProcesamientoImagen() {
-		return procesamientoImagen;
+	public List<ProcImagen> getProcesamientoImagen() {
+		return procImagen;
 	}
 
 

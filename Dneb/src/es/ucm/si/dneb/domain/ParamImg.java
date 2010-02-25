@@ -9,14 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="PARAMETRO")
-public class Parametro {
-	
+@Table(name="PARAM_IMG")
+public class ParamImg {
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID_PARAMETRO")
-    private long idParametro;
+    @Column(name="ID_PARAM_IMG")
+    private long idParametroImagen;
 	
 	@Column(name="VAL_NUM")
 	private Double valorNum;
@@ -29,16 +30,18 @@ public class Parametro {
 	private TipoParametro tipoParametro;
 	
 	@ManyToOne
-	@JoinColumn(name="PROC",nullable=false) 
-	private TareaProcesamiento tareaProcesamiento;
+	@JoinColumn(name="IMG",nullable=false) 
+	private ProcImagen procImagen;
+	
 
 	
-	public long getIdParametro() {
-		return idParametro;
+
+	public long getIdParametroImagen() {
+		return idParametroImagen;
 	}
 
-	public void setIdParametro(long idParametro) {
-		this.idParametro = idParametro;
+	public void setIdParametroImagen(long idParametroImagen) {
+		this.idParametroImagen = idParametroImagen;
 	}
 
 	public Double getValorNum() {
@@ -65,14 +68,19 @@ public class Parametro {
 		this.tipoParametro = tipoParametro;
 	}
 
-	public void setTareaProcesamiento(TareaProcesamiento tareaProcesamiento) {
-		this.tareaProcesamiento = tareaProcesamiento;
+	public ProcImagen getProcImagen() {
+		return procImagen;
 	}
 
-	public TareaProcesamiento getTareaProcesamiento() {
-		return tareaProcesamiento;
+	public void setProcImagen(ProcImagen procImagen) {
+		this.procImagen = procImagen;
 	}
+	
+	
+
+
 	
 	
 
 }
+	

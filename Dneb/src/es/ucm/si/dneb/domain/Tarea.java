@@ -73,7 +73,7 @@ public class Tarea implements Serializable {
     private List<Survey> surveys;
     
     @OneToMany(mappedBy="tarea")
-    private List<TareaProcesamiento> tareasProcesamiento;
+    private List<ProcTarea> tareasProcesamiento;
     
     @Column(name="SOLAPAMIENTO")
     private double solapamiento;
@@ -238,11 +238,11 @@ public class Tarea implements Serializable {
 		return descripcion;
 	}
 
-	public void setTareasProcesamiento(List<TareaProcesamiento> tareasProcesamiento) {
+	public void setTareasProcesamiento(List<ProcTarea> tareasProcesamiento) {
 		this.tareasProcesamiento = tareasProcesamiento;
 	}
 
-	public List<TareaProcesamiento> getTareasProcesamiento() {
+	public List<ProcTarea> getTareasProcesamiento() {
 		return tareasProcesamiento;
 	}
 
