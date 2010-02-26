@@ -1,4 +1,4 @@
-﻿delete from Survey;
+delete from Survey;
 insert into Survey values(1,'poss1_red');
 insert into Survey values(2,'poss1_blue');
 insert into Survey values(3,'poss2ukstu_blue');
@@ -17,5 +17,5 @@ insert into tip_proc values(1,'Procesamiento busqueda dobles','Procesamiento bus
 insert into tip_proc values(2,'Procesamiento calculo distancia','Procesamiento calculo distancia');
 
 delete from tipo_parametro;
-insert into tipo_parametro values(1,'Brillo','Brillo de bsqueda de estrellas dobles',1);
-insert into tipo_parametro values(2,'Umbral','Umbral de bsqueda de estrellas dobles',1);
+insert into tipo_parametro values(1,'Brillo','Brillo de busqueda de estrellas dobles');
+insert into tipo_parametro values(2,'Umbral','Umbral de busqueda de estrellas dobles');
