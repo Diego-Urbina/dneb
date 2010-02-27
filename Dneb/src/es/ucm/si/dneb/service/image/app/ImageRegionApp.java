@@ -143,7 +143,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
-	    textFieldUmbral = new JTextField("10000");
+	    textFieldUmbral = new JTextField("30000");
 	    textFieldBrillo = new JTextField("40000");
 	    
 	    layout.setHorizontalGroup(
@@ -222,7 +222,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					
 					imagenFITS = new Fits(new File(file2));
 					imageHDU = imagenFITS.getHDU(0);
-					l2 = new LectorImageHDU(imageHDU, file1);
+					l2 = new LectorImageHDU(imageHDU, file2);
 					im = createPlanarImage(l2);
 					JAI.create("filestore",im,"Temp/im2.png","PNG");
 					input2 = JAI.create("fileload", "Temp/im2.png");
@@ -242,7 +242,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
 		
 		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
-		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l1.getWidth(), l.getHeight(), 1);
+		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l.getWidth(), l.getHeight(), 1);
 		ColorModel cm = PlanarImage.createColorModel(sm);
 		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new Point(0,0));
 		TiledImage tiledImage = new TiledImage(0,0,l.getWidth(),l.getHeight(),0,0,sm,cm);

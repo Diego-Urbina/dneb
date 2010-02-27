@@ -75,4 +75,8 @@ public class StarFinder {
 		    display.addImageRegion(ir);
 		}
 	}
+	
+	public ArrayList<RectStar> getNRecuadrosMasGrandes() {
+		return null;
+	}
 }
