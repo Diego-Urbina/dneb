@@ -75,6 +75,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		manager.merge(procImgs.get(0));
 		manager.merge(procImgs.get(1));
 		
+		// encontrar n cuadrados mas grandes
+		
 	}
 
 	public EntityManager getManager() {
@@ -87,8 +89,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 
 	public static Log getLog() {
 		return LOG;
-	}
-	
-	
+	} 
 
 }
