@@ -129,6 +129,5 @@ public class RectStar {
 			   "Esquina inf der: (" + xRight + "," + yBot + ")";
 	}
 	
-	
 
 }

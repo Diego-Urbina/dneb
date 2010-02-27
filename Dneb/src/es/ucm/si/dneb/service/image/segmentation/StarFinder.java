@@ -76,7 +76,37 @@ public class StarFinder {
 		}
 	}
 	
-	public ArrayList<RectStar> getNRecuadrosMasGrandes() {
-		return null;
+	public ArrayList<RectStar> getNRecuadrosMasGrandes(int n) {
+		ArrayList<RectStar> masGrandes = new ArrayList<RectStar>();
+		
+		ordenarRectangulosPorArea(recuadros, 0, recuadros.size()-1);
+		for (int i = 0; i < n; i++) {
+			masGrandes.add(recuadros.get(i));
+		}
+
+		return masGrandes;
 	}
+	
+	private void ordenarRectangulosPorArea(ArrayList<RectStar> vector, int primero, int ultimo){
+    	int i = primero, j = ultimo;
+    	int pivote = (vector.get(primero).getArea() + vector.get(ultimo).getArea()) / 2;
+    	RectStar auxiliar;
+ 
+    	do{
+    		while(vector.get(i).getArea() > pivote) i++;    		
+    		while(vector.get(j).getArea() < pivote) j--;
+ 
+    		if (i <= j){
+    			auxiliar = vector.get(j);
+    			vector.set(j, vector.get(i));
+    			vector.set(i, auxiliar);
+    			i++;
+    			j--;
+    		}
+ 
+    	} while (i <= j);
+ 
+    	if(primero < j) ordenarRectangulosPorArea(vector, primero, j);
+    	if(ultimo > i) ordenarRectangulosPorArea(vector, i, ultimo);
+    }
 }

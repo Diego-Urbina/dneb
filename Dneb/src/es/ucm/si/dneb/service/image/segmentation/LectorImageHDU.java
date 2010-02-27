@@ -176,4 +176,14 @@ public class LectorImageHDU extends LectorHDU {
 	public int getPixel(int x, int y) {
 		return arrayData[y][x];
 	}
+	
+	public int[][] getPorcionImagen(int xLeft, int yTop, int width, int height) {
+		int[][] rect = new int[width][height];
+		
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++)
+				rect[i][j] = arrayData[yTop + i][xLeft + j];
+				
+		return rect;
+	}
 }
