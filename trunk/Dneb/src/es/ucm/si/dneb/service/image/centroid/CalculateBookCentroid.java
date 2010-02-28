@@ -7,7 +7,7 @@ import es.ucm.si.dneb.service.image.util.Point;
 public class CalculateBookCentroid implements
 CalculateCentroid<Point, int [][]>{
 
-	
+	@Override
 	public Point giveMeTheCentroid(int[][] points) {
 		
 		Point centroid = new Point();
