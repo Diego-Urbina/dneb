@@ -18,8 +18,10 @@ public class Point {
 	public Double getY() {
 		return y;
 	}
-	
-	
+	public Double getDistancia(Point p) {
+		return Math.sqrt(Math.pow(this.getX() - p.getX(), 2) +
+				Math.pow(this.getY() - p.getY(), 2));
+	}
 		
 	
 
