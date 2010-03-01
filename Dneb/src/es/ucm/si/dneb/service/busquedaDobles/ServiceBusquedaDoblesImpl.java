@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import Jama.Matrix;
+
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
@@ -44,7 +46,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		/* Algoritmo de busqueda de estrellas
 		 * 
 		 * 1 - Buscar todas las estrellas en las dos imagenes con el algoritmo de busqueda de estrellas
-		 * 2 - Coger de ambas imagenes el minimo numero de estrellas encontradas
+		 * 2 - Coger de ambas imagenes el minimo numero de estrellas encontradas. La imagen con menos estrellas
+		 *     será la de los centroides a analizar y la otra la de los emparejamientos
 		 * 3 - Obtener los centroides de las estrellas encontradas
 		 * 4 - Comparar cada centroide de la primera imagen con los de la segunda e ir emparejandolos
 		 * 4.1 - Se coge el centroide mas cercano al que se quiere emparejar y se toma como su pareja
@@ -82,14 +85,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			sf2.buscarEstrellas(l2, new Float(brillo), new Float(umbral));
 			System.out.println("Numero de estrellas encontradas: " + sf2.getNumberOfStars());
 
-			ArrayList<RectStar> masGrandes1, masGrandes2;
+			ArrayList<RectStar> recuadros1, recuadros2;
 			int nRecuadros = Math.min(sf1.getNumberOfStars(), sf2.getNumberOfStars());
+			LectorImageHDU aux;
 			if (nRecuadros == sf1.getNumberOfStars()) {
-				masGrandes1 = sf1.getRecuadros();
-				masGrandes2 = sf2.getNRecuadrosMasGrandes(nRecuadros);
+				recuadros1 = sf1.getRecuadros();
+				recuadros2 = sf2.getRecuadros();
 			} else {
-				masGrandes2 = sf2.getRecuadros();
-				masGrandes1 = sf1.getNRecuadrosMasGrandes(nRecuadros);
+				aux = l1;
+				l1 = l2;
+				l2 = aux;
+				recuadros1 = sf2.getRecuadros();
+				recuadros2 = sf1.getRecuadros();
 			}
 			
 			// Calcular los centroides de los recuadros de ambas imagenes
@@ -97,19 +104,20 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			CalculateBookCentroid cc = new CalculateBookCentroid();
 			Point cent1, cent2;
 			for (int i = 0; i < nRecuadros; i++) {
-				cent1 = cc.giveMeTheCentroid(l1.getPorcionImagen(masGrandes1.get(i).getxLeft(), masGrandes1.get(i).getyTop(), 
-							masGrandes1.get(i).getWidth(), masGrandes1.get(i).getHeight()));
-				cent2 = cc.giveMeTheCentroid(l2.getPorcionImagen(masGrandes2.get(i).getxLeft(), masGrandes2.get(i).getyTop(), 
-							masGrandes2.get(i).getWidth(), masGrandes2.get(i).getHeight()));
+				cent1 = cc.giveMeTheCentroid(l1.getPorcionImagen(recuadros1.get(i).getxLeft(), recuadros1.get(i).getyTop(), 
+						recuadros1.get(i).getWidth(), recuadros1.get(i).getHeight()));
+				cent2 = cc.giveMeTheCentroid(l2.getPorcionImagen(recuadros2.get(i).getxLeft(), recuadros2.get(i).getyTop(), 
+						recuadros2.get(i).getWidth(), recuadros2.get(i).getHeight()));
 				
 				centroides1.add(cent1);
 				centroides2.add(cent2);
 			}
 			
 			// Hacer coincidir los nRecuadros centroides
-			double scaleW = l2.getWidth()/l1.getWidth();
-			double scaleH = l2.getHeight()/l1.getHeight();
-			int porcentaje = 0;
+			double scaleW, scaleH;
+			scaleW = l2.getWidth()/l1.getWidth();
+			scaleH = l2.getHeight()/l1.getHeight();
+			double porcentaje = 0;
 			int radioBusqueda = 20; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
 			Point centroide;
 			int indice;
@@ -142,9 +150,28 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				}
 			}
 			
+			porcentaje = (porcentaje/nRecuadros) * 100;
+			System.out.println("El porcentaje de centroides elegidos es: " + porcentaje);
+			
 			// Construir las matrices de ambas listas y encontrar la matriz de transformacion
-			
-			
+			if (porcentaje >= 50) {
+				double[][] m1 = new double[centroides1.size()][3], m2 = new double[centroides1.size()][3];
+				for (int i = 0; i < centroides1.size(); i++) {
+					centroide = centroides1.get(i);
+					m1[i][0] = centroide.getX();
+					m1[i][1] = centroide.getY();
+					m1[i][2] = 1;
+					
+					centroide = centroides2.get(indicesElegidos.get(i));
+					m2[i][0] = centroide.getX();
+					m2[i][1] = centroide.getY();
+					m2[i][2] = 1;
+				}
+				
+				Matrix P = new Matrix(m1);
+				Matrix Q = new Matrix(m2);
+				Matrix X = P.solve(Q);
+			}
 			
 			procImgs.get(0).setFinalizada(true);
 			procImgs.get(1).setFinalizada(true);
