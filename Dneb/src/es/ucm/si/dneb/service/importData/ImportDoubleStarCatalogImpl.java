@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Service("importDoubleStarCatalog")
+
 public class ImportDoubleStarCatalogImpl implements ImportDoubleStarCatalog{
 
 	@PersistenceContext
