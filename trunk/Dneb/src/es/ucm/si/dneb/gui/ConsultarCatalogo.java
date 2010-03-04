@@ -1,6 +1,7 @@
 package es.ucm.si.dneb.gui;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import com.intellij.uiDesigner.core.*;
@@ -16,6 +17,15 @@ import com.intellij.uiDesigner.core.*;
 public class ConsultarCatalogo extends JPanel {
 	public ConsultarCatalogo() {
 		initComponents();
+	}
+
+	private void consultarActionPerformed(ActionEvent e) {
+		// TODO add your code here
+		
+	}
+
+	private void generarTareaAction(ActionEvent e) {
+		// TODO add your code here
 	}
 
 	private void initComponents() {
@@ -130,6 +140,11 @@ public class ConsultarCatalogo extends JPanel {
 
 		//---- button1 ----
 		button1.setText("Consultar");
+		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultarActionPerformed(e);
+			}
+		});
 		add(button1, new GridConstraints(10, 12, 1, 6,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -159,6 +174,11 @@ public class ConsultarCatalogo extends JPanel {
 
 		//---- button2 ----
 		button2.setText("Generar Tarea");
+		button2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarTareaAction(e);
+			}
+		});
 		add(button2, new GridConstraints(22, 8, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,

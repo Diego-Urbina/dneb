@@ -39,6 +39,8 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 public class CrearProcesamiento extends JPanel {
 
+	
+	private static final long serialVersionUID = -320907160078131474L;
 	private DefaultTableModel modelo;
 	private ServicioGestionTareas servicioGestionTareas;
 	private ServicioGestionProcesamientos servicioGestionProcesamientos;
@@ -98,6 +100,7 @@ public class CrearProcesamiento extends JPanel {
 			String tipoProc = (String) cbTipoProc.getSelectedItem();
 			
 			if (tipoProc.equals("Procesamiento busqueda dobles")) {
+				
 				double brillo = Double.parseDouble(textFieldBrillo.getText());
 				double umbral = Double.parseDouble(textFieldUmbral.getText());
 				
@@ -119,7 +122,25 @@ public class CrearProcesamiento extends JPanel {
 			}
 			
 			if (tipoProc.equals("Procesamiento calculo distancia")) {
-				// cuando hayan parametros se hara
+				
+				double brillo = Double.parseDouble(textFieldBrillo.getText());
+				double umbral = Double.parseDouble(textFieldUmbral.getText());
+				
+				if (umbral <= 0 || brillo <= 0)
+					throw new Exception("Los parámetros deben ser mayores que 0");
+				
+				ParamProcTarea p1 = new ParamProcTarea(), p2 = new ParamProcTarea();
+				
+				p1.setTareaProcesamiento(procesamiento);
+				p1.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(1L));
+				p1.setValorNum(brillo);
+				
+				p2.setTareaProcesamiento(procesamiento);
+				p2.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(2L));
+				p2.setValorNum(umbral);
+				
+				paramProcTareas.add(p1);
+				paramProcTareas.add(p2);
 			}
 			
 			procesamiento.setActiva(false);
@@ -150,6 +171,9 @@ public class CrearProcesamiento extends JPanel {
 				procImagen.setImagen(imagen);
 				procImagen.setFinalizada(false);
 				procImagen.setTareaProcesamiento(procesamiento);
+				if(tipoProc.equals("Procesamiento calculo distancia")){
+					
+				}
 				
 				procesamientoImagenes.add(procImagen);
 				
@@ -178,10 +202,10 @@ public class CrearProcesamiento extends JPanel {
 		    textFieldBrillo.setVisible(true);
 		}
 		else { // calculo de distancias
-			labelUmbral.setVisible(false);
-		    labelBrillo.setVisible(false);
-			textFieldUmbral.setVisible(false);
-		    textFieldBrillo.setVisible(false);
+			labelUmbral.setVisible(true);
+		    labelBrillo.setVisible(true);
+			textFieldUmbral.setVisible(true);
+		    textFieldBrillo.setVisible(true);
 		}
 	}
 	

@@ -23,6 +23,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="ProcTarea.getTareaProcesamientoActivo",query="select t from ProcTarea t where t.activa=true"),
 	@NamedQuery(name="ProcTarea.getAllProcesamientoImagen",query="select p from ProcImagen p where p.procTarea=? "),
 	@NamedQuery(name="ProcTarea.getAllProcesamientos",query="select t from ProcTarea t"),
+	@NamedQuery(name="ProcTarea.getParams",query="select t.paramProcTareas from ProcTarea t where t=?"),
 	@NamedQuery(name="ProcTarea.getNumeroProcesamientos",query="select count(*) from ProcImagen p where p.procTarea=?")
 	
 })
