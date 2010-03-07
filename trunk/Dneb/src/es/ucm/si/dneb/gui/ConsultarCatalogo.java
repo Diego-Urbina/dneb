@@ -2,12 +2,27 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.table.*;
+import javax.swing.table.TableColumn;
+
 import com.intellij.uiDesigner.core.*;
+
+import es.ucm.si.dneb.domain.DoubleStarCatalog;
+import es.ucm.si.dneb.domain.Survey;
+import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
 /*
  * Created by JFormDesigner on Thu Feb 11 22:37:04 CET 2010
  */
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
+import es.ucm.si.dneb.util.ProgressRenderer;
 
 
 
@@ -15,13 +30,90 @@ import com.intellij.uiDesigner.core.*;
  * @author Brainrain
  */
 public class ConsultarCatalogo extends JPanel {
+	
+	DefaultTableModel modelo;
+	
+	private ServicioConsultaCatalogo servicioConsultaCatalogo;
+	
+	List<DoubleStarCatalog> dsData= new ArrayList<DoubleStarCatalog>();
+
+	private static final long serialVersionUID = -6003512136953182733L;
 	public ConsultarCatalogo() {
 		initComponents();
+		
+		servicioConsultaCatalogo= (ServicioConsultaCatalogo) ContextoAplicacion.getApplicationContext().getBean("servicioConsultaCatalogo");
+		
 	}
 
 	private void consultarActionPerformed(ActionEvent e) {
 		// TODO add your code here
 		
+		Integer intlimobs=Integer.MAX_VALUE;
+		Date dateprimObs=Date.valueOf(3000+"-01-01");   
+		Date dateultobs=Date.valueOf(3000+"-01-01");
+		Double doublemagmax=Double.MAX_VALUE;
+		Double doubledistmax=Double.MAX_VALUE;
+		
+		if(!this.limnumobs.getText().equals("")){
+			intlimobs=Integer.parseInt(this.limnumobs.getText());
+		}
+		if(!this.primobs.getText().equals("")){
+			dateprimObs= Date.valueOf(this.primobs.getText()+"-01-01"); 
+		}
+		if(!this.ultobs.getText().equals("")){
+			dateultobs= Date.valueOf(this.ultobs.getText()+"-01-01");   
+		}
+		if(!this.magmax.getText().equals("")){
+			doublemagmax=Double.parseDouble(this.magmax.getText());
+		}
+		if(!this.distmax.getText().equals("")){
+			doubledistmax= Double.parseDouble(this.distmax.getText());
+		}
+	
+		dsData=servicioConsultaCatalogo.consultaCatalogo(intlimobs, dateprimObs ,dateultobs   ,doublemagmax,doubledistmax, 0);
+		
+		
+		this.rellenarTabla();
+		//
+		
+	}
+	
+	private void rellenarTabla() {
+		try {
+	       
+	        int nFila = 0;
+	      
+	        Object [] fila = new Object[this.table1.getColumnCount()];
+	        for (DoubleStarCatalog dsc : dsData) {
+	        	
+	        	fila[0] = dsc.getArcsecondCoordinates2000();
+	        	fila[1] = dsc.getComponents();
+	        	fila[2] = dsc.getCoordinates();
+	        	fila[3] = dsc.getDiscovererAndNumber();
+	        	fila[4] = dsc.getDurchmusterungNumber();
+	        	fila[5] = dsc.getFirstObservation();
+	        	fila[6] = dsc.getFirstPosAngle();
+	        	fila[7] = dsc.getFirstSeparation();
+	        	fila[8] = dsc.getFirstStarMagnitude();
+	        	fila[9] = dsc.getLastObservation();
+	        	fila[10] = dsc.getLastPosAnges();
+	        	fila[11] =dsc.getLastSeparation();
+	        	fila[12] = dsc.getNotes();
+	        	fila[13] = dsc.getNumObservations();
+	        	fila[14] = dsc.getPrimaryProperMotionDec();
+	        	fila[15] = dsc.getPrimaryProperMotionRa();
+	        	fila[16] = dsc.getSecondaryProperMotionDec();
+	        	fila[17] = dsc.getSecondaryProperMotionRa();
+	        	fila[18] = dsc.getSecondStarMagnitude();
+	        	fila[19] = dsc.getSpectralType();
+	        	
+	        	modelo.addRow(fila);
+	        	
+	            nFila++;
+	        }
+		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 
 	private void generarTareaAction(ActionEvent e) {
@@ -32,17 +124,15 @@ public class ConsultarCatalogo extends JPanel {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		label1 = new JLabel();
 		label2 = new JLabel();
-		textField1 = new JTextField();
+		limnumobs = new JTextField();
 		label6 = new JLabel();
-		textField5 = new JTextField();
+		distmax = new JTextField();
 		label3 = new JLabel();
-		textField2 = new JTextField();
-		label7 = new JLabel();
-		textField6 = new JTextField();
+		primobs = new JTextField();
 		label4 = new JLabel();
-		textField3 = new JTextField();
+		ultobs = new JTextField();
 		label5 = new JLabel();
-		textField4 = new JTextField();
+		magmax = new JTextField();
 		button1 = new JButton();
 		scrollPane1 = new JScrollPane();
 		table1 = new JTable();
@@ -67,7 +157,7 @@ public class ConsultarCatalogo extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(textField1, new GridConstraints(4, 2, 1, 3,
+		add(limnumobs, new GridConstraints(4, 2, 1, 3,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -80,7 +170,7 @@ public class ConsultarCatalogo extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(textField5, new GridConstraints(4, 14, 1, 7,
+		add(distmax, new GridConstraints(4, 14, 1, 7,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -93,20 +183,7 @@ public class ConsultarCatalogo extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(textField2, new GridConstraints(6, 2, 1, 3,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label7 ----
-		label7.setText("Velocidad m\u00ednima");
-		add(label7, new GridConstraints(6, 12, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(textField6, new GridConstraints(6, 14, 1, 7,
+		add(primobs, new GridConstraints(6, 2, 1, 3,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -119,7 +196,7 @@ public class ConsultarCatalogo extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(textField3, new GridConstraints(8, 2, 1, 3,
+		add(ultobs, new GridConstraints(8, 2, 1, 3,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -132,7 +209,7 @@ public class ConsultarCatalogo extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(textField4, new GridConstraints(10, 2, 1, 3,
+		add(magmax, new GridConstraints(10, 2, 1, 3,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -153,6 +230,20 @@ public class ConsultarCatalogo extends JPanel {
 
 		//======== scrollPane1 ========
 		{
+
+			//---- table1 ----
+			this.modelo=new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null, null, null, null, null, "", null, "", null, null, null, null, "", "", "", ""},
+					{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "", null},
+				},
+				new String[] {
+					"ARSEC2000COOR", "COMPONENTS", "COORDINATES", "DISCOVERERANDMARKER", "DURSCHNUMBER", "FIRSTOBS", "FIRSTPOSANG", "FIRSTSEP", "FIRSTSTARMAG", "LASTOBS", "LASTPOSANG", "LASTSEP", "NOTES", "NUMOBS", "PPMDEC", "PPMRA", "SPMDEC", "SPMRA", "SSMAGNITUDE", "SPECTYPE"
+				}
+			);
+			
+			table1.setModel(modelo);
+			table1.setName("tableModel");
 			scrollPane1.setViewportView(table1);
 		}
 		add(scrollPane1, new GridConstraints(13, 1, 7, 18,
@@ -187,20 +278,26 @@ public class ConsultarCatalogo extends JPanel {
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
+	public void setServicioConsultaCatalogo(ServicioConsultaCatalogo servicioConsultaCatalogo) {
+		this.servicioConsultaCatalogo = servicioConsultaCatalogo;
+	}
+
+	public ServicioConsultaCatalogo getServicioConsultaCatalogo() {
+		return servicioConsultaCatalogo;
+	}
+
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JLabel label1;
 	private JLabel label2;
-	private JTextField textField1;
+	private JTextField limnumobs;
 	private JLabel label6;
-	private JTextField textField5;
+	private JTextField distmax;
 	private JLabel label3;
-	private JTextField textField2;
-	private JLabel label7;
-	private JTextField textField6;
+	private JTextField primobs;
 	private JLabel label4;
-	private JTextField textField3;
+	private JTextField ultobs;
 	private JLabel label5;
-	private JTextField textField4;
+	private JTextField magmax;
 	private JButton button1;
 	private JScrollPane scrollPane1;
 	private JTable table1;

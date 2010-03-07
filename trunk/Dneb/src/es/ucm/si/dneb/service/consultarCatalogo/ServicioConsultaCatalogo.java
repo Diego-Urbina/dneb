@@ -7,7 +7,7 @@ import es.ucm.si.dneb.domain.DoubleStarCatalog;
 
 public interface ServicioConsultaCatalogo {
 	
-	public List<DoubleStarCatalog> consultaCatalogo(int limNumObs,Date primeraObs,Date ultimaObs,long minMagnitud,long maxDist,long minVel);
+	public List<DoubleStarCatalog> consultaCatalogo(int limNumObs,Date primeraObs,Date ultimaObs,double minMagnitud,double maxDist,double minVel);
 	
 	
 }
