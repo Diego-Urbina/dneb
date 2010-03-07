@@ -143,8 +143,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
-	    textFieldUmbral = new JTextField("30000");
-	    textFieldBrillo = new JTextField("40000");
+	    textFieldUmbral = new JTextField("50000");
+	    textFieldBrillo = new JTextField("30000");
 	    
 	    layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
