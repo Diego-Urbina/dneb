@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_17" class="java.beans.XMLDecoder"> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
  <object class="com.jformdesigner.model.FormModel"> 
   <void property="contentType"> 
    <string>form/swing</string> 
@@ -90,7 +90,7 @@
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
         <void property="name"> 
-         <string>textField1</string> 
+         <string>limnumobs</string> 
         </void> 
        </object> 
        <object class="com.jformdesigner.model.FormLayoutConstraints"> 
@@ -140,7 +140,7 @@
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
         <void property="name"> 
-         <string>textField5</string> 
+         <string>distmax</string> 
         </void> 
        </object> 
        <object class="com.jformdesigner.model.FormLayoutConstraints"> 
@@ -190,7 +190,7 @@
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
         <void property="name"> 
-         <string>textField2</string> 
+         <string>primobs</string> 
         </void> 
        </object> 
        <object class="com.jformdesigner.model.FormLayoutConstraints"> 
@@ -210,56 +210,6 @@
         <void method="setProperty"> 
          <string>colSpan</string> 
          <int>3</int> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JLabel</string> 
-        <void method="setProperty"> 
-         <string>text</string> 
-         <string>Velocidad mínima</string> 
-        </void> 
-        <void property="name"> 
-         <string>label7</string> 
-        </void> 
-       </object> 
-       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
-        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
-        <void method="setProperty"> 
-         <string>column</string> 
-         <int>12</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>row</string> 
-         <int>6</int> 
-        </void> 
-       </object> 
-      </void> 
-      <void method="add"> 
-       <object class="com.jformdesigner.model.FormComponent"> 
-        <string>javax.swing.JTextField</string> 
-        <void property="name"> 
-         <string>textField6</string> 
-        </void> 
-       </object> 
-       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
-        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
-        <void method="setProperty"> 
-         <string>column</string> 
-         <int>14</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>row</string> 
-         <int>6</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>colSpan</string> 
-         <int>7</int> 
-        </void> 
-        <void method="setProperty"> 
-         <string>fill</string> 
-         <int>1</int> 
         </void> 
        </object> 
       </void> 
@@ -290,7 +240,7 @@
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
         <void property="name"> 
-         <string>textField3</string> 
+         <string>ultobs</string> 
         </void> 
        </object> 
        <object class="com.jformdesigner.model.FormLayoutConstraints"> 
@@ -340,7 +290,7 @@
        <object class="com.jformdesigner.model.FormComponent"> 
         <string>javax.swing.JTextField</string> 
         <void property="name"> 
-         <string>textField4</string> 
+         <string>magmax</string> 
         </void> 
        </object> 
        <object class="com.jformdesigner.model.FormLayoutConstraints"> 
