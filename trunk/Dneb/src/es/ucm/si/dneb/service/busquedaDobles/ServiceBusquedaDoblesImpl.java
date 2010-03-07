@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.swing.JOptionPane;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
@@ -70,7 +71,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		try {
 			
-			// Crear imagenes, buscar estrellas y obtener los N recuadros mas grandes
+			// Crear imagenes y buscar estrellas
 			Fits imagenFITS1 = new Fits(new File(filename1));			
 			BasicHDU imageHDU1 = imagenFITS1.getHDU(0);
 			LectorImageHDU l1 = new LectorImageHDU(imageHDU1, filename1);
@@ -118,35 +119,33 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			scaleW = l2.getWidth()/l1.getWidth();
 			scaleH = l2.getHeight()/l1.getHeight();
 			double porcentaje = 0;
-			int radioBusqueda = 20; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
-			Point centroide;
-			int indice;
-			ArrayList<Integer> indicesElegidos = new ArrayList<Integer>();
+			Point centroide, elegido;
+			ArrayList<Point> elegidos = new ArrayList<Point>();
+			ArrayList<Point> centroides = new ArrayList<Point>();
 			for (int i = 0; i < nRecuadros; i++) {
 				// Escalar el centroide
 				centroide = centroides1.get(i);
 				centroide.setX(centroide.getX() * scaleW);
 				centroide.setY(centroide.getY() * scaleH);
-				indice = getIndiceDelMasCercano(centroide, centroides2, radioBusqueda);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2);
 				
-				if (indice != -1) { // se ha encontrado coincidente
+				if (elegido != null) { // se ha encontrado coincidente
 					
-					// Comprobar si el indice ya esta en el array
-					if (indicesElegidos.contains(indice)) {
-						int pos = indicesElegidos.indexOf(indice);
+					// Comprobar si el centroide ya esta en el array
+					if (elegidos.contains(elegido)) {
+						int pos = elegidos.indexOf(elegido);
 						
 						// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
-						if (centroide.getDistancia(centroides2.get(indice)) <
-								centroides1.get(pos).getDistancia(centroides2.get(indice))) {
-							centroides1.remove(pos);
-							indicesElegidos.remove(pos);
+						if (centroide.getDistancia(elegido) <
+								centroides.get(pos).getDistancia(elegido)) {
+							centroides.remove(pos);
+							elegidos.remove(pos);
 						}
 					}
 					
-					indicesElegidos.add(indice);
+					centroides.add(centroide);
+					elegidos.add(elegido);
 					porcentaje++;
-				} else {
-					centroides1.remove(i);
 				}
 			}
 			
@@ -154,24 +153,40 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			System.out.println("El porcentaje de centroides elegidos es: " + porcentaje);
 			
 			// Construir las matrices de ambas listas y encontrar la matriz de transformacion
+			// Y a la vez se calcula el error inicial
+			double errorInicial = 0;
 			if (porcentaje >= 50) {
-				double[][] m1 = new double[centroides1.size()][3], m2 = new double[centroides1.size()][3];
-				for (int i = 0; i < centroides1.size(); i++) {
-					centroide = centroides1.get(i);
+				double[][] m1 = new double[centroides.size()][3], m2 = new double[elegidos.size()][3];
+				for (int i = 0; i < centroides.size(); i++) {
+					centroide = centroides.get(i);
 					m1[i][0] = centroide.getX();
 					m1[i][1] = centroide.getY();
 					m1[i][2] = 1;
 					
-					centroide = centroides2.get(indicesElegidos.get(i));
+					centroide = elegidos.get(i);
 					m2[i][0] = centroide.getX();
 					m2[i][1] = centroide.getY();
 					m2[i][2] = 1;
+					
+					errorInicial += Math.sqrt(Math.pow((m1[i][0] - m2[i][0]),2) +
+									Math.pow((m1[i][1] - m2[i][1]),2));
 				}
 				
 				Matrix P = new Matrix(m1);
 				Matrix Q = new Matrix(m2);
 				Matrix X = P.solve(Q);
+				Matrix E = P.times(X).minus(Q);
+			    double errorFinal = 0, prov = 0;
+			    for (int i = 0; i < E.getRowDimension(); i++) {
+			    	for (int j = 0; j < E.getColumnDimension()-1; j++) {
+			    		prov += Math.pow(E.get(i, j), 2);
+			    	}
+			    	errorFinal += Math.sqrt(prov);
+			    }
+			    JOptionPane.showMessageDialog(null, errorFinal);
 			}
+			
+			// Comparar errores
 			
 			procImgs.get(0).setFinalizada(true);
 			procImgs.get(1).setFinalizada(true);
@@ -187,22 +202,40 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 	}
 	
-	private int getIndiceDelMasCercano(Point punto, ArrayList<Point> listaPuntos, int radioBusqueda) {
-		Point aux = listaPuntos.get(0);
-		double distancia;
-		double distanciaMin = punto.getDistancia(aux);
-		int indice = (distanciaMin <= radioBusqueda)?(0):(-1);
+	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
+			ArrayList<RectStar> listaRecs) {
 		
-		for (int i = 1; i < listaPuntos.size(); i++) {
+		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio de 20 pixeles
+		
+		int radioBusqueda = 20; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
+		int tamRecLim = 2; // El area del rectangulo debera estar entre la mitad y el doble del rectangulo que se pasa
+		Point aux;
+		double distancia, distanciaMin = 0, brillo, brilloParecido = 0;
+		Point elegido = null;
+		
+		for (int i = 0; i < listaPuntos.size(); i++) {
 			aux = listaPuntos.get(i);
 			distancia = punto.getDistancia(aux);
-			if (distancia <= radioBusqueda && distancia < distanciaMin) {
-				distanciaMin = distancia;
-				indice = i;
+			brillo = listaRecs.get(i).getArea();
+			if (elegido == null) {
+				if (distancia <= radioBusqueda &&
+						brillo <= tamRecLim*rec.getArea() && brillo >= rec.getArea()/tamRecLim) {
+					distanciaMin = distancia;
+					brilloParecido = brillo;
+					elegido = aux;
+				}
+			} else {
+				if (distancia <= radioBusqueda &&
+						Math.abs(rec.getArea() - brillo) <= Math.abs(rec.getArea() - brilloParecido)
+						&& distancia < distanciaMin) {
+					brilloParecido = brillo;
+					distanciaMin = distancia;
+					elegido = aux;
+				}
 			}
 		}
 		
-		return indice;
+		return elegido;
 	}
 
 	public EntityManager getManager() {
