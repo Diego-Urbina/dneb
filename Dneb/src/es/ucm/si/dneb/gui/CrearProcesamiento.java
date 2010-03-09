@@ -33,6 +33,7 @@ import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
+import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
@@ -187,6 +188,8 @@ public class CrearProcesamiento extends JPanel {
 			//OJO TMB HAY QUE ASIGNARLE LOS PARÁMETROS
 			
 			servicioGestionProcesamientos.crearProcesamiento(procesamiento);
+			
+			JOptionPane.showMessageDialog(null,"Procesamiento creado satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE);
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(null, "El valor de los parámetros es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (Exception ex) {
