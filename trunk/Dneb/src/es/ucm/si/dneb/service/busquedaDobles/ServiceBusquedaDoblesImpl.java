@@ -171,6 +171,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					errorInicial += Math.sqrt(Math.pow((m1[i][0] - m2[i][0]),2) +
 									Math.pow((m1[i][1] - m2[i][1]),2));
 				}
+				JOptionPane.showMessageDialog(null, errorInicial);
 				
 				Matrix P = new Matrix(m1);
 				Matrix Q = new Matrix(m2);
