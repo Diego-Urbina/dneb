@@ -216,7 +216,7 @@ public class CrearProcesamiento extends JPanel {
 		cbTipoProc = new JComboBox(servicioGestionProcesamientos.getTiposProcesamiento().toArray());
 		labelUmbral = new JLabel("Umbral");
 	    labelBrillo = new JLabel("Brillo");
-		textFieldUmbral = new JTextField("50000");
+		textFieldUmbral = new JTextField("20000");
 	    textFieldBrillo = new JTextField("30000");
 		
 		{
