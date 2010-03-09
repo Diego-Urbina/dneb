@@ -27,12 +27,12 @@ CalculateCentroid<Point, int [][]>{
 			centroidY+=(points.length-i)*(tempY); 
 		}
 		
-		for(int j=0 ;j<=points.length-1;j++){
+		for(int i=0 ;i<=points.length-1;i++){
 			tempX=0;
-			for(int i=points[0].length-1 ;i>=0;i--){
+			for(int j=points[0].length-1 ;j>=0;j--){
 				tempX+=points[i][j];
 			}
-			centroidX+=(j+1)*(tempX);
+			centroidX+=(i+1)*(tempX);
 		}
 		
 		

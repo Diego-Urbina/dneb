@@ -117,8 +117,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			
 			// Hacer coincidir los nRecuadros centroides
 			double scaleW, scaleH;
-			scaleW = l2.getWidth()/l1.getWidth();
-			scaleH = l2.getHeight()/l1.getHeight();
+			scaleW = (double)l2.getWidth()/l1.getWidth();
+			scaleH = (double)l2.getHeight()/l1.getHeight();
 			double porcentaje = 0;
 			Point centroide, elegido;
 			ArrayList<Point> elegidos = new ArrayList<Point>();
@@ -141,6 +141,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 								centroides.get(pos).getDistancia(elegido)) {
 							centroides.remove(pos);
 							elegidos.remove(pos);
+							porcentaje--;
 						}
 					}
 					
@@ -150,8 +151,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				}
 			}
 			
+			System.out.println("Recuadros elegidos: " + porcentaje);
 			porcentaje = (porcentaje/nRecuadros) * 100;
-			System.out.println("Recuadros elegidos: " + nRecuadros);
 			System.out.println("El porcentaje de centroides elegidos es: " + porcentaje);
 			
 			// Construir las matrices de ambas listas y encontrar la matriz de transformacion
@@ -178,13 +179,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				Matrix P = new Matrix(m1);
 				Matrix Q = new Matrix(m2);
 				Matrix X = P.solve(Q);
-				Matrix E = P.times(X).minus(Q);
-			    double errorFinal = 0, prov = 0;
-			    for (int i = 0; i < E.getRowDimension(); i++) {
-			    	for (int j = 0; j < E.getColumnDimension()-1; j++) {
-			    		prov += Math.pow(E.get(i, j), 2);
-			    	}
-			    	errorFinal += Math.sqrt(prov);
+				Matrix R = P.times(X);
+			    double errorFinal = 0;
+			    for (int i = 0; i < R.getRowDimension(); i++) {
+			    	errorFinal += Math.sqrt(Math.pow((R.get(i, 0) - Q.get(i, 0)),2) +
+							Math.pow((R.get(i, 1) - Q.get(i, 1)),2));
 			    }
 			    JOptionPane.showMessageDialog(null, errorFinal);
 			}
