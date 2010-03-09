@@ -124,7 +124,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 		if(tareaProc.isActiva()){
 			throw new ServicioGestionProcesamientosException(
-			"ReanudarTarea: El procesamiento ya está activa");
+			"ReanudarTarea: El procesamiento ya está activo");
 		}
 		/**Se marca el procesamiento como activo**/
 		tareaProc.setActiva(true);
