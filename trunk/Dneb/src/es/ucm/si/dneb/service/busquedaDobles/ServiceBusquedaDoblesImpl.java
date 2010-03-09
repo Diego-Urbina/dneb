@@ -23,6 +23,7 @@ import Jama.Matrix;
 
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
@@ -150,6 +151,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			}
 			
 			porcentaje = (porcentaje/nRecuadros) * 100;
+			System.out.println("Recuadros elegidos: " + nRecuadros);
 			System.out.println("El porcentaje de centroides elegidos es: " + porcentaje);
 			
 			// Construir las matrices de ambas listas y encontrar la matriz de transformacion
@@ -189,16 +191,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			
 			// Comparar errores
 			
-			procImgs.get(0).setFinalizada(true);
+			/*procImgs.get(0).setFinalizada(true);
 			procImgs.get(1).setFinalizada(true);
 			
 			manager.merge(procImgs.get(0));
-			manager.merge(procImgs.get(1));
+			manager.merge(procImgs.get(1));*/
 		
 		} catch (FitsException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (ServicioGestionProcesamientosException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

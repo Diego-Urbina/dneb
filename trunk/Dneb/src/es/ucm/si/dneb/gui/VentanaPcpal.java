@@ -197,7 +197,7 @@ public class VentanaPcpal extends JFrame{
 
 	private void buscarActionPerformed(ActionEvent e) {
 		MonitorProcesamiento prDobles= new MonitorProcesamiento(this);
-		pane.addTab("Monitor Búsqueda dobles", prDobles);
+		pane.addTab("Monitor de Procesamientos", prDobles);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
