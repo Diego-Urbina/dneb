@@ -21,6 +21,7 @@ import org.springframework.context.ApplicationContext;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
+import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
@@ -131,6 +132,8 @@ public class MonitorProcesamiento extends JPanel{
 			servicioGestionProcesamientos.reanudarProcesamiento((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 			tableTasks.setValueAt(servicioGestionProcesamientos.getPorcentajeCompletado((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0)), tableTasks.getSelectedRow(), 14);
 		} catch(ServicioGestionTareasException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch(ServicioGestionProcesamientosException ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 	}
