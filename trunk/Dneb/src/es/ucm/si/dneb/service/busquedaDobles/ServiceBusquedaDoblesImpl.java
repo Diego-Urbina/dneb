@@ -1,6 +1,8 @@
 package es.ucm.si.dneb.service.busquedaDobles;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +44,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void iniciarProcesamiento(List<ProcImagen> procImgs) {
-		// TODO Auto-generated method stub
-		
 		
 		/* Algoritmo de busqueda de estrellas
 		 * 
@@ -72,20 +72,25 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		try {
 			
+			BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
+			bw.write("\r\n***** Información de ejecución *****\r\n");
+			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);
+			bw.write("\r\n\r\n2) Parámetros:\r\n\tUmbral: " + umbral + "\r\n\tBrillo: " + brillo);
+			
 			// Crear imagenes y buscar estrellas
 			Fits imagenFITS1 = new Fits(new File(filename1));			
 			BasicHDU imageHDU1 = imagenFITS1.getHDU(0);
 			LectorImageHDU l1 = new LectorImageHDU(imageHDU1, filename1);
 			StarFinder sf1 = new StarFinder();
 			sf1.buscarEstrellas(l1, new Float(brillo), new Float(umbral));
-			System.out.println("Numero de estrellas encontradas: " + sf1.getNumberOfStars());
+			bw.write("\r\n\r\n3) Número de estrellas encontradas:\r\n\tImagen 1: " + sf1.getNumberOfStars());
 			
 			Fits imagenFITS2 = new Fits(new File(filename2));			
 			BasicHDU imageHDU2 = imagenFITS2.getHDU(0);
 			LectorImageHDU l2 = new LectorImageHDU(imageHDU2, filename2);
 			StarFinder sf2 = new StarFinder();
 			sf2.buscarEstrellas(l2, new Float(brillo), new Float(umbral));
-			System.out.println("Numero de estrellas encontradas: " + sf2.getNumberOfStars());
+			bw.write("\r\n\tImagen 2: " + sf2.getNumberOfStars());
 
 			ArrayList<RectStar> recuadros1, recuadros2;
 			int nRecuadros = Math.min(sf1.getNumberOfStars(), sf2.getNumberOfStars());
@@ -151,9 +156,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				}
 			}
 			
-			System.out.println("Recuadros elegidos: " + porcentaje);
+			bw.write("\r\n\r\n4) Número de centroides elegidos: " + porcentaje);
 			porcentaje = (porcentaje/nRecuadros) * 100;
-			System.out.println("El porcentaje de centroides elegidos es: " + porcentaje);
+			bw.write("\r\n\r\n5) Porcentaje de centroides elegidos: " + porcentaje);
 			
 			// Construir las matrices de ambas listas y encontrar la matriz de transformacion
 			// Y a la vez se calcula el error inicial
@@ -174,7 +179,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					errorInicial += Math.sqrt(Math.pow((m1[i][0] - m2[i][0]),2) +
 									Math.pow((m1[i][1] - m2[i][1]),2));
 				}
-				JOptionPane.showMessageDialog(null, errorInicial);
+				bw.write("\r\n\r\n6) Error inicial: " + errorInicial);
 				
 				Matrix P = new Matrix(m1);
 				Matrix Q = new Matrix(m2);
@@ -185,16 +190,94 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			    	errorFinal += Math.sqrt(Math.pow((R.get(i, 0) - Q.get(i, 0)),2) +
 							Math.pow((R.get(i, 1) - Q.get(i, 1)),2));
 			    }
-			    JOptionPane.showMessageDialog(null, errorFinal);
+			    bw.write("\r\n\r\n7) Error final: " + errorFinal);
+			
+			    // Comparar errores y si el final es mayor que el inicial descartar
+				if (errorFinal <= errorInicial) {
+					
+					// Aplicar matriz a todos los puntos de la imagen uno y buscar emparejamiento
+					m1 = new double[centroides1.size()][3];
+					for (int i = 0; i < centroides1.size(); i++) {
+						centroide = centroides1.get(i);
+						m1[i][0] = centroide.getX();
+						m1[i][1] = centroide.getY();
+						m1[i][2] = 1;
+					}
+					P = new Matrix(m1);
+					Q = P.times(X);
+					
+					// Emparejamiento
+					elegidos.clear();
+					centroides.clear();
+					porcentaje = 0.;
+					for (int i = 0; i < centroides1.size(); i++) {
+						centroide = new Point();
+						centroide.setX(Q.get(i, 0));
+						centroide.setY(Q.get(i, 1));
+						elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2);
+						
+						if (elegido != null) { // se ha encontrado coincidente
+							
+							// Comprobar si el centroide ya esta en el array
+							if (elegidos.contains(elegido)) {
+								int pos = elegidos.indexOf(elegido);
+								
+								// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
+								if (centroide.getDistancia(elegido) <
+										centroides.get(pos).getDistancia(elegido)) {
+									centroides.remove(pos);
+									elegidos.remove(pos);
+									porcentaje--;
+								}
+							}
+							
+							centroides.add(centroide);
+							elegidos.add(elegido);
+							porcentaje++;
+						}
+					}
+					
+					bw.write("\r\n\r\n8) Número de centroides elegidos después de aplicar la matriz: " + porcentaje);
+					porcentaje = (porcentaje/centroides1.size()) * 100;
+					bw.write("\r\n\r\n9) Porcentaje de centroides elegidos después de aplicar la matriz: " + porcentaje);
+					
+					// Si el porcentaje es mayor o igual que 50 calcular errores y ver cual es mayor que 2*desviacion tipica (candidato a que se haya movido)
+					double media = 0., varianza = 0., error, desviacion;
+					double[] errores = new double[centroides.size()];
+					if (porcentaje >= 50) {
+						// Calculo de la media, varianza y desviacion tipica
+						for (int i = 0; i < centroides.size(); i++) {
+							error = Math.sqrt(Math.pow((centroides.get(i).getX() - elegidos.get(i).getX()),2) +
+									Math.pow((centroides.get(i).getY() - elegidos.get(i).getY()),2));
+							media += error;
+							varianza += Math.pow(error, 2);
+							errores[i] = error;
+						}
+						media = media / centroides.size();
+						varianza = varianza / centroides.size() - Math.pow(media, 2);
+						desviacion = Math.sqrt(varianza);
+						bw.write("\r\n\r\n10) Desviación típica: " + desviacion);
+						
+						// Calcular candidatos a haberse movido
+						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido");
+						for (int i = 0; i < centroides.size(); i++) {
+							if (errores[i] > 2*desviacion) {
+								centroide = centroides.get(i);
+								bw.write("\r\n\tCandidato -> X: " + centroide.getX() + " Y: " + centroide.getY() + "\r\n");
+							}
+						}
+					}
+				}
 			}
 			
-			// Comparar errores
+			bw.close();
+			JOptionPane.showMessageDialog(null, "Fichero de log creado en " + System.getProperty("user.dir"), "Información", JOptionPane.INFORMATION_MESSAGE);
 			
-			/*procImgs.get(0).setFinalizada(true);
+			procImgs.get(0).setFinalizada(true);
 			procImgs.get(1).setFinalizada(true);
 			
 			manager.merge(procImgs.get(0));
-			manager.merge(procImgs.get(1));*/
+			manager.merge(procImgs.get(1));
 		
 		} catch (FitsException e) {
 			e.printStackTrace();
