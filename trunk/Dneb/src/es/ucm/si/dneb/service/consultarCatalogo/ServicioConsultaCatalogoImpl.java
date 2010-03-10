@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
-import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 
 @Service("servicioConsultaCatalogo")
 public class ServicioConsultaCatalogoImpl implements ServicioConsultaCatalogo{
@@ -40,6 +39,18 @@ public class ServicioConsultaCatalogoImpl implements ServicioConsultaCatalogo{
 
 	public static Log getLog() {
 		return LOG;
+	}
+
+	@Override
+	public DoubleStarCatalog findDSCById(Long id) {
+		
+		return manager.find(DoubleStarCatalog.class, id);
+	}
+
+	@Override
+	public void crearTareaDescarga(List<DoubleStarCatalog> dscList) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

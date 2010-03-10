@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import es.ucm.si.dneb.domain.DoubleStarCatalog;
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
@@ -206,13 +207,13 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					 * TODO OJO QUE ESTO ES UN CAMBIO IMPORTANTE HAY QUE PROBAR
 					 * SI FUNCIONA
 					 **/
-					imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(),
-							survey.getDescripcion(), ar.toString(), dec
-									.toString(), tarea.getFormatoFichero()
-									.getAlias()));
+					imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey
+							.getDescripcion(), ar.toString(), dec.toString(),
+							tarea.getFormatoFichero().getAlias()));
 					imagen.setSurvey(survey);
 					imagen.setTarea(tarea);
-					imagen.setAncho((ancho *  (Math.cos((dec * 2.0 * Math.PI) / 360.0))));
+					imagen.setAncho((ancho * (Math
+							.cos((dec * 2.0 * Math.PI) / 360.0))));
 
 					manager.persist(imagen);
 
@@ -236,10 +237,10 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	private Double calculaAr(Double ar, Double solap, Double anchoreal) {
-	
+
 		ar = ar + (anchoreal) - (anchoreal * solap);
-		
-		LOG.debug("CACULA AR :"+ ar.toString());
+
+		LOG.debug("CACULA AR :" + ar.toString());
 		return ar;
 	}
 
@@ -251,7 +252,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		} else {
 			dec = dec + alto - (alto * solap);
 		}
-		LOG.debug("CACULA DEC :"+ dec.toString());
+		LOG.debug("CACULA DEC :" + dec.toString());
 		return dec;
 	}
 
@@ -261,6 +262,114 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 	public GestorDescargas getGestorHilos() {
 		return gestorDescargas;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void crearTarea(List<DoubleStarCatalog> dscs) {
+		// TODO Auto-generated method stub
+		Tarea tarea = new Tarea();
+
+		tarea.setActiva(false);
+		tarea.setAlias("CALCDIST");
+		tarea.setAlto(4);
+		tarea.setAncho(4);
+		tarea.setArFinal("0");
+		tarea.setArInicial("0");
+		tarea.setDecFinal("0");
+		tarea.setDecInicial("0");
+
+		tarea
+				.setDescripcion("TAREA DE DESCARGA DE IMAGENES PARA CALCULO DE DISTANCIA");
+		tarea.setFechaCreacion(Util.dameFechaActual());
+		tarea.setFechaUltimaActualizacion(Util.dameFechaActual());
+
+		tarea.setFinalizada(false);
+
+		FormatoFichero formatoFichero;
+
+		try {
+			formatoFichero = (FormatoFichero) manager.createNamedQuery(
+					"FormatoFichero:dameFormatoPorDescripcion").setParameter(1,
+					"fits").getSingleResult();
+		} catch (NoResultException e) {
+			LOG
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
+			throw new ServicioCreacionTareasException(
+					"Prolema al ejecutar query");
+		} catch (NonUniqueResultException e) {
+			LOG
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+			throw new ServicioCreacionTareasException(
+					"Prolema al ejecutar query");
+		}
+
+		tarea.setFormatoFichero(formatoFichero);
+		tarea.setRuta("d:\\");
+		// tarea.setSolpamiento(solpamiento);
+
+		ArrayList<Survey> surveys = new ArrayList<Survey>();
+
+		try {
+			Survey surveyViejo = (Survey) manager.createNamedQuery(
+					"Survey:dameSurveyPorDescripcion").setParameter(1,
+					"poss2ukstu_blue").getSingleResult();
+			surveys.add(surveyViejo);
+		} catch (NoResultException e) {
+			LOG
+					.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,No se Devuelve resultado");
+			throw new ServicioCreacionTareasException(
+					"Prolema al ejecutar query");
+		} catch (NonUniqueResultException e) {
+			LOG
+					.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,Se devuelve más de un resultado");
+			throw new ServicioCreacionTareasException(
+					"Prolema al ejecutar query");
+		}
+
+		tarea.setSurveys(surveys);
+		try {
+			manager.persist(tarea);
+		} catch (Exception e) {
+			LOG.error("Problema persistiendo tarea" + e.getCause()
+					+ e.getStackTrace());
+			throw new ServicioCreacionTareasException(
+					"Problema persistiendo tarea" + e.getCause()
+							+ e.getStackTrace());
+		}
+		// tarea.setDescargas(imagens);
+
+		for (DoubleStarCatalog dsc : dscs) {
+
+			Imagen imagen = new Imagen();
+
+			imagen.setAncho(tarea.getAncho());
+			imagen.setAscensionRecta(dsc.getArcsecondCoordinates2000()
+					.substring(0, 10));
+			imagen.setDeclinacion(dsc.getArcsecondCoordinates2000().substring(
+					10, 18));
+			imagen.setDescargada(false);
+			// imagen.setFechaDescarga(fechaFinalizacion);
+			// imagen.setProcesamientoImagen(procImagen);
+			imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), surveys.get(0)
+					.getDescripcion(), dsc.getArcsecondCoordinates2000()
+					.substring(0, 10), dsc.getArcsecondCoordinates2000()
+					.substring(10, 18), tarea.getFormatoFichero().getAlias()));
+			imagen.setSurvey(surveys.get(0));
+			imagen.setTarea(tarea);
+			try {
+				manager.persist(imagen);
+
+			} catch (Exception e) {
+				LOG.error("Problema persistiendo imagen" + e.getCause()
+						+ e.getStackTrace());
+				throw new ServicioCreacionTareasException(
+						"Problema persistiendo imagen" + e.getCause()
+								+ e.getStackTrace());
+			}
+
+		}
+
 	}
 
 }
