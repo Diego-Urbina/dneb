@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
-import javax.swing.table.TableColumn;
 
 import com.intellij.uiDesigner.core.*;
 
@@ -17,6 +16,7 @@ import es.ucm.si.dneb.domain.DoubleStarCatalog;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
+import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 /*
  * Created by JFormDesigner on Thu Feb 11 22:37:04 CET 2010
  */
@@ -34,6 +34,7 @@ public class ConsultarCatalogo extends JPanel {
 	DefaultTableModel modelo;
 	
 	private ServicioConsultaCatalogo servicioConsultaCatalogo;
+	private ServicioCreacionTareas servicioCreacionTareas;
 	
 	List<DoubleStarCatalog> dsData= new ArrayList<DoubleStarCatalog>();
 
@@ -42,12 +43,11 @@ public class ConsultarCatalogo extends JPanel {
 		initComponents();
 		
 		servicioConsultaCatalogo= (ServicioConsultaCatalogo) ContextoAplicacion.getApplicationContext().getBean("servicioConsultaCatalogo");
-		
+		servicioCreacionTareas= (ServicioCreacionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioCreacionTareas");
 	}
 
 	private void consultarActionPerformed(ActionEvent e) {
-		// TODO add your code here
-		
+			
 		Integer intlimobs=Integer.MAX_VALUE;
 		Date dateprimObs=Date.valueOf(3000+"-01-01");   
 		Date dateultobs=Date.valueOf(3000+"-01-01");
@@ -106,6 +106,8 @@ public class ConsultarCatalogo extends JPanel {
 	        	fila[17] = dsc.getSecondaryProperMotionRa();
 	        	fila[18] = dsc.getSecondStarMagnitude();
 	        	fila[19] = dsc.getSpectralType();
+	        	fila[20] = dsc.getId();
+	        	
 	        	
 	        	modelo.addRow(fila);
 	        	
@@ -117,7 +119,20 @@ public class ConsultarCatalogo extends JPanel {
 	}
 
 	private void generarTareaAction(ActionEvent e) {
+		
 		// TODO add your code here
+		
+		int selection[]=this.table1.getSelectedRows();
+		List<DoubleStarCatalog> dscs= new ArrayList<DoubleStarCatalog>();
+		
+		for(int i =0;i<selection.length; i++){
+			
+			DoubleStarCatalog dscSelected= servicioConsultaCatalogo.findDSCById((Long)modelo.getValueAt(selection[i],20));
+			dscs.add(dscSelected);
+		}
+		
+		servicioCreacionTareas.crearTarea(dscs);
+		
 	}
 
 	private void initComponents() {
@@ -234,11 +249,10 @@ public class ConsultarCatalogo extends JPanel {
 			//---- table1 ----
 			this.modelo=new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null, null, null, null, null, null, "", null, "", null, null, null, null, "", "", "", ""},
-					{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "", null},
+					
 				},
 				new String[] {
-					"ARSEC2000COOR", "COMPONENTS", "COORDINATES", "DISCOVERERANDMARKER", "DURSCHNUMBER", "FIRSTOBS", "FIRSTPOSANG", "FIRSTSEP", "FIRSTSTARMAG", "LASTOBS", "LASTPOSANG", "LASTSEP", "NOTES", "NUMOBS", "PPMDEC", "PPMRA", "SPMDEC", "SPMRA", "SSMAGNITUDE", "SPECTYPE"
+					"ARSEC2000COOR", "COMPONENTS", "COORDINATES", "DISCOVERERANDMARKER", "DURSCHNUMBER", "FIRSTOBS", "FIRSTPOSANG", "FIRSTSEP", "FIRSTSTARMAG", "LASTOBS", "LASTPOSANG", "LASTSEP", "NOTES", "NUMOBS", "PPMDEC", "PPMRA", "SPMDEC", "SPMRA", "SSMAGNITUDE", "SPECTYPE","ID"
 				}
 			);
 			
@@ -284,6 +298,14 @@ public class ConsultarCatalogo extends JPanel {
 
 	public ServicioConsultaCatalogo getServicioConsultaCatalogo() {
 		return servicioConsultaCatalogo;
+	}
+
+	public void setServicioCreacionTareas(ServicioCreacionTareas servicioCreacionTareas) {
+		this.servicioCreacionTareas = servicioCreacionTareas;
+	}
+
+	public ServicioCreacionTareas getServicioCreacionTareas() {
+		return servicioCreacionTareas;
 	}
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
