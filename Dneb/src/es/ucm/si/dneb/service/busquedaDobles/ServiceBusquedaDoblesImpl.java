@@ -124,21 +124,17 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				cent2.setX(recuadros2.get(i).getxLeft() + cent2.getX());
 				cent2.setY(recuadros2.get(i).getyTop() + cent2.getY());
 				
-				if (cent1.getX() > recuadros1.get(i).getxRight() || cent1.getY() > recuadros1.get(i).getyBot()) {
-					bwc.write("\r\n\r\nCentroide " + i + " de la imagen 1:\r\n\tX: " + cent1.getX() + "\r\n\tY: " + cent1.getY());
-					bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 1:\r\n\txLeft: " + recuadros1.get(i).getxLeft()
-							+ "\r\n\txRight: " + recuadros1.get(i).getxRight()
-							+ "\r\n\tyTop: " + recuadros1.get(i).getyTop()
-							+ "\r\n\tyBot: " + recuadros1.get(i).getyBot());
-				}
+				bwc.write("\r\n\r\nCentroide " + i + " de la imagen 1:\r\n\tX: " + cent1.getX() + "\r\n\tY: " + cent1.getY());
+				bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 1:\r\n\txLeft: " + recuadros1.get(i).getxLeft()
+						+ "\r\n\txRight: " + recuadros1.get(i).getxRight()
+						+ "\r\n\tyTop: " + recuadros1.get(i).getyTop()
+						+ "\r\n\tyBot: " + recuadros1.get(i).getyBot());
 				
-				if (cent2.getX() > recuadros2.get(i).getxRight() || cent2.getY() > recuadros2.get(i).getyBot()) {
-					bwc.write("\r\n\r\nCentroide " + i + " de la imagen 2:\r\n\tX: " + cent2.getX() + "\r\n\tY: " + cent2.getY());
-					bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 2:\r\n\txLeft: " + recuadros2.get(i).getxLeft()
-							+ "\r\n\txRight: " + recuadros2.get(i).getxRight()
-							+ "\r\n\tyTop: " + recuadros2.get(i).getyTop()
-							+ "\r\n\tyBot: " + recuadros2.get(i).getyBot());
-				}
+				bwc.write("\r\n\r\nCentroide " + i + " de la imagen 2:\r\n\tX: " + cent2.getX() + "\r\n\tY: " + cent2.getY());
+				bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 2:\r\n\txLeft: " + recuadros2.get(i).getxLeft()
+						+ "\r\n\txRight: " + recuadros2.get(i).getxRight()
+						+ "\r\n\tyTop: " + recuadros2.get(i).getyTop()
+						+ "\r\n\tyBot: " + recuadros2.get(i).getyBot());
 				
 				centroides1.add(cent1);
 				centroides2.add(cent2);
