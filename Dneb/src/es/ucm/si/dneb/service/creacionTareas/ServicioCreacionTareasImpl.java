@@ -305,7 +305,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		}
 
 		tarea.setFormatoFichero(formatoFichero);
-		tarea.setRuta("d:\\");
+		tarea.setRuta("d://");
 		// tarea.setSolpamiento(solpamiento);
 
 		ArrayList<Survey> surveys = new ArrayList<Survey>();
@@ -345,7 +345,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 			imagen.setAncho(tarea.getAncho());
 			imagen.setAscensionRecta(dsc.getArcsecondCoordinates2000()
-					.substring(0, 10));
+					.substring(0, 9));
 			imagen.setDeclinacion(dsc.getArcsecondCoordinates2000().substring(
 					10, 18));
 			imagen.setDescargada(false);
@@ -359,6 +359,8 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			imagen.setTarea(tarea);
 			try {
 				manager.persist(imagen);
+				
+				gestorDescargas.anadirHilo(tarea);
 
 			} catch (Exception e) {
 				LOG.error("Problema persistiendo imagen" + e.getCause()
