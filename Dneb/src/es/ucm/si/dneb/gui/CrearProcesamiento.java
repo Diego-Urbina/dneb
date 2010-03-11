@@ -82,8 +82,13 @@ public class CrearProcesamiento extends JPanel {
 	        	fila[9] = tarea.getFechaUltimaActualizacion().toString();
 	        	fila[10] = tarea.getFormatoFichero().getAlias();
 	        	fila[11] = tarea.getRuta();
-	        	fila[12] = tarea.getSurveys().get(0).getDescripcion();
-	        	fila[13] = tarea.getSurveys().get(1).getDescripcion();
+	        	if(tarea.getSurveys().size()>0){
+
+	        		fila[12] = tarea.getSurveys().get(0).getDescripcion();
+	        	}
+	        	if(tarea.getSurveys().size()>1){
+	        		fila[13] = tarea.getSurveys().get(1).getDescripcion();
+	        	}
 	        	modelo.addRow(fila);
 	        }
 		} catch(ServicioGestionTareasException ex) {
