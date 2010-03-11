@@ -286,10 +286,12 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						
 						// Calcular candidatos a haberse movido
 						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido");
+						int cont = 1;
 						for (int i = 0; i < centroides.size(); i++) {
 							if (errores[i] > 2*desviacion) {
 								centroide = centroides.get(i);
-								bw.write("\r\n\tCandidato -> X: " + centroide.getX() + " Y: " + centroide.getY() + "\r\n");
+								bw.write("\r\n\tCandidato " + cont + " -> X: " + Math.round(centroide.getX()) + " Y: " + Math.round(centroide.getY()) + "\r\n");
+								cont++;
 							}
 						}
 					}
