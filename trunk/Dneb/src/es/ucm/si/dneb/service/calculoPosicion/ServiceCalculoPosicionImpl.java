@@ -1,6 +1,8 @@
 package es.ucm.si.dneb.service.calculoPosicion;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,11 @@ import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
+import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
+import es.ucm.si.dneb.service.image.util.Point;
 
 @Service("serviceCalculoPosicion")
 public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
@@ -36,16 +40,21 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 	@PersistenceContext
 	EntityManager manager;
 	
+	
+	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void calcularPosicion(ProcImagen pi) {
 		
-		
+		//TODO
 		//Saco los parámetro de la imagen
 		List<ParamImg> paramsImg =pi.getParams();
 		
 		//Busco las estrellas
+		LOG.info("PROCESAMIENTO DE CALCULO DE POSICION");
 		
 		String filename1 = pi.getImagen().getRutaFichero();
+		
+		LOG.info("FICHERO : "+filename1);
 		
 		Fits imagenFITS;
 		List<RectStar> recStars= new ArrayList<RectStar>();
@@ -63,8 +72,42 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 					umbral = paramProcTareas.get(i).getValorNum();
 			}
 			sf.buscarEstrellas(l, new Float(brillo), new Float(umbral));
-			System.out.println("Numero de estrellas encontradas: " + sf.getNumberOfStars());
+			LOG.info("Numero de estrellas encontradas: " + sf.getNumberOfStars());
 			recStars=sf.getRecuadros();
+			
+			//FILTRAR POR BRILLO
+			
+			//CALCULAR CENTROIDES
+			ArrayList<Point> centroides = new ArrayList<Point>();
+			CalculateBookCentroid cc = new CalculateBookCentroid();
+			Point cent;
+			
+			BufferedWriter bwc = new BufferedWriter(new FileWriter("LogCentroides.txt"));
+			
+			int nRecuadros=recStars.size();
+			
+			for (int i = 0; i < nRecuadros; i++) {
+				
+				cent = cc.giveMeTheCentroid(l.getPorcionImagen(recStars.get(i).getxLeft(), recStars.get(i).getyTop(), 
+						recStars.get(i).getWidth(), recStars.get(i).getHeight()));
+				
+				
+				cent.setX(recStars.get(i).getxLeft() + cent.getX());
+				cent.setY(recStars.get(i).getyTop() + cent.getY());
+				
+				
+				LOG.info("\r\n\r\nCentroide " + i + " de la imagen 1:\r\n\tX: " + cent.getX() + "\r\n\tY: " + cent.getY());
+				LOG.info("\r\n\r\nRectángulo " + i + " de la imagen 1:\r\n\txLeft: " + recStars.get(i).getxLeft()
+						+ "\r\n\txRight: " + recStars.get(i).getxRight()
+						+ "\r\n\tyTop: " + recStars.get(i).getyTop()
+						+ "\r\n\tyBot: " + recStars.get(i).getyBot());
+
+				
+				centroides.add(cent);
+
+			}
+			
+			//CALCULAR DISTANCIAS ENTRE TODOS LOS CENTROIDES
 			
 		} catch (FitsException e) {
 			e.printStackTrace();
