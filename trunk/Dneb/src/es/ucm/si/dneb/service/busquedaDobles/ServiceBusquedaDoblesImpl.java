@@ -95,15 +95,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			ArrayList<RectStar> recuadros1, recuadros2;
 			int nRecuadros = Math.min(sf1.getNumberOfStars(), sf2.getNumberOfStars());
 			LectorImageHDU aux;
+			String numMinIm;
 			if (nRecuadros == sf1.getNumberOfStars()) {
 				recuadros1 = sf1.getRecuadros();
 				recuadros2 = sf2.getRecuadros();
+				numMinIm = "imagen 1";
 			} else {
 				aux = l1;
 				l1 = l2;
 				l2 = aux;
 				recuadros1 = sf2.getRecuadros();
 				recuadros2 = sf1.getRecuadros();
+				numMinIm = "imagen 2";
 			}
 			
 			// Calcular los centroides de los recuadros de ambas imagenes
@@ -281,7 +284,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						bw.write("\r\n\r\n10) Desviación típica: " + desviacion);
 						
 						// Calcular candidatos a haberse movido
-						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido");
+						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido en la " + numMinIm + ":");
 						int cont = 1;
 						for (int i = 0; i < centroides.size(); i++) {
 							if (errores[i] > 2*desviacion) {
