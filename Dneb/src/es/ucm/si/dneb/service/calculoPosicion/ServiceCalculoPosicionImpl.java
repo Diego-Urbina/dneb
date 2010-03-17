@@ -23,13 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 import es.ucm.si.dneb.domain.ParamImg;
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.ProcTarea;
-import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.image.util.Point;
+import es.ucm.si.dneb.service.math.MathService;
 
 @Service("serviceCalculoPosicion")
 public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
@@ -40,6 +39,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 	@PersistenceContext
 	EntityManager manager;
 	
+	private MathService mathService;
 	
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -109,6 +109,15 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 			
 			//CALCULAR DISTANCIAS ENTRE TODOS LOS CENTROIDES
 			
+			
+			/*for(){
+			
+				
+				
+			}*/
+			
+			//mathService.calculateDecimalDistance(ar1, dec1, ar2, dec2);
+			
 		} catch (FitsException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -123,6 +132,16 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 		//Sobre las estrellas calculo las distancias por parejas???
 		
 		
+	}
+
+
+	public void setMathService(MathService mathService) {
+		this.mathService = mathService;
+	}
+
+
+	public MathService getMathService() {
+		return mathService;
 	}
 
 }
