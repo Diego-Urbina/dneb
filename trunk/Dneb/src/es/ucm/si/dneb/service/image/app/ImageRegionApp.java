@@ -16,10 +16,12 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.SampleModel;
+import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
@@ -52,11 +54,13 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private JTextField textFieldUmbral, textFieldBrillo;
 	
 	private DisplayImageWithRegions display1, display2;
-	private PlanarImage input1, input2;
+	private PlanarImage input1, input2, scaledIm1, scaledIm2;
 	private LectorImageHDU l1, l2;
 	
+	private StarFinder sf1, sf2;
+	
 	private VentanaPcpal principal;
-	private int position;
+	private int position, scale, porcentajeZoom;
 	
 	public ImageRegionApp(VentanaPcpal pcpal,int position) {
 		principal = pcpal;
@@ -69,8 +73,14 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		display2 = null;
 		input1 = null;
 		input2 = null;
+		scaledIm1 = null;
+		scaledIm2 = null;
 		l1 = null;
 		l2 = null;
+		sf1 = new StarFinder();
+		sf2 = new StarFinder();
+		scale = 100;
+		porcentajeZoom = 10;
 		initComponents();
 		
 		parent.setSize(500, 650);
@@ -141,6 +151,26 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			}
 		});
 	    
+	    JButton buttonZoomMas = new JButton();
+	    //icon = new ImageIcon("images/abrir.gif");
+	    //buttonZoomMas.setIcon(icon);
+	    buttonZoomMas.setToolTipText("Aumentar la imagen");
+	    buttonZoomMas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonZoomMasActionPerformed(e);
+			}
+		});
+	    
+	    JButton buttonZoomMenos = new JButton();
+	    //icon = new ImageIcon("images/abrir.gif");
+	    //buttonZoomMenos.setIcon(icon);
+	    buttonZoomMenos.setToolTipText("Disminuir la imagen");
+	    buttonZoomMenos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonZoomMenosActionPerformed(e);
+			}
+		});
+	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
 	    textFieldUmbral = new JTextField("20000");
@@ -150,6 +180,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		   layout.createSequentialGroup()
 		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 		           .addComponent(buttonAbrir)
+		           .addComponent(buttonZoomMas)
+		           .addComponent(buttonZoomMenos)
 		           .addComponent(buttonBuscar)
 		           .addGap(20, 20, 20)
 		           .addGroup(layout.createSequentialGroup()
@@ -163,6 +195,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		layout.setVerticalGroup(
 		   layout.createSequentialGroup()
 		      .addComponent(buttonAbrir)
+		      .addComponent(buttonZoomMas)
+		      .addComponent(buttonZoomMenos)
 		      .addComponent(buttonBuscar)
 		      .addGap(20, 20, 20)
 		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -192,6 +226,88 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    jsp2.getVerticalScrollBar().addAdjustmentListener(this);
 	}
 	
+	private void buttonZoomMasActionPerformed(ActionEvent e) {
+		try {
+			if (l1 == null || l2 == null)
+				throw new Exception("Debe cargar primero dos imágenes");
+			
+			if (scale >= 10 && scale < 1000) {
+				
+				scale += porcentajeZoom;
+				ParameterBlock pb = new ParameterBlock();
+				InterpolationNearest in = new InterpolationNearest();
+				pb.addSource(input1);
+				pb.add(scale/100f);
+				pb.add(scale/100f);
+				pb.add(0.0F);
+				pb.add(0.0F);
+				pb.add(in);
+				scaledIm1 = JAI.create("scale", pb);
+				display1.set(scaledIm1);
+				pb = new ParameterBlock();
+				in = new InterpolationNearest();
+				pb.addSource(input2);
+				pb.add(scale/100f);
+				pb.add(scale/100f);
+				pb.add(0.0F);
+				pb.add(0.0F);
+				pb.add(in);
+				scaledIm2 = JAI.create("scale", pb);
+				display2.set(scaledIm2);
+				
+				sf1.escalarYTrasladarRectangulos(scale, -porcentajeZoom);
+				sf2.escalarYTrasladarRectangulos(scale, -porcentajeZoom);
+				display1.deleteROIs();
+				sf1.printRectStars(scaledIm1, display1);
+				display2.deleteROIs();
+				sf2.printRectStars(scaledIm2, display2);
+				jsp1.repaint();
+				jsp2.repaint();
+			}
+		} catch (Exception ex) {}
+	}
+	
+	private void buttonZoomMenosActionPerformed(ActionEvent e) {
+		try {
+			if (l1 == null || l2 == null)
+				throw new Exception("Debe cargar primero dos imágenes");
+			
+			if (scale > 10 && scale <= 1000) {
+
+				scale -= porcentajeZoom;
+				ParameterBlock pb = new ParameterBlock();
+				InterpolationNearest in = new InterpolationNearest();
+				pb.addSource(input1);
+				pb.add(scale/100f);
+				pb.add(scale/100f);
+				pb.add(0.0F);
+				pb.add(0.0F);
+				pb.add(in);
+				scaledIm1 = JAI.create("scale", pb);
+				display1.set(scaledIm1);
+				pb = new ParameterBlock();
+				in = new InterpolationNearest();
+				pb.addSource(input2);
+				pb.add(scale/100f);
+				pb.add(scale/100f);
+				pb.add(0.0F);
+				pb.add(0.0F);
+				pb.add(in);
+				scaledIm2 = JAI.create("scale", pb);
+				display2.set(scaledIm2);
+				
+				sf1.escalarYTrasladarRectangulos(scale, porcentajeZoom);
+				sf2.escalarYTrasladarRectangulos(scale, porcentajeZoom);
+				display1.deleteROIs();
+				sf1.printRectStars(scaledIm1, display1);
+				display2.deleteROIs();
+				sf2.printRectStars(scaledIm2, display2);
+				jsp1.repaint();
+				jsp2.repaint();
+			}
+		} catch (Exception ex) {}
+	}
+	
 	private void buttonAbrirActionPerformed(ActionEvent e) {
 		FiltreExtensible filtre = new FiltreExtensible("Imagenes");
 		filtre.addExtension(".fits");
@@ -215,6 +331,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					PlanarImage im = createPlanarImage(l1);
 					JAI.create("filestore",im,"Temp/im1.png","PNG");
 					input1 = JAI.create("fileload", "Temp/im1.png");
+					scaledIm1 = input1;
 					display1 = new DisplayImageWithRegions(input1);
 					display1.addMouseMotionListener(this);
 				    display1.addMouseListener(this);
@@ -226,6 +343,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					im = createPlanarImage(l2);
 					JAI.create("filestore",im,"Temp/im2.png","PNG");
 					input2 = JAI.create("fileload", "Temp/im2.png");
+					scaledIm2 = input2;
 					display2 = new DisplayImageWithRegions(input2);
 					display2.addMouseMotionListener(this);
 					display2.addMouseListener(this);
@@ -252,7 +370,6 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	}
 	
 	private void buttonBuscarActionPerformed(ActionEvent e) {
-		StarFinder sf1 = new StarFinder(), sf2 = new StarFinder();
 		float umbral, brilloEstrella;
 		try {
 			if (l1 == null || l2 == null)
@@ -266,10 +383,10 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			
 			sf1.buscarEstrellas(l1, brilloEstrella, umbral);
 			display1.deleteROIs();
-			sf1.printRectStars(input1, display1);
+			sf1.printRectStars(scaledIm1, display1);
 			sf2.buscarEstrellas(l2, brilloEstrella, umbral);
 			display2.deleteROIs();
-			sf2.printRectStars(input2, display2);
+			sf2.printRectStars(scaledIm2, display2);
 			jsp1.repaint();
 			jsp2.repaint();
 		} catch (NumberFormatException ex) {

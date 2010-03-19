@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import javax.media.jai.PlanarImage;
 import javax.media.jai.ROIShape;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -62,6 +63,27 @@ public class StarFinder {
 			incluido |= r.estaDentro(x,y);
 		}
 		return incluido;
+	}
+	
+	public void escalarYTrasladarRectangulos(int scale, int porcentajeZoom) {
+		Iterator<RectStar> it = recuadros.iterator();
+		RectStar r;
+		float antiguo;
+		while (it.hasNext()) {
+			r = it.next();
+			
+			antiguo = (r.getyTop() * 100) / (scale + porcentajeZoom);
+			r.setyTop(Math.round(antiguo * scale/100));
+
+			antiguo = (r.getyBot() * 100) / (scale + porcentajeZoom);
+			r.setyBot(Math.round(antiguo * scale/100));
+			
+			antiguo = (r.getxLeft() * 100) / (scale + porcentajeZoom);
+			r.setxLeft(Math.round(antiguo * scale/100));
+			
+			antiguo = (r.getxRight() * 100) / (scale + porcentajeZoom);
+			r.setxRight(Math.round(antiguo * scale/100));
+		}
 	}
 	
 	public void printRectStars(PlanarImage input, DisplayImageWithRegions display) {
