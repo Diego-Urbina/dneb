@@ -15,6 +15,8 @@ public class DecimalCoordinate {
 		this.dec = dec;
 	}
 	
+	
+	
 	public double getAr() {
 		return ar;
 	}
@@ -26,6 +28,28 @@ public class DecimalCoordinate {
 	}
 	public void setDec(double dec) {
 		this.dec = dec;
+	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "DecimalCoordinate ( "
+	        + super.toString() + TAB
+	        + "ar = " + this.ar + TAB
+	        + "dec = " + this.dec + TAB
+	        + " )";
+	
+	    return retValue;
 	}
 	
 	

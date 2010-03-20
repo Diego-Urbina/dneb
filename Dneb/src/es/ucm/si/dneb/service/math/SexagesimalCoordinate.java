@@ -61,6 +61,32 @@ public class SexagesimalCoordinate {
 	public void setDecsec(double decsec) {
 		this.decsec = decsec;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "SexagesimalCoordinate ( "
+	        + super.toString() + TAB
+	        + "arh = " + this.arh + TAB
+	        + "armin = " + this.armin + TAB
+	        + "arsec = " + this.arsec + TAB
+	        + "dech = " + this.dech + TAB
+	        + "decmin = " + this.decmin + TAB
+	        + "decsec = " + this.decsec + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 	

@@ -11,9 +11,14 @@ public class TestConversorUnidades {
 	@Test
 	public void testConvSexToDec(){
 		SexagesimalCoordinate sc = new SexagesimalCoordinate(21, 28, 19.85, 36, 40, 6.7);
+		System.out.println(sc.toString());
 		DecimalCoordinate dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
+		System.out.println(dc.toString());
 		
-		System.out.println("AR: "+dc.getAr() +" DEC: "+ dc.getDec());
+		sc=CoordinateConverter.decimalToSexagesimalConverter(dc);
+		
+		System.out.println(sc.toString());
+		
 	}
 
 }
