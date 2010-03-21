@@ -86,6 +86,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 			CalculateBookCentroid cc = new CalculateBookCentroid();
 			Point cent;
 			
+
 			int nRecuadros=recStars.size();
 			
 			for (int i = 0; i < nRecuadros; i++) {
@@ -108,6 +109,8 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 				centroides.add(cent);
 
 			}
+			
+			LOG.debug("");
 			
 			//CALCULAR DISTANCIAS ENTRE TODOS LOS CENTROIDES
 			
