@@ -29,7 +29,7 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteCatalog() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -51,7 +51,9 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 
 			if (!in.ready())
 				throw new IOException();
-
+			
+			int i=0;
+			
 			while ((line = in.readLine()) != null) {
 				// file.add(line);
 				String doubleStar = line;
@@ -67,9 +69,7 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 							.valueOf(doubleStar.substring(23, 27).trim()
 									+ "-01-01"));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(23-27) : "
-									+ doubleStar);
+					doubleStarCatalog.setFirstObservation(null);
 				}
 				try {
 					doubleStarCatalog.setLastObservation(Date
@@ -77,9 +77,7 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 									+ "-01-01"));
 
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(28-32) :"
-									+ doubleStar);
+					doubleStarCatalog.setLastObservation(null);
 				}
 
 				doubleStarCatalog.setNumObservations(Integer.decode(doubleStar
@@ -88,54 +86,42 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 					doubleStarCatalog.setFirstPosAngle(Double
 							.parseDouble(doubleStar.substring(38, 41).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(38-41) :"
-									+ doubleStar);
+					doubleStarCatalog.setFirstPosAngle(null);
 				}
 
 				try {
 					doubleStarCatalog.setLastPosAnges(Double
 							.parseDouble(doubleStar.substring(42, 45).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(42-45) :"
-									+ doubleStar);
+					doubleStarCatalog.setLastPosAnges(null);
 				}
 
 				try {
 					doubleStarCatalog.setFirstSeparation(Double
 							.parseDouble(doubleStar.substring(46, 51).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(46-51) :"
-									+ doubleStar);
+					doubleStarCatalog.setFirstSeparation(null);
 				}
 
 				try {
 					doubleStarCatalog.setLastSeparation(Double
 							.parseDouble(doubleStar.substring(52, 57).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(52-57) :"
-									+ doubleStar);
+					doubleStarCatalog.setLastSeparation(null);
 				}
 
 				try {
 					doubleStarCatalog.setFirstStarMagnitude(Double
 							.parseDouble(doubleStar.substring(58, 63).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(58-63) :"
-									+ doubleStar);
+					doubleStarCatalog.setFirstStarMagnitude(null);
 				}
 
 				try {
 					doubleStarCatalog.setSecondStarMagnitude(Double
 							.parseDouble(doubleStar.substring(64, 69).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(64-69) :"
-									+ doubleStar);
+					doubleStarCatalog.setSecondStarMagnitude(null);
 				}
 
 				doubleStarCatalog.setSpectralType(doubleStar.substring(70, 79));
@@ -144,36 +130,28 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 					doubleStarCatalog.setPrimaryProperMotionRa(Double
 							.parseDouble(doubleStar.substring(80, 84).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(80-84) :"
-									+ doubleStar);
+					doubleStarCatalog.setPrimaryProperMotionRa(null);
 				}
 
 				try {
 					doubleStarCatalog.setPrimaryProperMotionDec(Double
 							.parseDouble(doubleStar.substring(84, 88).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(84-88) :"
-									+ doubleStar);
+					doubleStarCatalog.setPrimaryProperMotionDec(null);
 				}
 
 				try {
 					doubleStarCatalog.setSecondaryProperMotionRa(Double
 							.parseDouble(doubleStar.substring(89, 93).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(89-93) :"
-									+ doubleStar);
+					doubleStarCatalog.setSecondaryProperMotionRa(null);
 				}
 
 				try {
 					doubleStarCatalog.setSecondaryProperMotionDec(Double
 							.parseDouble(doubleStar.substring(93, 97).trim()));
 				} catch (Exception e) {
-					LOG
-							.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(93-97) :"
-									+ doubleStar);
+					doubleStarCatalog.setSecondaryProperMotionDec(null);
 				}
 
 				doubleStarCatalog.setDurchmusterungNumber(doubleStar.substring(
@@ -181,10 +159,19 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 
 				doubleStarCatalog.setNotes(doubleStar.substring(107, 111));
 
-				doubleStarCatalog.setArcsecondCoordinates2000(doubleStar
-						.substring(112, 130));
-
+				String a2000rchsec =doubleStar.substring(112, 130);
+				
+				if(a2000rchsec.equals("      .         . ")){
+					doubleStarCatalog.setArcsecondCoordinates2000(null);					
+				}else{
+					doubleStarCatalog.setArcsecondCoordinates2000(a2000rchsec);
+				}
+				
+				/*TODO REALIZAR CONVERSIÓN DE UNIDADES*/
+				
 				manager.persist(doubleStarCatalog);
+				
+				i++;
 
 			}
 			in.close();
