@@ -49,6 +49,10 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 		//Saco los parámetro de la imagen
 		List<ParamImg> paramsImg =pi.getParams();
 		
+		//Busco los datos de la estrella binaria a buscar
+		
+		
+		
 		//Busco las estrellas
 		LOG.info("PROCESAMIENTO DE CALCULO DE POSICION");
 		
@@ -81,8 +85,6 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 			ArrayList<Point> centroides = new ArrayList<Point>();
 			CalculateBookCentroid cc = new CalculateBookCentroid();
 			Point cent;
-			
-			BufferedWriter bwc = new BufferedWriter(new FileWriter("LogCentroides.txt"));
 			
 			int nRecuadros=recStars.size();
 			

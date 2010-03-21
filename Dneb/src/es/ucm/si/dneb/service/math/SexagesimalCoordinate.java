@@ -25,6 +25,10 @@ public class SexagesimalCoordinate {
 		this.decsec = decsec;
 	}
 	
+	public String paint(){
+		return ""+this.getArh()+this.getArmin()+this.getArsec()+" "+this.getDech()+this.getDecmin()+this.getDecsec();
+	}
+	
 	public int getArh() {
 		return arh;
 	}

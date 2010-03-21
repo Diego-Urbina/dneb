@@ -345,9 +345,13 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 			imagen.setAncho(tarea.getAncho());
 			imagen.setAscensionRecta(dsc.getArcsecondCoordinates2000()
-					.substring(0, 9));
+					.substring(0, 2)+" "+dsc.getArcsecondCoordinates2000()
+					.substring(2, 4)+" "+dsc.getArcsecondCoordinates2000()
+					.substring(4, 9));
 			imagen.setDeclinacion(dsc.getArcsecondCoordinates2000().substring(
-					10, 18));
+					10, 12)+" "+dsc.getArcsecondCoordinates2000().substring(
+							12, 14)+" "+dsc.getArcsecondCoordinates2000().substring(
+									14, 18));
 			imagen.setDescargada(false);
 			// imagen.setFechaDescarga(fechaFinalizacion);
 			// imagen.setProcesamientoImagen(procImagen);

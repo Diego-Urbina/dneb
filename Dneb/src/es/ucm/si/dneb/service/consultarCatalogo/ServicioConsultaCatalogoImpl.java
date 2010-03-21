@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 
 @Service("servicioConsultaCatalogo")
 public class ServicioConsultaCatalogoImpl implements ServicioConsultaCatalogo{
@@ -53,6 +54,16 @@ public class ServicioConsultaCatalogoImpl implements ServicioConsultaCatalogo{
 		
 	}
 
-
-
+	@Override
+	@Transactional(propagation=Propagation.SUPPORTS)
+	public DoubleStarCatalog findDSCBYCoordinates(
+			SexagesimalCoordinate sexagesimalCoordinate) {
+		
+			List<DoubleStarCatalog> dscList= (List<DoubleStarCatalog>) manager.createQuery("select d from DoubleStarCatalog d where  arcsecondCoordinates2000=?").setParameter(1, sexagesimalCoordinate.paint()).getResultList();
+			if(dscList.size()>0){
+				return dscList.get(0);
+			}else{
+				throw new ServicioConsultaCatalogoException("No result found");
+			}
+	}
 }
