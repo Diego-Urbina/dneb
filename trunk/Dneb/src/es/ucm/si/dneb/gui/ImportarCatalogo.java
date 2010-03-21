@@ -54,12 +54,17 @@ public class ImportarCatalogo extends JPanel {
 		
 	}
 
+	private void eliminarActionPerformed(ActionEvent e) {
+		this.imporCatalog.deleteCatalog();
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		titulo = new JLabel();
 		ruta = new JTextField();
 		cargar = new JButton();
 		importar = new JButton();
+		eliminar = new JButton();
 
 		//======== this ========
 
@@ -88,6 +93,14 @@ public class ImportarCatalogo extends JPanel {
 			}
 		});
 
+		//---- eliminar ----
+		eliminar.setText("Elminar Todos los Datos");
+		eliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarActionPerformed(e);
+			}
+		});
+
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
 		layout.setHorizontalGroup(
@@ -97,11 +110,12 @@ public class ImportarCatalogo extends JPanel {
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 						.addComponent(titulo, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
 						.addGroup(layout.createSequentialGroup()
-							.addComponent(ruta, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+							.addComponent(ruta, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
 								.addComponent(importar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(cargar, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(cargar, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+								.addComponent(eliminar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		layout.setVerticalGroup(
@@ -115,7 +129,9 @@ public class ImportarCatalogo extends JPanel {
 						.addComponent(cargar))
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addComponent(importar)
-					.addGap(111, 111, 111))
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+					.addComponent(eliminar)
+					.addGap(78, 78, 78))
 		);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
@@ -133,5 +149,6 @@ public class ImportarCatalogo extends JPanel {
 	private JTextField ruta;
 	private JButton cargar;
 	private JButton importar;
+	private JButton eliminar;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
