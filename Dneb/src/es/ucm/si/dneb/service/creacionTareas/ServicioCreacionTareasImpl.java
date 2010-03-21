@@ -305,7 +305,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		}
 
 		tarea.setFormatoFichero(formatoFichero);
-		tarea.setRuta("d://");
+		tarea.setRuta("d:");
 		// tarea.setSolpamiento(solpamiento);
 
 		ArrayList<Survey> surveys = new ArrayList<Survey>();
