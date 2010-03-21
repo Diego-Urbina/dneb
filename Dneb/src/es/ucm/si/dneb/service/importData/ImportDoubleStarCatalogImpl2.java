@@ -28,8 +28,9 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteCatalog() {
-		// TODO Auto-generated method stub
 		
+		manager.createQuery("delete from DoubleStarCatalog").executeUpdate();
+		LOG.info("Se han elmininado todos los datos del catálogo");
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
