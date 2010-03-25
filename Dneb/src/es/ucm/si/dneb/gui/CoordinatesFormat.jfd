@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0" class="java.beans.XMLDecoder"> 
+ <object class="com.jformdesigner.model.FormModel"> 
+  <void property="contentType"> 
+   <string>form/swing</string> 
+  </void> 
+  <void property="root"> 
+   <object class="com.jformdesigner.model.FormRoot"> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormContainer"> 
+      <string>javax.swing.JPanel</string> 
+      <object class="com.jformdesigner.model.FormLayoutManager"> 
+       <class>com.intellij.uiDesigner.core.GridLayoutManager</class> 
+       <void method="setProperty"> 
+        <string>$columnCount</string> 
+        <int>1</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>$rowCount</string> 
+        <int>2</int> 
+       </void> 
+       <void method="setProperty"> 
+        <string>hGap</string> 
+        <int>5</int> 
+       </void> 
+      </object> 
+      <void property="name"> 
+       <string>this</string> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormContainer"> 
+        <string>javax.swing.JScrollPane</string> 
+        <object class="com.jformdesigner.model.FormLayoutManager"> 
+         <class>javax.swing.JScrollPane</class> 
+        </object> 
+        <void property="name"> 
+         <string>scrollPane1</string> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JTextPane</string> 
+          <void method="setProperty"> 
+           <string>editable</string> 
+           <boolean>false</boolean> 
+          </void> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>Enter the Right Ascension and Declination on which you would like the scan to be centered (you won&apos;t need to enter it if you use the Target Name Resolver), and select either J2000 or B1950 for the equinox of the coordinates.
+
+A number of formats are accepted for the RA and Dec. Here are some examples:
+
+    Decimal Degrees
+        185.63325 29.8959861111111
+ 
+    Hours, minutes and Seconds
+        12 22 31.98      29 53 45.55
+        12h22m31.98s     29d53m45.55s
+        12:22:31.98     +29:53:45.55
+        12h22&apos;31.98&quot;     29d53&apos;45.55&quot;
+        12h 22m 31.98s   29d 53m 45.55s
+        12h 22&apos; 31.98&quot;   29d 53&apos; 45.55&quot;
+        12h 22&apos; 31.98&quot;  -29d 53&apos; 45.55&quot;
+        12h22&apos;31&quot;.98    -29d53&apos;45&quot;.55
+        12h22m31s.98    -29o53m45s.55
+        12h 22&apos; 31&quot;.98  -29d 53&apos; 45&quot;.55
+     
+    Hours/Degrees and Minutes (no seconds)
+        12 22     29 53
+        12h22m   +29d53m
+        12h22m    29d53m
+        12:22m    29:53m
+        12h22&apos;    29d53&apos;
+        12h 22m   29d 53m
+        12h 22&apos;   29d 53&apos;
+        12h 22&apos;  -29d 53&apos;
+ 
+    The RA may be given in decimal degrees by indicating
+    a D or d after the degrees:
+        12d 22m   29d 53m
+
+Spacing is not important, as long as the value is unambiguous, and that you can delimit the hours/degrees, minutes, and (optional) seconds with letters, colons, spaces, or any character that&apos;s not a digit or a decimal point.
+
+Note also that seconds of the form 31&quot;.98 or 31s.98 are accepted. This should make it easy to cut and paste values into these fields from electronic publications. </string> 
+          </void> 
+          <void property="name"> 
+           <string>textPane1</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+        <void method="setProperty"> 
+         <string>row</string> 
+         <int>1</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>fill</string> 
+         <int>1</int> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JLabel</string> 
+        <void method="setProperty"> 
+         <string>text</string> 
+         <string>Información sobre el formato de coordenadas aceptado por la aplicación.</string> 
+        </void> 
+        <void method="setProperty"> 
+         <string>horizontalAlignment</string> 
+         <int>0</int> 
+        </void> 
+        <void property="name"> 
+         <string>label1</string> 
+        </void> 
+       </object> 
+       <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+        <class>com.intellij.uiDesigner.core.GridConstraints</class> 
+       </object> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>0</int> 
+        <int>0</int> 
+       </object> 
+      </void> 
+      <void method="setProperty"> 
+       <string>size</string> 
+       <object class="java.awt.Dimension"> 
+        <int>400</int> 
+        <int>300</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

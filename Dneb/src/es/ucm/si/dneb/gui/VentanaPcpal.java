@@ -87,6 +87,7 @@ public class VentanaPcpal extends JFrame{
 		
 		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
 		this.dnebInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
+		this.formaCoord.setIcon(new ImageIcon("images/help_icon.jpg"));
 		
 		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
@@ -263,6 +264,12 @@ public class VentanaPcpal extends JFrame{
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
+	private void formaCoordActionPerformed(ActionEvent e) {
+		pane.add("INFORMACIÓN COORDENADAS",new CoordinatesFormat());
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
 	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -289,6 +296,7 @@ public class VentanaPcpal extends JFrame{
 		consultarCatalogo = new JMenuItem();
 		menu7 = new JMenu();
 		importInfo = new JMenuItem();
+		formaCoord = new JMenuItem();
 		dnebInfo = new JMenuItem();
 
 		//======== this ========
@@ -487,6 +495,15 @@ public class VentanaPcpal extends JFrame{
 				});
 				menu7.add(importInfo);
 
+				//---- formaCoord ----
+				formaCoord.setText("FORMATO COORDENADAS");
+				formaCoord.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						formaCoordActionPerformed(e);
+					}
+				});
+				menu7.add(formaCoord);
+
 				//---- dnebInfo ----
 				dnebInfo.setText("DNEB");
 				dnebInfo.addActionListener(new ActionListener() {
@@ -556,6 +573,7 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem consultarCatalogo;
 	private JMenu menu7;
 	private JMenuItem importInfo;
+	private JMenuItem formaCoord;
 	private JMenuItem dnebInfo;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
