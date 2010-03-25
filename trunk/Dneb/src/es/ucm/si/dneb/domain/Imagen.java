@@ -4,6 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 
 @Entity
@@ -13,6 +19,13 @@ import javax.persistence.*;
 	@NamedQuery(name="Imagen:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Imagen d where tarea=? and descargada=false")
 })
 @Table(name="IMAGEN")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "idDescarga",
+    "ascensionRecta",
+    "declinacion"
+})
+@XmlRootElement(name = "Imagen")
 public class Imagen {
 	
 	public Imagen(){
@@ -22,35 +35,45 @@ public class Imagen {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_DESCARGA")
+    @XmlElement(required = true)
     private long idDescarga;
 	
 	@Column(name="AR", nullable =false)
+	@XmlElement(required = true)
 	private String ascensionRecta;
 	
 	@Column(name="DECLI", nullable =false)
+	@XmlElement(required = true)
 	private String declinacion;
 	
 	@ManyToOne
 	@JoinColumn(name="Survey_ID_FK",nullable=false)
+	@XmlTransient
 	private Survey survey;
 	
 	@Column(name="DESCARGADA", nullable =false)
+	@XmlTransient
 	private boolean descargada;
 	
 	@Column(name="FECHA_DESCARGA")
+	@XmlTransient
 	private Date fechaDescarga;
 	
 	@Column(name="RUTA")
+	@XmlTransient
 	private String rutaFichero;
 	
 	@Column(name="ANCHO")
+	@XmlTransient
 	private Double ancho;
 
 	@ManyToOne
     @JoinColumn(name="TAREA_ID_FK",nullable=false)
+    @XmlTransient
 	private Tarea tarea;
 	
 	@OneToMany(mappedBy="imagen")
+	@XmlTransient
     private List<ProcImagen> procImagen;
 	
 

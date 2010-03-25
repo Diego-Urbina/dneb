@@ -1,4 +1,4 @@
-package es.ucm.si.dneb.service.exportData;
+package es.ucm.si.dneb.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import es.ucm.si.dneb.domain.InformacionRelevante;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
