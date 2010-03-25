@@ -4,6 +4,6 @@ import es.ucm.si.dneb.domain.DatosRelevantes;
 
 public interface ServiceExportData {
 	
-	public void exportRelevantData(String path);
+	public void exportRelevantData(String filename,String path);
 
 }
