@@ -6,22 +6,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 
 @Entity
 @Table(name="TIP_INFO_REL")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "alias",
+    "description"
+})
+@XmlRootElement(name = "TipoInformacionRelevante")
 public class TipoInformacionRelevante {
 	
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
+    @XmlElement(required = true)
     private long id;
 	
 	@Column(name="ALIAS", nullable =false)
+	@XmlElement(required = true)
 	private String alias;
 	
 	@Column(name="DESCRIPCION", nullable =false)
+	@XmlElement
 	private String description;
 
 	public long getId() {
