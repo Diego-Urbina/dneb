@@ -38,7 +38,7 @@ public class ExportDataTest {
 	
 	@Test
 	public void testExport(){
-		serviceExportData.exportRelevantData("d:\\");
+		serviceExportData.exportRelevantData("kk","d:\\");
 	}
 	
 

@@ -216,7 +216,16 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void exportRelevantXMLActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		
+		ExportarXMl expXml = new ExportarXMl();
+		
+		pane.addTab("Exportar XML", expXml);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);
+		
+		
 	}
 
 	private void consultarCatalogoActionPerformed(ActionEvent e) {

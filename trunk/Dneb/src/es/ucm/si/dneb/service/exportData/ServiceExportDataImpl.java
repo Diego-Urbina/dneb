@@ -39,7 +39,7 @@ public class ServiceExportDataImpl implements ServiceExportData {
 	
 
 	@Override
-	public void exportRelevantData(String path){
+	public void exportRelevantData(String filename,String path){
 		try {
 			jaxbContext = JAXBContext.newInstance("es.ucm.si.dneb.xml");
 			marshaller = jaxbContext.createMarshaller();
@@ -56,7 +56,7 @@ public class ServiceExportDataImpl implements ServiceExportData {
 		
 		try {
 			File file = new File(path
-					+ "/DATOS_RELEVANTES.xml");
+					+ "/"+filename+".xml");
 
 			if (!file.exists()) {
 				try {
