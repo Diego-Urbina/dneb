@@ -16,8 +16,8 @@ public class TestConversorUnidades {
 	
 	@Test
 	public void testConvSexToDec(){
-		
-		SexagesimalCoordinate sc = new SexagesimalCoordinate(21, 28, 19.85, 36, 40, 6.7);
+		/*0	33	23,05	-20	51	31,8*/
+		SexagesimalCoordinate sc = new SexagesimalCoordinate(0, 33, 23.05, -20, 51, 31.8);
 		LOG.info(sc.toString());
 		DecimalCoordinate dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
 		LOG.info(dc.toString());

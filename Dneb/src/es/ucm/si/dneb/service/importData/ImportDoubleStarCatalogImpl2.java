@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
+import es.ucm.si.dneb.service.math.CoordinateConverter;
+import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 
 @Service("importDoubleStarCatalog")
 public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
@@ -28,7 +31,7 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteCatalog() {
-		
+
 		manager.createQuery("delete from DoubleStarCatalog").executeUpdate();
 		LOG.info("Se han elmininado todos los datos del catálogo");
 	}
@@ -52,9 +55,9 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 
 			if (!in.ready())
 				throw new IOException();
-			
-			int i=0;
-			
+
+			int i = 0;
+
 			while ((line = in.readLine()) != null) {
 				// file.add(line);
 				String doubleStar = line;
@@ -160,18 +163,53 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 
 				doubleStarCatalog.setNotes(doubleStar.substring(107, 111));
 
-				String a2000rchsec =doubleStar.substring(112, 130);
-				
-				if(a2000rchsec.equals("      .         . ")){
-					doubleStarCatalog.setArcsecondCoordinates2000(null);					
-				}else{
+				String a2000rchsec = doubleStar.substring(112, 130);
+
+				if (a2000rchsec.equals("      .         . ")) {
+					doubleStarCatalog.setArcsecondCoordinates2000(null);
+				} else {
+
+					// TODO
 					doubleStarCatalog.setArcsecondCoordinates2000(a2000rchsec);
+
+					SexagesimalCoordinate sc = new SexagesimalCoordinate();
+
+					sc.setArh(Integer.parseInt(doubleStarCatalog
+							.getArcsecondCoordinates2000().substring(0, 2)));
+					sc.setArmin(Integer.parseInt(doubleStarCatalog
+							.getArcsecondCoordinates2000().substring(2, 4)));
+					sc.setArsec(Double.parseDouble(doubleStarCatalog
+							.getArcsecondCoordinates2000().substring(4, 9)));
+
+					if (doubleStarCatalog.getArcsecondCoordinates2000()
+							.substring(9, 10).equals("+")) {
+						sc.setDech(Integer
+								.parseInt(doubleStarCatalog
+										.getArcsecondCoordinates2000()
+										.substring(10, 12)));
+					} else {
+						sc.setDech(Integer.parseInt(doubleStarCatalog
+								.getArcsecondCoordinates2000()
+								.substring(9, 12)));
+					}
+
+					sc.setDecmin(Integer.parseInt(doubleStarCatalog
+							.getArcsecondCoordinates2000().substring(12, 14)));
+					sc.setDecsec(Double.parseDouble(doubleStarCatalog
+							.getArcsecondCoordinates2000().substring(14, 18)));
+
+					DecimalCoordinate dc = CoordinateConverter
+							.sexagesimalToDecimalConverter(sc);
+
+					doubleStarCatalog.setAscRecGrados(dc.getAr());
+					doubleStarCatalog.setDecGrados(dc.getDec());
+
 				}
-				
-				/*TODO REALIZAR CONVERSIÓN DE UNIDADES*/
-				
+
+				/* TODO REALIZAR CONVERSIÓN DE UNIDADES */
+
 				manager.persist(doubleStarCatalog);
-				
+
 				i++;
 
 			}
@@ -207,6 +245,7 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 		 * }catch(Exception e){
 		 * LOG.debug("PROBLEM IMPORTING DATA OF DOUBLE STAR CATALOG:(28-32) :" +
 		 * doubleStar); }
+		 * 
 		 * 
 		 * 
 		 * doubleStarCatalog.setNumObservations(Integer.decode(doubleStar.substring
@@ -274,10 +313,12 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 		 * 
 		 * 
 		 * 
+		 * 
 		 * doubleStarCatalog.setDurchmusterungNumber(doubleStar.substring(98,106)
 		 * );
 		 * 
 		 * doubleStarCatalog.setNotes(doubleStar.substring(107,111));
+		 * 
 		 * 
 		 * 
 		 * doubleStarCatalog.setArcsecondCoordinates2000(doubleStar.substring(112

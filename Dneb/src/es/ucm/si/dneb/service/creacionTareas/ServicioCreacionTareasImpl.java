@@ -344,6 +344,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			Imagen imagen = new Imagen();
 
 			imagen.setAncho(tarea.getAncho());
+			
+			//TODO HAY QUE ELIMINAR ESTO CUANDO EL CATALGO IMPORTE BIEN
+			/*
 			imagen.setAscensionRecta(dsc.getArcsecondCoordinates2000()
 					.substring(0, 2)+" "+dsc.getArcsecondCoordinates2000()
 					.substring(2, 4)+" "+dsc.getArcsecondCoordinates2000()
@@ -352,6 +355,11 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					10, 12)+" "+dsc.getArcsecondCoordinates2000().substring(
 							12, 14)+" "+dsc.getArcsecondCoordinates2000().substring(
 									14, 18));
+			*/
+			
+			imagen.setAscensionRecta(""+dsc.getAscRecGrados());
+			imagen.setDeclinacion(""+dsc.getDecGrados());
+			
 			imagen.setDescargada(false);
 			// imagen.setFechaDescarga(fechaFinalizacion);
 			// imagen.setProcesamientoImagen(procImagen);
