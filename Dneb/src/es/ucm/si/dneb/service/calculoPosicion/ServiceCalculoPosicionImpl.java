@@ -24,14 +24,16 @@ import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ParamImg;
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.image.util.Point;
+import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.Distance;
 import es.ucm.si.dneb.service.math.MathService;
-import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 
 @Service("serviceCalculoPosicion")
 public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
@@ -45,7 +47,11 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 	@Resource
 	private ServicioConsultaCatalogo servicioConsultaCatalogo;
 	
+	@Resource
 	private MathService mathService;
+	
+	@Resource
+	private ServiceBusquedaDobles serviceBusquedaDobles;
 	
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -137,16 +143,37 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 			
 			LOG.debug("");
 			
+			//PASAR DE PÍXELES A COORDENADAS
+			
+			ArrayList<DecimalCoordinate> centroidesDC= new ArrayList<DecimalCoordinate>();
+			
+			
+			for(Point pointIter: centroides){
+				LOG.debug("ANCHO: "+l.getWidth()+" ALTO: "+ l.getHeight()+" X: "+ pointIter.getX()+" Y: "+ pointIter.getY());
+				 DecimalCoordinate dc= serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, l.getWidth(), l.getHeight(), pointIter.getX(), pointIter.getY());
+				 LOG.debug("AR: "+dc.getAr() +" DEC: "+dc.getDec());
+				 centroidesDC.add(dc);
+			}
+			
 			//CALCULAR DISTANCIAS ENTRE TODOS LOS CENTROIDES
 			
+			List<Distance> distancesList= new ArrayList<Distance>();
 			
-			/*for(){
+			for(DecimalCoordinate dc1 : centroidesDC){
+				for(DecimalCoordinate dc2 : centroidesDC){
+					
+					Distance distanceAux=this.mathService.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
+					distanceAux.setPoint1(dc1);
+					distanceAux.setPoint2(dc2);
+					
+					distancesList.add(distanceAux);
+				}
+			}
 			
-				
-				
-			}*/
 			
-			//mathService.calculateDecimalDistance(ar1, dec1, ar2, dec2);
+			
+			
+			
 			
 		} catch (FitsException e) {
 			e.printStackTrace();
@@ -182,6 +209,16 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 
 	public ServicioConsultaCatalogo getServicioConsultaCatalogo() {
 		return servicioConsultaCatalogo;
+	}
+
+
+	public void setServiceBusquedaDobles(ServiceBusquedaDobles serviceBusquedaDobles) {
+		this.serviceBusquedaDobles = serviceBusquedaDobles;
+	}
+
+
+	public ServiceBusquedaDobles getServiceBusquedaDobles() {
+		return serviceBusquedaDobles;
 	}
 
 }
