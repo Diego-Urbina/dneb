@@ -1,12 +1,11 @@
 package es.ucm.si.dneb.service.calculoPosicion;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,15 +19,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.ucm.si.dneb.domain.DoubleStarCatalog;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ParamImg;
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.math.MathService;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 
 @Service("serviceCalculoPosicion")
 public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
@@ -38,6 +41,9 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 
 	@PersistenceContext
 	EntityManager manager;
+	
+	@Resource
+	private ServicioConsultaCatalogo servicioConsultaCatalogo;
 	
 	private MathService mathService;
 	
@@ -51,7 +57,26 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 		
 		//Busco los datos de la estrella binaria a buscar
 		
+		Imagen imagen=pi.getImagen();
 		
+		double ar=Double.parseDouble(imagen.getAscensionRecta());
+		double dec=Double.parseDouble(imagen.getDeclinacion());
+		
+		double param1=ar+0.0000000000001;
+		double param2=ar-0.0000000000001;
+		
+		double param3=dec+0.0000000000001;
+		double param4=dec-0.0000000000001;
+		
+		
+		List<DoubleStarCatalog> dscList= manager.createQuery("select dsc from DoubleStarCatalog dsc where dsc.ascRecGrados<? and dsc.ascRecGrados>?  and dsc.decGrados<? and dsc.decGrados>?").setParameter(1, param1).setParameter(2,param2 ).setParameter(3,param3 ).setParameter(4,param4 ).getResultList();
+		
+		if(dscList.size()<1){
+			LOG.error("NO SE HA PODIDO LOCALIZAR LA INFORMACIÓN EN EL CATALOGO");
+			return;
+		}
+		
+		dscList.get(0);
 		
 		//Busco las estrellas
 		LOG.info("PROCESAMIENTO DE CALCULO DE POSICION");
@@ -147,6 +172,16 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 
 	public MathService getMathService() {
 		return mathService;
+	}
+
+
+	public void setServicioConsultaCatalogo(ServicioConsultaCatalogo servicioConsultaCatalogo) {
+		this.servicioConsultaCatalogo = servicioConsultaCatalogo;
+	}
+
+
+	public ServicioConsultaCatalogo getServicioConsultaCatalogo() {
+		return servicioConsultaCatalogo;
 	}
 
 }

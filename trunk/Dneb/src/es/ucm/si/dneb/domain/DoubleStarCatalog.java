@@ -77,6 +77,12 @@ public class DoubleStarCatalog {
 	@Column(name="NOTES")
 	private String notes;
 	
+	@Column(name="AR_GRADOS")
+	private double ascRecGrados;
+	
+	@Column(name="DEC_GRADOS")
+	private double decGrados;
+	
 	@Column(name="ARCH_COORD_2000")
 	private String arcsecondCoordinates2000;
 
@@ -246,6 +252,22 @@ public class DoubleStarCatalog {
 
 	public void setArcsecondCoordinates2000(String arcsecondCoordinates2000) {
 		this.arcsecondCoordinates2000 = arcsecondCoordinates2000;
+	}
+
+	public void setAscRecGrados(double ascRecGrados) {
+		this.ascRecGrados = ascRecGrados;
+	}
+
+	public double getAscRecGrados() {
+		return ascRecGrados;
+	}
+
+	public void setDecGrados(double decGrados) {
+		this.decGrados = decGrados;
+	}
+
+	public double getDecGrados() {
+		return decGrados;
 	}
 
 	
