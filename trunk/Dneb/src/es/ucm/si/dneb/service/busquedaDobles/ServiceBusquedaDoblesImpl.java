@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Jama.Matrix;
 
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
@@ -31,6 +32,7 @@ import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.image.util.Point;
+import es.ucm.si.dneb.service.math.DecimalCoordinate;
 
 @Service("serviceBusquedaDobles")
 public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
@@ -362,6 +364,35 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 
 	public static Log getLog() {
 		return LOG;
+	}
+
+	/**
+	 * width y height son el alcho y el alto de la imagen en pixeles.
+	 * x e y son las coordenadas que queremos trasnformar
+	 */
+	@Override
+	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y) {
+		double ancho = imagen.getAncho();
+		double alto = imagen.getTarea().getAlto();
+		double ar = Double.parseDouble(imagen.getAscensionRecta());
+		double dec = Double.parseDouble(imagen.getDeclinacion());
+		double incX = x - width/2;
+		double incY = y - height/2;
+		
+		double ar1 = ar + incX*(ancho/width);
+		double dec1 = dec + incY*(alto*height);
+		if (dec1 > 90) { // Cruzo el polo norte
+			dec1 = 180 - dec1;
+			ar1 = ar1 - 180;
+		}
+		if (dec1 < 0) { // Cruzo el polo sur
+			dec1 = Math.abs(dec1);
+			ar1 = ar1 - 180;
+		}
+		if (ar1 > 360) ar1 -= 360;
+		if (ar1 < 0) ar1 += 360;
+		
+		return new DecimalCoordinate(ar1, dec1);
 	} 
 
 }
