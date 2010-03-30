@@ -2,8 +2,15 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.renderable.ParameterBlock;
+
+import javax.media.jai.InterpolationNearest;
+import javax.media.jai.JAI;
+import javax.media.jai.PlanarImage;
 import javax.swing.*;
 
+import es.ucm.si.dneb.service.image.app.DisplayJAIWithPixelInfo;
+import es.ucm.si.dneb.service.image.app.DisplayJAIWithPixelInfoApp;
 import es.ucm.si.dneb.service.image.app.ImageRegionApp;
 
 
@@ -287,6 +294,28 @@ public class VentanaPcpal extends JFrame{
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
+	private void visualizadorDebugActionPerformed(ActionEvent e) {
+		
+		 PlanarImage image = JAI.create("fileload","kk.png");
+		    //
+		    float scale = 1000/100f;
+		    ParameterBlock pb = new ParameterBlock();
+		    pb.addSource(image);
+		    pb.add(scale);
+		    pb.add(scale);
+		    pb.add(0.0F);
+		    pb.add(0.0F);
+		    pb.add(new InterpolationNearest());
+		    // Creates a new, scaled image and uses it on the DisplayJAI component
+		    PlanarImage input = JAI.create("scale", pb);
+		
+		DisplayJAIWithPixelInfoApp visu =new DisplayJAIWithPixelInfoApp(input);
+		
+		pane.add("VISUALIZADOR DEBUG",visu);
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
 	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -308,6 +337,7 @@ public class VentanaPcpal extends JFrame{
 		menuCatalogoED = new JMenuItem();
 		menu5 = new JMenu();
 		visualizador = new JMenuItem();
+		visualizadorDebug = new JMenuItem();
 		nueProcEstDob = new JMenuItem();
 		buscar = new JMenuItem();
 		consultarCatalogo = new JMenuItem();
@@ -322,7 +352,7 @@ public class VentanaPcpal extends JFrame{
 		setIconImage(null);
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
-
+		
 
 		//======== menuBar1 ========
 		{
@@ -464,13 +494,22 @@ public class VentanaPcpal extends JFrame{
 				menu5.setText("UTILIDADES");
 
 				//---- visualizador ----
-				visualizador.setText("VISUALIZADOR");
+				visualizador.setText("VISUALIZADOR DOBLES");
 				visualizador.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						visualizadorActionPerformed(e);
 					}
 				});
 				menu5.add(visualizador);
+
+				//---- visualizadorDebug ----
+				visualizadorDebug.setText("VISUALIZADOR DEBUG");
+				visualizadorDebug.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						visualizadorDebugActionPerformed(e);
+					}
+				});
+				menu5.add(visualizadorDebug);
 
 				//---- nueProcEstDob ----
 				nueProcEstDob.setText("CREAR PROCESAMIENTO");
@@ -605,6 +644,7 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem menuCatalogoED;
 	private JMenu menu5;
 	private JMenuItem visualizador;
+	private JMenuItem visualizadorDebug;
 	private JMenuItem nueProcEstDob;
 	private JMenuItem buscar;
 	private JMenuItem consultarCatalogo;
