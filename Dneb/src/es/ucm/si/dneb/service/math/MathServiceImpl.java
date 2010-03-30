@@ -40,7 +40,13 @@ public class MathServiceImpl implements MathService{
 		}
 		LOG.debug("ang="+ang);
 		
-		return new Distance(dist,ang);
+		double distSec=ang*3600;
+		
+		Distance distance = new Distance(dist,ang);
+		
+		distance.setDistanceSeconds(distSec);
+		
+		return distance;
 	}
 	
 	public Double rad(Double degree){

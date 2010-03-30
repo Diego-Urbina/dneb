@@ -6,6 +6,8 @@ public class Distance {
 	private double distance;
 	private double angle;
 	
+	private double distanceSeconds;
+	
 	private DecimalCoordinate point1;
 	private DecimalCoordinate point2;
 	
@@ -37,6 +39,12 @@ public class Distance {
 	}
 	public void setPoint2(DecimalCoordinate point2) {
 		this.point2 = point2;
+	}
+	public void setDistanceSeconds(double distanceSeconds) {
+		this.distanceSeconds = distanceSeconds;
+	}
+	public double getDistanceSeconds() {
+		return distanceSeconds;
 	}
 	
 	
