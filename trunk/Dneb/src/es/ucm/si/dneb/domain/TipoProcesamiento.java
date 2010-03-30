@@ -68,6 +68,30 @@ public class TipoProcesamiento {
 			Collection<ProcTarea> procTareas) {
 		this.procTareas = procTareas;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "TipoProcesamiento ( "
+	        + super.toString() + TAB
+	        + "idTipoProcesamiento = " + this.idTipoProcesamiento + TAB
+	        + "alias = " + this.alias + TAB
+	        + "descripcion = " + this.descripcion + TAB
+	        + "procTareas = " + this.procTareas + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 

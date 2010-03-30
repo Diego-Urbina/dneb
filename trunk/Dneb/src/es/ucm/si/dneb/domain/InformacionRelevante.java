@@ -100,6 +100,31 @@ public class InformacionRelevante {
 		return tipoInformacionRelevante;
 	}
 
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "InformacionRelevante ( "
+	        + super.toString() + TAB
+	        + "id = " + this.id + TAB
+	        + "description = " + this.description + TAB
+	        + "fecha = " + this.fecha + TAB
+	        + "tipoInformacionRelevante = " + this.tipoInformacionRelevante + TAB
+	        + "imagenes = " + this.imagenes + TAB
+	        + " )";
+	
+	    return retValue;
+	}
+
 
 	
 	

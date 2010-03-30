@@ -160,6 +160,37 @@ public class ProcTarea {
 	public long getIdProcesamiento() {
 		return idProcesamiento;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "ProcTarea ( "
+	        + super.toString() + TAB
+	        + "idProcesamiento = " + this.idProcesamiento + TAB
+	        + "alias = " + this.alias + TAB
+	        + "description = " + this.description + TAB
+	        + "fechaCreacion = " + this.fechaCreacion + TAB
+	        + "finalizada = " + this.finalizada + TAB
+	        + "activa = " + this.activa + TAB
+	        + "fechaUltimaAct = " + this.fechaUltimaAct + TAB
+	        + "tarea = " + this.tarea + TAB
+	        + "procesamientoImagenes = " + this.procesamientoImagenes + TAB
+	        + "tipoProcesamiento = " + this.tipoProcesamiento + TAB
+	        + "paramProcTareas = " + this.paramProcTareas + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 

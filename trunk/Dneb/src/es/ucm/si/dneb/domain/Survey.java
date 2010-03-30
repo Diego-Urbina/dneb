@@ -47,4 +47,27 @@ public class Survey {
 		return tareas;
 	}
 
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "Survey ( "
+	        + super.toString() + TAB
+	        + "idSurvey = " + this.idSurvey + TAB
+	        + "descripcion = " + this.descripcion + TAB
+	        + "tareas = " + this.tareas + TAB
+	        + " )";
+	
+	    return retValue;
+	}
+
 }

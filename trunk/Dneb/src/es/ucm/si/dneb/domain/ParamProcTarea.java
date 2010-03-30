@@ -72,6 +72,31 @@ public class ParamProcTarea {
 	public ProcTarea getTareaProcesamiento() {
 		return procTarea;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "ParamProcTarea ( "
+	        + super.toString() + TAB
+	        + "idParametro = " + this.idParametro + TAB
+	        + "valorNum = " + this.valorNum + TAB
+	        + "valorAlfa = " + this.valorAlfa + TAB
+	        + "tipoParametro = " + this.tipoParametro + TAB
+	        + "procTarea = " + this.procTarea + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 
