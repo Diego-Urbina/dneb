@@ -374,7 +374,7 @@
             <string>javax.swing.JMenuItem</string> 
             <void method="setProperty"> 
              <string>text</string> 
-             <string>VISUALIZADOR</string> 
+             <string>VISUALIZADOR DOBLES</string> 
             </void> 
             <void property="name"> 
              <string>visualizador</string> 
@@ -384,6 +384,26 @@
               <string>java.awt.event.ActionListener</string> 
               <string>actionPerformed</string> 
               <string>visualizadorActionPerformed</string> 
+              <boolean>true</boolean> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JMenuItem</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <string>VISUALIZADOR DEBUG</string> 
+            </void> 
+            <void property="name"> 
+             <string>visualizadorDebug</string> 
+            </void> 
+            <void method="addEvent"> 
+             <object class="com.jformdesigner.model.FormEvent"> 
+              <string>java.awt.event.ActionListener</string> 
+              <string>actionPerformed</string> 
+              <string>visualizadorDebugActionPerformed</string> 
               <boolean>true</boolean> 
              </object> 
             </void> 
