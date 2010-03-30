@@ -21,9 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
 import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.InformacionRelevante;
 import es.ucm.si.dneb.domain.ParamImg;
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.domain.TipoInformacionRelevante;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
@@ -34,6 +36,7 @@ import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
 import es.ucm.si.dneb.service.math.Distance;
 import es.ucm.si.dneb.service.math.MathService;
+import es.ucm.si.dneb.util.Util;
 
 @Service("serviceCalculoPosicion")
 public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
@@ -82,7 +85,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 			return;
 		}
 		
-		dscList.get(0);
+		DoubleStarCatalog dsc=dscList.get(0);
 		
 		//Busco las estrellas
 		LOG.info("PROCESAMIENTO DE CALCULO DE POSICION");
@@ -170,7 +173,25 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 				}
 			}
 			
-			
+			for(Distance dist: distancesList){
+				
+				double sep= dsc.getLastSeparation();
+				double ang=dsc.getLastPosAnges();
+				
+				if( ((sep*0.85)<=dist.getDistance() && dist.getDistance()<=(sep*1.15)) && ((ang*0.85)<=dist.getAngle() && dist.getAngle()<=(ang*1.15)) ){
+					InformacionRelevante ir = new InformacionRelevante();
+					ir.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS"+ dist +"INFO DSC"+ dsc.toString() );
+					ir.setFecha(Util.dameFechaActual());
+					List<Imagen> imagenes = new ArrayList<Imagen>();
+					imagenes.add(imagen);
+					ir.setImagenes(imagenes);
+					
+					ir.setTipoInformacionRelevante(manager.find(TipoInformacionRelevante.class, 2));
+					
+					manager.persist(ir);
+				}
+				
+			}
 			
 			
 			
