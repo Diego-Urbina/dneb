@@ -141,7 +141,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 
 			}
 			
-			LOG.debug("");
+			LOG.info("");
 			
 			//PASAR DE PÍXELES A COORDENADAS
 			
@@ -149,9 +149,9 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 			
 			
 			for(Point pointIter: centroides){
-				LOG.debug("ANCHO: "+l.getWidth()+" ALTO: "+ l.getHeight()+" X: "+ pointIter.getX()+" Y: "+ pointIter.getY());
+				LOG.info("ANCHO: "+l.getWidth()+" ALTO: "+ l.getHeight()+" X: "+ pointIter.getX()+" Y: "+ pointIter.getY());
 				 DecimalCoordinate dc= serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, l.getWidth(), l.getHeight(), pointIter.getX(), pointIter.getY());
-				 LOG.debug("AR: "+dc.getAr() +" DEC: "+dc.getDec());
+				 LOG.info("AR: "+dc.getAr() +" DEC: "+dc.getDec());
 				 centroidesDC.add(dc);
 			}
 			
