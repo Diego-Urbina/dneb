@@ -84,6 +84,8 @@ public class VentanaPcpal extends JFrame{
 		
 		this.buscar.setIcon(new ImageIcon("images/Process Icon.jpg"));	
 		this.consultarCatalogo.setIcon(new ImageIcon("images/catalogIcon.jpg"));
+		this.visualizador.setIcon(new ImageIcon("images/icon_viewer.png"));
+		this.nueProcEstDob.setIcon(new ImageIcon("images/new Process Icon.JPG"));
 		
 		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
 		this.dnebInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
