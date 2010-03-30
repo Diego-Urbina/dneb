@@ -63,6 +63,30 @@ public class FormatoFichero {
 	public String getDescription() {
 		return description;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "FormatoFichero ( "
+	        + super.toString() + TAB
+	        + "idFormatoFichero = " + this.idFormatoFichero + TAB
+	        + "alias = " + this.alias + TAB
+	        + "description = " + this.description + TAB
+	        + "tareas = " + this.tareas + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 	

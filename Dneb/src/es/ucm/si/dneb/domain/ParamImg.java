@@ -75,6 +75,31 @@ public class ParamImg {
 	public void setProcImagen(ProcImagen procImagen) {
 		this.procImagen = procImagen;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "ParamImg ( "
+	        + super.toString() + TAB
+	        + "idParametroImagen = " + this.idParametroImagen + TAB
+	        + "valorNum = " + this.valorNum + TAB
+	        + "valorAlfa = " + this.valorAlfa + TAB
+	        + "tipoParametro = " + this.tipoParametro + TAB
+	        + "procImagen = " + this.procImagen + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 

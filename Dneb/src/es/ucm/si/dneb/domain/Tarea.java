@@ -246,6 +246,45 @@ public class Tarea implements Serializable {
 		return tareasProcesamiento;
 	}
 
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "Tarea ( "
+	        + super.toString() + TAB
+	        + "idTarea = " + this.idTarea + TAB
+	        + "alias = " + this.alias + TAB
+	        + "descripcion = " + this.descripcion + TAB
+	        + "fechaCreacion = " + this.fechaCreacion + TAB
+	        + "descargaFinalizada = " + this.descargaFinalizada + TAB
+	        + "descargaActiva = " + this.descargaActiva + TAB
+	        + "fechaUltimaActualizacion = " + this.fechaUltimaActualizacion + TAB
+	        + "arInicial = " + this.arInicial + TAB
+	        + "decInicial = " + this.decInicial + TAB
+	        + "arFinal = " + this.arFinal + TAB
+	        + "decFinal = " + this.decFinal + TAB
+	        + "alto = " + this.alto + TAB
+	        + "ancho = " + this.ancho + TAB
+	        + "surveys = " + this.surveys + TAB
+	        + "tareasProcesamiento = " + this.tareasProcesamiento + TAB
+	        + "solapamiento = " + this.solapamiento + TAB
+	        + "ruta = " + this.ruta + TAB
+	        + "formatoFichero = " + this.formatoFichero + TAB
+	        + "imagens = " + this.imagens + TAB
+	        + " )";
+	
+	    return retValue;
+	}
+
 
 
     

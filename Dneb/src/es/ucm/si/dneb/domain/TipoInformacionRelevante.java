@@ -62,6 +62,29 @@ public class TipoInformacionRelevante {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "TipoInformacionRelevante ( "
+	        + super.toString() + TAB
+	        + "id = " + this.id + TAB
+	        + "alias = " + this.alias + TAB
+	        + "description = " + this.description + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 	

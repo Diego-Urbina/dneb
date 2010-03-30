@@ -103,6 +103,33 @@ public class DownloadConfig {
 	public void setFormatoFichero(FormatoFichero formatoFichero) {
 		this.formatoFichero = formatoFichero;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "DownloadConfig ( "
+	        + super.toString() + TAB
+	        + "id = " + this.id + TAB
+	        + "alias = " + this.alias + TAB
+	        + "surveys = " + this.surveys + TAB
+	        + "alto = " + this.alto + TAB
+	        + "ancho = " + this.ancho + TAB
+	        + "path = " + this.path + TAB
+	        + "formatoFichero = " + this.formatoFichero + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 	

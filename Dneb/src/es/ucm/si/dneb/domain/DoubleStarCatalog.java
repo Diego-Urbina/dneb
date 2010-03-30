@@ -270,6 +270,49 @@ public class DoubleStarCatalog {
 		return decGrados;
 	}
 
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "DoubleStarCatalog ( "
+	        + super.toString() + TAB
+	        + "id = " + this.id + TAB
+	        + "coordinates = " + this.coordinates + TAB
+	        + "discovererAndNumber = " + this.discovererAndNumber + TAB
+	        + "components = " + this.components + TAB
+	        + "firstObservation = " + this.firstObservation + TAB
+	        + "lastObservation = " + this.lastObservation + TAB
+	        + "numObservations = " + this.numObservations + TAB
+	        + "firstPosAngle = " + this.firstPosAngle + TAB
+	        + "lastPosAnges = " + this.lastPosAnges + TAB
+	        + "firstSeparation = " + this.firstSeparation + TAB
+	        + "lastSeparation = " + this.lastSeparation + TAB
+	        + "firstStarMagnitude = " + this.firstStarMagnitude + TAB
+	        + "secondStarMagnitude = " + this.secondStarMagnitude + TAB
+	        + "spectralType = " + this.spectralType + TAB
+	        + "primaryProperMotionRa = " + this.primaryProperMotionRa + TAB
+	        + "primaryProperMotionDec = " + this.primaryProperMotionDec + TAB
+	        + "secondaryProperMotionRa = " + this.secondaryProperMotionRa + TAB
+	        + "secondaryProperMotionDec = " + this.secondaryProperMotionDec + TAB
+	        + "durchmusterungNumber = " + this.durchmusterungNumber + TAB
+	        + "notes = " + this.notes + TAB
+	        + "ascRecGrados = " + this.ascRecGrados + TAB
+	        + "decGrados = " + this.decGrados + TAB
+	        + "arcsecondCoordinates2000 = " + this.arcsecondCoordinates2000 + TAB
+	        + " )";
+	
+	    return retValue;
+	}
+
 	
 	
 	

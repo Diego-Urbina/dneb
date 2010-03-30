@@ -112,6 +112,34 @@ public class ProcImagen {
 	public List<ParamImg> getParams() {
 		return params;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "ProcImagen ( "
+	        + super.toString() + TAB
+	        + "id = " + this.id + TAB
+	        + "alias = " + this.alias + TAB
+	        + "description = " + this.description + TAB
+	        + "finalizada = " + this.finalizada + TAB
+	        + "fechaProcesamiento = " + this.fechaProcesamiento + TAB
+	        + "imagen = " + this.imagen + TAB
+	        + "procTarea = " + this.procTarea + TAB
+	        + "params = " + this.params + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 

@@ -125,6 +125,35 @@ public class CargaDatos {
 	public void setSurveys(List<Survey> surveys) {
 		this.surveys = surveys;
 	}
+
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "CargaDatos ( "
+	        + super.toString() + TAB
+	        + "idPunto = " + this.idPunto + TAB
+	        + "ascencionRecta = " + this.ascencionRecta + TAB
+	        + "declinacion = " + this.declinacion + TAB
+	        + "procesado = " + this.procesado + TAB
+	        + "descripcion = " + this.descripcion + TAB
+	        + "alto = " + this.alto + TAB
+	        + "ancho = " + this.ancho + TAB
+	        + "path = " + this.path + TAB
+	        + "surveys = " + this.surveys + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 	

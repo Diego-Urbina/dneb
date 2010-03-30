@@ -159,6 +159,36 @@ public class Imagen {
 		return procImagen;
 	}
 
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "Imagen ( "
+	        + super.toString() + TAB
+	        + "idDescarga = " + this.idDescarga + TAB
+	        + "ascensionRecta = " + this.ascensionRecta + TAB
+	        + "declinacion = " + this.declinacion + TAB
+	        + "survey = " + this.survey + TAB
+	        + "descargada = " + this.descargada + TAB
+	        + "fechaDescarga = " + this.fechaDescarga + TAB
+	        + "rutaFichero = " + this.rutaFichero + TAB
+	        + "ancho = " + this.ancho + TAB
+	        + "tarea = " + this.tarea + TAB
+	        + "procImagen = " + this.procImagen + TAB
+	        + " )";
+	
+	    return retValue;
+	}
+
 
 	
 	
