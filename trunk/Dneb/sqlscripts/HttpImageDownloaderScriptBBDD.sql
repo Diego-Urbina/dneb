@@ -19,3 +19,9 @@ insert into tip_proc values(2,'Procesamiento calculo distancia','Procesamiento c
 delete from tipo_parametro;
 insert into tipo_parametro values(1,'Brillo','Brillo de busqueda de estrellas dobles');
 insert into tipo_parametro values(2,'Umbral','Umbral de busqueda de estrellas dobles');
+
+delete from INFOREL_IMAGEN_JT;
+delete from INFO_REL; 
+delete from TIP_INFO_REL;
+insert into TIP_INFO_REL values(2,'CALC DIST','INFO RELEVANTE DEL CALCULO DE DISTANCIA USANDO EL WDSC');
+insert into TIP_INFO_REL values(1,'CALC DOBLES','BUSQUEDA ESTRELLA DOBLE');
