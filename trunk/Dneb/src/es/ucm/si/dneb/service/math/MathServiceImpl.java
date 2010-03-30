@@ -40,11 +40,11 @@ public class MathServiceImpl implements MathService{
 		}
 		LOG.debug("ang="+ang);
 		
-		double distSec=ang*3600;
+		double distSec=dist/3600;
 		
-		Distance distance = new Distance(dist,ang);
+		Distance distance = new Distance(distSec,ang);
 		
-		distance.setDistanceSeconds(distSec);
+		distance.setDistanceSeconds(dist);
 		
 		return distance;
 	}

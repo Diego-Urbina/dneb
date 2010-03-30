@@ -91,6 +91,9 @@ public class VentanaPcpal extends JFrame{
 		this.dnebInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
 		this.formaCoord.setIcon(new ImageIcon("images/help_icon.jpg"));
 		
+		this.distancias.setIcon(new ImageIcon("images/distance.jpg"));
+		this.conversor.setIcon(new ImageIcon("images/Converter_icon.jpg"));
+		
 		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
 	}
@@ -272,6 +275,18 @@ public class VentanaPcpal extends JFrame{
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
+	private void conversorActionPerformed(ActionEvent e) {
+		pane.add("CONVERSOR COORDENADAS",new CoordinateConverter());
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
+	private void distanciasActionPerformed(ActionEvent e) {
+		pane.add("CALCULADORA DISTANCIAS",new CalcularDistanciaForm());
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
 	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -296,6 +311,8 @@ public class VentanaPcpal extends JFrame{
 		nueProcEstDob = new JMenuItem();
 		buscar = new JMenuItem();
 		consultarCatalogo = new JMenuItem();
+		conversor = new JMenuItem();
+		distancias = new JMenuItem();
 		menu7 = new JMenu();
 		importInfo = new JMenuItem();
 		formaCoord = new JMenuItem();
@@ -305,7 +322,7 @@ public class VentanaPcpal extends JFrame{
 		setIconImage(null);
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
-		
+
 
 		//======== menuBar1 ========
 		{
@@ -481,6 +498,24 @@ public class VentanaPcpal extends JFrame{
 					}
 				});
 				menu5.add(consultarCatalogo);
+
+				//---- conversor ----
+				conversor.setText("CONVERSOR COORDENADAS");
+				conversor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						conversorActionPerformed(e);
+					}
+				});
+				menu5.add(conversor);
+
+				//---- distancias ----
+				distancias.setText("CALCULO DISTANCIAS");
+				distancias.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						distanciasActionPerformed(e);
+					}
+				});
+				menu5.add(distancias);
 			}
 			menuBar1.add(menu5);
 
@@ -573,6 +608,8 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem nueProcEstDob;
 	private JMenuItem buscar;
 	private JMenuItem consultarCatalogo;
+	private JMenuItem conversor;
+	private JMenuItem distancias;
 	private JMenu menu7;
 	private JMenuItem importInfo;
 	private JMenuItem formaCoord;
