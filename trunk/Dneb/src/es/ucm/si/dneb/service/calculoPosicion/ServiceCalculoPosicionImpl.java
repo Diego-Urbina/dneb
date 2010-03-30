@@ -178,7 +178,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 				double sep= dsc.getLastSeparation();
 				double ang=dsc.getLastPosAnges();
 				
-				if( ((sep*0.85)<=dist.getDistance() && dist.getDistance()<=(sep*1.15)) && ((ang*0.85)<=dist.getAngle() && dist.getAngle()<=(ang*1.15)) ){
+				if( ((sep*0.85)<=dist.getDistanceSeconds() && dist.getDistanceSeconds()<=(sep*1.15)) && ((ang*0.85)<=dist.getAngle() && dist.getAngle()<=(ang*1.15)) ){
 					InformacionRelevante ir = new InformacionRelevante();
 					ir.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS"+ dist +"INFO DSC"+ dsc.toString() );
 					ir.setFecha(Util.dameFechaActual());
