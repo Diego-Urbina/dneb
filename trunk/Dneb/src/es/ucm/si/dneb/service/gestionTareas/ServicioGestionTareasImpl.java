@@ -179,6 +179,27 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		manager.remove(tarea);
 
 	}
+	
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Imagen getImagenByPath(String path) {
+		
+		String pathm=path;
+		
+		
+		pathm=pathm.replace("\\","%");
+		pathm=pathm.replace("\\\\","%");
+		pathm=pathm.replace("/","%");
+		pathm=pathm.replace("//","%");
+		
+		
+		List<Imagen> imagenes=manager.createQuery("select i from Imagen i where i.rutaFichero like ?").setParameter(1, pathm).getResultList();
+		return imagenes.get(0);
+		
+	}
+	
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Imagen> getDescargasTarea(Long tareaId) {
 		Tarea tarea = manager.find(Tarea.class, tareaId);
@@ -304,5 +325,6 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 		return manager.find(Tarea.class,id);
 	}
-	
+
+
 }

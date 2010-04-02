@@ -20,6 +20,8 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
  */
 public class ImportarCatalogo extends JPanel {
 	
+
+	private static final long serialVersionUID = -6491542979983449271L;
 	private ImportDoubleStarCatalog imporCatalog;
 	
 	public ImportarCatalogo() {
