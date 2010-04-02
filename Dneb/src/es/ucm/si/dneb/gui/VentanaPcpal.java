@@ -9,8 +9,6 @@ import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.swing.*;
 
-import es.ucm.si.dneb.service.image.app.DisplayJAIWithPixelInfo;
-import es.ucm.si.dneb.service.image.app.DisplayJAIWithPixelInfoApp;
 import es.ucm.si.dneb.service.image.app.ImageRegionApp;
 
 
@@ -297,20 +295,8 @@ public class VentanaPcpal extends JFrame{
 
 	private void visualizadorDebugActionPerformed(ActionEvent e) {
 		
-		 PlanarImage image = JAI.create("fileload","kk.png");
-		    //
-		    float scale = 1000/100f;
-		    ParameterBlock pb = new ParameterBlock();
-		    pb.addSource(image);
-		    pb.add(scale);
-		    pb.add(scale);
-		    pb.add(0.0F);
-		    pb.add(0.0F);
-		    pb.add(new InterpolationNearest());
-		    // Creates a new, scaled image and uses it on the DisplayJAI component
-		    PlanarImage input = JAI.create("scale", pb);
-		
-		DisplayJAIWithPixelInfoApp visu =new DisplayJAIWithPixelInfoApp(input);
+		 		
+		FitsCoordinateViewerPanel visu =new FitsCoordinateViewerPanel();
 		
 		pane.add("VISUALIZADOR DEBUG",visu);
 	    this.initTabComponent(pane.getTabCount()-1);
