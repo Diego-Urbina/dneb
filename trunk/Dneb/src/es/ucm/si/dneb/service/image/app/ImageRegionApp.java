@@ -152,8 +152,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		});
 	    
 	    JButton buttonZoomMas = new JButton();
-	    //icon = new ImageIcon("images/abrir.gif");
-	    //buttonZoomMas.setIcon(icon);
+	    icon = new ImageIcon("images/zoom_in_icon.gif");
+	    buttonZoomMas.setIcon(icon);
 	    buttonZoomMas.setToolTipText("Aumentar la imagen");
 	    buttonZoomMas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,8 +162,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		});
 	    
 	    JButton buttonZoomMenos = new JButton();
-	    //icon = new ImageIcon("images/abrir.gif");
-	    //buttonZoomMenos.setIcon(icon);
+	    icon = new ImageIcon("images/zoom_out_icon.gif");
+	    buttonZoomMenos.setIcon(icon);
 	    buttonZoomMenos.setToolTipText("Disminuir la imagen");
 	    buttonZoomMenos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
