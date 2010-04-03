@@ -73,16 +73,28 @@ public class StarFinder {
 			r = it.next();
 			
 			antiguo = (r.getyTop() * 100) / (scale + porcentajeZoom);
-			r.setyTop(Math.round(antiguo * scale/100));
+			if (porcentajeZoom > 0) // zoom -
+				r.setyTop(Math.round(antiguo * scale/100));
+			else // zoom +
+				r.setyTop((int) Math.ceil(antiguo * scale/100));
 
 			antiguo = (r.getyBot() * 100) / (scale + porcentajeZoom);
-			r.setyBot(Math.round(antiguo * scale/100));
+			if (porcentajeZoom > 0) // zoom -
+				r.setyBot(Math.round(antiguo * scale/100));
+			else // zoom +
+				r.setyBot((int) Math.ceil(antiguo * scale/100));
 			
 			antiguo = (r.getxLeft() * 100) / (scale + porcentajeZoom);
-			r.setxLeft(Math.round(antiguo * scale/100));
+			if (porcentajeZoom > 0) // zoom -
+				r.setxLeft(Math.round(antiguo * scale/100));
+			else // zoom +
+				r.setxLeft((int) Math.ceil(antiguo * scale/100));
 			
 			antiguo = (r.getxRight() * 100) / (scale + porcentajeZoom);
-			r.setxRight(Math.round(antiguo * scale/100));
+			if (porcentajeZoom > 0) // zoom -
+				r.setxRight(Math.round(antiguo * scale/100));
+			else // zoom +
+				r.setxRight((int) Math.ceil(antiguo * scale/100));
 		}
 	}
 	
@@ -96,5 +108,9 @@ public class StarFinder {
 		    ir.setBorderColor(new Color(255,255,0));
 		    display.addImageRegion(ir);
 		}
+	}
+	
+	public void eliminarRecuadros() {
+		recuadros.clear();
 	}
 }
