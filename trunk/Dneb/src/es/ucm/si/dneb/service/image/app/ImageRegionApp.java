@@ -349,6 +349,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					display2.addMouseListener(this);
 					jsp2.setViewportView(display2);
 					
+					scale = 100;
+					sf1.eliminarRecuadros();
+					sf2.eliminarRecuadros();
 				}
 			}
 		} catch(Exception ex) {
@@ -381,11 +384,16 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			if (umbral <= 0 || brilloEstrella <= 0)
 				throw new Exception("Los parámetros deben ser mayores que 0");
 			
+			sf1.eliminarRecuadros();
+			sf2.eliminarRecuadros();
+			
 			sf1.buscarEstrellas(l1, brilloEstrella, umbral);
 			display1.deleteROIs();
+			display1.set(input1);
 			sf1.printRectStars(scaledIm1, display1);
 			sf2.buscarEstrellas(l2, brilloEstrella, umbral);
 			display2.deleteROIs();
+			display2.set(input2);
 			sf2.printRectStars(scaledIm2, display2);
 			jsp1.repaint();
 			jsp2.repaint();
