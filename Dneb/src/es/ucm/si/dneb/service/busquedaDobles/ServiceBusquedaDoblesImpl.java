@@ -32,7 +32,9 @@ import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.image.util.Point;
+import es.ucm.si.dneb.service.math.CoordinateConverter;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 
 @Service("serviceBusquedaDobles")
 public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
@@ -367,20 +369,24 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	}
 
 	/**
-	 * width y height son el alcho y el alto de la imagen en pixeles.
-	 * x e y son las coordenadas que queremos trasnformar
+	 * width y height son el ancho y el alto de la imagen en pixeles.
+	 * x e y son las coordenadas que queremos transformar
 	 */
 	@Override
 	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y) {
+		SexagesimalCoordinate sc;
+		
 		double ancho = imagen.getAncho();
 		double alto = imagen.getTarea().getAlto();
 		double ar = Double.parseDouble(imagen.getAscensionRecta());
 		double dec = Double.parseDouble(imagen.getDeclinacion());
-		double incX = x - width/2;
-		double incY = y - height/2;
+		sc = new SexagesimalCoordinate(0,ancho,0,0,alto,0);
+		DecimalCoordinate dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
+		double incX = width/2.0 - x;
+		double incY = y - height/2.0;
 		
-		double ar1 = ar + incX*(ancho/width);
-		double dec1 = dec + incY*(alto*height);
+		double ar1 = ar + incX*(dc.getAr()/width);
+		double dec1 = dec + incY*(dc.getDec()/height);
 		if (dec1 > 90) { // Cruzo el polo norte
 			dec1 = 180 - dec1;
 			ar1 = ar1 - 180;

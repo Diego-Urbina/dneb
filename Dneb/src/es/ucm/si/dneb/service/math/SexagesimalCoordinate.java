@@ -2,20 +2,20 @@ package es.ucm.si.dneb.service.math;
 
 public class SexagesimalCoordinate {
 	
-	private int arh;
-	private int armin;
+	private double arh;
+	private double armin;
 	private double arsec;
 	
-	private int dech;
-	private int decmin;
+	private double dech;
+	private double decmin;
 	private double decsec;
 	
 	public SexagesimalCoordinate(){
 		
 	}
 	
-	public SexagesimalCoordinate(int arh, int armin, double arsec, int dech,
-			int decmin, double decsec) {
+	public SexagesimalCoordinate(double arh, double armin, double arsec, double dech,
+			double decmin, double decsec) {
 		super();
 		this.arh = arh;
 		this.armin = armin;
@@ -29,16 +29,16 @@ public class SexagesimalCoordinate {
 		return ""+this.getArh()+this.getArmin()+this.getArsec()+" "+this.getDech()+this.getDecmin()+this.getDecsec();
 	}
 	
-	public int getArh() {
+	public double getArh() {
 		return arh;
 	}
-	public void setArh(int arh) {
+	public void setArh(double arh) {
 		this.arh = arh;
 	}
-	public int getArmin() {
+	public double getArmin() {
 		return armin;
 	}
-	public void setArmin(int armin) {
+	public void setArmin(double armin) {
 		this.armin = armin;
 	}
 	public double getArsec() {
@@ -47,16 +47,16 @@ public class SexagesimalCoordinate {
 	public void setArsec(double arsec) {
 		this.arsec = arsec;
 	}
-	public int getDech() {
+	public double getDech() {
 		return dech;
 	}
-	public void setDech(int dech) {
+	public void setDech(double dech) {
 		this.dech = dech;
 	}
-	public int getDecmin() {
+	public double getDecmin() {
 		return decmin;
 	}
-	public void setDecmin(int decmin) {
+	public void setDecmin(double decmin) {
 		this.decmin = decmin;
 	}
 	public double getDecsec() {
