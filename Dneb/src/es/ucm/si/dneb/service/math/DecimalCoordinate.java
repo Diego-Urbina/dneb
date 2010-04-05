@@ -44,7 +44,7 @@ public class DecimalCoordinate {
 	    String retValue = "";
 	    
 	    retValue = "DecimalCoordinate ( "
-	        + super.toString() + TAB
+	        
 	        + "ar = " + this.ar + TAB
 	        + "dec = " + this.dec + TAB
 	        + " )";
