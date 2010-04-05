@@ -66,7 +66,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements
 	private JLabel label; // a label that will contain information on the pixels
 	// of the image being displayed.
 	private JButton jbutton;
-	private PlanarImage input1;
+
 	private PixelInfoViewer dj; // an instance of the display component.
 	private LectorImageHDU l1;
 	
@@ -122,13 +122,13 @@ public class FitsCoordinateViewerPanel extends JPanel implements
 				l1 = new LectorImageHDU(imageHDU, file1);
 				im = createPlanarImage(l1);
 				JAI.create("filestore", im, "Temp/im3.png", "PNG");
-				input1 = JAI.create("fileload", "Temp/im3.png");
+				input = JAI.create("fileload", "Temp/im3.png");
 				
 				
 				imagen=this.servicioGestionTareas.getImagenByPath(file1);
 				
 				
-			    float scale = 1000/100f;
+			   /* float scale = 1000/100f;
 			    ParameterBlock pb = new ParameterBlock();
 			    pb.addSource(input1);
 			    pb.add(scale);
@@ -139,7 +139,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements
 			    
 			    
 			    // Creates a new, scaled image and uses it on the DisplayJAI component
-			    input = JAI.create("scale", pb);
+			    input = JAI.create("scale", pb);*/
 				
 			    this.removeAll();
 			    
