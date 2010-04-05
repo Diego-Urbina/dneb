@@ -80,7 +80,6 @@ public class SexagesimalCoordinate {
 	    String retValue = "";
 	    
 	    retValue = "SexagesimalCoordinate ( "
-	        + super.toString() + TAB
 	        + "arh = " + this.arh + TAB
 	        + "armin = " + this.armin + TAB
 	        + "arsec = " + this.arsec + TAB

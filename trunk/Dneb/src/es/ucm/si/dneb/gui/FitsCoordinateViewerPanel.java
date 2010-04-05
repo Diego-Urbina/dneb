@@ -50,6 +50,9 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
+
+
 
 /**
  * This class uses an instance of DisplayJAIWithPixelInfo to display an image in
@@ -192,8 +195,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements
 	public void mouseMoved(MouseEvent e) {
 		
 		DecimalCoordinate dc=serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
+		SexagesimalCoordinate sc= es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
 		
-		String pos = "(" + e.getX() + "," + e.getY() + ") " +"("+dc.toString() +")";
+		String pos = "(" + e.getX() + "," + e.getY() + ") " +"("+dc.toString() +")"+"("+sc.toString() +")";
 		
 		
 		label.setText(pos + dj.getPixelInfo()); // just update the label with
