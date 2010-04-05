@@ -25,12 +25,9 @@ import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
-import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
-import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 
-import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
@@ -53,7 +50,6 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
-import es.ucm.si.dneb.test.ServicioBusquedaDoblesTest;
 
 /**
  * This class uses an instance of DisplayJAIWithPixelInfo to display an image in
