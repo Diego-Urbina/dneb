@@ -114,8 +114,7 @@ public class InformacionRelevante {
 	    String retValue = "";
 	    
 	    retValue = "InformacionRelevante ( "
-	        + super.toString() + TAB
-	        + "id = " + this.id + TAB
+	       +"id = " + this.id + TAB
 	        + "description = " + this.description + TAB
 	        + "fecha = " + this.fecha + TAB
 	        + "tipoInformacionRelevante = " + this.tipoInformacionRelevante + TAB

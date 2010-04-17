@@ -64,7 +64,7 @@ public class Survey {
 	        + super.toString() + TAB
 	        + "idSurvey = " + this.idSurvey + TAB
 	        + "descripcion = " + this.descripcion + TAB
-	        + "tareas = " + this.tareas + TAB
+	        
 	        + " )";
 	
 	    return retValue;
