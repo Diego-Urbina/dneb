@@ -144,7 +144,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 
 			}
 			
-			LOG.info("");
+			LOG.info("PASANDO DE PÍXELES A COORDENADAS");
 			
 			//PASAR DE PÍXELES A COORDENADAS
 			
@@ -166,8 +166,13 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 				for(DecimalCoordinate dc2 : centroidesDC){
 					
 					Distance distanceAux=this.mathService.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
+					
+					
 					distanceAux.setPoint1(dc1);
 					distanceAux.setPoint2(dc2);
+					
+					LOG.debug("DISTANCE INFO: "+ distanceAux.toString());
+					
 					
 					distancesList.add(distanceAux);
 				}
@@ -179,6 +184,15 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 				double ang=dsc.getLastPosAnges();
 				
 				if( ((sep*0.85)<=dist.getDistanceSeconds() && dist.getDistanceSeconds()<=(sep*1.15)) && ((ang*0.85)<=dist.getAngle() && dist.getAngle()<=(ang*1.15)) ){
+					
+					LOG.debug("PUNTOS DENTRO DE RANGO:"+dist.toString());
+					
+					
+					/*ESTUDIO DE FILTRADO POR BRILLO*/
+					
+					
+					/**/
+					
 					InformacionRelevante ir = new InformacionRelevante();
 					ir.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS"+ dist +"INFO DSC"+ dsc.toString() );
 					ir.setFecha(Util.dameFechaActual());
@@ -186,7 +200,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 					imagenes.add(imagen);
 					ir.setImagenes(imagenes);
 					
-					ir.setTipoInformacionRelevante(manager.find(TipoInformacionRelevante.class, 2));
+					ir.setTipoInformacionRelevante(manager.find(TipoInformacionRelevante.class, 2L));
 					
 					manager.persist(ir);
 				}
@@ -201,13 +215,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//Calculo los centros
 		
-		//Filtro de candidatas por brillo
-		
-		//Ojo a los colores
-		
-		//Sobre las estrellas calculo las distancias por parejas???
 		
 		
 	}

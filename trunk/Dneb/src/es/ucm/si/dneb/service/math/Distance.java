@@ -46,6 +46,30 @@ public class Distance {
 	public double getDistanceSeconds() {
 		return distanceSeconds;
 	}
+	/**
+	 * Constructs a <code>String</code> with all attributes
+	 * in name = value format.
+	 *
+	 * @return a <code>String</code> representation 
+	 * of this object.
+	 */
+	public String toString()
+	{
+	    final String TAB = "    ";
+	    
+	    String retValue = "";
+	    
+	    retValue = "Distance ( "
+	        + super.toString() + TAB
+	        + "distance = " + this.distance + TAB
+	        + "angle = " + this.angle + TAB
+	        + "distanceSeconds = " + this.distanceSeconds + TAB
+	        + "point1 = " + this.point1 + TAB
+	        + "point2 = " + this.point2 + TAB
+	        + " )";
+	
+	    return retValue;
+	}
 	
 	
 	
