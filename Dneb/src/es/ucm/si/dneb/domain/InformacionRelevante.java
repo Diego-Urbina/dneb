@@ -40,7 +40,7 @@ public class InformacionRelevante {
     @XmlElement(required = true)
     private long id;
 	
-	@Column(name="DESCRIPCION")
+	@Column(name="DESCRIPCION" , length=5000 )
 	@XmlElement(required = true)
 	private String description;
 	
