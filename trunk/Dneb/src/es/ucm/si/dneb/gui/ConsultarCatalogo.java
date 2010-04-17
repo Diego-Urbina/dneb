@@ -47,6 +47,19 @@ public class ConsultarCatalogo extends JPanel {
 	}
 
 	private void consultarActionPerformed(ActionEvent e) {
+		
+		
+		this.modelo=new DefaultTableModel(
+				new Object[][] {
+					
+				},
+				new String[] {
+					"ARSEC2000COOR", "COMPONENTS", "COORDINATES", "DISCOVERERANDMARKER", "DURSCHNUMBER", "FIRSTOBS", "FIRSTPOSANG", "FIRSTSEP", "FIRSTSTARMAG", "LASTOBS", "LASTPOSANG", "LASTSEP", "NOTES", "NUMOBS", "PPMDEC", "PPMRA", "SPMDEC", "SPMRA", "SSMAGNITUDE", "SPECTYPE","ID"
+				}
+			);
+			
+			table1.setModel(modelo);
+		
 			
 		Integer intlimobs=Integer.MAX_VALUE;
 		Date dateprimObs=Date.valueOf(3000+"-01-01");   

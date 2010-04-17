@@ -92,8 +92,7 @@ public class TipoParametro {
 	        + "idTipoParametro = " + this.idTipoParametro + TAB
 	        + "alias = " + this.alias + TAB
 	        + "descripcion = " + this.descripcion + TAB
-	        + "paramProcTareas = " + this.paramProcTareas + TAB
-	        + "paramImgs = " + this.paramImgs + TAB
+	      
 	        + " )";
 	
 	    return retValue;

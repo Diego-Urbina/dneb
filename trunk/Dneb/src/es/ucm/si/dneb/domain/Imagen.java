@@ -182,8 +182,8 @@ public class Imagen {
 	        + "fechaDescarga = " + this.fechaDescarga + TAB
 	        + "rutaFichero = " + this.rutaFichero + TAB
 	        + "ancho = " + this.ancho + TAB
-	        + "tarea = " + this.tarea + TAB
-	        + "procImagen = " + this.procImagen + TAB
+	        
+	        
 	        + " )";
 	
 	    return retValue;

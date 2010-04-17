@@ -134,8 +134,7 @@ public class ProcImagen {
 	        + "finalizada = " + this.finalizada + TAB
 	        + "fechaProcesamiento = " + this.fechaProcesamiento + TAB
 	        + "imagen = " + this.imagen + TAB
-	        + "procTarea = " + this.procTarea + TAB
-	        + "params = " + this.params + TAB
+	        	        + "params = " + this.params + TAB
 	        + " )";
 	
 	    return retValue;

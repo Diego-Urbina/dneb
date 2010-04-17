@@ -95,7 +95,7 @@ public class ParamImg {
 	        + "valorNum = " + this.valorNum + TAB
 	        + "valorAlfa = " + this.valorAlfa + TAB
 	        + "tipoParametro = " + this.tipoParametro + TAB
-	        + "procImagen = " + this.procImagen + TAB
+	       
 	        + " )";
 	
 	    return retValue;

@@ -60,7 +60,7 @@ public class Distance {
 	    String retValue = "";
 	    
 	    retValue = "Distance ( "
-	        + super.toString() + TAB
+	       + TAB
 	        + "distance = " + this.distance + TAB
 	        + "angle = " + this.angle + TAB
 	        + "distanceSeconds = " + this.distanceSeconds + TAB
