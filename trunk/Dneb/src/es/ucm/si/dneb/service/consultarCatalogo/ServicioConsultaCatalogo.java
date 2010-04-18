@@ -17,6 +17,7 @@ public interface ServicioConsultaCatalogo {
 	
 	public DoubleStarCatalog findDSCBYCoordinates(SexagesimalCoordinate sexagesimalCoordinate);
 	
+	public List<DoubleStarCatalog> consultaAvanzadaCatalogo(Integer ciobs,Integer csobs,Date ciDateprimObs,Date csDateprimObs,Date ciDateUltObs,Date csDateUltObs,Double cimag1,Double csmag1,Double ciDespAR1,Double csDespAR1,Double ciDespDEC1,Double csDespDEC1,Double ciDist,Double csDist,Double ciAng,Double csAng,Double cimag2,Double csmag2,Double ciDespAR2,Double csDespAR2,Double ciDespDEC2,Double csDespDEC2);
 	
 	
 	public void crearTareaDescarga(List<DoubleStarCatalog> dscList);
