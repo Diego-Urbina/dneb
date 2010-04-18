@@ -7,10 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Dsc:AdvancedSearch",query="select d from DoubleStarCatalog d where (d.numObservations between ? and ? )and (d.firstObservation between ? and ?)and (d.lastObservation between ? and ? )and (d.firstStarMagnitude  between ? and ?)and (d.primaryProperMotionRa between ? and ?)and (d.primaryProperMotionDec between ? and ?)and (d.lastSeparation between ? and ?)and (d.lastPosAnges between ? and ?)and ( d.secondStarMagnitude between ? and ?)and ( d.secondaryProperMotionRa between ? and ?)and ( d.secondaryProperMotionDec between ? and ?)")
+})
 @Table(name="DOUBLE_STAR_CATALOG")
 public class DoubleStarCatalog {
 	

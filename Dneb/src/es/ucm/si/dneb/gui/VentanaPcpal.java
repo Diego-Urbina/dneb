@@ -241,10 +241,15 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void consultarCatalogoActionPerformed(ActionEvent e) {
-
+		
+		
+		
+		
 		ConsultarCatalogo consultarCatalogo = new ConsultarCatalogo();
 		
-		pane.addTab("Consultar catálogo", consultarCatalogo);
+		JScrollPane sp= new JScrollPane(consultarCatalogo);
+		 
+		pane.addTab("Consultar catálogo", sp);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
