@@ -266,12 +266,12 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void crearTarea(List<DoubleStarCatalog> dscs) {
+	public void crearTarea(List<String> selectedSurveys,String alias, String ruta,List<DoubleStarCatalog> dscs) {
 		// TODO Auto-generated method stub
 		Tarea tarea = new Tarea();
 
 		tarea.setActiva(false);
-		tarea.setAlias("CALCDIST");
+		tarea.setAlias(alias);
 		tarea.setAlto(4);
 		tarea.setAncho(4);
 		tarea.setArFinal("0");
@@ -305,26 +305,29 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		}
 
 		tarea.setFormatoFichero(formatoFichero);
-		tarea.setRuta("d:");
+		tarea.setRuta(ruta);
 		// tarea.setSolpamiento(solpamiento);
 
 		ArrayList<Survey> surveys = new ArrayList<Survey>();
-
-		try {
-			Survey surveyViejo = (Survey) manager.createNamedQuery(
-					"Survey:dameSurveyPorDescripcion").setParameter(1,
-					"poss2ukstu_blue").getSingleResult();
-			surveys.add(surveyViejo);
-		} catch (NoResultException e) {
-			LOG
-					.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,No se Devuelve resultado");
-			throw new ServicioCreacionTareasException(
-					"Prolema al ejecutar query");
-		} catch (NonUniqueResultException e) {
-			LOG
-					.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,Se devuelve más de un resultado");
-			throw new ServicioCreacionTareasException(
-					"Prolema al ejecutar query");
+		/*TODO*/
+		
+		for(String sSurvey: selectedSurveys){
+			try {
+				Survey surveyViejo = (Survey) manager.createNamedQuery(
+						"Survey:dameSurveyPorDescripcion").setParameter(1,
+						sSurvey).getSingleResult();
+				surveys.add(surveyViejo);
+			} catch (NoResultException e) {
+				LOG
+						.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,No se Devuelve resultado");
+				throw new ServicioCreacionTareasException(
+						"Prolema al ejecutar query");
+			} catch (NonUniqueResultException e) {
+				LOG
+						.error("ProblemaQuery,Survey:dameSurveyPorDescripcion,Se devuelve más de un resultado");
+				throw new ServicioCreacionTareasException(
+						"Prolema al ejecutar query");
+			}
 		}
 
 		tarea.setSurveys(surveys);
@@ -344,18 +347,6 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			Imagen imagen = new Imagen();
 
 			imagen.setAncho(tarea.getAncho());
-			
-			//TODO HAY QUE ELIMINAR ESTO CUANDO EL CATALGO IMPORTE BIEN
-			/*
-			imagen.setAscensionRecta(dsc.getArcsecondCoordinates2000()
-					.substring(0, 2)+" "+dsc.getArcsecondCoordinates2000()
-					.substring(2, 4)+" "+dsc.getArcsecondCoordinates2000()
-					.substring(4, 9));
-			imagen.setDeclinacion(dsc.getArcsecondCoordinates2000().substring(
-					10, 12)+" "+dsc.getArcsecondCoordinates2000().substring(
-							12, 14)+" "+dsc.getArcsecondCoordinates2000().substring(
-									14, 18));
-			*/
 			
 			imagen.setAscensionRecta(""+dsc.getAscRecGrados());
 			imagen.setDeclinacion(""+dsc.getDecGrados());
