@@ -8,5 +8,5 @@ public interface ServicioCreacionTareas {
 	
 	public void crearTarea(String arInicial,String arFinal,String decInicial,String decFinal,double alto,double ancho,double solapamiento,String surveyOld, String surveynNew,String formato,String ruta);
 	
-	public void crearTarea(List<DoubleStarCatalog> dsc);
+	public void crearTarea(List<String> surveys,String alias,String path,List<DoubleStarCatalog> dsc);
 }
