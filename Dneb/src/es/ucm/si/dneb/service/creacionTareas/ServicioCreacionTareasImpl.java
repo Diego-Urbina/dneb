@@ -343,37 +343,38 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		// tarea.setDescargas(imagens);
 
 		for (DoubleStarCatalog dsc : dscs) {
-
-			Imagen imagen = new Imagen();
-
-			imagen.setAncho(tarea.getAncho());
-			
-			imagen.setAscensionRecta(""+dsc.getAscRecGrados());
-			imagen.setDeclinacion(""+dsc.getDecGrados());
-			
-			imagen.setDescargada(false);
-			// imagen.setFechaDescarga(fechaFinalizacion);
-			// imagen.setProcesamientoImagen(procImagen);
-			imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), surveys.get(0)
-					.getDescripcion(), dsc.getArcsecondCoordinates2000()
-					.substring(0, 10), dsc.getArcsecondCoordinates2000()
-					.substring(10, 18), tarea.getFormatoFichero().getAlias()));
-			imagen.setSurvey(surveys.get(0));
-			imagen.setTarea(tarea);
-			try {
-				manager.persist(imagen);
+			for(Survey surIter :surveys){
+				Imagen imagen = new Imagen();
+	
+				imagen.setAncho(tarea.getAncho());
 				
-				gestorDescargas.anadirHilo(tarea);
-
-			} catch (Exception e) {
-				LOG.error("Problema persistiendo imagen" + e.getCause()
-						+ e.getStackTrace());
-				throw new ServicioCreacionTareasException(
-						"Problema persistiendo imagen" + e.getCause()
-								+ e.getStackTrace());
+				imagen.setAscensionRecta(""+dsc.getAscRecGrados());
+				imagen.setDeclinacion(""+dsc.getDecGrados());
+				
+				imagen.setDescargada(false);
+				// imagen.setFechaDescarga(fechaFinalizacion);
+				// imagen.setProcesamientoImagen(procImagen);
+				imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), surveys.get(0)
+						.getDescripcion(), dsc.getArcsecondCoordinates2000()
+						.substring(0, 10), dsc.getArcsecondCoordinates2000()
+						.substring(10, 18), tarea.getFormatoFichero().getAlias()));
+				imagen.setSurvey(surIter);
+				imagen.setTarea(tarea);
+				try {
+					manager.persist(imagen);
+					
+					
+	
+				} catch (Exception e) {
+					LOG.error("Problema persistiendo imagen" + e.getCause()
+							+ e.getStackTrace());
+					throw new ServicioCreacionTareasException(
+							"Problema persistiendo imagen" + e.getCause()
+									+ e.getStackTrace());
+				}
 			}
-
 		}
+		gestorDescargas.anadirHilo(tarea);
 
 	}
 

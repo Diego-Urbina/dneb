@@ -244,13 +244,13 @@ public class ConsultarCatalogo extends JPanel {
 
 		// TODO add your code here
 
-		String[] surveys = (String[]) this.listSurvey.getSelectedValues();
+		Object[] surveys = (Object[]) this.listSurvey.getSelectedValues();
 
 		/* TODO */
 		ArrayList<String> surveysList = new ArrayList<String>();
 
 		for (int i = 0; i < surveys.length; i++) {
-			surveysList.add(surveys[i]);
+			surveysList.add((String)surveys[i]);
 		}
 
 		int selection[] = this.table1.getSelectedRows();
