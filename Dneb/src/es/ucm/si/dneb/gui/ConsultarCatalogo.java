@@ -1,7 +1,6 @@
 package es.ucm.si.dneb.gui;
 
-import java.awt.Font;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -23,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.springframework.context.ApplicationContext;
 
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -202,6 +202,12 @@ public class ConsultarCatalogo extends JPanel {
 
 	private void rellenarTabla() {
 		try {
+			DescriptiveStatistics magnitudeEstatistics= new DescriptiveStatistics();
+			DescriptiveStatistics distanceEstatistics= new DescriptiveStatistics();
+			DescriptiveStatistics motionAREstatistics= new DescriptiveStatistics();
+			DescriptiveStatistics motionDECEstatistics= new DescriptiveStatistics();
+			DescriptiveStatistics angEstatistics= new DescriptiveStatistics();
+
 
 			int nFila = 0;
 
@@ -231,9 +237,56 @@ public class ConsultarCatalogo extends JPanel {
 				fila[20] = dsc.getId();
 
 				modelo.addRow(fila);
+				
+				magnitudeEstatistics.addValue(dsc.getFirstStarMagnitude());
+				magnitudeEstatistics.addValue(dsc.getSecondStarMagnitude());
+				
+				distanceEstatistics.addValue(dsc.getLastSeparation());
+				
+				motionAREstatistics.addValue(dsc.getPrimaryProperMotionRa());
+				motionAREstatistics.addValue(dsc.getSecondaryProperMotionRa());
+				
+				motionDECEstatistics.addValue(dsc.getPrimaryProperMotionDec());
+				motionDECEstatistics.addValue(dsc.getSecondaryProperMotionDec());
+				
+				angEstatistics.addValue(dsc.getLastPosAnges());
+				
 
 				nFila++;
 			}
+			
+		this.distMEd.setText(""+distanceEstatistics.getMean());
+		this.distDes.setText(""+distanceEstatistics.getStandardDeviation());
+		this.distVar.setText(""+distanceEstatistics.getVariance());
+		this.distMax.setText(""+distanceEstatistics.getMax());
+		this.distMin.setText(""+distanceEstatistics.getMin());
+		
+		this.magMEd.setText(""+magnitudeEstatistics.getMean());
+		this.magDesv.setText(""+magnitudeEstatistics.getStandardDeviation());
+		this.magVar.setText(""+magnitudeEstatistics.getVariance());
+		this.magMax.setText(""+magnitudeEstatistics.getMax());
+		this.magMin.setText(""+magnitudeEstatistics.getMin());
+		
+		this.movArMed.setText(""+motionAREstatistics.getMean());
+		this.movArDesv.setText(""+motionAREstatistics.getStandardDeviation());
+		this.movArVar.setText(""+motionAREstatistics.getVariance());
+		this.movArMax.setText(""+motionAREstatistics.getMax());
+		this.movArMin.setText(""+motionAREstatistics.getMin());
+		
+		this.movDecMed.setText(""+motionDECEstatistics.getMean());
+		this.movDecDes.setText(""+motionDECEstatistics.getStandardDeviation());
+		this.movDecVar.setText(""+motionDECEstatistics.getVariance());
+		this.movDecMax.setText(""+motionDECEstatistics.getMax());
+		this.movDecMin.setText(""+motionDECEstatistics.getMin());
+		
+		
+		this.angMed.setText(""+angEstatistics.getMean());
+		this.angDesv.setText(""+angEstatistics.getStandardDeviation());
+		this.angVar.setText(""+angEstatistics.getVariance());
+		this.angMax.setText(""+angEstatistics.getMax());
+		this.angMin.setText(""+angEstatistics.getMin());
+			
+			
 		} catch (ServicioGestionTareasException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
@@ -339,6 +392,41 @@ public class ConsultarCatalogo extends JPanel {
 		table1 = new JTable();
 		separator1 = new JSeparator();
 		label11 = new JLabel();
+		label29 = new JLabel();
+		label30 = new JLabel();
+		label31 = new JLabel();
+		label32 = new JLabel();
+		label33 = new JLabel();
+		label24 = new JLabel();
+		distMEd = new JTextField();
+		distDes = new JTextField();
+		distVar = new JTextField();
+		distMax = new JTextField();
+		distMin = new JTextField();
+		label26 = new JLabel();
+		magMEd = new JTextField();
+		magDesv = new JTextField();
+		magVar = new JTextField();
+		magMax = new JTextField();
+		magMin = new JTextField();
+		label25 = new JLabel();
+		movArMed = new JTextField();
+		movArDesv = new JTextField();
+		movArVar = new JTextField();
+		movArMax = new JTextField();
+		movArMin = new JTextField();
+		label27 = new JLabel();
+		movDecMed = new JTextField();
+		movDecDes = new JTextField();
+		movDecVar = new JTextField();
+		movDecMax = new JTextField();
+		movDecMin = new JTextField();
+		label28 = new JLabel();
+		angMed = new JTextField();
+		angDesv = new JTextField();
+		angVar = new JTextField();
+		angMax = new JTextField();
+		angMin = new JTextField();
 		separator2 = new JSeparator();
 		label10 = new JLabel();
 		label17 = new JLabel();
@@ -350,565 +438,675 @@ public class ConsultarCatalogo extends JPanel {
 		listSurvey = new JList();
 		button2 = new JButton();
 
-		// ======== this ========
-		setLayout(new GridLayoutManager(34, 6, new Insets(20, 20, 20, 20), -1,
-				-1, true, false));
+		//======== this ========
+		setLayout(new GridLayoutManager(40, 6, new Insets(20, 20, 20, 20), -1, -1, true, false));
 
-		// ---- label1 ----
+		//---- label1 ----
 		label1.setText("GENERAR TAREAS MEDIANTE CONSULTAS EN EL DSWC");
-		add(label1,
-				new GridConstraints(0, 0, 2, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label1, new GridConstraints(0, 0, 2, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label20 ----
+		//---- label20 ----
 		label20.setText("Cota Inferior");
-		add(label20,
-				new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label20, new GridConstraints(3, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label21 ----
+		//---- label21 ----
 		label21.setText("Cota Superior");
-		add(label21,
-				new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label21, new GridConstraints(3, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label22 ----
+		//---- label22 ----
 		label22.setText("Cota Inferior");
-		add(label22,
-				new GridConstraints(3, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label22, new GridConstraints(3, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label23 ----
+		//---- label23 ----
 		label23.setText("Cota Superior");
-		add(label23,
-				new GridConstraints(3, 5, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label23, new GridConstraints(3, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label2 ----
+		//---- label2 ----
 		label2.setText("N\u00famero Observaciones");
-		add(label2,
-				new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciNumObs,
-				new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csNumObs,
-				new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label2, new GridConstraints(4, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciNumObs, new GridConstraints(4, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csNumObs, new GridConstraints(4, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label6 ----
+		//---- label6 ----
 		label6.setText("Distacancia lineal");
-		add(label6,
-				new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciDistLin,
-				new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csDistLin,
-				new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label6, new GridConstraints(4, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciDistLin, new GridConstraints(4, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csDistLin, new GridConstraints(4, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label3 ----
+		//---- label3 ----
 		label3.setText("Primera Observaci\u00f3n");
-		add(label3,
-				new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciPrimObs,
-				new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csPrimObs,
-				new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label3, new GridConstraints(6, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciPrimObs, new GridConstraints(6, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csPrimObs, new GridConstraints(6, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label7 ----
+		//---- label7 ----
 		label7.setText("\u00c1ngulo");
-		add(label7,
-				new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciAng,
-				new GridConstraints(6, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csAng,
-				new GridConstraints(6, 5, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label7, new GridConstraints(6, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciAng, new GridConstraints(6, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csAng, new GridConstraints(6, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label4 ----
+		//---- label4 ----
 		label4.setText("\u00daltima Observaci\u00f3n");
-		add(label4,
-				new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciUlObs,
-				new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csUltObs,
-				new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label4, new GridConstraints(8, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciUlObs, new GridConstraints(8, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csUltObs, new GridConstraints(8, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label8 ----
+		//---- label8 ----
 		label8.setText("Espectro");
-		add(label8,
-				new GridConstraints(8, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label8, new GridConstraints(8, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- ciEspec ----
+		//---- ciEspec ----
 		ciEspec.setEditable(false);
 		ciEspec.setEnabled(false);
-		add(ciEspec,
-				new GridConstraints(8, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(ciEspec, new GridConstraints(8, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label5 ----
+		//---- label5 ----
 		label5.setText("Magnitud 1");
-		add(label5,
-				new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciMag1,
-				new GridConstraints(10, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csMag1,
-				new GridConstraints(10, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label5, new GridConstraints(10, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciMag1, new GridConstraints(10, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csMag1, new GridConstraints(10, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label9 ----
+		//---- label9 ----
 		label9.setText("Magnitud 2");
-		add(label9,
-				new GridConstraints(10, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciMag2,
-				new GridConstraints(10, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csMag2,
-				new GridConstraints(10, 5, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label9, new GridConstraints(10, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciMag2, new GridConstraints(10, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csMag2, new GridConstraints(10, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label13 ----
+		//---- label13 ----
 		label13.setText("Movimiento 1 AR");
-		add(label13,
-				new GridConstraints(12, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciMov1Ar,
-				new GridConstraints(12, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csMov1AR,
-				new GridConstraints(12, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label13, new GridConstraints(12, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciMov1Ar, new GridConstraints(12, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csMov1AR, new GridConstraints(12, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label14 ----
+		//---- label14 ----
 		label14.setText("Movimiento 2 AR");
-		add(label14,
-				new GridConstraints(12, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciMov2Ar,
-				new GridConstraints(12, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csMov2Ar,
-				new GridConstraints(12, 5, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label14, new GridConstraints(12, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciMov2Ar, new GridConstraints(12, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csMov2Ar, new GridConstraints(12, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label15 ----
+		//---- label15 ----
 		label15.setText("Movimiento 1 DEC");
-		add(label15,
-				new GridConstraints(14, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciMov1DEC,
-				new GridConstraints(14, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csMov1DEC,
-				new GridConstraints(14, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label15, new GridConstraints(14, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciMov1DEC, new GridConstraints(14, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csMov1DEC, new GridConstraints(14, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label16 ----
+		//---- label16 ----
 		label16.setText("Movimiento 2 DEC");
-		add(label16,
-				new GridConstraints(14, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(ciMov2Dec,
-				new GridConstraints(14, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(csMMov2Dec,
-				new GridConstraints(14, 5, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label16, new GridConstraints(14, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(ciMov2Dec, new GridConstraints(14, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(csMMov2Dec, new GridConstraints(14, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- button1 ----
+		//---- button1 ----
 		button1.setText("Consultar");
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				consultarActionPerformed(e);
 			}
 		});
-		add(button1,
-				new GridConstraints(16, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(separator3,
-				new GridConstraints(17, 0, 1, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(button1, new GridConstraints(16, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(separator3, new GridConstraints(17, 0, 1, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label12 ----
+		//---- label12 ----
 		label12.setText("DATOS OBTENIDOS EN LA CONSULTA");
-		add(label12,
-				new GridConstraints(18, 0, 1, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label12, new GridConstraints(18, 0, 1, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ======== scrollPane1 ========
+		//======== scrollPane1 ========
 		{
 			scrollPane1.setViewportView(table1);
 		}
-		add(scrollPane1,
-				new GridConstraints(19, 0, 7, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(separator1,
-				new GridConstraints(26, 0, 1, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(scrollPane1, new GridConstraints(19, 0, 7, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(separator1, new GridConstraints(26, 0, 1, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label11 ----
+		//---- label11 ----
 		label11.setText("ESTAD\u00cdSTICAS DE DATOS OBTENIDOS");
-		add(label11,
-				new GridConstraints(27, 0, 1, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(separator2,
-				new GridConstraints(28, 0, 1, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label11, new GridConstraints(27, 0, 1, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label10 ----
+		//---- label29 ----
+		label29.setText("Media");
+		add(label29, new GridConstraints(28, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label30 ----
+		label30.setText("Desviaci\u00f3n");
+		add(label30, new GridConstraints(28, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label31 ----
+		label31.setText("Varianza");
+		add(label31, new GridConstraints(28, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label32 ----
+		label32.setText("M\u00e1ximo");
+		add(label32, new GridConstraints(28, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label33 ----
+		label33.setText("M\u00ednimo");
+		add(label33, new GridConstraints(28, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label24 ----
+		label24.setText("Distancia");
+		add(label24, new GridConstraints(29, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- distMEd ----
+		distMEd.setEditable(false);
+		add(distMEd, new GridConstraints(29, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- distDes ----
+		distDes.setEditable(false);
+		add(distDes, new GridConstraints(29, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- distVar ----
+		distVar.setEditable(false);
+		add(distVar, new GridConstraints(29, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- distMax ----
+		distMax.setEditable(false);
+		add(distMax, new GridConstraints(29, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- distMin ----
+		distMin.setEditable(false);
+		add(distMin, new GridConstraints(29, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label26 ----
+		label26.setText("Magnitud");
+		add(label26, new GridConstraints(30, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- magMEd ----
+		magMEd.setEditable(false);
+		add(magMEd, new GridConstraints(30, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- magDesv ----
+		magDesv.setEditable(false);
+		add(magDesv, new GridConstraints(30, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- magVar ----
+		magVar.setEditable(false);
+		add(magVar, new GridConstraints(30, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- magMax ----
+		magMax.setEditable(false);
+		add(magMax, new GridConstraints(30, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- magMin ----
+		magMin.setEditable(false);
+		add(magMin, new GridConstraints(30, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label25 ----
+		label25.setText("Movimiento AR");
+		add(label25, new GridConstraints(31, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movArMed ----
+		movArMed.setEditable(false);
+		add(movArMed, new GridConstraints(31, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movArDesv ----
+		movArDesv.setEditable(false);
+		add(movArDesv, new GridConstraints(31, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movArVar ----
+		movArVar.setEditable(false);
+		add(movArVar, new GridConstraints(31, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movArMax ----
+		movArMax.setEditable(false);
+		add(movArMax, new GridConstraints(31, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movArMin ----
+		movArMin.setEditable(false);
+		add(movArMin, new GridConstraints(31, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label27 ----
+		label27.setText("Movimiento DEC");
+		add(label27, new GridConstraints(32, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movDecMed ----
+		movDecMed.setEditable(false);
+		add(movDecMed, new GridConstraints(32, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movDecDes ----
+		movDecDes.setEditable(false);
+		add(movDecDes, new GridConstraints(32, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movDecVar ----
+		movDecVar.setEditable(false);
+		add(movDecVar, new GridConstraints(32, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movDecMax ----
+		movDecMax.setEditable(false);
+		add(movDecMax, new GridConstraints(32, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- movDecMin ----
+		movDecMin.setEditable(false);
+		add(movDecMin, new GridConstraints(32, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label28 ----
+		label28.setText("\u00c1ngulo");
+		add(label28, new GridConstraints(33, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- angMed ----
+		angMed.setEditable(false);
+		add(angMed, new GridConstraints(33, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- angDesv ----
+		angDesv.setEditable(false);
+		add(angDesv, new GridConstraints(33, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- angVar ----
+		angVar.setEditable(false);
+		add(angVar, new GridConstraints(33, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- angMax ----
+		angMax.setEditable(false);
+		add(angMax, new GridConstraints(33, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- angMin ----
+		angMin.setEditable(false);
+		add(angMin, new GridConstraints(33, 5, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(separator2, new GridConstraints(34, 0, 1, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+
+		//---- label10 ----
 		label10.setText("GENERACI\u00d3N DE TAREAS");
-		add(label10,
-				new GridConstraints(29, 0, 1, 6, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label10, new GridConstraints(35, 0, 1, 6,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label17 ----
+		//---- label17 ----
 		label17.setText("Alias");
-		add(label17,
-				new GridConstraints(31, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(aliasTarea,
-				new GridConstraints(31, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label17, new GridConstraints(37, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(aliasTarea, new GridConstraints(37, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label18 ----
+		//---- label18 ----
 		label18.setText("Ruta");
-		add(label18,
-				new GridConstraints(31, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		add(rutaTarea,
-				new GridConstraints(31, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label18, new GridConstraints(37, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		add(rutaTarea, new GridConstraints(37, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- selRuta ----
+		//---- selRuta ----
 		selRuta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selRutaActionPerformed(e);
 			}
 		});
-		add(selRuta,
-				new GridConstraints(31, 4, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(selRuta, new GridConstraints(37, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- label19 ----
+		//---- label19 ----
 		label19.setText("SURVEYS");
-		add(label19,
-				new GridConstraints(32, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(label19, new GridConstraints(38, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- listSurvey ----
+		//---- listSurvey ----
 		listSurvey.setVisibleRowCount(5);
 		listSurvey.setFont(new Font("Arial", Font.PLAIN, 11));
 		listSurvey.setSelectedIndex(0);
 		listSurvey.setBorder(new BevelBorder(BevelBorder.LOWERED));
-		add(listSurvey,
-				new GridConstraints(32, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_HORIZONTAL,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
+		add(listSurvey, new GridConstraints(38, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
-		// ---- button2 ----
+		//---- button2 ----
 		button2.setText("Generar Tarea");
 		button2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				generarTareaAction(e);
 			}
 		});
-		add(button2,
-				new GridConstraints(33, 2, 1, 2, GridConstraints.ANCHOR_CENTER,
-						GridConstraints.FILL_NONE,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW,
-						GridConstraints.SIZEPOLICY_CAN_SHRINK
-								| GridConstraints.SIZEPOLICY_CAN_GROW, null,
-						null, null));
-		// JFormDesigner - End of component initialization
+		add(button2, new GridConstraints(39, 2, 1, 2,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 		// //GEN-END:initComponents
 	}
 
@@ -979,6 +1177,41 @@ public class ConsultarCatalogo extends JPanel {
 	private JTable table1;
 	private JSeparator separator1;
 	private JLabel label11;
+	private JLabel label29;
+	private JLabel label30;
+	private JLabel label31;
+	private JLabel label32;
+	private JLabel label33;
+	private JLabel label24;
+	private JTextField distMEd;
+	private JTextField distDes;
+	private JTextField distVar;
+	private JTextField distMax;
+	private JTextField distMin;
+	private JLabel label26;
+	private JTextField magMEd;
+	private JTextField magDesv;
+	private JTextField magVar;
+	private JTextField magMax;
+	private JTextField magMin;
+	private JLabel label25;
+	private JTextField movArMed;
+	private JTextField movArDesv;
+	private JTextField movArVar;
+	private JTextField movArMax;
+	private JTextField movArMin;
+	private JLabel label27;
+	private JTextField movDecMed;
+	private JTextField movDecDes;
+	private JTextField movDecVar;
+	private JTextField movDecMax;
+	private JTextField movDecMin;
+	private JLabel label28;
+	private JTextField angMed;
+	private JTextField angDesv;
+	private JTextField angVar;
+	private JTextField angMax;
+	private JTextField angMin;
 	private JSeparator separator2;
 	private JLabel label10;
 	private JLabel label17;
