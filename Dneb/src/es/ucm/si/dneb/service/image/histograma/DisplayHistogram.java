@@ -46,12 +46,12 @@ public class DisplayHistogram extends JComponent implements MouseMotionListener
   // Some data and hints for the histogram plot.
   private int[] counts;
   private double maxCount; 
-  private int indexMultiplier = 1;
-  private int skipIndexes = 8;
+  private int indexMultiplier = 12;
+  private int skipIndexes = 20;
   // The components' dimensions.
   private int width,height=250;
   // Some constants for this component.
-  private int verticalTicks = 10;
+  private int verticalTicks = 1;
   private Insets border = new Insets(40,70,40,30);
   private int binWidth = 3;
   private Color backgroundColor = Color.BLACK;
