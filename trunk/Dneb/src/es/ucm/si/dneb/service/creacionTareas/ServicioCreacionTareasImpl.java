@@ -267,13 +267,13 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearTarea(List<String> selectedSurveys,String alias, String ruta,List<DoubleStarCatalog> dscs) {
-		// TODO Auto-generated method stub
+		// TODO Ajustar el tamaño de la imagen según la distancia
 		Tarea tarea = new Tarea();
 
 		tarea.setActiva(false);
 		tarea.setAlias(alias);
-		tarea.setAlto(4);
-		tarea.setAncho(4);
+		tarea.setAlto(6);
+		tarea.setAncho(6);
 		tarea.setArFinal("0");
 		tarea.setArInicial("0");
 		tarea.setDecFinal("0");
