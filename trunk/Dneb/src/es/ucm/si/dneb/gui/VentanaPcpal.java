@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.renderable.ParameterBlock;
 
+import javax.media.jai.Histogram;
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.swing.*;
 
 import es.ucm.si.dneb.service.image.app.ImageRegionApp;
+import es.ucm.si.dneb.service.image.histograma.DisplayHistogramApp;
 
 
 public class VentanaPcpal extends JFrame{
@@ -99,6 +101,8 @@ public class VentanaPcpal extends JFrame{
 		
 		this.distancias.setIcon(new ImageIcon("images/distance.jpg"));
 		this.conversor.setIcon(new ImageIcon("images/Converter_icon.jpg"));
+		
+		this.histograma.setIcon(new ImageIcon("images/graph-icon.jpg"));
 		
 		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
@@ -308,6 +312,30 @@ public class VentanaPcpal extends JFrame{
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
+	private void histogramaActionPerformed(ActionEvent e) {
+		
+		  PlanarImage image = JAI.create("fileload", "kk.png");
+		    ParameterBlock pb = new ParameterBlock();
+		    pb.addSource(image);
+		    pb.add(null); // The ROI.
+		    pb.add(1); // Samplings.
+		    pb.add(1);
+		    pb.add(new int[]{5000}); // Num. bins.
+		    pb.add(new double[]{0}); // Min value to be considered.
+		    pb.add(new double[]{60000}); // Max value to be considered.
+		    // Creates the histogram.
+		    PlanarImage temp = JAI.create("histogram", pb);
+		    Histogram h = (Histogram)temp.getProperty("histogram");
+		    DisplayHistogramApp visu= new DisplayHistogramApp("kk.png",h);
+		    
+		    
+		    pane.add("VISUALIZADOR DEBUG",visu);
+		    this.initTabComponent(pane.getTabCount()-1);
+		    pane.setSelectedIndex(pane.getTabCount()-1);
+		    
+		
+	}
+
 	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -335,6 +363,7 @@ public class VentanaPcpal extends JFrame{
 		consultarCatalogo = new JMenuItem();
 		conversor = new JMenuItem();
 		distancias = new JMenuItem();
+		histograma = new JMenuItem();
 		menu7 = new JMenu();
 		importInfo = new JMenuItem();
 		formaCoord = new JMenuItem();
@@ -345,7 +374,6 @@ public class VentanaPcpal extends JFrame{
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
 		
-
 		//======== menuBar1 ========
 		{
 
@@ -547,6 +575,15 @@ public class VentanaPcpal extends JFrame{
 					}
 				});
 				menu5.add(distancias);
+
+				//---- histograma ----
+				histograma.setText("HISTOGRAMA");
+				histograma.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						histogramaActionPerformed(e);
+					}
+				});
+				menu5.add(histograma);
 			}
 			menuBar1.add(menu5);
 
@@ -642,6 +679,7 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem consultarCatalogo;
 	private JMenuItem conversor;
 	private JMenuItem distancias;
+	private JMenuItem histograma;
 	private JMenu menu7;
 	private JMenuItem importInfo;
 	private JMenuItem formaCoord;
