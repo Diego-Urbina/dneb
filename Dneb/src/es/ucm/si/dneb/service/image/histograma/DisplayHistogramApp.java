@@ -22,11 +22,12 @@ import javax.media.jai.Histogram;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * This class uses the DisplayHistogram component in an application.
  */
-public class DisplayHistogramApp extends JFrame 
+public class DisplayHistogramApp extends JPanel 
   {
   private DisplayHistogram dh; // an instance of the DisplayHistogram component
 
@@ -36,15 +37,14 @@ public class DisplayHistogramApp extends JFrame
   */
   public DisplayHistogramApp(String name,Histogram histo)
     {
-    setTitle("Histogram of "+name);
-    getContentPane().setLayout(new BorderLayout());
-    // Add to this ContentPane an instance of DisplayHistogram, which will
-    // contain the histogram plot.
-    dh = new DisplayHistogram(histo,"Histogram of "+name);
-    getContentPane().add(dh,BorderLayout.CENTER);
-    // Set the closing operation so the application is finished.
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    pack(); // adjust the frame size using preferred dimensions.
+	  dh = new DisplayHistogram(histo,"Histogram of "+name);
+	  
+	  
+	  
+	  this.add(dh);
+	  
+	  dh.setVisible(true);
+
     setVisible(true); // show the frame.
     }
 
