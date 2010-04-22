@@ -39,7 +39,7 @@ public class DisplayHistogramApp extends JPanel
     {
 	  dh = new DisplayHistogram(histo,"Histogram of "+name);
 	  
-	  
+	 
 	  
 	  this.add(dh);
 	  

@@ -328,8 +328,9 @@ public class VentanaPcpal extends JFrame{
 		    Histogram h = (Histogram)temp.getProperty("histogram");
 		    DisplayHistogramApp visu= new DisplayHistogramApp("kk.png",h);
 		    
+		    JScrollPane sp= new JScrollPane(visu);
 		    
-		    pane.add("VISUALIZADOR DEBUG",visu);
+		    pane.add("VISUALIZADOR DEBUG",sp);
 		    this.initTabComponent(pane.getTabCount()-1);
 		    pane.setSelectedIndex(pane.getTabCount()-1);
 		    
