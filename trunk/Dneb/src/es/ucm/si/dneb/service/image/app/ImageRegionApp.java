@@ -18,8 +18,6 @@ import java.awt.image.Raster;
 import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
@@ -37,7 +35,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
@@ -45,9 +42,13 @@ import nom.tam.util.ArrayFuncs;
 import es.ucm.si.dneb.gui.VentanaPcpal;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
+import es.ucm.si.dneb.util.FiltreExtensible;
 
 
 public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
+	
+	private static final long serialVersionUID = -2623868602369156354L;
+	private static final int porcentajeZoom = 10;
 	
 	private JScrollPane jsp1, jsp2;
 	private JLabel labelPosicion;
@@ -60,7 +61,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private StarFinder sf1, sf2;
 	
 	private VentanaPcpal principal;
-	private int position, scale, porcentajeZoom;
+	private int position, scale;
 	
 	public ImageRegionApp(VentanaPcpal pcpal,int position) {
 		principal = pcpal;
@@ -80,7 +81,6 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		sf1 = new StarFinder();
 		sf2 = new StarFinder();
 		scale = 100;
-		porcentajeZoom = 10;
 		initComponents();
 		
 		parent.setSize(500, 650);
@@ -116,7 +116,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    add(jsp2, c);
 	    
 	    
-	    labelPosicion = new JLabel();
+	    labelPosicion = new JLabel("???");
 	    c.gridx = 0;
 	    c.gridy = 1;
 	    c.gridwidth = 3;
@@ -171,6 +171,16 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			}
 		});
 	    
+	    JButton buttonRestaurar = new JButton();
+	    icon = new ImageIcon("images/restaurar.gif");
+	    buttonRestaurar.setIcon(icon);
+	    buttonRestaurar.setToolTipText("Restaurar la imagen");
+	    buttonRestaurar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonRestaurarActionPerformed(e);
+			}
+		});
+	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
 	    textFieldUmbral = new JTextField("20000");
@@ -182,6 +192,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		           .addComponent(buttonAbrir)
 		           .addComponent(buttonZoomMas)
 		           .addComponent(buttonZoomMenos)
+		           .addComponent(buttonRestaurar)
 		           .addComponent(buttonBuscar)
 		           .addGap(20, 20, 20)
 		           .addGroup(layout.createSequentialGroup()
@@ -197,6 +208,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		      .addComponent(buttonAbrir)
 		      .addComponent(buttonZoomMas)
 		      .addComponent(buttonZoomMenos)
+		      .addComponent(buttonRestaurar)
 		      .addComponent(buttonBuscar)
 		      .addGap(20, 20, 20)
 		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -224,6 +236,20 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	    jsp2.getHorizontalScrollBar().addAdjustmentListener(this);
 	    // Vertical scroll bar of the second image.
 	    jsp2.getVerticalScrollBar().addAdjustmentListener(this);
+	}
+	
+	private void buttonRestaurarActionPerformed(ActionEvent e) {
+		scale = 100;
+		sf1.eliminarRecuadros();
+		sf2.eliminarRecuadros();
+		display1.deleteROIs();
+		display2.deleteROIs();
+		display1.set(input1);
+		display2.set(input2);
+		scaledIm1 = input1;
+		scaledIm2 = input2;
+		jsp1.repaint();
+		jsp2.repaint();
 	}
 	
 	private void buttonZoomMasActionPerformed(ActionEvent e) {
@@ -264,7 +290,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 				jsp1.repaint();
 				jsp2.repaint();
 			}
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void buttonZoomMenosActionPerformed(ActionEvent e) {
@@ -305,7 +333,9 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 				jsp1.repaint();
 				jsp2.repaint();
 			}
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void buttonAbrirActionPerformed(ActionEvent e) {
@@ -460,66 +490,4 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 
-
-	class FiltreExtensible extends FileFilter{
-		
-		   // descripción y extensiones aceptadas por el filtro
-		   private String description;
-		   private List<String> extensions;
-		 
-		   // constructor a partir de la descripción
-		   public FiltreExtensible(String description){
-		      this.description = description;
-		      this.extensions = new ArrayList<String>();
-		   }
-		 
-		   public String getDescription(){
-			  if (description == null)
-				  return "No description";
-			  
-		      StringBuffer buffer = new StringBuffer(description);
-		      buffer.append(" (");
-		      for(String extension : extensions){
-		         buffer.append(extension).append(" ");
-		      }
-		      return buffer.append(")").toString();
-		   }
-		 
-		   public void setDescription(String description){
-		      this.description = description;
-		   }
-		 
-		   public void addExtension(String extension){
-		      if(extension == null){
-		         throw new RuntimeException("La extensión no puede ser null.");
-		      }
-		      extensions.add(extension);
-		   }
-		 
-		   public void removeExtension(String extension){
-		      extensions.remove(extension);
-		   }
-		 
-		   public void clearExtensions(){
-		      extensions.clear();
-		   }
-		 
-		   public List<String> getExtensions(){
-		      return extensions;
-		   }
-		
-			@Override
-			public boolean accept(File file) {
-				if(file.isDirectory() || extensions.size()==0) { 
-			         return true; 
-			    } 
-			    String nombreFichero = file.getName().toLowerCase(); 
-			    for(String extension : extensions){
-			       if(nombreFichero.endsWith(extension)){
-			          return true;
-			       }
-			    }
-			    return false;
-			}
-	}
 }
