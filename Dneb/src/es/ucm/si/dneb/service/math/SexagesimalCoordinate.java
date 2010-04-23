@@ -85,8 +85,7 @@ public class SexagesimalCoordinate {
 	        + "arsec = " + this.arsec + TAB
 	        + "dech = " + this.dech + TAB
 	        + "decmin = " + this.decmin + TAB
-	        + "decsec = " + this.decsec + TAB
-	        + " )";
+	        + "decsec = " + this.decsec + " )";
 	
 	    return retValue;
 	}

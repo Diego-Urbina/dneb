@@ -46,8 +46,7 @@ public class DecimalCoordinate {
 	    retValue = "DecimalCoordinate ( "
 	        
 	        + "ar = " + this.ar + TAB
-	        + "dec = " + this.dec + TAB
-	        + " )";
+	        + "dec = " + this.dec + " )";
 	
 	    return retValue;
 	}
