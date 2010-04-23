@@ -384,6 +384,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 			if (umbral <= 0 || brilloEstrella <= 0)
 				throw new Exception("Los parámetros deben ser mayores que 0");
 			
+			scale = 100;
 			sf1.eliminarRecuadros();
 			sf2.eliminarRecuadros();
 			
