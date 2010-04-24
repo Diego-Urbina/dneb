@@ -21,6 +21,7 @@ import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.media.jai.InterpolationNearest;
@@ -47,6 +48,7 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
+import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
@@ -58,6 +60,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	private static final int porcentajeZoom = 10;
 	
 	private int scale;
+	private List<Point> listaPuntos;
 	
 	private JLabel infoPixelLabel, dLabel, sLabel;
 	private JScrollPane jsp;
@@ -74,6 +77,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		servicioGestionTareas =(ServicioGestionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioGestionTareas");
 		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
 		scale = 100;
+		listaPuntos = null;
 		initComponents();
 	}
 	
@@ -154,7 +158,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	    JButton buttonProcesar = new JButton();
 	    buttonProcesar.setIcon(new ImageIcon("images/buscar.gif"));
 	    buttonProcesar.setToolTipText("Procesar puntos en la imagen");
-	    buttonRestaurar.addActionListener(new ActionListener() {
+	    buttonProcesar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonProcesarActionPerformed(e);
 			}
@@ -196,21 +200,22 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				throw new Exception("Debe cargar primero una imagen");
 			
 			// obtengo la lista de puntos
-			List<Point> listaPuntos = new ArrayList<Point>();
+			listaPuntos = new ArrayList<Point>();
 			listaPuntos.add(new Point(50, 60));
 			listaPuntos.add(new Point(100, 60));
 			listaPuntos.add(new Point(30, 10));
 			
+			scale = 100;
 			display.deleteROIs();
+			scaledIm = input;
 			display.set(input);
 			for (Point p : listaPuntos) {
-				Shape s = new Ellipse2D.Float((float) p.getX(), (float) p.getY(), 10.0f, 10.0f);
+				Shape s = new Ellipse2D.Float((float) p.getX(), (float) p.getY(), 10.0f * (scale / 100), 10.0f * (scale / 100));
 			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
 			    ir.setBorderColor(new Color(255,0,0));
-			    display.set(scaledIm);
 			    display.addImageRegion(ir);
 			}
-			display.repaint();
+			jsp.repaint();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -218,10 +223,11 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	
 	private void buttonRestaurarActionPerformed(ActionEvent e) {
 		scale = 100;
+		listaPuntos = null;
 		display.deleteROIs();
 		scaledIm = input;
-		display.set(scaledIm);
-		display.repaint();
+		display.set(input);
+		jsp.repaint();
 	}
 
 	private void buttonZoomMasActionPerformed(ActionEvent e) {
@@ -242,6 +248,10 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				pb.add(in);
 				scaledIm = JAI.create("scale", pb);
 				display.set(scaledIm);
+				
+				display.deleteROIs();
+				escalarYTrasladarCirculos();
+				jsp.repaint();
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -266,6 +276,10 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				pb.add(in);
 				scaledIm = JAI.create("scale", pb);
 				display.set(scaledIm);
+				
+				display.deleteROIs();
+				escalarYTrasladarCirculos();
+				jsp.repaint();
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -287,6 +301,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				File dir = new File("Temp");
 				dir.mkdir();
 				
+				scale = 100;
+				listaPuntos = null;
+				
 				Fits imagenFITS = new Fits(new File(file));
 				BasicHDU imageHDU = imagenFITS.getHDU(0);
 				l = new LectorImageHDU(imageHDU, file);
@@ -295,7 +312,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				input = JAI.create("fileload", "Temp/im3.png");
 				scaledIm = input;
 				
-				display = new DisplayImageWithRegions(scaledIm);
+				display = new DisplayImageWithRegions(input);
 				display.addMouseMotionListener(this);
 			    display.addMouseListener(this);
 				jsp.setViewportView(display);
@@ -320,6 +337,19 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		tiledImage.setData(raster);
 		
 		return tiledImage;
+	}
+	
+	private void escalarYTrasladarCirculos() {
+		if (listaPuntos == null)
+			return;
+		
+		for (Point p : listaPuntos) {
+			Shape s = new Ellipse2D.Float((float) p.getX() * (scale / 100.0f), (float) p.getY() * (scale / 100.0f),
+					10.0f * (scale / 100.0f), 10.0f * (scale / 100.0f));
+		    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
+		    ir.setBorderColor(new Color(255,0,0));
+		    display.addImageRegion(ir);
+		}
 	}
 	
 	@Override
