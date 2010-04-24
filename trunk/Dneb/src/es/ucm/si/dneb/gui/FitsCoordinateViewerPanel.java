@@ -2,6 +2,7 @@
 package es.ucm.si.dneb.gui;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Shape;
@@ -11,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
@@ -18,6 +20,7 @@ import java.awt.image.Raster;
 import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.media.jai.InterpolationNearest;
@@ -57,16 +60,20 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	private static final int porcentajeZoom = 10;
 	
 	private int scale;
+	private boolean calculoDistancia, estado;
 	private List<Point> listaPuntos;
+	private String file;
+	private java.awt.Point pIni;
 	
 	private JLabel infoPixelLabel, dLabel, sLabel;
+	private JButton buttonDistancia;
 	private JScrollPane jsp;
-	private String file;
 	
 	private LectorImageHDU l;
 	private PlanarImage input, im, scaledIm;
 	private DisplayImageWithRegions display;
 	private Imagen imagen;
+	private DecimalCoordinate dc;
 	
 	private ServicioGestionTareas servicioGestionTareas;
 	private ServiceBusquedaDobles serviceBusquedaDobles;
@@ -76,6 +83,8 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
 		scale = 100;
 		listaPuntos = null;
+		calculoDistancia = false;
+		estado = false;
 		initComponents();
 	}
 	
@@ -161,6 +170,15 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				buttonProcesarActionPerformed(e);
 			}
 		});
+	    
+	    buttonDistancia = new JButton();
+	    buttonDistancia.setIcon(new ImageIcon("images/distance_icon.gif"));
+	    buttonDistancia.setToolTipText("Medir distancia entre dos puntos en la imagen");
+	    buttonDistancia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonDistanciaActionPerformed(e);
+			}
+		});
 		
 		layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
@@ -169,7 +187,8 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			      .addComponent(buttonZoomMas)
 			      .addComponent(buttonZoomMenos)
 			      .addComponent(buttonRestaurar)
-			      .addComponent(buttonProcesar))
+			      .addComponent(buttonProcesar)
+			      .addComponent(buttonDistancia))
 		);
 	    
 		layout.setVerticalGroup(
@@ -179,6 +198,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		      .addComponent(buttonZoomMenos)
 		      .addComponent(buttonRestaurar)
 		      .addComponent(buttonProcesar)
+		      .addComponent(buttonDistancia)
 		);
 		
 	    c.gridx = 1;
@@ -192,6 +212,29 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		setVisible(true);
 	}
 	
+	private void buttonDistanciaActionPerformed(ActionEvent e) {
+		try {
+			if (l == null)
+				throw new Exception("Debe cargar primero una imagen");
+			
+			calculoDistancia = !calculoDistancia;
+			
+			if (!calculoDistancia)
+				buttonDistancia.setIcon(new ImageIcon("images/distance_icon.gif"));
+			else
+				buttonDistancia.setIcon(new ImageIcon("images/stop_icon.gif"));
+			
+			scale = 100;
+			display.deleteROIs();
+			scaledIm = input;
+			display.set(input);
+			jsp.repaint();
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 	private void buttonProcesarActionPerformed(ActionEvent e) {
 		try {
 			if (l == null)
@@ -199,7 +242,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			
 			ServiceCalculoPosicion serviceCalculoPosicion= (ServiceCalculoPosicion) ContextoAplicacion.getApplicationContext().getBean("serviceCalculoPosicion");
 			
-			listaPuntos = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
+			//listaPuntos = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
+			listaPuntos = new ArrayList<Point>();
+			listaPuntos.add(new Point(20., 40.));
 			
 			scale = 100;
 			display.deleteROIs();
@@ -207,8 +252,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			display.set(input);
 			
 			for(Point punt : listaPuntos){
-				listaPuntos.add(punt);
-				Shape s = new Ellipse2D.Float(punt.getX().floatValue(), punt.getY().floatValue(), 10.0f * (scale / 100), 10.0f * (scale / 100));
+				Shape s = new Ellipse2D.Float(punt.getX().floatValue() - 5.0f, punt.getY().floatValue() - 5.0f, 10.0f, 10.0f);
 			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
 			    ir.setBorderColor(new Color(255,0,0));
 			    display.addImageRegion(ir);
@@ -352,14 +396,18 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		DecimalCoordinate dc = null;
+		SexagesimalCoordinate sc = null;
 		
-		DecimalCoordinate dc = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
-		SexagesimalCoordinate sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
+		if (scale == 100) {
+			dc = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
+			sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
+		}
 		
 		String pos = "(" + e.getX() + "," + e.getY() + ") ";
 		String s1 = "", s2 = "";
 		
-		if (e.getX() < scaledIm.getWidth() && e.getY() < scaledIm.getHeight()) {
+		if (scale == 100 && e.getX() < scaledIm.getWidth() && e.getY() < scaledIm.getHeight()) {
 			s1 = dc.toString();
 			s2 = sc.toString();
 		}
@@ -374,7 +422,42 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, e.getX() + " " + e.getY());
+		if (calculoDistancia) {
+			if (e.getX() >= scaledIm.getWidth() || e.getY() >= scaledIm.getHeight()) {
+				JOptionPane.showMessageDialog(null, "Elegir un punto dentro de la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+				estado = false;
+				pIni = null;
+				return;
+			}
+			
+			estado = !estado;
+			
+			if (estado) {
+				dc = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
+				pIni = new java.awt.Point(e.getX(), e.getY());
+				
+				display.deleteROIs();
+				jsp.repaint();
+				
+				Shape s = new Ellipse2D.Float(e.getX() - 5.0f, e.getY() - 5.0f, 10.0f, 10.0f);
+			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
+			    ir.setBorderColor(new Color(0,255,0));
+			    display.addImageRegion(ir);
+				jsp.repaint();
+			} else {
+				DecimalCoordinate dcAux = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
+				
+				// Calcular distancia entre dc y dcAux
+				
+				
+				Shape s = new Ellipse2D.Float(e.getX() - 5.0f, e.getY() - 5.0f, 10.0f, 10.0f);
+			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
+			    ir.setBorderColor(new Color(0,255,0));
+			    display.addImageRegion(ir);
+			    jsp.repaint();
+				JOptionPane.showMessageDialog(null, "La distancia entre los dos puntos es ", "Distancia", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 
 	@Override
