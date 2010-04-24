@@ -4,8 +4,6 @@ package es.ucm.si.dneb.gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +18,6 @@ import java.awt.image.Raster;
 import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.media.jai.InterpolationNearest;
@@ -49,7 +45,7 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
-import es.ucm.si.dneb.service.image.segmentation.RectStar;
+import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
@@ -201,32 +197,18 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			if (l == null)
 				throw new Exception("Debe cargar primero una imagen");
 			
-			
-			
-			
 			ServiceCalculoPosicion serviceCalculoPosicion= (ServiceCalculoPosicion) ContextoAplicacion.getApplicationContext().getBean("serviceCalculoPosicion");
 			
-		
-			
-			List<es.ucm.si.dneb.service.image.util.Point> listaPuntis = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
-			
-			// obtengo la lista de puntos
-			listaPuntos = new ArrayList<Point>();
-			
-			for(es.ucm.si.dneb.service.image.util.Point punt:listaPuntis){
-				listaPuntos.add(new Point(punt.getX().intValue(), punt.getY().intValue()));
-			}
-			
-			
-		
-			
+			listaPuntos = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
 			
 			scale = 100;
 			display.deleteROIs();
 			scaledIm = input;
 			display.set(input);
-			for (Point p : listaPuntos) {
-				Shape s = new Ellipse2D.Float((float) p.getX(), (float) p.getY(), 10.0f * (scale / 100), 10.0f * (scale / 100));
+			
+			for(Point punt : listaPuntos){
+				listaPuntos.add(punt);
+				Shape s = new Ellipse2D.Float(punt.getX().floatValue(), punt.getY().floatValue(), 10.0f * (scale / 100), 10.0f * (scale / 100));
 			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
 			    ir.setBorderColor(new Color(255,0,0));
 			    display.addImageRegion(ir);
@@ -348,7 +330,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
 		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l.getWidth(), l.getHeight(), 1);
 		ColorModel cm = PlanarImage.createColorModel(sm);
-		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new Point(0,0));
+		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new java.awt.Point(0,0));
 		TiledImage tiledImage = new TiledImage(0,0,l.getWidth(),l.getHeight(),0,0,sm,cm);
 		tiledImage.setData(raster);
 		
@@ -360,7 +342,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			return;
 		
 		for (Point p : listaPuntos) {
-			Shape s = new Ellipse2D.Float((float) p.getX() * (scale / 100.0f), (float) p.getY() * (scale / 100.0f),
+			Shape s = new Ellipse2D.Float(p.getX().floatValue() * (scale / 100.0f), p.getY().floatValue() * (scale / 100.0f),
 					10.0f * (scale / 100.0f), 10.0f * (scale / 100.0f));
 		    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
 		    ir.setBorderColor(new Color(255,0,0));
@@ -391,16 +373,18 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	public void mouseDragged(MouseEvent e) {}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {}
+	public void mouseClicked(MouseEvent e) {
+		JOptionPane.showMessageDialog(null, e.getX() + " " + e.getY());
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {}
