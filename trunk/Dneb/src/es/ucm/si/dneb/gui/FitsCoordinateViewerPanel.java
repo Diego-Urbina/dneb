@@ -44,6 +44,7 @@ import nom.tam.fits.Fits;
 import nom.tam.util.ArrayFuncs;
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
+import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicion;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
@@ -64,6 +65,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	
 	private JLabel infoPixelLabel, dLabel, sLabel;
 	private JScrollPane jsp;
+	private String file;
 	
 	private LectorImageHDU l;
 	private PlanarImage input, im, scaledIm;
@@ -199,11 +201,25 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			if (l == null)
 				throw new Exception("Debe cargar primero una imagen");
 			
+			
+			
+			
+			ServiceCalculoPosicion serviceCalculoPosicion= (ServiceCalculoPosicion) ContextoAplicacion.getApplicationContext().getBean("serviceCalculoPosicion");
+			
+		
+			
+			List<es.ucm.si.dneb.service.image.util.Point> listaPuntis = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
+			
 			// obtengo la lista de puntos
 			listaPuntos = new ArrayList<Point>();
-			listaPuntos.add(new Point(50, 60));
-			listaPuntos.add(new Point(100, 60));
-			listaPuntos.add(new Point(30, 10));
+			
+			for(es.ucm.si.dneb.service.image.util.Point punt:listaPuntis){
+				listaPuntos.add(new Point(punt.getX().intValue(), punt.getY().intValue()));
+			}
+			
+			
+		
+			
 			
 			scale = 100;
 			display.deleteROIs();
@@ -293,7 +309,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		JFileChooser fc = new JFileChooser(".");
 		fc.addChoosableFileFilter(filtre);
 		
-		String file;
+		
 		int retval = fc.showOpenDialog(this);
 		try {
 			if (retval == JFileChooser.APPROVE_OPTION) {
