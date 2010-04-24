@@ -50,6 +50,36 @@ public class DecimalCoordinate {
 	
 	    return retValue;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(ar);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(dec);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DecimalCoordinate other = (DecimalCoordinate) obj;
+		if (Double.doubleToLongBits(ar) != Double.doubleToLongBits(other.ar))
+			return false;
+		if (Double.doubleToLongBits(dec) != Double.doubleToLongBits(other.dec))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 	
