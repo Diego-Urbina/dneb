@@ -245,7 +245,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			
 		
 			
-			List<es.ucm.si.dneb.service.image.util.Point> listaPuntis = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
+			List<es.ucm.si.dneb.service.image.util.Point> listaPuntis = serviceCalculoPosicion.algotirmoCalculoPosicion( 30000,  20000 ,imagen);
 			
 			// obtengo la lista de puntos
 			listaPuntos = new ArrayList<Point>();
