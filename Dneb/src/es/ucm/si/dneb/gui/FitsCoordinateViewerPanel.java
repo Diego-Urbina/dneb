@@ -240,11 +240,19 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			if (l == null)
 				throw new Exception("Debe cargar primero una imagen");
 			
+
 			ServiceCalculoPosicion serviceCalculoPosicion= (ServiceCalculoPosicion) ContextoAplicacion.getApplicationContext().getBean("serviceCalculoPosicion");
 			
-			//listaPuntos = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
+		
+			
+			List<es.ucm.si.dneb.service.image.util.Point> listaPuntis = serviceCalculoPosicion.calcularPosicion(imagen, 30000, 20000);
+			
+			// obtengo la lista de puntos
 			listaPuntos = new ArrayList<Point>();
-			listaPuntos.add(new Point(20., 40.));
+			
+			for(es.ucm.si.dneb.service.image.util.Point punt:listaPuntis){
+				listaPuntos.add(new Point(punt.getX().intValue(), punt.getY().intValue()));
+			}
 			
 			scale = 100;
 			display.deleteROIs();
