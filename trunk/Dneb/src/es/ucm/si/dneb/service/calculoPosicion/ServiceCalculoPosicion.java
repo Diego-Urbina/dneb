@@ -10,7 +10,8 @@ public interface ServiceCalculoPosicion {
 	
 	public void calcularPosicion(ProcImagen pi);
 	
-	public List<Point> calcularPosicion(Imagen imagen,double brillo, double umbral);
+	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,
+			Imagen imagen);
 	
 
 
