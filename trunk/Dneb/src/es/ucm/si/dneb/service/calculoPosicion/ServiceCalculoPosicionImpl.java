@@ -57,8 +57,6 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 	@Resource
 	private ServiceBusquedaDobles serviceBusquedaDobles;
 
-	
-	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void calcularPosicion(ProcImagen pi) {
 
@@ -98,18 +96,16 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		// Busco los datos de la estrella binaria a buscar
 
 		Imagen imagen = pi.getImagen();
-		
-		
+
 		algotirmoCalculoPosicion(brillo, umbral, imagen);
 
 	}
-	
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,
 			Imagen imagen) {
-		
-		
+
 		ArrayList<Point> points = new ArrayList<Point>();
 		/*
 		 * MARGEN PARA PODER HACER CONSULTAS SOBRE DOUBLES EN BASE DE DATOS YA
@@ -150,11 +146,24 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		try {
 
 			/* TODO ALGORITMO PARA PROBAR LA CERCANÍA DE DOS ESTRELLAS */
-			/*
-			 * if(dsc.getLastSeparation()){
-			 * 
-			 * }
+
+			int limSep = 1;
+			int tipoAjuste = 0;
+
+			/**
+			 * Ajuste 0= Se reduce continuamente el umbral para encontrar las
+			 * estrellas Ajuste 1= si se considera que pueden estar pegadas se
+			 * aumentan brillo y umbral hasta encontrar las estrellas deseadas
+			 * Ajuste 2= Si la separación es muy grande es un problema porque el
+			 * rango es amplio y hay demasaidos datos, falsos positivos,
+			 * considerar como arreglarlos.
 			 */
+
+			if (dsc.getLastSeparation() <= limSep) {
+
+				tipoAjuste = 1;
+
+			}
 
 			imagenFITS = new Fits(new File(filename1));
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
@@ -169,6 +178,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						.info("SE PROCEDE A EJECUTAR EL ALGORITMO CON LOS SIGUIENTES PARÁMETROS: BRILLO: "
 								+ brillo + "UMBRAL: " + umbral);
 
+				sf = new StarFinder();
 				sf.buscarEstrellas(l, new Float(brillo), new Float(umbral));
 				LOG.info("Numero de estrellas encontradas: "
 						+ sf.getNumberOfStars());
@@ -191,10 +201,10 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 					cent.setX(recStars.get(i).getxLeft() + cent.getX());
 					cent.setY(recStars.get(i).getyTop() + cent.getY());
 
-					LOG.info("\r\n\r\nCentroide " + i
+					LOG.debug("\r\n\r\nCentroide " + i
 							+ " de la imagen 1:\r\n\tX: " + cent.getX()
 							+ "\r\n\tY: " + cent.getY());
-					LOG.info("\r\n\r\nRectángulo " + i
+					LOG.debug("\r\n\r\nRectángulo " + i
 							+ " de la imagen 1:\r\n\txLeft: "
 							+ recStars.get(i).getxLeft() + "\r\n\txRight: "
 							+ recStars.get(i).getxRight() + "\r\n\tyTop: "
@@ -241,7 +251,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						distanceAux.setPoint1(dc1);
 						distanceAux.setPoint2(dc2);
 
-						LOG.info("DISTANCE INFO: " + distanceAux.toString());
+						LOG.debug("DISTANCE INFO: " + distanceAux.toString());
 
 						distancesList.add(distanceAux);
 					}
@@ -282,7 +292,6 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 								TipoInformacionRelevante.class, 2L));
 
 						manager.persist(ir);
-						
 
 						points.add(dcToPoint.get(dist.getPoint1()));
 						points.add(dcToPoint.get(dist.getPoint2()));
@@ -291,14 +300,25 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 					}
 
 				}
-				if (umbral < brillo) {
-					brillo = brillo - (brillo * 0.04);
 
-					LOG
-							.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
-									+ brillo + "UMBRAL: " + umbral);
+				if (tipoAjuste == 0) {
+					if (umbral < brillo) {
+						brillo = brillo - (brillo * 0.04);
+
+						LOG
+								.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
+										+ brillo + "UMBRAL: " + umbral);
+					} else {
+						sinRelevantes = false;
+					}
 				} else {
-					sinRelevantes = false;
+
+					if (tipoAjuste == 1 && brillo < 100000) {
+						brillo = brillo + 2000;
+						umbral = umbral + 2000;
+					} else {
+						sinRelevantes = false;
+					}
 				}
 
 			}
@@ -308,7 +328,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return points;
 	}
 
