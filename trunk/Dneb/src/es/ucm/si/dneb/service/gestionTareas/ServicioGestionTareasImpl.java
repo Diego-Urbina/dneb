@@ -94,7 +94,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 		double calParcial = (100 - ((pendientes*100) / (total)));
 		
-		LOG.info("EL PORCENTAJE de: " + tareaId +" "+calParcial  );
+		//LOG.info("EL PORCENTAJE de: " + tareaId +" "+calParcial  );
 		
 		return new Integer((int) calParcial);
 	}

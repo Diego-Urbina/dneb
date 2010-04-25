@@ -131,10 +131,10 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 					cent.setX(recStars.get(i).getxLeft() + cent.getX());
 					cent.setY(recStars.get(i).getyTop() + cent.getY());
 
-					LOG.info("\r\n\r\nCentroide " + i
+					LOG.debug("\r\n\r\nCentroide " + i
 							+ " de la imagen 1:\r\n\tX: " + cent.getX()
 							+ "\r\n\tY: " + cent.getY());
-					LOG.info("\r\n\r\nRectángulo " + i
+					LOG.debug("\r\n\r\nRectángulo " + i
 							+ " de la imagen 1:\r\n\txLeft: "
 							+ recStars.get(i).getxLeft() + "\r\n\txRight: "
 							+ recStars.get(i).getxRight() + "\r\n\tyTop: "
@@ -155,14 +155,14 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 				ArrayList<DecimalCoordinate> centroidesDC = new ArrayList<DecimalCoordinate>();
 
 				for (Point pointIter : centroides) {
-					LOG.info("ANCHO: " + l.getWidth() + " ALTO: "
+					LOG.debug("ANCHO: " + l.getWidth() + " ALTO: "
 							+ l.getHeight() + " X: " + pointIter.getX()
 							+ " Y: " + pointIter.getY());
 					DecimalCoordinate dc = serviceBusquedaDobles
 							.pixelToCoordinatesConverter(imagen, l.getWidth(),
 									l.getHeight(), pointIter.getX(), pointIter
 											.getY());
-					LOG.info("AR: " + dc.getAr() + " DEC: " + dc.getDec());
+					LOG.debug("AR: " + dc.getAr() + " DEC: " + dc.getDec());
 					centroidesDC.add(dc);
 					
 					dcToPoint.put(dc, pointIter);
@@ -182,7 +182,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						distanceAux.setPoint1(dc1);
 						distanceAux.setPoint2(dc2);
 
-						LOG.info("DISTANCE INFO: " + distanceAux.toString());
+						LOG.debug("DISTANCE INFO: " + distanceAux.toString());
 
 						distancesList.add(distanceAux);
 					}
