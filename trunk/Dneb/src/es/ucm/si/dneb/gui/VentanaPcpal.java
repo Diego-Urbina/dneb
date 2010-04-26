@@ -314,19 +314,8 @@ public class VentanaPcpal extends JFrame{
 
 	private void histogramaActionPerformed(ActionEvent e) {
 		
-		  PlanarImage image = JAI.create("fileload", "kk.png");
-		    ParameterBlock pb = new ParameterBlock();
-		    pb.addSource(image);
-		    pb.add(null); // The ROI.
-		    pb.add(1); // Samplings.
-		    pb.add(1);
-		    pb.add(new int[]{5000}); // Num. bins.
-		    pb.add(new double[]{0}); // Min value to be considered.
-		    pb.add(new double[]{60000}); // Max value to be considered.
-		    // Creates the histogram.
-		    PlanarImage temp = JAI.create("histogram", pb);
-		    Histogram h = (Histogram)temp.getProperty("histogram");
-		    DisplayHistogramApp visu= new DisplayHistogramApp("kk.png",h);
+		  	
+		    DisplayHistogramApp visu= new DisplayHistogramApp();
 		    
 		    JScrollPane sp= new JScrollPane(visu);
 		    
