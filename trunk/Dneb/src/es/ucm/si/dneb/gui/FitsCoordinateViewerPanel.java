@@ -89,6 +89,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		calculoDistancia = false;
 		estado = false;
 		initComponents();
+		
+		mathService= (MathService) ContextoAplicacion.getApplicationContext().getBean("mathService");
+		
 	}
 	
 	private void initComponents() {
@@ -460,6 +463,8 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				
 				// Calcular distancia entre dc y dcAux
 				/*TODO*/
+				
+				
 				
 				//mathService.calculateDecimalDistance(ar1, dec1, ar2, dec2);
 				
