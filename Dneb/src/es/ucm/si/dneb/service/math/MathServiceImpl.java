@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import es.ucm.si.dneb.domain.Imagen;
+
 @Service("mathService")
 public class MathServiceImpl implements MathService{
 	
@@ -57,6 +59,47 @@ public class MathServiceImpl implements MathService{
 		
 		return Math.toDegrees(rad);
 	}
+	
+	
+	/**
+	 * width y height son el ancho y el alto de la imagen en pixeles.
+	 * x e y son las coordenadas que queremos transformar
+	 */
+	@Override
+	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y) {
+		SexagesimalCoordinate sc;
+		DecimalCoordinate dc;
+		
+		double ancho = imagen.getAncho();
+		double alto = imagen.getTarea().getAlto();
+		double ar = Double.parseDouble(imagen.getAscensionRecta());
+		double dec = Double.parseDouble(imagen.getDeclinacion());
+		
+		sc = new SexagesimalCoordinate(0,0,0,0,alto,0);
+		dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
+		double incX = width/2.0 - x;
+		double incY = y - height/2.0;
+		
+		double dec1 = dec + incY*(dc.getDec()/height);
+		double anchoAux = ancho/(15.0*Math.cos(Math.toRadians(dec1)));
+		sc = new SexagesimalCoordinate(0,anchoAux,0,0,0,0);
+		dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
+		double ar1 = ar + incX*(dc.getAr()/width);
+		
+		if (dec1 > 90) { // Cruzo el polo norte
+			dec1 = 180 - dec1;
+			ar1 = ar1 - 180;
+		}
+		if (dec1 < 0) { // Cruzo el polo sur
+			dec1 = Math.abs(dec1);
+			ar1 = ar1 - 180;
+		}
+		if (ar1 > 360) ar1 -= 360;
+		if (ar1 < 0) ar1 += 360;
+		
+		return new DecimalCoordinate(ar1, dec1);
+	} 
+
 
 	@Override
 	public double[][] transform(double[][] image, double scale,double rotation, double verticalTranslation,double horizontalTranslation) {

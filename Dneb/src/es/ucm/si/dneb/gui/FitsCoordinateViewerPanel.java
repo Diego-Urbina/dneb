@@ -51,6 +51,7 @@ import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.MathService;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.FiltreExtensible;
 
@@ -74,6 +75,8 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	private DisplayImageWithRegions display;
 	private Imagen imagen;
 	private DecimalCoordinate dc;
+	
+	private MathService mathService;
 	
 	private ServicioGestionTareas servicioGestionTareas;
 	private ServiceBusquedaDobles serviceBusquedaDobles;
@@ -456,7 +459,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				DecimalCoordinate dcAux = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
 				
 				// Calcular distancia entre dc y dcAux
+				/*TODO*/
 				
+				//mathService.calculateDecimalDistance(ar1, dec1, ar2, dec2);
 				
 				Shape s = new Ellipse2D.Float(e.getX() - 5.0f, e.getY() - 5.0f, 10.0f, 10.0f);
 			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
