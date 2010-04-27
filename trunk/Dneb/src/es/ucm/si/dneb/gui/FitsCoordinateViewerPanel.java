@@ -2,7 +2,6 @@
 package es.ucm.si.dneb.gui;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Shape;
@@ -12,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
@@ -51,6 +49,7 @@ import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.Distance;
 import es.ucm.si.dneb.service.math.MathService;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.FiltreExtensible;
@@ -462,18 +461,14 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				DecimalCoordinate dcAux = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
 				
 				// Calcular distancia entre dc y dcAux
-				/*TODO*/
-				
-				
-				
-				//mathService.calculateDecimalDistance(ar1, dec1, ar2, dec2);
+				Distance d = mathService.calculateDecimalDistance(dc.getAr(), dc.getDec(), dcAux.getAr(), dcAux.getDec());
 				
 				Shape s = new Ellipse2D.Float(e.getX() - 5.0f, e.getY() - 5.0f, 10.0f, 10.0f);
 			    ImageRegion ir = new ImageRegion(scaledIm,new ROIShape(s));
 			    ir.setBorderColor(new Color(0,255,0));
 			    display.addImageRegion(ir);
 			    jsp.repaint();
-				JOptionPane.showMessageDialog(null, "La distancia entre los dos puntos es ", "Distancia", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Distancia: " + d.getDistance() + "\n¡ngulo: " + d.getAngle(), "Distancia", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
