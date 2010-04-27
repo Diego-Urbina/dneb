@@ -439,7 +439,6 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			if (e.getX() >= scaledIm.getWidth() || e.getY() >= scaledIm.getHeight()) {
 				JOptionPane.showMessageDialog(null, "Elegir un punto dentro de la imagen", "Error", JOptionPane.ERROR_MESSAGE);
 				estado = false;
-				pIni = null;
 				return;
 			}
 			
@@ -447,7 +446,6 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			
 			if (estado) {
 				dc = serviceBusquedaDobles.pixelToCoordinatesConverter(imagen, im.getWidth(), im.getHeight(), e.getX(), e.getY());
-				pIni = new java.awt.Point(e.getX(), e.getY());
 				
 				display.deleteROIs();
 				jsp.repaint();
@@ -468,7 +466,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			    ir.setBorderColor(new Color(0,255,0));
 			    display.addImageRegion(ir);
 			    jsp.repaint();
-				JOptionPane.showMessageDialog(null, "Distancia: " + d.getDistance() + "\n¡ngulo: " + d.getAngle(), "Distancia", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Distancia: " + d.getDistance() + " arcosegundos" + "\n¡ngulo: " + d.getAngle() + " grados", "MediciÛn", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
