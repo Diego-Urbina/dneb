@@ -1,5 +1,10 @@
 package es.ucm.si.dneb.service.busquedaDobles;
 
+import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferInt;
+import java.awt.image.Raster;
+import java.awt.image.SampleModel;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -7,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.media.jai.PlanarImage;
+import javax.media.jai.RasterFactory;
+import javax.media.jai.TiledImage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.swing.JOptionPane;
@@ -14,6 +22,7 @@ import javax.swing.JOptionPane;
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
+import nom.tam.util.ArrayFuncs;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,7 +73,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		 */
 		
 		// Obtener nombre de ficheros y parametros configurables
-		String filename1 = procImgs.get(0).getImagen().getRutaFichero(), filename2 = procImgs.get(1).getImagen().getRutaFichero();
+		Imagen im1 = procImgs.get(0).getImagen(), im2 = procImgs.get(1).getImagen();
+		String filename1 = im1.getRutaFichero(), filename2 = im2.getRutaFichero();
 		List<ParamProcTarea> paramProcTareas = procImgs.get(0).getTareaProcesamiento().getParametros();
 		double brillo = 0, umbral = 0;
 		for (int i = 0; i < paramProcTareas.size(); i++) {
@@ -99,18 +109,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			ArrayList<RectStar> recuadros1, recuadros2;
 			int nRecuadros = Math.min(sf1.getNumberOfStars(), sf2.getNumberOfStars());
 			LectorImageHDU aux;
-			String numMinIm;
+			int numMinIm; // número de la imagen con el número mínimo de estrellas
 			if (nRecuadros == sf1.getNumberOfStars()) {
 				recuadros1 = sf1.getRecuadros();
 				recuadros2 = sf2.getRecuadros();
-				numMinIm = "imagen 1";
+				numMinIm = 1;
 			} else {
 				aux = l1;
 				l1 = l2;
 				l2 = aux;
 				recuadros1 = sf2.getRecuadros();
 				recuadros2 = sf1.getRecuadros();
-				numMinIm = "imagen 2";
+				numMinIm = 2;
 			}
 			
 			// Calcular los centroides de los recuadros de ambas imagenes
@@ -131,14 +141,14 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				cent2.setX(recuadros2.get(i).getxLeft() + cent2.getX());
 				cent2.setY(recuadros2.get(i).getyTop() + cent2.getY());
 				
-				bwc.write("\r\n\r\nCentroide " + i + " de la imagen 1:\r\n\tX: " + cent1.getX() + "\r\n\tY: " + cent1.getY());
-				bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 1:\r\n\txLeft: " + recuadros1.get(i).getxLeft()
+				bwc.write("\r\n\r\nCentroide " + i + " de la imagen " + numMinIm + ":\r\n\tX: " + cent1.getX() + "\r\n\tY: " + cent1.getY());
+				bwc.write("\r\n\r\nRectángulo " + i + " de la imagen " + numMinIm + ":\r\n\txLeft: " + recuadros1.get(i).getxLeft()
 						+ "\r\n\txRight: " + recuadros1.get(i).getxRight()
 						+ "\r\n\tyTop: " + recuadros1.get(i).getyTop()
 						+ "\r\n\tyBot: " + recuadros1.get(i).getyBot());
 				
-				bwc.write("\r\n\r\nCentroide " + i + " de la imagen 2:\r\n\tX: " + cent2.getX() + "\r\n\tY: " + cent2.getY());
-				bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 2:\r\n\txLeft: " + recuadros2.get(i).getxLeft()
+				bwc.write("\r\n\r\nCentroide " + i + " de la imagen " + (numMinIm%2)+1 + ":\r\n\tX: " + cent2.getX() + "\r\n\tY: " + cent2.getY());
+				bwc.write("\r\n\r\nRectángulo " + i + " de la imagen " + (numMinIm%2)+1 + ":\r\n\txLeft: " + recuadros2.get(i).getxLeft()
 						+ "\r\n\txRight: " + recuadros2.get(i).getxRight()
 						+ "\r\n\tyTop: " + recuadros2.get(i).getyTop()
 						+ "\r\n\tyBot: " + recuadros2.get(i).getyBot());
@@ -288,12 +298,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						bw.write("\r\n\r\n10) Desviación típica: " + desviacion);
 						
 						// Calcular candidatos a haberse movido
-						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido en la " + numMinIm + ":");
+						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido en la imagen " + numMinIm + ":");
 						int cont = 1;
+						DecimalCoordinate dc;
+						PlanarImage pi = createPlanarImage(l1);
 						for (int i = 0; i < centroides.size(); i++) {
 							if (errores[i] > 2*desviacion) {
 								centroide = centroides.get(i);
-								bw.write("\r\n\tCandidato " + cont + " -> X: " + Math.round(centroide.getX()) + " Y: " + Math.round(centroide.getY()) + "\r\n");
+								dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
+								bw.write("\r\n\tCandidato " + cont + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
 								cont++;
 							}
 						}
@@ -406,5 +419,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		return new DecimalCoordinate(ar1, dec1);
 	} 
+	
+	public PlanarImage createPlanarImage(LectorImageHDU l) {
+		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
+		
+		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
+		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l.getWidth(), l.getHeight(), 1);
+		ColorModel cm = PlanarImage.createColorModel(sm);
+		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new java.awt.Point(0,0));
+		TiledImage tiledImage = new TiledImage(0,0,l.getWidth(),l.getHeight(),0,0,sm,cm);
+		tiledImage.setData(raster);
+		
+		return tiledImage;
+	}
 
 }
