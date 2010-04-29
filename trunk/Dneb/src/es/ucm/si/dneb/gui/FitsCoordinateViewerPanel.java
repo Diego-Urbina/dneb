@@ -444,7 +444,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			    ir.setBorderColor(new Color(0,255,0));
 			    display.addImageRegion(ir);
 			    jsp.repaint();
-				JOptionPane.showMessageDialog(null, "Distancia: " + d.getDistance() + " arcosegundos" + "\nÁngulo: " + d.getAngle() + " grados", "Medición", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Distancia: " + d.getDistanceSeconds() + " arcosegundos" + "\nÁngulo: " + d.getAngle() + " grados", "Medición", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
