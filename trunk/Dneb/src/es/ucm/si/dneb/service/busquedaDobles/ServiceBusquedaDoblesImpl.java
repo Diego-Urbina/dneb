@@ -173,7 +173,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				centroide = centroides1.get(i);
 				centroide.setX(centroide.getX() * scaleW);
 				centroide.setY(centroide.getY() * scaleH);
-				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH);
 				
 				if (elegido != null) { // se ha encontrado coincidente
 					
@@ -182,8 +182,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						int pos = elegidos.indexOf(elegido);
 						
 						// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
-						if (centroide.getDistancia(elegido) <
-								centroides.get(pos).getDistancia(elegido)) {
+						if (centroide.getDistancia(elegido) < centroides.get(pos).getDistancia(elegido)) {
 							centroides.remove(pos);
 							elegidos.remove(pos);
 							porcentaje--;
@@ -201,8 +200,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			bw.write("\r\n\r\n5) Porcentaje de centroides elegidos: " + porcentaje);
 			
 			// Construir las matrices de ambas listas y encontrar la matriz de transformacion
-			// Y a la vez se calcula el error inicial
+			// Y a la vez se calcula el error cuadratico medio inicial
 			double errorInicial = 0;
+			Point p1 = new Point(), p2 = new Point();
 			if (porcentaje >= 50) {
 				double[][] m1 = new double[centroides.size()][3], m2 = new double[elegidos.size()][3];
 				for (int i = 0; i < centroides.size(); i++) {
@@ -216,10 +216,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					m2[i][1] = centroide.getY();
 					m2[i][2] = 1;
 					
-					errorInicial += Math.sqrt(Math.pow((m1[i][0] - m2[i][0]),2) +
-									Math.pow((m1[i][1] - m2[i][1]),2));
+					p1.setX(m1[i][0]);
+					p1.setY(m1[i][1]);
+					p2.setX(m2[i][0]);
+					p2.setY(m2[i][1]);
+					errorInicial += Math.pow(p1.getDistancia(p2), 2);
 				}
-				bw.write("\r\n\r\n6) Error inicial: " + errorInicial);
+				
+				errorInicial = Math.sqrt(errorInicial/centroides.size());
+				bw.write("\r\n\r\n6) Error cuadrático medio inicial: " + errorInicial);
 				
 				Matrix P = new Matrix(m1);
 				Matrix Q = new Matrix(m2);
@@ -227,15 +232,20 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				Matrix R = P.times(X);
 			    double errorFinal = 0;
 			    for (int i = 0; i < R.getRowDimension(); i++) {
-			    	errorFinal += Math.sqrt(Math.pow((R.get(i, 0) - Q.get(i, 0)),2) +
-							Math.pow((R.get(i, 1) - Q.get(i, 1)),2));
+			    	p1.setX(R.get(i, 0));
+					p1.setY(R.get(i, 1));
+					p2.setX(Q.get(i, 0));
+					p2.setY(Q.get(i, 1));
+			    	errorFinal += Math.pow(p1.getDistancia(p2),2);
 			    }
-			    bw.write("\r\n\r\n7) Error final: " + errorFinal);
+			    
+			    errorFinal = Math.sqrt(errorFinal/R.getRowDimension());
+			    bw.write("\r\n\r\n7) Error cuadrático medio final: " + errorFinal);
 			
 			    // Comparar errores y si el final es mayor que el inicial descartar
-				if (errorFinal <= errorInicial) {
+				if (errorFinal < errorInicial) {
 					
-					// Aplicar matriz a todos los puntos de la imagen uno y buscar emparejamiento
+					// Aplicar matriz a todos los puntos de la imagen con menos recuadros y buscar emparejamiento
 					m1 = new double[centroides1.size()][3];
 					for (int i = 0; i < centroides1.size(); i++) {
 						centroide = centroides1.get(i);
@@ -254,7 +264,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						centroide = new Point();
 						centroide.setX(Q.get(i, 0));
 						centroide.setY(Q.get(i, 1));
-						elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2);
+						elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH);
 						
 						if (elegido != null) { // se ha encontrado coincidente
 							
@@ -263,8 +273,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 								int pos = elegidos.indexOf(elegido);
 								
 								// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
-								if (centroide.getDistancia(elegido) <
-										centroides.get(pos).getDistancia(elegido)) {
+								if (centroide.getDistancia(elegido) < centroides.get(pos).getDistancia(elegido)) {
 									centroides.remove(pos);
 									elegidos.remove(pos);
 									porcentaje--;
@@ -288,8 +297,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					if (porcentaje >= 50) {
 						// Calculo de la media, varianza y desviacion tipica
 						for (int i = 0; i < centroides.size(); i++) {
-							error = Math.sqrt(Math.pow((centroides.get(i).getX() - elegidos.get(i).getX()),2) +
-									Math.pow((centroides.get(i).getY() - elegidos.get(i).getY()),2));
+							p1.setX(centroides.get(i).getX());
+							p1.setY(centroides.get(i).getY());
+							p2.setX(elegidos.get(i).getX());
+							p2.setY(elegidos.get(i).getY());
+							error = p1.getDistancia(p2);
 							calcEstadisticos.addValue(error);
 							errores[i] = error;
 						}
@@ -333,30 +345,31 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
-			ArrayList<RectStar> listaRecs) {
+			ArrayList<RectStar> listaRecs, double scaleW, double scaleH) {
 		
 		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio de 20 pixeles
 		
-		int radioBusqueda = 20; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
-		int tamRecLim = 2; // El area del rectangulo debera estar entre la mitad y el doble del rectangulo que se pasa
+		double radioBusqueda = 20; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
+		double tamRecLim = 1.5; // El area del rectangulo debera estar entre un rango determinado
 		Point aux;
-		double distancia, distanciaMin = 0, brillo, brilloParecido = 0;
+		double distancia, distanciaMin = 0, brillo, brilloParecido = 0, brilloEscalado;
 		Point elegido = null;
 		
 		for (int i = 0; i < listaPuntos.size(); i++) {
 			aux = listaPuntos.get(i);
 			distancia = punto.getDistancia(aux);
 			brillo = listaRecs.get(i).getArea();
+			brilloEscalado = rec.getWidth()*scaleW * rec.getHeight()*scaleH;
 			if (elegido == null) {
 				if (distancia <= radioBusqueda &&
-						brillo <= tamRecLim*rec.getArea() && brillo >= rec.getArea()/tamRecLim) {
+						brillo <= tamRecLim*brilloEscalado && brillo >= brilloEscalado/tamRecLim) {
 					distanciaMin = distancia;
 					brilloParecido = brillo;
 					elegido = aux;
 				}
 			} else {
 				if (distancia <= radioBusqueda &&
-						Math.abs(rec.getArea() - brillo) <= Math.abs(rec.getArea() - brilloParecido)
+						Math.abs(brilloEscalado - brillo) <= Math.abs(brilloEscalado - brilloParecido)
 						&& distancia < distanciaMin) {
 					brilloParecido = brillo;
 					distanciaMin = distancia;
