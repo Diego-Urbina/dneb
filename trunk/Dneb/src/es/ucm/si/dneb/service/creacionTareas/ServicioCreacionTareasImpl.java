@@ -212,6 +212,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 							tarea.getFormatoFichero().getAlias()));
 					imagen.setSurvey(survey);
 					imagen.setTarea(tarea);
+					/*TODO TOCAR*/
 					imagen.setAncho((ancho * (Math
 							.cos((dec * 2.0 * Math.PI) / 360.0))));
 
@@ -223,10 +224,11 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 							+ imagen.getSurvey().getDescripcion());
 
 				}
-
+				/*TODO TOCAR*/
 				dec = calculaDec(decini, decfin, alto, dec, solap);
 
 			}
+			/*TODO TOCAR*/
 			dec = decini;
 			anchoreal = ancho * (Math.cos((dec * 2.0 * Math.PI) / 360.0));
 			ar = calculaAr(ar, solap, anchoreal);
