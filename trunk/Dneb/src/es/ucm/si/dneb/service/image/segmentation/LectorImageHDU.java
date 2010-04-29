@@ -17,6 +17,7 @@ public class LectorImageHDU extends LectorHDU {
 	public LectorImageHDU(BasicHDU bhdu, String f) {
 		super(bhdu.getHeader());
 		try {
+			calculosEstadisticos = new DescriptiveStatistics();
 			short[][] arrayDataAux = (short[][]) bhdu.getData().getData();
 			min = Double.parseDouble(super.getValue("DATAMIN"));
 			max = Double.parseDouble(super.getValue("DATAMAX"));

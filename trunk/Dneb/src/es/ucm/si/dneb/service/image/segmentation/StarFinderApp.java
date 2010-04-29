@@ -32,7 +32,6 @@ public class StarFinderApp {
 			LOG.debug("Filename:  " + l1.getFilename());
 			LOG.debug("Min:  " + l1.getMin());
 			LOG.debug("Max:  " + l1.getMax());
-			LOG.debug("Average:  " + l1.getAverage());
 			LOG.debug("Scale:  " + l1.getScale());
 			LOG.debug("Width:  " + l1.getWidth());
 			LOG.debug("Height:  " + l1.getHeight());
