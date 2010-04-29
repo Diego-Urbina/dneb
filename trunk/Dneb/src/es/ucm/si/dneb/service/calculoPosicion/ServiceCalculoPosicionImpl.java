@@ -74,6 +74,8 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		 * 
 		 * SIN SON MUY BRILLANTES AJUSTAR PARÁMETROS DE OTRA FORMA, EN CASO DE
 		 * QUE SEAN MUY BRILLANTES MIRAR CON EL CATALOGO 2MASS
+		 * 
+		 * Reducir el margen si la imagen es muy grande
 		 */
 
 		LOG
@@ -85,25 +87,38 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 		List<ParamProcTarea> paramProcTareas = pi.getTareaProcesamiento()
 				.getParametros();
-		double brillo = 0, umbral = 0;
+		double brillo = 0, umbral = 0, margenAngulo=0.15,margenDistancia=0.15,distMinima=4;
+		int limCandidatos=5,maxEstrellas = 70;
+		
 		for (int i = 0; i < paramProcTareas.size(); i++) {
 			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 1) // brillo
 				brillo = paramProcTareas.get(i).getValorNum();
 			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 2) // umbral
 				umbral = paramProcTareas.get(i).getValorNum();
+			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 3) // limNumObs
+				limCandidatos = paramProcTareas.get(i).getValorNum().intValue();
+			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 4) // maxEstrellas
+				maxEstrellas = paramProcTareas.get(i).getValorNum().intValue();
+			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 5) // margenAngulo
+				margenAngulo = paramProcTareas.get(i).getValorNum();
+			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 6) // margenDistancia
+				margenDistancia = paramProcTareas.get(i).getValorNum();
+			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 7) // distanciaMínima
+				distMinima = paramProcTareas.get(i).getValorNum();
+			
 		}
 
 		// Busco los datos de la estrella binaria a buscar
 
 		Imagen imagen = pi.getImagen();
 
-		algotirmoCalculoPosicion(brillo, umbral, imagen);
+		algotirmoCalculoPosicion(brillo, umbral,limCandidatos,maxEstrellas,margenAngulo,margenDistancia,distMinima ,imagen);
 
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,
+	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,int maxCandidatos, int maxEstrellas,double margenAngulo,double margenDistancia, double distanciaMinima,
 			Imagen imagen) {
 
 		ArrayList<Point> points = new ArrayList<Point>();
@@ -147,7 +162,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 			/* TODO ALGORITMO PARA PROBAR LA CERCANÍA DE DOS ESTRELLAS */
 
-			int limSep = 1;
+			
 			int tipoAjuste = 0;
 
 			/**
@@ -159,7 +174,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 			 * considerar como arreglarlos.
 			 */
 
-			if (dsc.getLastSeparation() <= limSep) {
+			if (dsc.getLastSeparation() < distanciaMinima) {
 
 				tipoAjuste = 1;
 
@@ -190,6 +205,13 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 				Point cent;
 
 				int nRecuadros = recStars.size();
+				
+				if(nRecuadros>maxEstrellas){
+					
+					LOG.error("DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE");
+					
+					return points;
+				}
 
 				for (int i = 0; i < nRecuadros; i++) {
 
@@ -256,16 +278,18 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						distancesList.add(distanceAux);
 					}
 				}
+				
+				List<InformacionRelevante> infoRels= new ArrayList<InformacionRelevante>();
 
 				for (Distance dist : distancesList) {
 
 					double sep = dsc.getLastSeparation();
 					double ang = dsc.getLastPosAnges();
 
-					if (((sep * 0.85) <= dist.getDistanceSeconds() && dist
-							.getDistanceSeconds() <= (sep * 1.15))
-							&& ((ang * 0.85) <= dist.getAngle() && dist
-									.getAngle() <= (ang * 1.15))) {
+					if (((sep * (1-margenDistancia)) <= dist.getDistanceSeconds() && dist
+							.getDistanceSeconds() <= (sep * (1+margenDistancia)))
+							&& ((ang * (1-margenAngulo)) <= dist.getAngle() && dist
+									.getAngle() <= (ang * (1+margenAngulo)))) {
 
 						LOG.info("PUNTOS DENTRO DE RANGO:" + dist.toString());
 
@@ -291,7 +315,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						ir.setTipoInformacionRelevante(manager.find(
 								TipoInformacionRelevante.class, 2L));
 
-						manager.persist(ir);
+						infoRels.add(ir);
 
 						points.add(dcToPoint.get(dist.getPoint1()));
 						points.add(dcToPoint.get(dist.getPoint2()));
@@ -299,6 +323,16 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						sinRelevantes = false;
 					}
 
+				}
+				
+				if(infoRels.size()<=maxCandidatos){
+					for(InformacionRelevante ir : infoRels){
+						manager.persist(ir);
+					}
+					
+				}else{
+					LOG.error("El número de resultados relevantes supera el máximo: Se descarta la imagen");
+					return new ArrayList<Point>();
 				}
 
 				if (tipoAjuste == 0) {
