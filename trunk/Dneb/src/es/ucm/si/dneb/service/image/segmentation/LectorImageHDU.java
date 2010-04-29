@@ -1,29 +1,31 @@
 package es.ucm.si.dneb.service.image.segmentation;
 
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.FitsException;
 
 public class LectorImageHDU extends LectorHDU {
 	
 	private int[][] arrayData;
-	private float min, max, average, scale;
+	private double min, max, scale;
 	private int width;
 	private int height;
 	private String filename;
+	private DescriptiveStatistics calculosEstadisticos;
 	
 	public LectorImageHDU(BasicHDU bhdu, String f) {
 		super(bhdu.getHeader());
 		try {
 			short[][] arrayDataAux = (short[][]) bhdu.getData().getData();
-			min = Float.parseFloat(super.getValue("DATAMIN"));
-			max = Float.parseFloat(super.getValue("DATAMAX"));
+			min = Double.parseDouble(super.getValue("DATAMIN"));
+			max = Double.parseDouble(super.getValue("DATAMAX"));
 			scale = (max-min)/65535;
 			width = Integer.parseInt(super.getValue("NAXIS1"));
 			height = Integer.parseInt(super.getValue("NAXIS2"));
 			filename = f;  			
 			
 			arreglarMatriz(arrayDataAux);
-			average = brilloMedio();
 		} catch (FitsException e) {
 			e.printStackTrace();
 		}
@@ -42,7 +44,7 @@ public class LectorImageHDU extends LectorHDU {
 	}
 	
 
-	public float getMin() {
+	public double getMin() {
 		return min;
 	}
 
@@ -51,7 +53,7 @@ public class LectorImageHDU extends LectorHDU {
 	}
 
 
-	public float getMax() {
+	public double getMax() {
 		return max;
 	}
 
@@ -59,17 +61,7 @@ public class LectorImageHDU extends LectorHDU {
 		this.max = max;
 	}
 
-
-	public float getAverage() {
-		return average;
-	}
-
-	public void setAverage(float average) {
-		this.average = average;
-	}
-
-
-	public float getScale() {
+	public double getScale() {
 		return scale;
 	}
 
@@ -141,9 +133,8 @@ public class LectorImageHDU extends LectorHDU {
 				arrayDataAux[i][j] = (short) ((arrayDataAux[i][j] - min) / scale);
 			}
 		
-		// Actualizo min, max, average y scale por haber cambiado la escala
+		// Actualizo min, max y scale por haber cambiado la escala
 		max = (max - min) / scale;
-		average = (average - min) / scale;
 		min = (min - min) / scale;
 		scale = (max-min)/65535;
 		
@@ -159,19 +150,18 @@ public class LectorImageHDU extends LectorHDU {
 					arrayData[i][j] = aux + 65536;
 				else
 					arrayData[i][j] = aux;
+				
+				calculosEstadisticos.addValue(arrayData[i][j]);
 			}
 	}
 	
-	private float brilloMedio(){
-        
-		float suma=0;
-	    
-	    for(int i=0; i<height; i++)
-	    	for(int j=0; j<width; j++)
-	    		suma += arrayData[i][j];
-	    		
-	    return (suma /(width * height));
+	public double brilloMedio(){
+	    return calculosEstadisticos.getMean();
     }
+	
+	public double getNPercentile(double n) {
+		return calculosEstadisticos.getPercentile(n);
+	}
 	
 	public int getPixel(int x, int y) {
 		return arrayData[y][x];
