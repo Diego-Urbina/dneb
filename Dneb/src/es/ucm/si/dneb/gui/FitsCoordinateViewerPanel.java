@@ -11,11 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferInt;
-import java.awt.image.Raster;
-import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.util.ArrayList;
@@ -25,8 +20,6 @@ import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.ROIShape;
-import javax.media.jai.RasterFactory;
-import javax.media.jai.TiledImage;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,7 +31,6 @@ import javax.swing.JScrollPane;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
-import nom.tam.util.ArrayFuncs;
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicion;
@@ -63,7 +55,6 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	private boolean calculoDistancia, estado;
 	private List<Point> listaPuntos;
 	private String file;
-	private java.awt.Point pIni;
 	
 	private JLabel infoPixelLabel, dLabel, sLabel;
 	private JButton buttonDistancia;
@@ -250,12 +241,12 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			
 		
 			
-			List<es.ucm.si.dneb.service.image.util.Point> listaPuntis = serviceCalculoPosicion.algotirmoCalculoPosicion( 30000,  20000 ,imagen);
+			List<Point> listaPuntis = serviceCalculoPosicion.algotirmoCalculoPosicion( 30000,  20000 ,imagen);
 			
 			// obtengo la lista de puntos
 			listaPuntos = new ArrayList<Point>();
 			
-			for(es.ucm.si.dneb.service.image.util.Point punt:listaPuntis){
+			for(Point punt:listaPuntis){
 				listaPuntos.add(new Point(punt.getX().intValue(), punt.getY().intValue()));
 			}
 			
@@ -362,7 +353,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 				Fits imagenFITS = new Fits(new File(file));
 				BasicHDU imageHDU = imagenFITS.getHDU(0);
 				l = new LectorImageHDU(imageHDU, file);
-				im = createPlanarImage(l);
+				im = serviceBusquedaDobles.createPlanarImage(l);
 				JAI.create("filestore", im, "Temp/im3.png", "PNG");
 				input = JAI.create("fileload", "Temp/im3.png");
 				scaledIm = input;
@@ -379,19 +370,6 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-	}
-	
-	private PlanarImage createPlanarImage(LectorImageHDU l) {
-		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
-		
-		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
-		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l.getWidth(), l.getHeight(), 1);
-		ColorModel cm = PlanarImage.createColorModel(sm);
-		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new java.awt.Point(0,0));
-		TiledImage tiledImage = new TiledImage(0,0,l.getWidth(),l.getHeight(),0,0,sm,cm);
-		tiledImage.setData(raster);
-		
-		return tiledImage;
 	}
 	
 	private void escalarYTrasladarCirculos() {

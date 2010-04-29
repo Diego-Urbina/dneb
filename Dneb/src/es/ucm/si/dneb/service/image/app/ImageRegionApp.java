@@ -3,7 +3,6 @@ package es.ucm.si.dneb.service.image.app;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -11,19 +10,12 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferInt;
-import java.awt.image.Raster;
-import java.awt.image.SampleModel;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
-import javax.media.jai.RasterFactory;
-import javax.media.jai.TiledImage;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -38,10 +30,11 @@ import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
-import nom.tam.util.ArrayFuncs;
 import es.ucm.si.dneb.gui.VentanaPcpal;
+import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.util.FiltreExtensible;
 
 
@@ -57,7 +50,6 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	private DisplayImageWithRegions display1, display2;
 	private PlanarImage input1, input2, scaledIm1, scaledIm2;
 	private LectorImageHDU l1, l2;
-	
 	private StarFinder sf1, sf2;
 	
 	private VentanaPcpal principal;
@@ -339,6 +331,8 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 	}
 	
 	private void buttonAbrirActionPerformed(ActionEvent e) {
+		ServiceBusquedaDobles serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
+		
 		FiltreExtensible filtre = new FiltreExtensible("Imagenes");
 		filtre.addExtension(".fits");
 		JFileChooser fc = new JFileChooser(".");
@@ -358,7 +352,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					Fits imagenFITS = new Fits(new File(file1));			
 					BasicHDU imageHDU = imagenFITS.getHDU(0);
 					l1 = new LectorImageHDU(imageHDU, file1);
-					PlanarImage im = createPlanarImage(l1);
+					PlanarImage im = serviceBusquedaDobles.createPlanarImage(l1);
 					JAI.create("filestore",im,"Temp/im1.png","PNG");
 					input1 = JAI.create("fileload", "Temp/im1.png");
 					scaledIm1 = input1;
@@ -370,7 +364,7 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 					imagenFITS = new Fits(new File(file2));
 					imageHDU = imagenFITS.getHDU(0);
 					l2 = new LectorImageHDU(imageHDU, file2);
-					im = createPlanarImage(l2);
+					im = serviceBusquedaDobles.createPlanarImage(l2);
 					JAI.create("filestore",im,"Temp/im2.png","PNG");
 					input2 = JAI.create("fileload", "Temp/im2.png");
 					scaledIm2 = input2;
@@ -387,19 +381,6 @@ public class ImageRegionApp extends JPanel implements AdjustmentListener, MouseL
 		} catch(Exception ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-	}
-	
-	private PlanarImage createPlanarImage(LectorImageHDU l) {
-		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
-		
-		DataBufferInt dBuffer = new DataBufferInt(arrayDataAplanado, l.getWidth()*l.getHeight());
-		SampleModel sm = RasterFactory.createBandedSampleModel(DataBuffer.TYPE_SHORT, l.getWidth(), l.getHeight(), 1);
-		ColorModel cm = PlanarImage.createColorModel(sm);
-		Raster raster = RasterFactory.createWritableRaster(sm, dBuffer, new Point(0,0));
-		TiledImage tiledImage = new TiledImage(0,0,l.getWidth(),l.getHeight(),0,0,sm,cm);
-		tiledImage.setData(raster);
-		
-		return tiledImage;
 	}
 	
 	private void buttonBuscarActionPerformed(ActionEvent e) {
