@@ -49,8 +49,8 @@ public class CrearProcesamiento extends JPanel {
 	private JTable tableTasks;
 	private JButton buttonSiguiente;
 	private JComboBox cbTipoProc;
-	private JTextField textFieldUmbral, textFieldBrillo;
-	private JLabel labelUmbral, labelBrillo;
+	private JTextField textFieldUmbral, textFieldBrillo, maxResRelevantes;
+	private JLabel labelUmbral, labelBrillo, labelMaxResRel;
 	
 	private VentanaPcpal principal;
 	
@@ -224,8 +224,10 @@ public class CrearProcesamiento extends JPanel {
 		cbTipoProc = new JComboBox(servicioGestionProcesamientos.getTiposProcesamiento().toArray());
 		labelUmbral = new JLabel("Umbral");
 	    labelBrillo = new JLabel("Brillo");
+	    this.labelMaxResRel= new JLabel("Maximo candidatos");
 		textFieldUmbral = new JTextField("20000");
 	    textFieldBrillo = new JTextField("30000");
+	    this.maxResRelevantes= new JTextField("4");
 		
 		{
 			modelo = new DefaultTableModel(
@@ -317,13 +319,16 @@ public class CrearProcesamiento extends JPanel {
 						.addGroup(layout.createSequentialGroup()
 							.addComponent(cbTipoProc, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 							.addGap(50, 50, 50)
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+							.addGroup(layout.createSequentialGroup()
 								.addGroup(layout.createSequentialGroup()
 										.addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 						        		.addComponent(textFieldUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 								.addGroup(layout.createSequentialGroup()
 										.addComponent(labelBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-								        .addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))))
+								        .addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(this.labelMaxResRel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+										.addComponent(this.maxResRelevantes, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))        ))
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
