@@ -26,6 +26,7 @@ import nom.tam.util.ArrayFuncs;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -281,20 +282,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					bw.write("\r\n\r\n9) Porcentaje de centroides elegidos después de aplicar la matriz: " + porcentaje);
 					
 					// Si el porcentaje es mayor o igual que 50 calcular errores y ver cual es mayor que 2*desviacion tipica (candidato a que se haya movido)
-					double media = 0., varianza = 0., error, desviacion;
+					double error, desviacion;
+					DescriptiveStatistics calcEstadisticos= new DescriptiveStatistics();
 					double[] errores = new double[centroides.size()];
 					if (porcentaje >= 50) {
 						// Calculo de la media, varianza y desviacion tipica
 						for (int i = 0; i < centroides.size(); i++) {
 							error = Math.sqrt(Math.pow((centroides.get(i).getX() - elegidos.get(i).getX()),2) +
 									Math.pow((centroides.get(i).getY() - elegidos.get(i).getY()),2));
-							media += error;
-							varianza += Math.pow(error, 2);
+							calcEstadisticos.addValue(error);
 							errores[i] = error;
 						}
-						media = media / centroides.size();
-						varianza = varianza / centroides.size() - Math.pow(media, 2);
-						desviacion = Math.sqrt(varianza);
+						desviacion = calcEstadisticos.getStandardDeviation();
 						bw.write("\r\n\r\n10) Desviación típica: " + desviacion);
 						
 						// Calcular candidatos a haberse movido
