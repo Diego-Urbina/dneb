@@ -309,7 +309,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						bw.write("\r\n\r\n10) Desviación típica: " + desviacion);
 						
 						// Calcular candidatos a haberse movido
-						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido en la imagen " + numMinIm + ":");
+						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido:");
 						int cont = 1;
 						DecimalCoordinate dc;
 						PlanarImage pi = createPlanarImage(l1);
