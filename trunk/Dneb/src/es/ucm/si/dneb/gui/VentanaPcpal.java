@@ -34,7 +34,6 @@ public class VentanaPcpal extends JFrame{
 	private JTabbedPane  pane= new JTabbedPane();
 	
 	public VentanaPcpal(){
-		super("kk");
 		
 		this.getContentPane().setLayout(new BorderLayout());
 	    initComponents();
@@ -58,10 +57,14 @@ public class VentanaPcpal extends JFrame{
 	    setLocationRelativeTo(null);
 	    
 	    this.setExtendedState(Frame.MAXIMIZED_BOTH); 
-	    
-	    setVisible(true);
-
+	    this.setSize(1024, 768);
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension windowSize = getSize();
+		int windowX = Math.max(0, (screenSize.width  - windowSize.width ) / 2);
+		int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
+		setLocation(windowX, windowY);
 	}
+	
 	 public void initTabComponent(int i) {
 	        pane.setTabComponentAt(i,
 	                 new ButtonTabComponent(pane));
