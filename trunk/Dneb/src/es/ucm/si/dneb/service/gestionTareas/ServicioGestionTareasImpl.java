@@ -72,6 +72,9 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 		manager.merge(tarea);
 		
+		if (!gestorDescargas.existeHilo(tarea.getIdTarea()))
+			gestorDescargas.anadirHilo(tarea);
+			
 		gestorDescargas.iniciarHilo(tarea.getIdTarea());
 
 	}
@@ -157,7 +160,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eliminarTarea(long tareaId) {
 		
-		gestorDescargas.eleminarHilo(tareaId);
+		gestorDescargas.eliminarHilo(tareaId);
 		
 		Tarea tarea = manager.find(Tarea.class, tareaId);
 

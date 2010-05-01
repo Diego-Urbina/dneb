@@ -16,7 +16,7 @@ public interface GestorHilos<T>{
 	public abstract void anadirHilo(T t);
 
 	
-	public void eleminarHilo(Long id) ;
+	public void eliminarHilo(Long id) ;
 
 	
 	public void iniciarHilo(Long idHilo);
