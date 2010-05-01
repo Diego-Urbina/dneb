@@ -213,16 +213,11 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					imagen.setAscensionRecta(ar.toString());
 					imagen.setDeclinacion(dec.toString());
 					imagen.setDescargada(false);
-					/**
-					 * TODO OJO QUE ESTO ES UN CAMBIO IMPORTANTE HAY QUE PROBAR
-					 * SI FUNCIONA
-					 **/
 					imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), survey
 							.getDescripcion(), ar.toString(), dec.toString(),
 							tarea.getFormatoFichero().getAlias()));
 					imagen.setSurvey(survey);
 					imagen.setTarea(tarea);
-					/*TODO TOCAR*/
 					imagen.setAncho(ancho);
 
 					manager.persist(imagen);
@@ -233,11 +228,9 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 							+ imagen.getSurvey().getDescripcion());
 
 				}
-				/*TODO TOCAR*/
 				dec = calculaDec(decini, decfin, alto, dec, solap);
 
 			}
-			/*TODO TOCAR*/
 			dec = decini;
 			anchoreal = ancho/(15.0*Math.cos(Math.toRadians(dec)));
 			ar = calculaAr(ar, solap, anchoreal);
