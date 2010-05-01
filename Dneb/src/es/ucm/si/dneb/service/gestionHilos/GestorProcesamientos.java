@@ -52,7 +52,7 @@ public class GestorProcesamientos implements GestorHilos<ProcTarea>{
 	}
 
 	@Override
-	public void eleminarHilo(Long id) {
+	public void eliminarHilo(Long id) {
 		
 		Hilo hilo = hilos.get(id);
 
@@ -99,7 +99,7 @@ public class GestorProcesamientos implements GestorHilos<ProcTarea>{
 
 		ProcTarea tarProc = (ProcTarea) hilo.getEjecutor().getCore();
 
-		this.eleminarHilo(idHilo);
+		this.eliminarHilo(idHilo);
 
 		this.anadirHilo(tarProc);
 

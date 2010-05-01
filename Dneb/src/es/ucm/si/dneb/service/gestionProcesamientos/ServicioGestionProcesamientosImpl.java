@@ -81,7 +81,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void eliminarProcesamiento(Long idProcesamiento) {
 		
-		gestorProcesamientos.eleminarHilo(idProcesamiento);
+		gestorProcesamientos.eliminarHilo(idProcesamiento);
 		
 		ProcTarea proc = manager.find(ProcTarea.class, idProcesamiento);
 

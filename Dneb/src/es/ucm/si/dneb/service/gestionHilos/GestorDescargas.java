@@ -59,7 +59,7 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 	}
 
 	@Override
-	public void eleminarHilo(Long id) {
+	public void eliminarHilo(Long id) {
 		Hilo hilo = hilos.get(id);
 
 		if (hilo.isInterrupted() == false) {
@@ -96,7 +96,7 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 
 		//Tarea tarea = hilo.getEjecutor().getTarea();
 
-		this.eleminarHilo(idHilo);
+		this.eliminarHilo(idHilo);
 
 		//this.anadirHilo(tarea);
 
@@ -116,6 +116,12 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 		return LOG;
 	}
 	
-	
+	public boolean existeHilo(Long idHilo) {
+		Hilo hilo = hilos.get(idHilo);
+		if (hilo != null)
+			return true;
+		else
+			return false;
+	}
 
 }
