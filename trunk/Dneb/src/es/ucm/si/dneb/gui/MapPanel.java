@@ -60,9 +60,6 @@ public class MapPanel extends JPanel {
 				ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 				ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
 				servicioCreacionTareas.crearTarea(principal.ari, principal.arf, principal.deci, principal.decf, Double.parseDouble(principal.alto), Double.parseDouble(principal.ancho), Double.parseDouble(principal.solapamiento), principal.survey1, principal.survey2, "fits", principal.ruta);
-				ServicioGestionTareas servicioGestionTareas= (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
-				ArrayList<Tarea> tareas= (ArrayList<Tarea>) servicioGestionTareas.getTareas();
-				servicioGestionTareas.iniciarTarea(tareas.get(tareas.size()-1).getIdTarea());
 			}
 		} catch(ServicioGestionTareasException ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

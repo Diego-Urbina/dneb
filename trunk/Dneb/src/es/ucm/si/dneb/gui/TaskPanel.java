@@ -25,6 +25,7 @@ import es.ucm.si.dneb.util.ProgressRenderer;
  */
 public class TaskPanel extends JPanel {
 	
+	private static final long serialVersionUID = -3364091451558723326L;
 	private VentanaPcpal principal;
 	private DefaultTableModel modelo;
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
@@ -98,9 +99,10 @@ public class TaskPanel extends JPanel {
 	
 	private void buttonEliminarActionPerformed(ActionEvent e) {
 		try {
-			SwingWorker w = workers.get(tableTasks.getSelectedRow());
+			SwingWorker<Integer, Integer> w = workers.get(tableTasks.getSelectedRow());
 			if (!w.isCancelled())
 				w.cancel(true);
+			workers.remove(w);
 			servicioGestionTareas.eliminarTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 			modelo.removeRow(tableTasks.getSelectedRow());
 		} catch(ServicioGestionTareasException ex) {
@@ -110,7 +112,7 @@ public class TaskPanel extends JPanel {
 	
 	private void buttonPararActionPerformed(ActionEvent e) {
 		try {
-			SwingWorker w = workers.get(tableTasks.getSelectedRow());
+			SwingWorker<Integer, Integer> w = workers.get(tableTasks.getSelectedRow());
 			if (!w.isCancelled())
 				w.cancel(true);
 			servicioGestionTareas.pararTarea((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
