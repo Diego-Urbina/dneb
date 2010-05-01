@@ -23,8 +23,19 @@ public class CoordinateConverter extends JPanel {
 	private void decToSexActionPerformed(ActionEvent e) {
 		try{
 			DecimalCoordinate dc= new DecimalCoordinate();
-			dc.setAr(Double.parseDouble(this.ar.getText()));
-			dc.setDec(Double.parseDouble(this.dec.getText()));
+			String s;
+			
+			s = this.ar.getText();
+			if (s.equals(""))
+				dc.setAr(0);
+			else
+				dc.setAr(Double.parseDouble(s));
+			
+			s = this.dec.getText();
+			if (s.equals(""))
+				dc.setDec(0);
+			else
+				dc.setDec(Double.parseDouble(s));
 			
 			SexagesimalCoordinate sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
 			
@@ -34,11 +45,7 @@ public class CoordinateConverter extends JPanel {
 			
 			decGrad.setText(""+sc.getDech());
 			decMin.setText(""+sc.getDecmin());
-			decSec.setText(""+sc.getDecsec());
-			
-			
-			
-			
+			decSec.setText(""+sc.getDecsec());			
 			
 		}catch(Exception exc){
 			JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -48,13 +55,43 @@ public class CoordinateConverter extends JPanel {
 	private void SexToDecActionPerformed(ActionEvent e) {
 		try{
 			SexagesimalCoordinate sc= new SexagesimalCoordinate();
-			sc.setArh(Integer.parseInt(this.arh.getText()));
-			sc.setArmin(Integer.parseInt(this.armin.getText()));
-			sc.setArsec(Double.parseDouble(this.arsec.getText()));
+			String s;
 			
-			sc.setDech(Integer.parseInt(this.decGrad.getText()));
-			sc.setDecmin(Integer.parseInt(this.decMin.getText()));
-			sc.setDecsec(Double.parseDouble(this.decSec.getText()));
+			s = this.arh.getText();
+			if (s.equals(""))
+				sc.setArh(0);
+			else
+				sc.setArh(Double.parseDouble(s));
+			
+			s = this.armin.getText();
+			if (s.equals(""))
+				sc.setArmin(0);
+			else
+				sc.setArmin(Double.parseDouble(s));
+			
+			s = this.arsec.getText();
+			if (s.equals(""))
+				sc.setArsec(0);
+			else
+				sc.setArsec(Double.parseDouble(s));
+
+			s = this.decGrad.getText();
+			if (s.equals(""))
+				sc.setDech(0);
+			else
+				sc.setDech(Double.parseDouble(s));
+			
+			s = this.decMin.getText();
+			if (s.equals(""))
+				sc.setDecmin(0);
+			else
+				sc.setDecmin(Double.parseDouble(s));
+			
+			s = this.decSec.getText();
+			if (s.equals(""))
+				sc.setDecsec(0);
+			else
+				sc.setDecsec(Double.parseDouble(s));
 			
 			DecimalCoordinate dc= es.ucm.si.dneb.service.math.CoordinateConverter.sexagesimalToDecimalConverter(sc);
 			
@@ -64,6 +101,19 @@ public class CoordinateConverter extends JPanel {
 		}catch(Exception exc){
 			JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	private void cleanActionPerformed(ActionEvent e) {			
+		ar.setText("");
+		dec.setText("");
+		
+		arh.setText("");
+		armin.setText("");
+		arsec.setText("");
+		
+		decGrad.setText("");
+		decMin.setText("");
+		decSec.setText("");
 	}
 
 	private void initComponents() {
@@ -89,6 +139,7 @@ public class CoordinateConverter extends JPanel {
 		separator1 = new JSeparator();
 		decToSex = new JButton();
 		SexToDec = new JButton();
+		clean = new JButton();
 
 		//======== this ========
 		setLayout(new GridLayoutManager(31, 30, new Insets(0, 50, 50, 50), 4, 4));
@@ -230,6 +281,19 @@ public class CoordinateConverter extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
+		
+		//---- clean ----
+		clean.setText("CLEAN FIELDS");
+		clean.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cleanActionPerformed(e);
+			}
+		});
+		add(clean, new GridConstraints(18, 13, 1, 5,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 
 		//---- SexToDec ----
 		SexToDec.setText("SEX TO DEC");
@@ -238,7 +302,7 @@ public class CoordinateConverter extends JPanel {
 				SexToDecActionPerformed(e);
 			}
 		});
-		add(SexToDec, new GridConstraints(18, 19, 1, 6,
+		add(SexToDec, new GridConstraints(18, 23, 1, 6,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -268,5 +332,6 @@ public class CoordinateConverter extends JPanel {
 	private JSeparator separator1;
 	private JButton decToSex;
 	private JButton SexToDec;
+	private JButton clean;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

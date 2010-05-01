@@ -33,9 +33,8 @@ public class DnebApp {
 		ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas) ctx.getBean("servicioGestionTareas");
 		servicioGestionTareas.anadirTareasAlGestor();
 		
-		
-		
 		VentanaPcpal vent = new VentanaPcpal();
+		vent.setVisible(true);
 	}
 
 }
