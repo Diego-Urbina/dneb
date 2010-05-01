@@ -117,22 +117,18 @@ public class VentanaPcpal extends JFrame{
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
-	private void gestorTareasActionPerformed(ActionEvent e) {
+	private void gestorTareasActionPerformed(ActionEvent e) {		
+		JPanel vent = new TaskPanel(this);
+		pane.addTab("Gestor de tareas", vent);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		
-			JPanel vent = new TaskPanel(this);
-			pane.addTab("Gestor de tareas", vent);
-			this.initTabComponent(pane.getTabCount()-1);
-			pane.setSelectedIndex(pane.getTabCount()-1);
-			
-			this.setExtendedState(Frame.MAXIMIZED_BOTH);
-			setVisible(true);
-			
-		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);		
 	}
 	
 	private void crearProcesamientoActionPerformed(ActionEvent e) {
@@ -140,7 +136,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Crear procesamientos", panel);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -149,7 +146,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Nueva Imagen", vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -158,7 +156,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Configurar Descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -167,7 +166,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Configurar Base de Datos", dataBaseConfig);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -176,7 +176,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Configurar Descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -186,7 +187,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Configurar Descargas", imptBBDD);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 		
 	}
@@ -205,10 +207,11 @@ public class VentanaPcpal extends JFrame{
 	private void visualizadorActionPerformed(ActionEvent e) {
 		
 		ImageRegionApp config = new ImageRegionApp(this);
-		pane.addTab("Configurar Descargas", config);
+		pane.addTab("Visualizador dobles", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 		
 		
@@ -219,7 +222,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Monitor de Procesamientos", prDobles);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -230,7 +234,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Importar catálogo", importarCatalogo);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -241,16 +246,12 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Exportar XML", expXml);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
 		
-		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setVisible(true);		
 	}
 
 	private void consultarCatalogoActionPerformed(ActionEvent e) {
-		
-		
-		
 		
 		ConsultarCatalogo consultarCatalogo = new ConsultarCatalogo();
 		
@@ -259,7 +260,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("Consultar catálogo", sp);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -270,7 +272,8 @@ public class VentanaPcpal extends JFrame{
 		pane.addTab("WDSC", wdsHelp);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
