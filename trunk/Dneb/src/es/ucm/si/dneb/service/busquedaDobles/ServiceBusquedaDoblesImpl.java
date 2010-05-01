@@ -402,15 +402,17 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		SexagesimalCoordinate sc;
 		DecimalCoordinate dc;
 		
+		// En sexagesimal
 		double ancho = imagen.getAncho();
 		double alto = imagen.getTarea().getAlto();
+		// En decimal
 		double ar = Double.parseDouble(imagen.getAscensionRecta());
 		double dec = Double.parseDouble(imagen.getDeclinacion());
 		
 		sc = new SexagesimalCoordinate(0,0,0,0,alto,0);
 		dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
 		double incX = width/2.0 - x;
-		double incY = y - height/2.0;
+		double incY = height/2.0 - y;
 		
 		double dec1 = dec + incY*(dc.getDec()/height);
 		double anchoAux = ancho/(15.0*Math.cos(Math.toRadians(dec1)));

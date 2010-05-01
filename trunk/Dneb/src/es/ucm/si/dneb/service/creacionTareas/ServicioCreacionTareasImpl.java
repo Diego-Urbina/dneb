@@ -23,6 +23,9 @@ import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
+import es.ucm.si.dneb.service.math.CoordinateConverter;
+import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.Util;
 
 @Service("servicioCreacionTareas")
@@ -163,7 +166,14 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public List<Imagen> crearDescargas(Tarea tarea) {
-
+		/*
+		 * Tanto AR como DEC inicial y final van en grados.
+		 * 
+		 * Ancho y alto van en arcmin
+		 * 
+		 * Solapamiento es un porcentaje??
+		 */
+		
 		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
 
 		String ariniS = tarea.getArInicial();
@@ -213,8 +223,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 					imagen.setSurvey(survey);
 					imagen.setTarea(tarea);
 					/*TODO TOCAR*/
-					imagen.setAncho((ancho * (Math
-							.cos((dec * 2.0 * Math.PI) / 360.0))));
+					imagen.setAncho(ancho);
 
 					manager.persist(imagen);
 
@@ -230,7 +239,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			}
 			/*TODO TOCAR*/
 			dec = decini;
-			anchoreal = ancho * (Math.cos((dec * 2.0 * Math.PI) / 360.0));
+			anchoreal = ancho/(15.0*Math.cos(Math.toRadians(dec)));
 			ar = calculaAr(ar, solap, anchoreal);
 
 		}
@@ -240,7 +249,10 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	private Double calculaAr(Double ar, Double solap, Double anchoreal) {
 
-		ar = ar + (anchoreal) - (anchoreal * solap);
+		// El ancho esta en sex!!! Convertir a dec
+		SexagesimalCoordinate sc = new SexagesimalCoordinate(0,anchoreal,0,0,0,0);
+		DecimalCoordinate dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
+		ar = ar + (dc.getAr()) - (dc.getAr() * solap);
 
 		LOG.debug("CACULA AR :" + ar.toString());
 		return ar;
@@ -249,10 +261,15 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	private Double calculaDec(Double decini, Double decfin, Double alto,
 			Double dec, Double solap) {
+		
+		// El alto esta en sex!!! Convertir a dec
+		SexagesimalCoordinate sc = new SexagesimalCoordinate(0,0,0,0,alto,0);
+		DecimalCoordinate dc = CoordinateConverter.sexagesimalToDecimalConverter(sc);
+		
 		if (decini > decfin) {
-			dec = dec - alto + (alto * solap);
+			dec = dec - dc.getDec() + (dc.getDec() * solap);
 		} else {
-			dec = dec + alto - (alto * solap);
+			dec = dec + dc.getDec() - (dc.getDec() * solap);
 		}
 		LOG.debug("CACULA DEC :" + dec.toString());
 		return dec;

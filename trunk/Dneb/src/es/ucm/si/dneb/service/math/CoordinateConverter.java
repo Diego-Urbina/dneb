@@ -13,7 +13,7 @@ public class CoordinateConverter {
 		
 		/*SI(D29>0;D29+E29/60+F29/3600; D29-E29/60-F29/3600)*/
 		//dc.setDec(((double)(sc.getDech()<0 ? -1 : 1 ) * (double)Math.abs(sc.getDech()))+( (double)sc.getDecmin()/60)+((double)sc.getDecsec()/3600) );
-		dc.setDec(sc.getDech()>0 ? sc.getDech()+((double)sc.getDecmin()/60)+ ((double)sc.getDecsec()/3600): sc.getDech()-((double)sc.getDecmin()/60)-((double)sc.getDecsec()/3600));
+		dc.setDec(sc.getDech()>=0 ? sc.getDech()+((double)sc.getDecmin()/60)+ ((double)sc.getDecsec()/3600): sc.getDech()-((double)sc.getDecmin()/60)-((double)sc.getDecsec()/3600));
 		
 		return dc;
 	}
