@@ -11,7 +11,6 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -44,7 +43,6 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 
 	private static final long serialVersionUID = -7389267318471409502L;
 	
-	private ArrayList<Point> listaCentroides1, listaCentroides2;
 	private int numIm;
 	
 	private JScrollPane jsp1, jsp2;
@@ -58,15 +56,10 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	private ServicioGestionTareas servicioGestionTareas;
 	private ServiceBusquedaDobles serviceBusquedaDobles;
 
-	public CentroidsViewerPanel(ArrayList<Point> lc1, ArrayList<Point> lc2, int numIm, String f1, String f2) {
+	public CentroidsViewerPanel() {
 		initComponents();
 		servicioGestionTareas =(ServicioGestionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioGestionTareas");
 		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
-		listaCentroides1 = lc1;
-		listaCentroides2 = lc2;
-		this.numIm = numIm; // imagen que se procesa
-		
-		abrirImagenes(f1, f2);
 		
 		this.setLocationRelativeTo(null);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
