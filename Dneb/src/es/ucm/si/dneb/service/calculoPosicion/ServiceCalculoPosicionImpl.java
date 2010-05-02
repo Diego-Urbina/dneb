@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.print.resources.serviceui_zh_TW;
+
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.InformacionRelevante;
@@ -87,9 +89,9 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 		List<ParamProcTarea> paramProcTareas = pi.getTareaProcesamiento()
 				.getParametros();
-		double brillo = 0, umbral = 0, margenAngulo=0.15,margenDistancia=0.15,distMinima=4;
-		int limCandidatos=5,maxEstrellas = 70;
-		
+		double brillo = 0, umbral = 0, margenAngulo = 0.15, margenDistancia = 0.15, distMinima = 4;
+		int limCandidatos = 5, maxEstrellas = 70;
+
 		for (int i = 0; i < paramProcTareas.size(); i++) {
 			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 1) // brillo
 				brillo = paramProcTareas.get(i).getValorNum();
@@ -105,21 +107,23 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 				margenDistancia = paramProcTareas.get(i).getValorNum();
 			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 7) // distanciaMínima
 				distMinima = paramProcTareas.get(i).getValorNum();
-			
+
 		}
 
 		// Busco los datos de la estrella binaria a buscar
 
 		Imagen imagen = pi.getImagen();
 
-		algotirmoCalculoPosicion(brillo, umbral,limCandidatos,maxEstrellas,margenAngulo,margenDistancia,distMinima ,imagen);
+		algotirmoCalculoPosicion(brillo, umbral, limCandidatos, maxEstrellas,
+				margenAngulo, margenDistancia, distMinima, imagen);
 
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,int maxCandidatos, int maxEstrellas,double margenAngulo,double margenDistancia, double distanciaMinima,
-			Imagen imagen) {
+	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,
+			int maxCandidatos, int maxEstrellas, double margenAngulo,
+			double margenDistancia, double distanciaMinima, Imagen imagen) {
 
 		ArrayList<Point> points = new ArrayList<Point>();
 		/*
@@ -144,7 +148,8 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		if (dscList.size() < 1) {
 			LOG
 					.error("NO SE HA PODIDO LOCALIZAR LA INFORMACIÓN EN EL CATALOGO");
-			return points;
+			throw new ServiceCalculoPosicionException(
+					"NO SE HA PODIDO LOCALIZAR LA INFORMACIÓN EN EL CATALOGO");
 		}
 
 		DoubleStarCatalog dsc = dscList.get(0);
@@ -162,7 +167,6 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 			/* TODO ALGORITMO PARA PROBAR LA CERCANÍA DE DOS ESTRELLAS */
 
-			
 			int tipoAjuste = 0;
 
 			/**
@@ -172,9 +176,13 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 			 * Ajuste 2= Si la separación es muy grande es un problema porque el
 			 * rango es amplio y hay demasaidos datos, falsos positivos,
 			 * considerar como arreglarlos.
+			 * 
+			 * 
+			 * Es la magnitud de verdad relevante??? pk no parece que se corresponda el nº con la imgen
 			 */
+			LOG.info(dsc.toString());
 
-			if (dsc.getLastSeparation() < distanciaMinima) {
+			if (dsc.getLastSeparation() < distanciaMinima  || dsc.getFirstStarMagnitude()>=12 || dsc.getSecondStarMagnitude()>=12) {
 
 				tipoAjuste = 1;
 
@@ -205,12 +213,15 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 				Point cent;
 
 				int nRecuadros = recStars.size();
-				
-				if(nRecuadros>maxEstrellas){
-					
-					LOG.error("DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE");
-					
-					return points;
+
+				if (nRecuadros > maxEstrellas) {
+
+					LOG
+							.error("DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE");
+
+					throw new ServiceCalculoPosicionException(
+							"DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE"
+									+ dsc.toString());
 				}
 
 				for (int i = 0; i < nRecuadros; i++) {
@@ -278,18 +289,18 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						distancesList.add(distanceAux);
 					}
 				}
-				
-				List<InformacionRelevante> infoRels= new ArrayList<InformacionRelevante>();
+
+				List<InformacionRelevante> infoRels = new ArrayList<InformacionRelevante>();
 
 				for (Distance dist : distancesList) {
 
 					double sep = dsc.getLastSeparation();
 					double ang = dsc.getLastPosAnges();
 
-					if (((sep * (1-margenDistancia)) <= dist.getDistanceSeconds() && dist
-							.getDistanceSeconds() <= (sep * (1+margenDistancia)))
-							&& ((ang * (1-margenAngulo)) <= dist.getAngle() && dist
-									.getAngle() <= (ang * (1+margenAngulo)))) {
+					if (((sep * (1 - margenDistancia)) <= dist
+							.getDistanceSeconds() && dist.getDistanceSeconds() <= (sep * (1 + margenDistancia)))
+							&& ((ang * (1 - margenAngulo)) <= dist.getAngle() && dist
+									.getAngle() <= (ang * (1 + margenAngulo)))) {
 
 						LOG.info("PUNTOS DENTRO DE RANGO:" + dist.toString());
 
@@ -324,34 +335,39 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 					}
 
 				}
-				
-				if(infoRels.size()<=maxCandidatos){
-					for(InformacionRelevante ir : infoRels){
+
+				if (infoRels.size() <= maxCandidatos) {
+					for (InformacionRelevante ir : infoRels) {
 						manager.persist(ir);
 					}
-					
-				}else{
-					LOG.error("El número de resultados relevantes supera el máximo: Se descarta la imagen");
-					return new ArrayList<Point>();
-				}
 
-				if (tipoAjuste == 0) {
-					if (umbral < brillo) {
-						brillo = brillo - (brillo * 0.04);
-
-						LOG
-								.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
-										+ brillo + "UMBRAL: " + umbral);
-					} else {
-						sinRelevantes = false;
-					}
 				} else {
+					LOG
+							.error("El número de resultados relevantes supera el máximo: Se descarta la imagen");
+					throw new ServiceCalculoPosicionException(
+							"El número de resultados relevantes supera el máximo: Se descarta la imagen"
+									+ dsc.toString());
 
-					if (tipoAjuste == 1 && brillo < 100000) {
-						brillo = brillo + 2000;
-						umbral = umbral + 2000;
+				}
+				if (sinRelevantes) {
+					if (tipoAjuste == 0) {
+						if (umbral < brillo) {
+							brillo = brillo - (brillo * 0.04);
+
+							LOG
+									.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
+											+ brillo + "UMBRAL: " + umbral);
+						} else {
+							sinRelevantes = false;
+						}
 					} else {
-						sinRelevantes = false;
+
+						if (tipoAjuste == 1 && brillo < 80000) {
+							brillo = brillo + 2000;
+							umbral = umbral + 2000;
+						} else {
+							sinRelevantes = false;
+						}
 					}
 				}
 
