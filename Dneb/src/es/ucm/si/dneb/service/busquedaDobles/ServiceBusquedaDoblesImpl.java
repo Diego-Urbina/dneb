@@ -52,7 +52,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	@PersistenceContext
 	private EntityManager manager;
 	
-	
 	private static final Log LOG = LogFactory
 	.getLog(ServiceBusquedaDoblesImpl.class);
 		
@@ -75,7 +74,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		// Obtener nombre de ficheros y parametros configurables
 		Imagen im1 = procImgs.get(0).getImagen(), im2 = procImgs.get(1).getImagen();
-		String filename1 = im1.getRutaFichero(), filename2 = im2.getRutaFichero();
 		List<ParamProcTarea> paramProcTareas = procImgs.get(0).getTareaProcesamiento().getParametros();
 		double brillo = 0, umbral = 0;
 		for (int i = 0; i < paramProcTareas.size(); i++) {
@@ -85,7 +83,20 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				umbral = paramProcTareas.get(i).getValorNum();
 		}
 		
+		busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
+		
+		procImgs.get(0).setFinalizada(true);
+		procImgs.get(1).setFinalizada(true);
+		
+		manager.merge(procImgs.get(0));
+		manager.merge(procImgs.get(1));
+		
+	}
+	
+	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, Imagen im1, Imagen im2) {
 		try {
+			String filename1 = im1.getRutaFichero();
+			String filename2 = im2.getRutaFichero();
 			
 			BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
 			bw.write("\r\n***** Información de ejecución *****\r\n");
@@ -109,16 +120,20 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 
 			ArrayList<RectStar> recuadros1, recuadros2;
 			int nRecuadros = Math.min(sf1.getNumberOfStars(), sf2.getNumberOfStars());
-			LectorImageHDU aux;
+			LectorImageHDU auxLI;
+			Imagen auxIm;
 			int numMinIm; // número de la imagen con el número mínimo de estrellas
 			if (nRecuadros == sf1.getNumberOfStars()) {
 				recuadros1 = sf1.getRecuadros();
 				recuadros2 = sf2.getRecuadros();
 				numMinIm = 1;
 			} else {
-				aux = l1;
+				auxLI = l1;
 				l1 = l2;
-				l2 = aux;
+				l2 = auxLI;
+				auxIm = im1;
+				im1 = im2;
+				im2 = auxIm;
 				recuadros1 = sf2.getRecuadros();
 				recuadros2 = sf1.getRecuadros();
 				numMinIm = 2;
@@ -167,7 +182,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			double porcentaje = 0;
 			Point centroide, elegido;
 			ArrayList<Point> elegidos = new ArrayList<Point>();
-			ArrayList<Point> centroides = new ArrayList<Point>();
+			ArrayList<Point> centroidesFin = new ArrayList<Point>();
 			for (int i = 0; i < nRecuadros; i++) {
 				// Escalar el centroide
 				centroide = centroides1.get(i);
@@ -182,14 +197,14 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						int pos = elegidos.indexOf(elegido);
 						
 						// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
-						if (centroide.getDistancia(elegido) < centroides.get(pos).getDistancia(elegido)) {
-							centroides.remove(pos);
+						if (centroide.getDistancia(elegido) < centroidesFin.get(pos).getDistancia(elegido)) {
+							centroidesFin.remove(pos);
 							elegidos.remove(pos);
 							porcentaje--;
 						}
 					}
-					
-					centroides.add(centroide);
+
+					centroidesFin.add(centroide);
 					elegidos.add(elegido);
 					porcentaje++;
 				}
@@ -203,10 +218,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			// Y a la vez se calcula el error cuadratico medio inicial
 			double errorInicial = 0;
 			Point p1 = new Point(), p2 = new Point();
+			Point[][] resultado = new Point[2][centroidesFin.size()];
 			if (porcentaje >= 50) {
-				double[][] m1 = new double[centroides.size()][3], m2 = new double[elegidos.size()][3];
-				for (int i = 0; i < centroides.size(); i++) {
-					centroide = centroides.get(i);
+				double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
+				for (int i = 0; i < centroidesFin.size(); i++) {
+					centroide = centroidesFin.get(i);
 					m1[i][0] = centroide.getX();
 					m1[i][1] = centroide.getY();
 					m1[i][2] = 1;
@@ -223,7 +239,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					errorInicial += Math.pow(p1.getDistancia(p2), 2);
 				}
 				
-				errorInicial = Math.sqrt(errorInicial/centroides.size());
+				errorInicial = Math.sqrt(errorInicial/centroidesFin.size());
 				bw.write("\r\n\r\n6) Error cuadrático medio inicial: " + errorInicial);
 				
 				Matrix P = new Matrix(m1);
@@ -234,9 +250,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			    for (int i = 0; i < R.getRowDimension(); i++) {
 			    	p1.setX(R.get(i, 0));
 					p1.setY(R.get(i, 1));
-					p2.setX(Q.get(i, 0));
-					p2.setY(Q.get(i, 1));
-			    	errorFinal += Math.pow(p1.getDistancia(p2),2);
+					centroide = elegidos.get(i);
+			    	errorFinal += Math.pow(p1.getDistancia(centroide),2);
 			    }
 			    
 			    errorFinal = Math.sqrt(errorFinal/R.getRowDimension());
@@ -249,6 +264,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					m1 = new double[centroides1.size()][3];
 					for (int i = 0; i < centroides1.size(); i++) {
 						centroide = centroides1.get(i);
+						centroide.setX(centroide.getX() * scaleW);
+						centroide.setY(centroide.getY() * scaleH);
 						m1[i][0] = centroide.getX();
 						m1[i][1] = centroide.getY();
 						m1[i][2] = 1;
@@ -258,7 +275,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					
 					// Emparejamiento
 					elegidos.clear();
-					centroides.clear();
+					centroidesFin.clear();
+					ArrayList<Point> centroidesIni = new ArrayList<Point>();
 					porcentaje = 0.;
 					for (int i = 0; i < centroides1.size(); i++) {
 						centroide = new Point();
@@ -273,14 +291,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 								int pos = elegidos.indexOf(elegido);
 								
 								// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
-								if (centroide.getDistancia(elegido) < centroides.get(pos).getDistancia(elegido)) {
-									centroides.remove(pos);
+								if (centroide.getDistancia(elegido) < centroidesFin.get(pos).getDistancia(elegido)) {
+									centroidesFin.remove(pos);
 									elegidos.remove(pos);
 									porcentaje--;
 								}
 							}
 							
-							centroides.add(centroide);
+							centroidesIni.add(centroides1.get(i));
+							centroidesFin.add(centroide);
 							elegidos.add(elegido);
 							porcentaje++;
 						}
@@ -293,12 +312,12 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					// Si el porcentaje es mayor o igual que 50 calcular errores y ver cual es mayor que 2*desviacion tipica (candidato a que se haya movido)
 					double error, desviacion;
 					DescriptiveStatistics calcEstadisticos= new DescriptiveStatistics();
-					double[] errores = new double[centroides.size()];
+					double[] errores = new double[centroidesFin.size()];
 					if (porcentaje >= 50) {
 						// Calculo de la media, varianza y desviacion tipica
-						for (int i = 0; i < centroides.size(); i++) {
-							p1.setX(centroides.get(i).getX());
-							p1.setY(centroides.get(i).getY());
+						for (int i = 0; i < centroidesFin.size(); i++) {
+							p1.setX(centroidesFin.get(i).getX());
+							p1.setY(centroidesFin.get(i).getY());
 							p2.setX(elegidos.get(i).getX());
 							p2.setY(elegidos.get(i).getY());
 							error = p1.getDistancia(p2);
@@ -312,11 +331,13 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido:");
 						int cont = 1;
 						DecimalCoordinate dc;
-						PlanarImage pi = createPlanarImage(l1);
-						for (int i = 0; i < centroides.size(); i++) {
+						PlanarImage pi = createPlanarImage(l2);
+						for (int i = 0; i < centroidesFin.size(); i++) {
 							if (errores[i] > 2*desviacion) {
-								centroide = centroides.get(i);
-								dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
+								centroide = centroidesFin.get(i);
+								resultado[0][i] = centroidesIni.get(i);
+								resultado[1][i] = centroide;
+								dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
 								bw.write("\r\n\tCandidato " + cont + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
 								cont++;
 							}
@@ -327,21 +348,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			
 			bw.close();
 			JOptionPane.showMessageDialog(null, "Fichero de log creado en " + System.getProperty("user.dir"), "Información", JOptionPane.INFORMATION_MESSAGE);
-			
-			procImgs.get(0).setFinalizada(true);
-			procImgs.get(1).setFinalizada(true);
-			
-			manager.merge(procImgs.get(0));
-			manager.merge(procImgs.get(1));
+			return resultado;
 		
 		} catch (FitsException e) {
 			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		} catch (ServicioGestionProcesamientosException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
-		
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
@@ -432,7 +450,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		if (ar1 < 0) ar1 += 360;
 		
 		return new DecimalCoordinate(ar1, dec1);
-	} 
+	}
 	
 	public PlanarImage createPlanarImage(LectorImageHDU l) {
 		int[] arrayDataAplanado = (int[]) ArrayFuncs.flatten(l.getArrayData());
