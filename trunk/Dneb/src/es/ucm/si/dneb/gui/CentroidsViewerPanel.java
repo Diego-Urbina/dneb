@@ -10,10 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 
 import javax.swing.*;
 
+import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 import javax.media.jai.ROIShape;
@@ -44,9 +46,12 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	private static final long serialVersionUID = -7389267318471409502L;
 	
 	private int numIm;
+	private boolean hiloParado;
+	private HiloAnimacion hilo;
 	
 	private JScrollPane jsp1, jsp2;
 	private JTextField textFieldUmbral, textFieldBrillo;
+	private JButton buttonAnimar;
 	
 	private LectorImageHDU l1, l2;
 	private PlanarImage input1, input2;
@@ -60,17 +65,12 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 		initComponents();
 		servicioGestionTareas =(ServicioGestionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioGestionTareas");
 		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
-		
-		this.setLocationRelativeTo(null);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.setTitle("Visor de centroides");
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		hiloParado = true;
 	}
 	
 	private void initComponents() {
 		setLayout(new GridBagLayout());
-	    GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints c = new GridBagConstraints();
 	    
 	    jsp1 = new JScrollPane();
 	    c.gridx = 0;
@@ -87,9 +87,9 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	    c.gridy = 0;
 	    add(jsp2, c);
 	    
-	    JPanel panel = new JPanel();
-	    GroupLayout layout = new GroupLayout(panel);
-	    panel.setLayout(layout);
+	    JPanel panel2 = new JPanel();
+	    GroupLayout layout = new GroupLayout(panel2);
+	    panel2.setLayout(layout);
 	    
 	    layout.setAutoCreateGaps(true);
 	    layout.setAutoCreateContainerGaps(true);
@@ -121,7 +121,7 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			}
 		});
 	    
-	    JButton buttonAnimar = new JButton();
+	    buttonAnimar = new JButton();
 	    buttonAnimar.setIcon(new ImageIcon("images/starticon.gif"));
 	    buttonAnimar.setToolTipText("Animación de imágenes");
 	    buttonAnimar.addActionListener(new ActionListener() {
@@ -172,7 +172,7 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	    c.gridheight = 1;
 	    c.fill = GridBagConstraints.NONE;
 	    c.weightx = 0.0;
-	    add(panel, c);
+	    add(panel2, c);
 		
 	    // Horizontal scroll bar of the first image.
 	    jsp1.getHorizontalScrollBar().addAdjustmentListener(this);
@@ -183,10 +183,18 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	    // Vertical scroll bar of the second image.
 	    jsp2.getVerticalScrollBar().addAdjustmentListener(this);
 	    
-		setVisible(true);
+	    this.setLocationRelativeTo(null);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setTitle("Visor de centroides");
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setVisible(true);
 	}
 	
 	private void buttonRestaurarActionPerformed(ActionEvent e) {
+		restaurar();
+	}
+	
+	private void restaurar() {
 		display1.deleteROIs();
 		display2.deleteROIs();
 		display1.set(input1);
@@ -241,8 +249,29 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	}
 	
 	private void buttonAnimarActionPerformed(ActionEvent e) {
-		jsp1.setVisible(false);
-		display1.setVisible(false);
+		try {
+			if (l1 == null || l2 == null)
+				throw new Exception("Debe cargar primero dos imágenes");
+			
+			restaurar();
+			
+			jsp1.setVisible(!hiloParado);
+			
+			if (hiloParado) {
+				PlanarImage[] imagenes = {input1, input2};
+				hilo = new HiloAnimacion(imagenes, display2, 400, 400);
+				hilo.start();
+				buttonAnimar.setIcon(new ImageIcon("images/stop_icon.gif"));
+			} else {
+				hilo.detenerHilo();
+				buttonAnimar.setIcon(new ImageIcon("images/starticon.gif"));
+				display2.set(input2);
+			}
+			
+			hiloParado = !hiloParado;
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void buttonProcesarActionPerformed(ActionEvent e) {
@@ -250,6 +279,8 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 		try {
 			if (l1 == null || l2 == null)
 				throw new Exception("Debe cargar primero dos imágenes");
+			
+			restaurar();
 			
 			double umbral, brillo;
 			umbral = Double.parseDouble(textFieldUmbral.getText());
@@ -340,26 +371,67 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	    }
 	}
 	
-	class HiloAnimacion implements Runnable {
+	class HiloAnimacion extends Thread {
 		
 		private PlanarImage[] imagenes;
+		private DisplayImageWithRegions display;
+		private float scaleW, scaleH;
+		private boolean continuar;
 		
-		public HiloAnimacion(PlanarImage[] ims) {
+		public HiloAnimacion(PlanarImage[] ims, DisplayImageWithRegions dis, float scW, float scH) {
 			imagenes = ims;
+			display = dis;
+			scaleW = scW;
+			scaleH = scW;
+			continuar = true;
+			
+			igualarDimensiones();
 		}
 		
 		@Override
 		public void run() {
 			int cont = 0;
-			while (true) {
+			while (continuar) {
 				try {
-					display1.set(imagenes[cont]);
+					display.set(imagenes[cont]);
 					cont = (cont+1)%2;
 					Thread.sleep(500);
 				} catch(InterruptedException e) {}
 			}
 		}
 		
+		private void igualarDimensiones() {			
+			float sW, sH;
+			PlanarImage auxIm;
+			int cont = 0;
+			
+			for (PlanarImage pi : imagenes) {
+				sW = scaleW / imagenes[cont].getWidth();
+				sH = scaleH / imagenes[cont].getHeight();
+				
+				ParameterBlock pb = new ParameterBlock();
+				InterpolationNearest in = new InterpolationNearest();
+				pb.addSource(pi);
+				pb.add(sW);
+				pb.add(sH);
+				pb.add(0.0F);
+				pb.add(0.0F);
+				pb.add(in);
+				auxIm = JAI.create("scale", pb);
+				imagenes[cont] = auxIm;
+				
+				cont++;
+			}
+		}
+		
+		public void detenerHilo() {
+			continuar = false;
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		new CentroidsViewerPanel();
 	}
 
 }
