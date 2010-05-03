@@ -96,6 +96,7 @@ public class VentanaPcpal extends JFrame{
 		this.consultarCatalogo.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		this.visualizador.setIcon(new ImageIcon("images/icon_viewer.png"));
 		this.visualizadorDebug.setIcon(new ImageIcon("images/icon_viewer.png"));
+		this.visorCentroides.setIcon(new ImageIcon("images/icon_viewer.png"));
 		this.nueProcEstDob.setIcon(new ImageIcon("images/new Process Icon.JPG"));
 		
 		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
@@ -109,6 +110,9 @@ public class VentanaPcpal extends JFrame{
 		
 		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
+		
+		
+		
 	}
 	
 
@@ -332,6 +336,14 @@ public class VentanaPcpal extends JFrame{
 		
 	}
 
+	private void visorCentroidesActionPerformed(ActionEvent e) {
+		CentroidsViewerPanel  visu =new CentroidsViewerPanel();
+		
+		pane.add("VISOR CENTROIDES",visu);
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
 	
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -353,6 +365,7 @@ public class VentanaPcpal extends JFrame{
 		menuCatalogoED = new JMenuItem();
 		menu5 = new JMenu();
 		visualizador = new JMenuItem();
+		visorCentroides = new JMenuItem();
 		visualizadorDebug = new JMenuItem();
 		nueProcEstDob = new JMenuItem();
 		buscar = new JMenuItem();
@@ -369,7 +382,8 @@ public class VentanaPcpal extends JFrame{
 		setIconImage(null);
 		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
-		
+		//contentPane.setLayout(null);
+
 		//======== menuBar1 ========
 		{
 
@@ -517,6 +531,15 @@ public class VentanaPcpal extends JFrame{
 					}
 				});
 				menu5.add(visualizador);
+
+				//---- visorCentroides ----
+				visorCentroides.setText("VISUALIZADOR CENTROIDES");
+				visorCentroides.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						visorCentroidesActionPerformed(e);
+					}
+				});
+				menu5.add(visorCentroides);
 
 				//---- visualizadorDebug ----
 				visualizadorDebug.setText("VISUALIZADOR DEBUG");
@@ -669,6 +692,7 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem menuCatalogoED;
 	private JMenu menu5;
 	private JMenuItem visualizador;
+	private JMenuItem visorCentroides;
 	private JMenuItem visualizadorDebug;
 	private JMenuItem nueProcEstDob;
 	private JMenuItem buscar;
