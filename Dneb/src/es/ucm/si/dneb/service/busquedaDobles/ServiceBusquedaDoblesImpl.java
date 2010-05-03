@@ -329,16 +329,16 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						
 						// Calcular candidatos a haberse movido
 						bw.write("\r\n\r\n11) Lista de candidatos a haberse movido:");
-						int cont = 1;
+						int cont = 0;
 						DecimalCoordinate dc;
 						PlanarImage pi = createPlanarImage(l2);
 						for (int i = 0; i < centroidesFin.size(); i++) {
 							if (errores[i] > 2*desviacion) {
 								centroide = centroidesFin.get(i);
-								resultado[0][i] = centroidesIni.get(i);
-								resultado[1][i] = centroide;
+								resultado[0][cont] = centroidesIni.get(i);
+								resultado[1][cont] = centroide;
 								dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
-								bw.write("\r\n\tCandidato " + cont + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
+								bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
 								cont++;
 							}
 						}
