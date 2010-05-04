@@ -196,7 +196,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		});
 	    
 	    buttonDistancia = new JButton();
-	    buttonDistancia.setIcon(new ImageIcon("images/distance_icon.gif"));
+	    buttonDistancia.setIcon(new ImageIcon("images/distance2.jpg"));
 	    buttonDistancia.setToolTipText("Medir distancia entre dos puntos en la imagen");
 	    buttonDistancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -244,9 +244,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			calculoDistancia = !calculoDistancia;
 			
 			if (!calculoDistancia)
-				buttonDistancia.setIcon(new ImageIcon("images/distance_icon.gif"));
+				buttonDistancia.setIcon(new ImageIcon("images/distance2.jpg"));
 			else
-				buttonDistancia.setIcon(new ImageIcon("images/stop_icon.gif"));
+				buttonDistancia.setIcon(new ImageIcon("images/stop_icon2.png"));
 			
 			scale = 100;
 			display.deleteROIs();
