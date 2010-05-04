@@ -170,6 +170,16 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 			}
 		});
 	    
+	    JButton buttonED = new JButton();
+	    icon = new ImageIcon("images/staricon2.jpg");
+	    buttonED.setIcon(icon);
+	    buttonED.setToolTipText("Buscar estrellas dobles en la imagen");
+	    buttonED.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEDActionPerformed(e);
+			}
+		});
+	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
 	    textFieldUmbral = new JTextField("30000");
@@ -183,6 +193,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		           .addComponent(buttonZoomMenos)
 		           .addComponent(buttonRestaurar)
 		           .addComponent(buttonBuscar)
+		           .addComponent(buttonED)
 		           .addGap(20, 20, 20)
 		           .addGroup(layout.createSequentialGroup()
 		        		   .addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
@@ -199,6 +210,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		      .addComponent(buttonZoomMenos)
 		      .addComponent(buttonRestaurar)
 		      .addComponent(buttonBuscar)
+		      .addComponent(buttonED)
 		      .addGap(20, 20, 20)
 		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 		    		  .addComponent(labelUmbral)
@@ -239,6 +251,18 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		scaledIm2 = input2;
 		jsp1.repaint();
 		jsp2.repaint();
+	}
+	
+	private void buttonEDActionPerformed(ActionEvent e) {
+		try {
+			if (l1 == null || l2 == null)
+				throw new Exception("Debe cargar primero dos imágenes");
+			
+			
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void buttonZoomMasActionPerformed(ActionEvent e) {

@@ -83,7 +83,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				umbral = paramProcTareas.get(i).getValorNum();
 		}
 		
-		busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
+		busquedaEstrellasDobles(umbral, brillo, im1, im2);
 		
 		procImgs.get(0).setFinalizada(true);
 		procImgs.get(1).setFinalizada(true);
@@ -362,6 +362,10 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
+	}
+	
+	public Point[][] busquedaEstrellasDobles(double umbral, double brillo, Imagen im1, Imagen im2) {
+		return busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,

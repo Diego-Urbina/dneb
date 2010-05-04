@@ -16,6 +16,8 @@ public interface ServiceBusquedaDobles {
 	
 	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, Imagen im1, Imagen im2);
 	
+	public Point[][] busquedaEstrellasDobles(double umbral, double brillo, Imagen im1, Imagen im2);
+	
 	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y);
 
 	public PlanarImage createPlanarImage(LectorImageHDU l);
