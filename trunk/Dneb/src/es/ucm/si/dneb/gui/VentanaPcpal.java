@@ -210,7 +210,7 @@ public class VentanaPcpal extends JFrame{
 
 	private void visualizadorActionPerformed(ActionEvent e) {
 		
-		ImageRegionApp config = new ImageRegionApp(this);
+		DoubleStarsViewerPanel config = new DoubleStarsViewerPanel(this);
 		pane.addTab("Visualizador dobles", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
