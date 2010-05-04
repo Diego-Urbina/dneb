@@ -120,7 +120,7 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 		});
 	    
 	    buttonAnimar = new JButton();
-	    buttonAnimar.setIcon(new ImageIcon("images/starticon.gif"));
+	    buttonAnimar.setIcon(new ImageIcon("images/starticon2.jpg"));
 	    buttonAnimar.setToolTipText("Animación de imágenes");
 	    buttonAnimar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -260,10 +260,10 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 				float sH = Math.min(input1.getHeight(), input2.getHeight());
 				hilo = new HiloAnimacion(imagenes, display2, sW, sH);
 				hilo.start();
-				buttonAnimar.setIcon(new ImageIcon("images/stop_icon.gif"));
+				buttonAnimar.setIcon(new ImageIcon("images/stop_icon2.png"));
 			} else {
 				hilo.detenerHilo();
-				buttonAnimar.setIcon(new ImageIcon("images/starticon.gif"));
+				buttonAnimar.setIcon(new ImageIcon("images/starticon2.jpg"));
 				display2.set(input2);
 			}
 			

@@ -2,15 +2,9 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.renderable.ParameterBlock;
 
-import javax.media.jai.Histogram;
-import javax.media.jai.InterpolationNearest;
-import javax.media.jai.JAI;
-import javax.media.jai.PlanarImage;
 import javax.swing.*;
 
-import es.ucm.si.dneb.service.image.app.ImageRegionApp;
 import es.ucm.si.dneb.service.image.histograma.DisplayHistogramApp;
 
 
