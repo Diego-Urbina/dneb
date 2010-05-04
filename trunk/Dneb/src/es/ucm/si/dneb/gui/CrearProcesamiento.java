@@ -204,16 +204,12 @@ public class CrearProcesamiento extends JPanel {
 	
 	private void cbTipoProcActionPerformed(ActionEvent e) {
 		if (cbTipoProc.getSelectedIndex() == 0) { // busqueda estrellas dobles
-			labelUmbral.setVisible(true);
-		    labelBrillo.setVisible(true);
-			textFieldUmbral.setVisible(true);
-		    textFieldBrillo.setVisible(true);
+			labelMaxResRel.setVisible(false);
+			maxResRelevantes.setVisible(false);
 		}
 		else { // calculo de distancias
-			labelUmbral.setVisible(true);
-		    labelBrillo.setVisible(true);
-			textFieldUmbral.setVisible(true);
-		    textFieldBrillo.setVisible(true);
+			labelMaxResRel.setVisible(true);
+			maxResRelevantes.setVisible(true);
 		}
 	}
 	
@@ -224,10 +220,12 @@ public class CrearProcesamiento extends JPanel {
 		cbTipoProc = new JComboBox(servicioGestionProcesamientos.getTiposProcesamiento().toArray());
 		labelUmbral = new JLabel("Umbral");
 	    labelBrillo = new JLabel("Brillo");
-	    this.labelMaxResRel= new JLabel("Maximo candidatos");
-		textFieldUmbral = new JTextField("20000");
-	    textFieldBrillo = new JTextField("30000");
-	    this.maxResRelevantes= new JTextField("4");
+	    labelMaxResRel= new JLabel("Máximos candidatos");
+	    labelMaxResRel.setVisible(false);
+		textFieldUmbral = new JTextField("30000");
+	    textFieldBrillo = new JTextField("32000");
+	    maxResRelevantes= new JTextField("4");
+	    maxResRelevantes.setVisible(false);
 		
 		{
 			modelo = new DefaultTableModel(
@@ -319,16 +317,16 @@ public class CrearProcesamiento extends JPanel {
 						.addGroup(layout.createSequentialGroup()
 							.addComponent(cbTipoProc, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 							.addGap(50, 50, 50)
-							.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 								.addGroup(layout.createSequentialGroup()
-										.addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+										.addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 						        		.addComponent(textFieldUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 								.addGroup(layout.createSequentialGroup()
-										.addComponent(labelBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+										.addComponent(labelBrillo, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 								        .addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 								.addGroup(layout.createSequentialGroup()
-										.addComponent(this.labelMaxResRel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-										.addComponent(this.maxResRelevantes, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))        ))
+										.addComponent(labelMaxResRel, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+										.addComponent(maxResRelevantes, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))        ))
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
@@ -346,11 +344,15 @@ public class CrearProcesamiento extends JPanel {
 							.addGap(10, 10, 10)
 							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 					    		.addComponent(labelBrillo)
-					    		.addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))))
+					    		.addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+				    		.addGap(10, 10, 10)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					    		.addComponent(labelMaxResRel)
+					    		.addComponent(maxResRelevantes, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))))
 					.addGap(40, 40, 40)
 					.addComponent(buttonSiguiente)
 					.addGap(40, 40, 40))
 		);
 	}
-
+	
 }

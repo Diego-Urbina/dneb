@@ -60,15 +60,12 @@ public class MapPanel extends JPanel {
 				ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 				ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
 				servicioCreacionTareas.crearTarea(principal.ari, principal.arf, principal.deci, principal.decf, Double.parseDouble(principal.alto), Double.parseDouble(principal.ancho), Double.parseDouble(principal.solapamiento), principal.survey1, principal.survey2, "fits", principal.ruta);
+				principal.getPane().remove(position);
+				JOptionPane.showMessageDialog(null,"Tarea creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/TASKICON.JPG"));
 			}
 		} catch(ServicioGestionTareasException ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-		
-		principal.getPane().remove(position);
-		
-		JOptionPane.showMessageDialog(null,"Tarea creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/TASKICON.JPG"));
-		
 		
 	}
 
