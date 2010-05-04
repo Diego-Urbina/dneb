@@ -289,8 +289,10 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			
 			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(umbral, brillo, filename1, filename2, null, null);
 			
-			if (centroides == null)
+			if (centroides == null || centroides[0][0] == null || centroides[1][0] == null) {
+				JOptionPane.showMessageDialog(null, "No se han encontrado estrellas en movimiento", "Información", JOptionPane.INFORMATION_MESSAGE);
 				return;
+			}
 			
 			display1.deleteROIs();
 			display1.set(input1);

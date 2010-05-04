@@ -336,7 +336,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 							if (errores[i] > 2*desviacion) {
 								centroide = centroidesFin.get(i);
 								resultado[0][cont] = centroidesIni.get(i);
-								resultado[1][cont] = centroide;
+								resultado[1][cont] = elegidos.get(i);
 								if (im2 != null) { // para el caso en que se llama desde interfaz
 									dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
 									bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
@@ -370,7 +370,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio de 20 pixeles
 		
-		double radioBusqueda = 20; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
+		double radioBusqueda = 15; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
 		double tamRecLim = 1.5; // El area del rectangulo debera estar entre un rango determinado
 		Point aux;
 		double distancia, distanciaMin = 0, brillo, brilloParecido = 0, brilloEscalado;
