@@ -16,16 +16,9 @@ public class VentanaPcpal extends JFrame{
 	
 	//Control del número de pestañas de seguimiento abiertas
 	private MonitorProcesamiento procesamientoDobles;
-	private TaskPanel taskPanel;
+	private TaskPanel taskPanel;	
+	private JTabbedPane pane = new JTabbedPane();
 	
-	private int numTaskPanels=0;
-	private int maxTaskPanels=1;
-	
-	private int numProces=0;
-	private int maxProces=1;
-	
-	
-	private JTabbedPane  pane= new JTabbedPane();
 	
 	public VentanaPcpal(){
 		
@@ -60,8 +53,7 @@ public class VentanaPcpal extends JFrame{
 	}
 	
 	 public void initTabComponent(int i) {
-	        pane.setTabComponentAt(i,
-	                 new ButtonTabComponent(pane));
+	        pane.setTabComponentAt(i, new ButtonTabComponent(pane));
 	}  
 	
 	private void initIcons(){
@@ -104,243 +96,238 @@ public class VentanaPcpal extends JFrame{
 		
 		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
 		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
-		
-		
-		
 	}
 	
 
+	// ------------- CREACION PESTAÑAS -------------
+	
+	// --------- Nueva tarea ---------
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
 		pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
+	// --------- Gestor tareas ---------
 	private void gestorTareasActionPerformed(ActionEvent e) {		
 		JPanel vent = new TaskPanel(this);
 		pane.addTab("Gestor de tareas", vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);		
 	}
 	
-	private void crearProcesamientoActionPerformed(ActionEvent e) {
-		JPanel panel = new CrearProcesamiento(this);
-		pane.addTab("Crear procesamientos", panel);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-	}
-
+	
+	
+	
+	
+	// --------- Crear Descarga ---------
 	private void crearDescargaActionPerformed(ActionEvent e) {
 		JPanel vent = new CreateNewDownload(this,pane.getTabCount());
-		pane.addTab("Nueva Imagen", vent);
+		pane.addTab("Crear descarga", vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
+	// --------- Configurar descargas ---------
 	private void gestionarDescargasConfigActionPerformed(ActionEvent e) {
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig(this);
-		pane.addTab("Configurar Descargas", config);
+		pane.addTab("Configurar descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
-
+	
+	
+	
+	
+	
+	// --------- Configurar BBDD ---------
 	private void configBBDDActionPerformed(ActionEvent e) {
 		DataBaseConfig dataBaseConfig = new DataBaseConfig(this);
-		pane.addTab("Configurar Base de Datos", dataBaseConfig);
+		pane.addTab("Configurar BBDD", dataBaseConfig);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
+	// --------- Configurar descargas ---------
 	private void configDownloadActionPerformed(ActionEvent e) {
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig(this);
-		pane.addTab("Configurar Descargas", config);
+		pane.addTab("Configurar descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
-
+	
+	
+	
+	
+	
+	// --------- Exportar XML ---------
+	private void exportRelevantXMLActionPerformed(ActionEvent e) {
+		pane.addTab("Exportar XML", new ExportarXMl());
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		setVisible(true);		
+	}
+	
+	
+	
+	
+	
+	// --------- Importar desde BBDD ---------
 	private void importBBDDActionPerformed(ActionEvent e) {
-
 		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD(this,pane.getTabCount());
-		pane.addTab("Configurar Descargas", imptBBDD);
+		pane.addTab("Importar desde BBDD", imptBBDD);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
-		
 	}
 
+	// --------- Importar desde XML ---------
 	private void importXMLActionPerformed(ActionEvent e) {
 		// TODO add your code here
 	}
+	
+	// --------- Importar catálogo ---------
+	private void menuCatalogoEDActionPerformed(ActionEvent e) {
+		pane.addTab("Importar catálogo", new ImportarCatalogo());
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		setVisible(true);
+	}
+	
+	
+	
+	
 
+	// --------- Visor dobles ---------
+	private void visualizadorActionPerformed(ActionEvent e) {
+		pane.addTab("Visor dobles", new DoubleStarsViewerPanel(this));
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		setVisible(true);
+	}
+	
+	// --------- Visor centroides ---------
+	private void visorCentroidesActionPerformed(ActionEvent e) {
+		CentroidsViewerPanel  visu =new CentroidsViewerPanel();
+		
+		pane.add("Visor centroides",visu);
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+	
+	// --------- Visor debug ---------
+	private void visualizadorDebugActionPerformed(ActionEvent e) {
+		FitsCoordinateViewerPanel visu =new FitsCoordinateViewerPanel();
+		
+		pane.add("Visor debug",visu);
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+	
+	// --------- Crear procesamiento ---------
+	private void nueProcEstDobActionPerformed(ActionEvent e) {
+		pane.add("Crear procesamiento",new CrearProcesamiento(this));
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
+	// --------- Monitor de procesamientos ---------
+	private void buscarActionPerformed(ActionEvent e) {
+		MonitorProcesamiento prDobles= new MonitorProcesamiento(this);
+		pane.addTab("Monitor de procesamientos", prDobles);
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		setVisible(true);
+	}
+
+	// --------- Consultar catálogo ---------
+	private void consultarCatalogoActionPerformed(ActionEvent e) {
+		pane.addTab("Consultar catálogo", new JScrollPane(new ConsultarCatalogo()));
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		setVisible(true);
+	}
+	
+	// --------- Conversor de coordenadas ---------
+	private void conversorActionPerformed(ActionEvent e) {
+		pane.add("Conversor de coordenadas",new CoordinateConverter());
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+	
+	// --------- Calculadora distancias ---------
+	private void distanciasActionPerformed(ActionEvent e) {
+		pane.add("Calculadora distancias",new CalcularDistanciaForm());
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+	
+	// --------- Histograma ---------
+	private void histogramaActionPerformed(ActionEvent e) {
+		JScrollPane sp= new JScrollPane(new DisplayHistogramApp());
+		    
+	    pane.add("Histograma",sp);
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);	
+	}
+	
+	
+	
+	
+	
+	// --------- WDSC ---------
+	private void importInfoActionPerformed(ActionEvent e) {
+		pane.addTab("WDSC", new WdsHelp());
+		this.initTabComponent(pane.getTabCount()-1);
+		pane.setSelectedIndex(pane.getTabCount()-1);
+		
+		setVisible(true);
+	}
+
+	private void formaCoordActionPerformed(ActionEvent e) {
+		pane.add("Información coordenadas",new CoordinatesFormat());
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+
+	private void dnebInfoActionPerformed(ActionEvent e) {
+		pane.add("DNEB",new BackgroundPanel(pane));
+	    this.initTabComponent(pane.getTabCount()-1);
+	    pane.setSelectedIndex(pane.getTabCount()-1);
+	}
+	
+	
+	
+	
+	
+	
 	public JTabbedPane getPane() {
 		return pane;
 	}
 	public void setPane(JTabbedPane pane) {
 		this.pane = pane;
 	}
-
-	private void visualizadorActionPerformed(ActionEvent e) {
-		
-		DoubleStarsViewerPanel config = new DoubleStarsViewerPanel(this);
-		pane.addTab("Visualizador dobles", config);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-		
-		
-	}
-
-	private void buscarActionPerformed(ActionEvent e) {
-		MonitorProcesamiento prDobles= new MonitorProcesamiento(this);
-		pane.addTab("Monitor de Procesamientos", prDobles);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-	}
-
-	private void menuCatalogoEDActionPerformed(ActionEvent e) {
-		
-		ImportarCatalogo importarCatalogo = new ImportarCatalogo();
-		
-		pane.addTab("Importar catálogo", importarCatalogo);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-	}
-
-	private void exportRelevantXMLActionPerformed(ActionEvent e) {
-		
-		ExportarXMl expXml = new ExportarXMl();
-		
-		pane.addTab("Exportar XML", expXml);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);		
-	}
-
-	private void consultarCatalogoActionPerformed(ActionEvent e) {
-		
-		ConsultarCatalogo consultarCatalogo = new ConsultarCatalogo();
-		
-		JScrollPane sp= new JScrollPane(consultarCatalogo);
-		 
-		pane.addTab("Consultar catálogo", sp);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-	}
-
-	private void importInfoActionPerformed(ActionEvent e) {
-		
-		WdsHelp wdsHelp = new WdsHelp();
-		
-		pane.addTab("WDSC", wdsHelp);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		//this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		setVisible(true);
-	}
-
-	private void dnebInfoActionPerformed(ActionEvent e) {
-
-		pane.add("DNEB",new BackgroundPanel(pane));
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
-	private void nueProcEstDobActionPerformed(ActionEvent e) {
-		pane.add("CREAR PROCESAMIENTO",new CrearProcesamiento(this));
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
-	private void formaCoordActionPerformed(ActionEvent e) {
-		pane.add("INFORMACIÓN COORDENADAS",new CoordinatesFormat());
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
-	private void conversorActionPerformed(ActionEvent e) {
-		pane.add("CONVERSOR COORDENADAS",new CoordinateConverter());
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
-	private void distanciasActionPerformed(ActionEvent e) {
-		pane.add("CALCULADORA DISTANCIAS",new CalcularDistanciaForm());
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
-	private void visualizadorDebugActionPerformed(ActionEvent e) {
-		
-		 		
-		FitsCoordinateViewerPanel visu =new FitsCoordinateViewerPanel();
-		
-		pane.add("VISUALIZADOR DEBUG",visu);
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
-	private void histogramaActionPerformed(ActionEvent e) {
-		
-		  	
-		    DisplayHistogramApp visu= new DisplayHistogramApp();
-		    
-		    JScrollPane sp= new JScrollPane(visu);
-		    
-		    pane.add("VISUALIZADOR DEBUG",sp);
-		    this.initTabComponent(pane.getTabCount()-1);
-		    pane.setSelectedIndex(pane.getTabCount()-1);
-		    
-		
-	}
-
-	private void visorCentroidesActionPerformed(ActionEvent e) {
-		CentroidsViewerPanel  visu =new CentroidsViewerPanel();
-		
-		pane.add("VISOR CENTROIDES",visu);
-	    this.initTabComponent(pane.getTabCount()-1);
-	    pane.setSelectedIndex(pane.getTabCount()-1);
-	}
-
 	
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
 		crearNuevaTarea = new JMenuItem();
@@ -374,7 +361,7 @@ public class VentanaPcpal extends JFrame{
 
 		//======== this ========
 		setIconImage(null);
-		setTitle("DNEB (DETECCI\u00d3N DE NUEVAS ESTRELLAS BINARIAS)");
+		setTitle("DNEB (DETECCIÓN DE NUEVAS ESTRELLAS BINARIAS)");
 		Container contentPane = getContentPane();
 		//contentPane.setLayout(null);
 
@@ -503,7 +490,7 @@ public class VentanaPcpal extends JFrame{
 				menu4.add(importXML);
 
 				//---- menuCatalogoED ----
-				menuCatalogoED.setText("IMPORTAR CAT\u00c1LOGO ESTRELLAS DOBLES");
+				menuCatalogoED.setText("IMPORTAR CATÁLOGO ESTRELLAS DOBLES");
 				menuCatalogoED.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						menuCatalogoEDActionPerformed(e);
@@ -518,7 +505,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.setText("UTILIDADES");
 
 				//---- visualizador ----
-				visualizador.setText("VISUALIZADOR DOBLES");
+				visualizador.setText("VISOR DOBLES");
 				visualizador.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						visualizadorActionPerformed(e);
@@ -527,7 +514,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.add(visualizador);
 
 				//---- visorCentroides ----
-				visorCentroides.setText("VISUALIZADOR CENTROIDES");
+				visorCentroides.setText("VISOR CENTROIDES");
 				visorCentroides.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						visorCentroidesActionPerformed(e);
@@ -536,7 +523,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.add(visorCentroides);
 
 				//---- visualizadorDebug ----
-				visualizadorDebug.setText("VISUALIZADOR DEBUG");
+				visualizadorDebug.setText("VISOR DEBUG");
 				visualizadorDebug.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						visualizadorDebugActionPerformed(e);
@@ -563,7 +550,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.add(buscar);
 
 				//---- consultarCatalogo ----
-				consultarCatalogo.setText("CONSULTAR CAT\u00c1LOGO");
+				consultarCatalogo.setText("CONSULTAR CATÁLOGO");
 				consultarCatalogo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						consultarCatalogoActionPerformed(e);
@@ -581,7 +568,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.add(conversor);
 
 				//---- distancias ----
-				distancias.setText("CALCULO DISTANCIAS");
+				distancias.setText("CÁLCULO DISTANCIAS");
 				distancias.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						distanciasActionPerformed(e);
@@ -605,7 +592,7 @@ public class VentanaPcpal extends JFrame{
 				menu7.setText("AYUDA");
 
 				//---- importInfo ----
-				importInfo.setText("IMPORTAR CAT\u00c1LOGO");
+				importInfo.setText("IMPORTAR CATÁLOGO");
 				importInfo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						importInfoActionPerformed(e);
@@ -634,23 +621,6 @@ public class VentanaPcpal extends JFrame{
 			menuBar1.add(menu7);
 		}
 		setJMenuBar(menuBar1);
-
-		{ // compute preferred size
-			Dimension preferredSize = new Dimension();
-			for(int i = 0; i < contentPane.getComponentCount(); i++) {
-				Rectangle bounds = contentPane.getComponent(i).getBounds();
-				preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-				preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-			}
-			Insets insets = contentPane.getInsets();
-			preferredSize.width += insets.right;
-			preferredSize.height += insets.bottom;
-			contentPane.setMinimumSize(preferredSize);
-			contentPane.setPreferredSize(preferredSize);
-		}
-		setSize(400, 300);
-		setLocationRelativeTo(getOwner());
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
 	public void setProcesamientoDobles(MonitorProcesamiento procesamientoDobles) {
@@ -667,7 +637,7 @@ public class VentanaPcpal extends JFrame{
 		return taskPanel;
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+	
 	private JMenuBar menuBar1;
 	private JMenu menu1;
 	private JMenuItem crearNuevaTarea;
@@ -698,5 +668,4 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem importInfo;
 	private JMenuItem formaCoord;
 	private JMenuItem dnebInfo;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

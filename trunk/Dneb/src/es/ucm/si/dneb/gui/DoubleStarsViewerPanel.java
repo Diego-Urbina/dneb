@@ -73,9 +73,6 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		sf2 = new StarFinder();
 		scale = 100;
 		initComponents();
-		
-		parent.setLocationRelativeTo(null);
-		parent.setMinimumSize(new Dimension(105, 330));
 	    
 		parent.add(this);
 		parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
