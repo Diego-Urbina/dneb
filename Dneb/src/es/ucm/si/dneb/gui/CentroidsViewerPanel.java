@@ -31,9 +31,7 @@ import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
-import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
-import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
@@ -48,6 +46,7 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	private int numIm;
 	private boolean hiloParado;
 	private HiloAnimacion hilo;
+	private String filename1, filename2;
 	
 	private JScrollPane jsp1, jsp2;
 	private JTextField textFieldUmbral, textFieldBrillo;
@@ -55,15 +54,12 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	
 	private LectorImageHDU l1, l2;
 	private PlanarImage input1, input2;
-	private Imagen im1, im2;
 	private DisplayImageWithRegions display1, display2;
 	
-	private ServicioGestionTareas servicioGestionTareas;
 	private ServiceBusquedaDobles serviceBusquedaDobles;
 
 	public CentroidsViewerPanel() {
 		initComponents();
-		servicioGestionTareas =(ServicioGestionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioGestionTareas");
 		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
 		hiloParado = true;
 	}
@@ -211,15 +207,17 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			Fits imagenFITS = new Fits(new File(file1));
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
 			l1 = new LectorImageHDU(imageHDU, file1);
-			JAI.create("filestore", serviceBusquedaDobles.createPlanarImage(l1), "Temp/im3.png", "PNG");
-			input1 = JAI.create("fileload", "Temp/im3.png");
+			PlanarImage im = serviceBusquedaDobles.createPlanarImage(l1);
+			JAI.create("filestore", im, "Temp/im1.png", "PNG");
+			input1 = JAI.create("fileload", "Temp/im1.png");
 			display1 = new DisplayImageWithRegions(input1);
 			jsp1.setViewportView(display1);
 			
 			imagenFITS = new Fits(new File(file2));
 			imageHDU = imagenFITS.getHDU(0);
 			l2 = new LectorImageHDU(imageHDU, file2);
-			JAI.create("filestore",serviceBusquedaDobles.createPlanarImage(l2),"Temp/im2.png","PNG");
+			im = serviceBusquedaDobles.createPlanarImage(l2);
+			JAI.create("filestore", im, "Temp/im2.png","PNG");
 			input2 = JAI.create("fileload", "Temp/im2.png");
 			display2 = new DisplayImageWithRegions(input2);
 			jsp2.setViewportView(display2);
@@ -237,13 +235,11 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 		
 		int retval = fc.showOpenDialog(this);
 		if (retval == JFileChooser.APPROVE_OPTION) {
-			String file1 = fc.getSelectedFile().toString();
+			filename1 = fc.getSelectedFile().toString();
 			retval = fc.showOpenDialog(this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
-				String file2 = fc.getSelectedFile().toString();
-				abrirImagenes(file1, file2);
-				im1 = servicioGestionTareas.getImagenByPath(file1);
-				im2 = servicioGestionTareas.getImagenByPath(file2);
+				filename2 = fc.getSelectedFile().toString();
+				abrirImagenes(filename1, filename2);
 			}
 		}
 	}
@@ -259,7 +255,9 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			
 			if (hiloParado) {
 				PlanarImage[] imagenes = {input1, input2};
-				hilo = new HiloAnimacion(imagenes, display2, 400, 400);
+				float sW = Math.min(input1.getWidth(), input2.getWidth());
+				float sH = Math.min(input1.getHeight(), input2.getHeight());
+				hilo = new HiloAnimacion(imagenes, display2, sW, sH);
 				hilo.start();
 				buttonAnimar.setIcon(new ImageIcon("images/stop_icon.gif"));
 			} else {
@@ -289,7 +287,10 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			if (umbral <= 0 || brillo <= 0)
 				throw new Exception("Los parámetros deben ser mayores que 0");
 			
-			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
+			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(umbral, brillo, filename1, filename2, null, null);
+			
+			if (centroides == null)
+				return;
 			
 			display1.deleteROIs();
 			display1.set(input1);
@@ -299,7 +300,7 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			jsp2.repaint();
 			
 			Point p1, p2;
-			for (int i = 0; i < centroides[0].length; i++) {
+			for (int i = 0; i < centroides[0].length && centroides[0][i] != null && centroides[1][i] != null; i++) {
 				p1 = centroides[0][i];
 				Shape s11 = new Ellipse2D.Float(p1.getX().floatValue() - 1.5f, p1.getY().floatValue() - 1.5f, 3.0f, 3.0f);
 				Shape s12 = new Ellipse2D.Float(p1.getX().floatValue() - 10.0f, p1.getY().floatValue() - 10.0f, 20.0f, 20.0f);
@@ -382,7 +383,7 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			imagenes = ims;
 			display = dis;
 			scaleW = scW;
-			scaleH = scW;
+			scaleH = scH;
 			continuar = true;
 			
 			igualarDimensiones();
@@ -412,8 +413,8 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 				ParameterBlock pb = new ParameterBlock();
 				InterpolationNearest in = new InterpolationNearest();
 				pb.addSource(pi);
-				pb.add(sW);
 				pb.add(sH);
+				pb.add(sW);
 				pb.add(0.0F);
 				pb.add(0.0F);
 				pb.add(in);
