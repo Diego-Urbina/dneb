@@ -13,8 +13,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 
-import javax.swing.*;
-
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
@@ -31,7 +29,9 @@ import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
@@ -39,14 +39,13 @@ import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.util.FiltreExtensible;
 
-public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
+public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 
 	private static final long serialVersionUID = -7389267318471409502L;
 	
 	private int numIm;
 	private boolean hiloParado;
 	private HiloAnimacion hilo;
-	private String filename1, filename2;
 	
 	private JScrollPane jsp1, jsp2;
 	private JTextField textFieldUmbral, textFieldBrillo;
@@ -55,12 +54,15 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	private LectorImageHDU l1, l2;
 	private PlanarImage input1, input2;
 	private DisplayImageWithRegions display1, display2;
+	private Imagen im1, im2;
 	
 	private ServiceBusquedaDobles serviceBusquedaDobles;
+	private ServicioGestionTareas servicioGestionTareas;
 
 	public CentroidsViewerPanel() {
 		initComponents();
 		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
+		servicioGestionTareas =(ServicioGestionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioGestionTareas");
 		hiloParado = true;
 	}
 	
@@ -179,10 +181,6 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 	    // Vertical scroll bar of the second image.
 	    jsp2.getVerticalScrollBar().addAdjustmentListener(this);
 	    
-	    this.setLocationRelativeTo(null);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.setTitle("Visor de centroides");
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 	}
 	
@@ -221,6 +219,9 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			input2 = JAI.create("fileload", "Temp/im2.png");
 			display2 = new DisplayImageWithRegions(input2);
 			jsp2.setViewportView(display2);
+			
+			im1 = servicioGestionTareas.getImagenByPath(file1);
+			im2 = servicioGestionTareas.getImagenByPath(file2);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -235,10 +236,10 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 		
 		int retval = fc.showOpenDialog(this);
 		if (retval == JFileChooser.APPROVE_OPTION) {
-			filename1 = fc.getSelectedFile().toString();
+			String filename1 = fc.getSelectedFile().toString();
 			retval = fc.showOpenDialog(this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
-				filename2 = fc.getSelectedFile().toString();
+				String filename2 = fc.getSelectedFile().toString();
 				abrirImagenes(filename1, filename2);
 			}
 		}
@@ -287,7 +288,7 @@ public class CentroidsViewerPanel extends JFrame implements AdjustmentListener {
 			if (umbral <= 0 || brillo <= 0)
 				throw new Exception("Los parámetros deben ser mayores que 0");
 			
-			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(umbral, brillo, filename1, filename2, null, null);
+			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
 			
 			if (centroides == null || centroides[0][0] == null || centroides[1][0] == null) {
 				JOptionPane.showMessageDialog(null, "No se han encontrado estrellas en movimiento", "Información", JOptionPane.INFORMATION_MESSAGE);
