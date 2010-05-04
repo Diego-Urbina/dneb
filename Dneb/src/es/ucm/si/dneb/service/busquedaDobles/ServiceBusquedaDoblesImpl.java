@@ -83,7 +83,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				umbral = paramProcTareas.get(i).getValorNum();
 		}
 		
-		busquedaEstrellasMovimiento(umbral, brillo, im1.getRutaFichero(), im2.getRutaFichero(), im1, im2);
+		busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
 		
 		procImgs.get(0).setFinalizada(true);
 		procImgs.get(1).setFinalizada(true);
@@ -93,9 +93,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 	}
 	
-	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, String filename1, String filename2,
-			Imagen im1, Imagen im2) {
+	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, Imagen im1, Imagen im2) {
 		try {
+			
+			String filename1 = im1.getRutaFichero();
+			String filename2 = im2.getRutaFichero();
 			
 			BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
 			bw.write("\r\n***** Información de ejecución *****\r\n");
@@ -337,11 +339,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 								centroide = centroidesFin.get(i);
 								resultado[0][cont] = centroidesIni.get(i);
 								resultado[1][cont] = elegidos.get(i);
-								if (im2 != null) { // para el caso en que se llama desde interfaz
-									dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
-									bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
-								} else
-									bw.write("\r\n\tCandidato " + (cont+1) + " -> X: " + centroide.getX() + " Y: " + centroide.getY() + "\r\n");
+								dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
+								bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
 								cont++;
 							}
 						}
