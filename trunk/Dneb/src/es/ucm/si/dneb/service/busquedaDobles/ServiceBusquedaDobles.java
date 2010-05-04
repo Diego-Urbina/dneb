@@ -14,7 +14,7 @@ public interface ServiceBusquedaDobles {
 	
 	public void iniciarProcesamiento(List<ProcImagen> procImgs);
 	
-	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, Imagen im1, Imagen im2);
+	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, String filename1, String filename2, Imagen im1, Imagen im2);
 	
 	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y);
 

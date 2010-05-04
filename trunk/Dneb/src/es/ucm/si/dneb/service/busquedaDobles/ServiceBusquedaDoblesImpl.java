@@ -83,7 +83,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				umbral = paramProcTareas.get(i).getValorNum();
 		}
 		
-		busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
+		busquedaEstrellasMovimiento(umbral, brillo, im1.getRutaFichero(), im2.getRutaFichero(), im1, im2);
 		
 		procImgs.get(0).setFinalizada(true);
 		procImgs.get(1).setFinalizada(true);
@@ -93,10 +93,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 	}
 	
-	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, Imagen im1, Imagen im2) {
+	public Point[][] busquedaEstrellasMovimiento(double umbral, double brillo, String filename1, String filename2,
+			Imagen im1, Imagen im2) {
 		try {
-			String filename1 = im1.getRutaFichero();
-			String filename2 = im2.getRutaFichero();
 			
 			BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
 			bw.write("\r\n***** Información de ejecución *****\r\n");
@@ -218,7 +217,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			// Y a la vez se calcula el error cuadratico medio inicial
 			double errorInicial = 0;
 			Point p1 = new Point(), p2 = new Point();
-			Point[][] resultado = new Point[2][centroidesFin.size()];
+			Point[][] resultado = null;
 			if (porcentaje >= 50) {
 				double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
 				for (int i = 0; i < centroidesFin.size(); i++) {
@@ -332,13 +331,17 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						int cont = 0;
 						DecimalCoordinate dc;
 						PlanarImage pi = createPlanarImage(l2);
+						resultado = new Point[2][centroidesFin.size()];
 						for (int i = 0; i < centroidesFin.size(); i++) {
 							if (errores[i] > 2*desviacion) {
 								centroide = centroidesFin.get(i);
 								resultado[0][cont] = centroidesIni.get(i);
 								resultado[1][cont] = centroide;
-								dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
-								bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
+								if (im2 != null) { // para el caso en que se llama desde interfaz
+									dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
+									bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
+								} else
+									bw.write("\r\n\tCandidato " + (cont+1) + " -> X: " + centroide.getX() + " Y: " + centroide.getY() + "\r\n");
 								cont++;
 							}
 						}
