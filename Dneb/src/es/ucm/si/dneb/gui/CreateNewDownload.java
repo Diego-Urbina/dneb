@@ -25,7 +25,6 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
  */
 public class CreateNewDownload extends JPanel {
 	
-	//private VentanaPcpal principal;
 	private VentanaPcpal principal;
 	
 	private int position;
@@ -45,7 +44,6 @@ public class CreateNewDownload extends JPanel {
 		initComponents();
 		
 		initIcons();
-		//this.principal=principal;
 		this.rellenarModel();
 	}
 
@@ -113,9 +111,7 @@ public class CreateNewDownload extends JPanel {
         }
 	}
 
-	private void updateConfigList() {
-		
-		
+	private void updateConfigList() {		
 		configsList = (ArrayList<DownloadConfig>) serviceDownloadDefaultConfig.getDownloadConfigs();
         if(configsList.size()==0){
         	return;
@@ -134,8 +130,7 @@ public class CreateNewDownload extends JPanel {
         this.comboBoxValoresPorDefecto.setSelectedIndex(0);
 	}
 
-	private void crearDescargaEvent(MouseEvent e) {
-		
+	private void crearDescargaEvent(MouseEvent e) {		
 		int formatoSeleccionado = this.formatoFichero.getSelectedIndex();
 		int survey1 = this.comboBoxSURVEY1.getSelectedIndex();
 		int survey2 = this.comboBoxSURVEY2.getSelectedIndex();
@@ -145,7 +140,6 @@ public class CreateNewDownload extends JPanel {
 		selectedSurveys.add(this.surveys.get(survey1));
 		selectedSurveys.add(this.surveys.get(survey2));
 		
-		/**TODO*/
 		
 		boolean iniciarDescarga= this.INICIARDESCARGAALCREAR.isSelected();
 		
@@ -207,14 +201,9 @@ public class CreateNewDownload extends JPanel {
 		principal.getPane().remove(position);
 		
 		JOptionPane.showMessageDialog(null,"Imagen creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
-		
-		
-		
-		
 	}
 
-	private void cargarValoresDefectoEvent(MouseEvent e) {
-		
+	private void cargarValoresDefectoEvent(MouseEvent e) {		
 		int configDefault = this.comboBoxValoresPorDefecto.getSelectedIndex();
 		 
 		DownloadConfig selectedDownloadDefaultConfiguration = configsList.get(configDefault);
@@ -256,29 +245,19 @@ public class CreateNewDownload extends JPanel {
 			
 			Survey aux= surveys.get(i);
 			
-			if(aux.getDescripcion().equals(survey1.getDescripcion())){
-				
+			if(aux.getDescripcion().equals(survey1.getDescripcion())){				
 				comboBoxSURVEY1.setSelectedIndex(i);
-
 			}
-			if(aux.getDescripcion().equals(survey2.getDescripcion())){
-				
+			if(aux.getDescripcion().equals(survey2.getDescripcion())){				
 				comboBoxSURVEY2.setSelectedIndex(i);
-
-			}
-			
-		}
-		
+			}			
+		}		
 	}
 
-	private void guardarValoresPorDefectoEvent(MouseEvent e) {
+	private void guardarValoresPorDefectoEvent(MouseEvent e) {		
+		String aliasConfig = aliasNuevaConfig.getText();		
 		
-		String aliasConfig = aliasNuevaConfig.getText();
-		
-		
-		DownloadConfig downloadConfig= new DownloadConfig();
-		
-		
+		DownloadConfig downloadConfig= new DownloadConfig();		
 		
 		if(!this.aliasNuevaConfig.getText().equals("")){
 			downloadConfig.setAlias(this.aliasNuevaConfig.getText());
@@ -290,8 +269,7 @@ public class CreateNewDownload extends JPanel {
 		
 		if(serviceDownloadDefaultConfig.existsConfig(aliasConfig)){
 			showAlertMessage("YA EXISTE UNA CONFIGURACION CON ESE ALIAS");
-			return;
-			
+			return;			
 		}
 		
 		if(!this.ALTOINPUT.getText().equals("")){
@@ -316,12 +294,9 @@ public class CreateNewDownload extends JPanel {
 		ArrayList<Survey> selectedSurveys = new ArrayList<Survey>();
 		
 		selectedSurveys.add(this.surveys.get(survey1));
-		selectedSurveys.add(this.surveys.get(survey2));
-	
+		selectedSurveys.add(this.surveys.get(survey2));		
 		
-		
-		downloadConfig.setSurveys(selectedSurveys);
-		
+		downloadConfig.setSurveys(selectedSurveys);		
 		
 		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);
 		
@@ -333,19 +308,7 @@ public class CreateNewDownload extends JPanel {
 		JOptionPane.showMessageDialog(this, mensaje);
 	}
 
-
-
-
-	private void volverAlMenuEvent(MouseEvent e) {
-		//JPanel vent = new MenuPanel(principal);
-		//principal.getContentPane().remove(0);
-		//principal.getContentPane().add(vent);
-		//principal.pack();
-		//vent.setVisible(true);
-	}
-
-	private void rutaMouseClicked(MouseEvent e) {
-		
+	private void rutaMouseClicked(MouseEvent e) {		
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fc.setAcceptAllFileFilterUsed(false);
@@ -498,7 +461,7 @@ public class CreateNewDownload extends JPanel {
 			null, null, null));
 
 		//---- label9 ----
-		label9.setText("PANTALLA DE CREACI\u00d3N DE DESCARGAS");
+		label9.setText("CREACIÓN DE DESCARGAS");
 		label9.setFont(label9.getFont().deriveFont(label9.getFont().getSize() + 10f));
 		label9.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label9, new GridConstraints(1, 0, 1, 5,

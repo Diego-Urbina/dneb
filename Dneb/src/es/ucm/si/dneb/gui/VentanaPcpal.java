@@ -12,9 +12,7 @@ public class VentanaPcpal extends JFrame{
 	
 
 	private static final long serialVersionUID = -1633763922217208939L;
-	String survey1, survey2, ari, deci, arf, decf, eq, alto, ancho, solapamiento, ruta;
 	
-	//Control del número de pestañas de seguimiento abiertas
 	private MonitorProcesamiento procesamientoDobles;
 	private TaskPanel taskPanel;	
 	private JTabbedPane pane = new JTabbedPane();
@@ -103,7 +101,8 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Nueva tarea ---------
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
-		pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
+		//pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
+		pane.add("Nueva Tarea",new MapPanel(this,pane.getTabCount()) );
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
