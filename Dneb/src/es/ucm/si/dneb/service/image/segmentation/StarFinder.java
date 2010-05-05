@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import javax.media.jai.PlanarImage;
 import javax.media.jai.ROIShape;
-import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
