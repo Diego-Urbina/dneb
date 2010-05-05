@@ -43,7 +43,6 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 
 	private static final long serialVersionUID = -7389267318471409502L;
 	
-	private int numIm;
 	private boolean hiloParado;
 	private HiloAnimacion hilo;
 	
@@ -130,8 +129,8 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
-	    textFieldUmbral = new JTextField("30000");
-	    textFieldBrillo = new JTextField("32000");
+	    textFieldUmbral = new JTextField("40000");
+	    textFieldBrillo = new JTextField("42000");
 		
 		layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
@@ -311,33 +310,18 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 				Shape s21 = new Ellipse2D.Float(p2.getX().floatValue() - 1.5f, p2.getY().floatValue() - 1.5f, 3.0f, 3.0f);
 				Shape s22 = new Ellipse2D.Float(p2.getX().floatValue() - 10.0f, p2.getY().floatValue() - 10.0f, 20.0f, 20.0f);
 				
-				if (numIm == 2) {
-					ImageRegion ir11 = new ImageRegion(input1,new ROIShape(s21));
-					ir11.setBorderColor(new Color(255,0,0));
-					display1.addImageRegion(ir11);
-					ImageRegion ir12 = new ImageRegion(input1,new ROIShape(s22));
-					ir12.setBorderColor(new Color(0,255,0));
-					display1.addImageRegion(ir11);
-					ImageRegion ir21 = new ImageRegion(input2,new ROIShape(s11));
-					ir21.setBorderColor(new Color(255,0,0));
-					display2.addImageRegion(ir21);
-					ImageRegion ir22 = new ImageRegion(input2,new ROIShape(s12));
-					ir22.setBorderColor(new Color(0,255,0));
-					display2.addImageRegion(ir22);
-				} else {
-					ImageRegion ir11 = new ImageRegion(input1,new ROIShape(s11));
-					ir11.setBorderColor(new Color(255,0,0));
-					display1.addImageRegion(ir11);
-					ImageRegion ir12 = new ImageRegion(input1,new ROIShape(s12));
-					ir12.setBorderColor(new Color(0,255,0));
-					display1.addImageRegion(ir12);
-					ImageRegion ir21 = new ImageRegion(input2,new ROIShape(s21));
-					ir21.setBorderColor(new Color(255,0,0));
-					display2.addImageRegion(ir21);
-					ImageRegion ir22 = new ImageRegion(input2,new ROIShape(s22));
-					ir22.setBorderColor(new Color(0,255,0));
-					display2.addImageRegion(ir22);
-				}
+				ImageRegion ir11 = new ImageRegion(input1,new ROIShape(s11));
+				ir11.setBorderColor(new Color(255,0,0));
+				display1.addImageRegion(ir11);
+				ImageRegion ir12 = new ImageRegion(input1,new ROIShape(s12));
+				ir12.setBorderColor(new Color(0,255,0));
+				display1.addImageRegion(ir12);
+				ImageRegion ir21 = new ImageRegion(input2,new ROIShape(s21));
+				ir21.setBorderColor(new Color(255,0,0));
+				display2.addImageRegion(ir21);
+				ImageRegion ir22 = new ImageRegion(input2,new ROIShape(s22));
+				ir22.setBorderColor(new Color(0,255,0));
+				display2.addImageRegion(ir22);
 			}
 			jsp1.repaint();
 			jsp2.repaint();

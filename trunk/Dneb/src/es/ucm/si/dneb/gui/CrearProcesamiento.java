@@ -222,8 +222,8 @@ public class CrearProcesamiento extends JPanel {
 	    labelBrillo = new JLabel("Brillo");
 	    labelMaxResRel= new JLabel("Máximos candidatos");
 	    labelMaxResRel.setVisible(false);
-		textFieldUmbral = new JTextField("30000");
-	    textFieldBrillo = new JTextField("32000");
+		textFieldUmbral = new JTextField("40000");
+	    textFieldBrillo = new JTextField("42000");
 	    maxResRelevantes= new JTextField("4");
 	    maxResRelevantes.setVisible(false);
 		
