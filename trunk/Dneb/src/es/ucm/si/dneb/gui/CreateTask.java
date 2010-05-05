@@ -16,12 +16,12 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
-public class MapPanel extends JPanel {
+public class CreateTask extends JPanel {
 	
 	private VentanaPcpal principal;
 	private int position;
 	
-	public MapPanel(VentanaPcpal pcpal,int position) {		
+	public CreateTask(VentanaPcpal pcpal,int position) {		
 		initComponents();
 		this.position=position;
 		principal = pcpal;

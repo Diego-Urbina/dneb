@@ -102,7 +102,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Nueva tarea ---------
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
 		//pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
-		pane.add("Nueva Tarea",new MapPanel(this,pane.getTabCount()) );
+		pane.add("Nueva Tarea",new CreateTask(this,pane.getTabCount()) );
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
