@@ -100,7 +100,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			
 			for (int iter = 0; iter < brillos.length; iter++) {
 			
-				bw.write("\r\n\r\n\r\nIteración " + iter+1 + ":");
+				bw.write("\r\n\r\n\r\nIteración " + (iter+1) + ":");
 				
 				float umbral1, umbral2, brillo1, brillo2;
 				
