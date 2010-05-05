@@ -32,9 +32,6 @@ public class LectorImageHDU extends LectorHDU {
 		}
 	}
 	
-	
-	
-	
 	// Getters and setters
 	public int[][] getArrayData() {
 		return arrayData;
@@ -69,7 +66,6 @@ public class LectorImageHDU extends LectorHDU {
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
-
 
 	public int getWidth() {
 		return width;

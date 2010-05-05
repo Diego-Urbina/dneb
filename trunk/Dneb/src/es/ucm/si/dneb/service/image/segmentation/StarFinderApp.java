@@ -20,7 +20,7 @@ public class StarFinderApp {
 	public static void main(String[] args) {		
 		try {			
 			// Cargo la imagen
-			String filename = "images/pos2.fits";
+			String filename = "AR2.69DEC49.74472SURVposs1_blue.fits";
 			Fits imagenFITS = new Fits(new File(filename));			
 			
 			// Obtengo el primer HDU (la imagen) y creo con el
@@ -28,22 +28,23 @@ public class StarFinderApp {
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
 			LectorImageHDU l1 = new LectorImageHDU(imageHDU, filename);
 			
-			LOG.debug("Atributos imagen\n------------------");
-			LOG.debug("Filename:  " + l1.getFilename());
-			LOG.debug("Min:  " + l1.getMin());
-			LOG.debug("Max:  " + l1.getMax());
-			LOG.debug("Scale:  " + l1.getScale());
-			LOG.debug("Width:  " + l1.getWidth());
-			LOG.debug("Height:  " + l1.getHeight());
+			System.out.println("Atributos imagen\n------------------");
+			System.out.println("Filename:  " + l1.getFilename());
+			System.out.println("Min:  " + l1.getMin());
+			System.out.println("Max:  " + l1.getMax());
+			System.out.println("Scale:  " + l1.getScale());
+			System.out.println("Width:  " + l1.getWidth());
+			System.out.println("Height:  " + l1.getHeight());
+			System.out.println("Media:  " + l1.brilloMedio());
+			System.out.println("Percentil:  " + l1.getNPercentile(99.4));
 			
 			StarFinder sf = new StarFinder();
-			float umbral = 10000;
-			float brilloEstrella = 40000;
+			float umbral = new Float(l1.getNPercentile(99.4));
+			float brilloEstrella = new Float(l1.getNPercentile(99.5));
 			
 			sf.buscarEstrellas(l1, brilloEstrella, umbral);
 			
 			System.out.println("\n\nRecuadros\n------------------");
-			//sf.printRectStars();
 			
 			System.out.println("Numero de estrellas encontradas: " + sf.getNumberOfStars());
 			
