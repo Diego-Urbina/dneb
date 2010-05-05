@@ -21,11 +21,9 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
@@ -47,7 +45,6 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 	private HiloAnimacion hilo;
 	
 	private JScrollPane jsp1, jsp2;
-	private JTextField textFieldUmbral, textFieldBrillo;
 	private JButton buttonAnimar;
 	
 	private LectorImageHDU l1, l2;
@@ -126,11 +123,6 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 				buttonAnimarActionPerformed(e);
 			}
 		});
-	    
-	    JLabel labelUmbral = new JLabel("Umbral");
-	    JLabel labelBrillo = new JLabel("Brillo");
-	    textFieldUmbral = new JTextField("40000");
-	    textFieldBrillo = new JTextField("42000");
 		
 		layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
@@ -138,14 +130,7 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 	    		  .addComponent(buttonAbrir)
 			      .addComponent(buttonRestaurar)
 			      .addComponent(buttonProcesar)
-			      .addComponent(buttonAnimar)
-			      .addGap(20, 20, 20)
-		           .addGroup(layout.createSequentialGroup()
-		        		   .addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-		        		   .addComponent(textFieldUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-		           .addGroup(layout.createSequentialGroup()
-		           .addComponent(labelBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-		           .addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
+			      .addComponent(buttonAnimar))
 		);
 	    
 		layout.setVerticalGroup(
@@ -154,13 +139,6 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 		      .addComponent(buttonRestaurar)
 		      .addComponent(buttonProcesar)
 		      .addComponent(buttonAnimar)
-		      .addGap(20, 20, 20)
-		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-		    		  .addComponent(labelUmbral)
-		    		  .addComponent(textFieldUmbral))
-		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-		    		  .addComponent(labelBrillo)
-		    		  .addComponent(textFieldBrillo))
 		);
 		
 	    c.gridx = 2;
@@ -280,14 +258,7 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 			
 			restaurar();
 			
-			double umbral, brillo;
-			umbral = Double.parseDouble(textFieldUmbral.getText());
-			brillo = Double.parseDouble(textFieldBrillo.getText());
-			
-			if (umbral <= 0 || brillo <= 0)
-				throw new Exception("Los parámetros deben ser mayores que 0");
-			
-			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(umbral, brillo, im1, im2);
+			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasMovimiento(im1, im2);
 			
 			if (centroides == null || centroides[0][0] == null || centroides[1][0] == null) {
 				JOptionPane.showMessageDialog(null, "No se han encontrado estrellas en movimiento", "Información", JOptionPane.INFORMATION_MESSAGE);

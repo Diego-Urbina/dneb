@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -33,7 +32,6 @@ import es.ucm.si.dneb.domain.ProcImagen;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
-import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
@@ -203,14 +201,15 @@ public class CrearProcesamiento extends JPanel {
 	}
 	
 	private void cbTipoProcActionPerformed(ActionEvent e) {
-		if (cbTipoProc.getSelectedIndex() == 0) { // busqueda estrellas dobles
-			labelMaxResRel.setVisible(false);
-			maxResRelevantes.setVisible(false);
-		}
-		else { // calculo de distancias
-			labelMaxResRel.setVisible(true);
-			maxResRelevantes.setVisible(true);
-		}
+		// Si es busqueda de estrellas dobles que desaparezca todo
+		boolean bed = cbTipoProc.getSelectedIndex() == 0;
+		
+		labelMaxResRel.setVisible(!bed);
+		maxResRelevantes.setVisible(!bed);
+		labelBrillo.setVisible(!bed);
+		textFieldBrillo.setVisible(!bed);
+		labelUmbral.setVisible(!bed);
+		textFieldUmbral.setVisible(!bed);
 	}
 	
 	private void initComponents() {
@@ -219,11 +218,15 @@ public class CrearProcesamiento extends JPanel {
 		buttonSiguiente = new JButton();
 		cbTipoProc = new JComboBox(servicioGestionProcesamientos.getTiposProcesamiento().toArray());
 		labelUmbral = new JLabel("Umbral");
+		labelUmbral.setVisible(false);
 	    labelBrillo = new JLabel("Brillo");
+	    labelBrillo.setVisible(false);
 	    labelMaxResRel= new JLabel("Máximos candidatos");
 	    labelMaxResRel.setVisible(false);
 		textFieldUmbral = new JTextField("40000");
+		textFieldUmbral.setVisible(false);
 	    textFieldBrillo = new JTextField("42000");
+	    textFieldBrillo.setVisible(false);
 	    maxResRelevantes= new JTextField("4");
 	    maxResRelevantes.setVisible(false);
 		
