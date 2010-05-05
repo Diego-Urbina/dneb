@@ -89,8 +89,14 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 			for (ProcImagen imagen : imagens) {
 
 				if (inter.continuar()) {
+					
+					try{
 
 					serviceCalculoPosicion.calcularPosicion(imagen);
+					
+					}catch(Exception e){
+						LOG.debug("PROBLEMA CON EL PROCESAMIENTO DE CALCULO POSICION: ID:"+imagen.getId()+"   "+e.getMessage());
+					}
 
 				} else {
 					break;
