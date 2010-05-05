@@ -32,6 +32,8 @@ public class Point {
 				Math.pow(this.getY() - p.getY(), 2));
 	}
 		
-	
+	public Point clone() {
+		return new Point(x.doubleValue(), y.doubleValue());
+	}
 
 }
