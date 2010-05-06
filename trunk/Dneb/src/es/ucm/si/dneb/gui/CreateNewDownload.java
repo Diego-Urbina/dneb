@@ -48,7 +48,7 @@ public class CreateNewDownload extends JPanel {
 	}
 
 	private void initIcons() {
-		this.button1.setIcon(new ImageIcon("images/load-icon-2.jpg"));
+		this.button1.setIcon(new ImageIcon("images/carpeta-icono.jpg"));
 	}
 	
 	private void rellenarModel() {
@@ -557,7 +557,7 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_FIXED,
 			GridConstraints.SIZEPOLICY_FIXED,
-			new Dimension(25, 25), null, new Dimension(25, 25)));
+			new Dimension(20, 20), null, new Dimension(20, 20)));
 		add(separator2, new GridConstraints(9, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
