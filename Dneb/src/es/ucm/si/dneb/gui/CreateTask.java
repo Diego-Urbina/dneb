@@ -64,7 +64,7 @@ public class CreateTask extends JPanel {
 		titulo.setText("CREACIÓN DE TAREAS");
 		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		add(titulo, new GridConstraints(1, 0, 1, 5,
+		add(titulo, new GridConstraints(1, 0, 1, 6,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -76,7 +76,7 @@ public class CreateTask extends JPanel {
 		
 		
 		//---- separator1 ----
-		add(separator1, new GridConstraints(2, 0, 1, 5,
+		add(separator1, new GridConstraints(2, 0, 1, 6,
 				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -123,7 +123,7 @@ public class CreateTask extends JPanel {
 		
 		
 		//---- separator2 ----
-		add(separator2, new GridConstraints(4, 0, 1, 5,
+		add(separator2, new GridConstraints(4, 0, 1, 6,
 				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -335,24 +335,32 @@ public class CreateTask extends JPanel {
 	}
 	
 	private void buttonSiguienteActionPerformed(ActionEvent e) {
-		String survey1, survey2, ari, deci, arf, decf, eq, alto, ancho, solapamiento, ruta;
+		String survey1, survey2, ari, deci, arf, decf, alto, ancho, solapamiento, ruta;
 		
-		survey1 = (String) comboBoxSurvey1.getSelectedItem();
-		survey2 = (String) comboBoxSurvey2.getSelectedItem();
-		alto = this.textFieldAlto.getText();
-		ancho = this.textFieldAncho.getText();
-		arf = this.textFieldARF.getText();
-		ari = this.textFieldARI.getText();
-		decf = this.textFieldDECF.getText();
-		deci = this.textFieldDECI.getText();
-		solapamiento = this.textFieldSolap.getText();
-		ruta = this.textFieldRuta.getText();
-		
-		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
-		servicioCreacionTareas.crearTarea(ari, arf, deci, decf, Double.parseDouble(alto), Double.parseDouble(ancho), Double.parseDouble(solapamiento), survey1, survey2, "fits", ruta);
-		principal.getPane().remove(position);
-		JOptionPane.showMessageDialog(null,"Tarea creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/TASKICON.JPG"));	
+		try {
+			survey1 = (String) comboBoxSurvey1.getSelectedItem();
+			survey2 = (String) comboBoxSurvey2.getSelectedItem();
+			alto = this.textFieldAlto.getText();
+			ancho = this.textFieldAncho.getText();
+			arf = this.textFieldARF.getText();
+			ari = this.textFieldARI.getText();
+			decf = this.textFieldDECF.getText();
+			deci = this.textFieldDECI.getText();
+			solapamiento = this.textFieldSolap.getText();
+			ruta = this.textFieldRuta.getText();
+			
+			if (alto.equals("") || ancho.equals("") || arf.equals("") || ari.equals("") || 
+				decf.equals("") || deci.equals("") || solapamiento.equals("") || ruta.equals(""))
+				throw new Exception("Faltan datos");
+			
+			ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
+			ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
+			servicioCreacionTareas.crearTarea(ari, arf, deci, decf, Double.parseDouble(alto), Double.parseDouble(ancho), Double.parseDouble(solapamiento), survey1, survey2, "fits", ruta);
+			principal.getPane().remove(position);
+			JOptionPane.showMessageDialog(null,"Tarea creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/TASKICON.JPG"));	
+		} catch(Exception ex) {
+	    	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
 	
 	private void rutaMouseClicked(ActionEvent e) {		
@@ -360,13 +368,8 @@ public class CreateTask extends JPanel {
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fc.setAcceptAllFileFilterUsed(false);
 		int retval = fc.showOpenDialog(this);
-		try {
-			if (retval == JFileChooser.APPROVE_OPTION) {
-				textFieldRuta.setText( fc.getSelectedFile().toString());
-			}
-		} catch(ServicioGestionTareasException ex) {
-        	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }		
+		if (retval == JFileChooser.APPROVE_OPTION)
+			textFieldRuta.setText( fc.getSelectedFile().toString());		
 		
 	}
 
