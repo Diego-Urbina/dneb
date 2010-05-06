@@ -97,6 +97,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			float[] brillos = {99.9f, 99.95f, 99.95f};
 			float[] umbrales = {99.8f, 99.75f, 99.8f};
 			Point[][] resultado = null;
+			int longResultado = 0;
 			
 			for (int iter = 0; iter < brillos.length; iter++) {
 			
@@ -350,22 +351,26 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 							DecimalCoordinate dc;
 							PlanarImage pi = createPlanarImage(l2);
 							if (iter == 0)
-								resultado = new Point[2][centroidesFin.size()];
-							int[] posiciones = new int[centroidesIni.size()];
+								resultado = new Point[2][centroidesIni.size()];
+							//int[] posiciones = new int[centroidesIni.size()];
+							Point[][] aux = new Point[2][centroidesIni.size()];
 							for (int i = 0; i < centroidesIni.size(); i++) {
 								if (errores[i] > 2*desviacion) {
 									centroide = centroidesIni.get(i);
-									if (iter == 0) {
+									/*if (iter == 0) {
 										resultado[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0][cont] = centroide;
 										resultado[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1][cont] = elegidos.get(i);
-									} else posiciones[i] = posicion(resultado, centroide, elegidos.get(i), (sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0);
+									} else posiciones[i] = posicion(resultado, centroide, elegidos.get(i), (sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0);*/
+									aux[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0][cont] = centroide;
+									aux[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1][cont] = elegidos.get(i);
 									dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
 									bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
 									cont++;
 								}
 							}
-							if (iter > 0)
-								resultado = eliminarPosiciones(resultado, posiciones);
+							/*if (iter > 0)
+								resultado = eliminarPosiciones(resultado, posiciones);*/
+							longResultado += union(resultado, aux, longResultado, cont, (sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1);
 						}
 					}
 				}
@@ -384,6 +389,33 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
+	}
+	
+	private int union(Point[][] p1, Point[][] p2, int pos1, int pos2, int posCent){
+		Point c1, e1, c2, e2;
+		boolean encontrado = false;
+		int pos = pos1;
+		int limite = 2;
+		
+		for (int i = 0; i < pos2; i++) {
+			c2 = p2[posCent][i];
+			e2 = p2[(posCent+1)%2][i];
+			for (int j = 0; j < pos1 && !encontrado; j++) {
+				c1 = p1[posCent][i];
+				e1 = p1[(posCent+1)%2][i];
+				encontrado = c1.getX()-limite <= c2.getX() && c1.getX()+limite >= c2.getX()
+							&& c1.getY()-limite <= c2.getY() && c1.getY()+limite >= c2.getY()
+							&& e1.getX()-limite <= e2.getX() && e1.getX()+limite >= e2.getX()
+							&& e1.getY()-limite <= e2.getY() && e1.getY()+limite >= e2.getY();
+			}
+			if (!encontrado) {
+				p1[posCent][pos] = c2;
+				p1[(posCent+1)%2][pos] = e2;
+				pos++;
+			}
+		}
+		
+		return pos;
 	}
 	
 	private int posicion(Point[][] r, Point cent, Point pareja, int posCent) {
