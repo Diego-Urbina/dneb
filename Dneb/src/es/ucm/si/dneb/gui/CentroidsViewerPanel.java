@@ -265,13 +265,6 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 				return;
 			}
 			
-			display1.deleteROIs();
-			display1.set(input1);
-			jsp1.repaint();
-			display2.deleteROIs();
-			display2.set(input2);
-			jsp2.repaint();
-			
 			Point p1, p2;
 			for (int i = 0; i < centroides[0].length && centroides[0][i] != null && centroides[1][i] != null; i++) {
 				p1 = centroides[0][i];
@@ -294,6 +287,7 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 				ir22.setBorderColor(new Color(0,255,0));
 				display2.addImageRegion(ir22);
 			}
+			
 			jsp1.repaint();
 			jsp2.repaint();
 		} catch (NumberFormatException ex) {
