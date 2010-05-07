@@ -28,8 +28,12 @@ public class Point {
 		return y;
 	}
 	public Double getDistancia(Point p) {
-		return Math.sqrt(Math.pow(this.getX() - p.getX(), 2) +
-				Math.pow(this.getY() - p.getY(), 2));
+		return Math.sqrt(Math.pow(p.getX()-this.getX(), 2) +
+				Math.pow(p.getY()-this.getY(), 2));
+	}
+	
+	public Double getDireccion(Point p) {
+		return Math.atan((p.getY()-this.getY()) / (p.getX()-this.getX()));
 	}
 		
 	public Point clone() {
