@@ -21,14 +21,8 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
-
-
-/**
- * @author Brainrain
- */
 public class DefaultDownloadSettingsConfig extends JPanel {
 	
-	private VentanaPcpal principal;
 	private ServiceDownloadDefaultConfig serviceDownloadDefaultConfig;
 	private ServicioGestionTareas servicioGestionTareas;
 	private ArrayList<Survey> surveys;
@@ -43,12 +37,10 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		this.elminarConfiguracion.setIcon(new ImageIcon("images/deleteicon.png"));
 		this.cargarValoresPorDefecto.setIcon(new ImageIcon("images/load-icon.jpg"));
 		this.guardarValoresPorDefecto.setIcon(new ImageIcon("images/save-icon.jpg"));
-		
-		principal = pcpal;
 	}
 	
 	private void initIcons() {
-		this.button1.setIcon(new ImageIcon("images/load-icon-2.jpg"));
+		this.button1.setIcon(new ImageIcon("images/iconos-diego/carpeta.jpg"));
 	}
 	
 	private void rellenarModel() {
@@ -254,7 +246,6 @@ String aliasConfig = aliasNuevaConfig.getText();
 	
 
 	private void elminarConfiguracionMouseClicked(MouseEvent e) {
-		// TODO add your code here
 		int configDefault = this.comboBoxValoresPorDefecto.getSelectedIndex();
 		 
 		DownloadConfig selectedDownloadDefaultConfiguration = configsList.get(configDefault);
@@ -281,7 +272,6 @@ String aliasConfig = aliasNuevaConfig.getText();
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		label3 = new JLabel();
 		ALTOINPUT = new JTextField();
 		ANCHOINPUT = new JTextField();
@@ -300,127 +290,186 @@ String aliasConfig = aliasNuevaConfig.getText();
 		comboBoxValoresPorDefecto = new JComboBox();
 		guardarValoresPorDefecto = new JButton();
 		separator1 = new JSeparator();
-		TITULO = new JLabel();
+		separator2 = new JSeparator();
+		titulo = new JLabel();
 		button1 = new JButton();
 		cargarValoresPorDefecto = new JButton();
 		elminarConfiguracion = new JButton();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(9, 6, new Insets(5, 5, 5, 5), 3, 1));
+		setLayout(new GridLayoutManager(8, 5, new Insets(0, 60, 0, 60), 5, -1));
 
-		//---- label3 ----
-		label3.setText("ALTO");
-		add(label3, new GridConstraints(3, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(ALTOINPUT, new GridConstraints(3, 2, 1, 1,
+		//---- titulo ----
+		titulo.setText("CONFIGURACIÓN DE VALORES POR DEFECTO");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(ANCHOINPUT, new GridConstraints(2, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		
+		
+		
+		
+		
+		
+		//---- separador1 ----
+		add(separator1, new GridConstraints(1, 0, 1, 5,
+				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- survey1 ----
+		label4.setText("SURVEY 1");
+		add(label4, new GridConstraints(2, 0, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
-		//---- label6 ----
-		label6.setText("ANCHO");
-		add(label6, new GridConstraints(2, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label5 ----
+		add(comboBoxSURVEY1, new GridConstraints(2, 1, 1, 1,
+				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		//---- survey2 ----
 		label5.setText("SURVEY 2");
 		add(label5, new GridConstraints(2, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 		add(comboBoxSURVEY2, new GridConstraints(2, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxSURVEY1, new GridConstraints(1, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		
+		
+		
+		
+		
+		
+		//---- ancho ----
+		label6.setText("ANCHO");
+		add(label6, new GridConstraints(3, 0, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
-		//---- label4 ----
-		label4.setText("SURVEY 1");
-		add(label4, new GridConstraints(1, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+		add(ANCHOINPUT, new GridConstraints(3, 1, 1, 1,
+				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		//---- alto ----
+		label3.setText("ALTO");
+		add(label3, new GridConstraints(3, 3, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
+		add(ALTOINPUT, new GridConstraints(3, 4, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		
+		
+		
+		
+		
 		//---- ruta ----
+		label10.setText("RUTA");
+		add(label10, new GridConstraints(4, 0, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
 		ruta.setEditable(false);
-		ruta.addMouseListener(new MouseAdapter() {
+		add(ruta, new GridConstraints(4, 1, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- button1 ----
+		button1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				rutaMouseClicked(e);
 			}
 		});
-		add(ruta, new GridConstraints(1, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(formatoFichero, new GridConstraints(3, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label11 ----
+		add(button1, new GridConstraints(4, 2, 1, 1,
+			GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_FIXED,
+			GridConstraints.SIZEPOLICY_FIXED,
+			new Dimension(20, 20), new Dimension(20, 20), new Dimension(20, 20)));
+		//---- formato fichero ----
 		label11.setText("FORMATO FICHERO");
-		add(label11, new GridConstraints(3, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+		add(label11, new GridConstraints(4, 3, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
+		add(formatoFichero, new GridConstraints(4, 4, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- separador2 ----
+		add(separator2, new GridConstraints(5, 0, 1, 5,
+				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
 
-		//---- label10 ----
-		label10.setText("RUTA");
-		add(label10, new GridConstraints(1, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
+		
 
 		//---- label13 ----
 		label13.setText("ALIAS CONFIGURACION");
-		add(label13, new GridConstraints(5, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+		add(label13, new GridConstraints(6, 0, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(aliasNuevaConfig, new GridConstraints(5, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		add(aliasNuevaConfig, new GridConstraints(6, 1, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 
 		//---- label14 ----
 		label14.setText("VALORES POR DEFECTO");
-		add(label14, new GridConstraints(5, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+		add(label14, new GridConstraints(6, 3, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxValoresPorDefecto, new GridConstraints(5, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		add(comboBoxValoresPorDefecto, new GridConstraints(6, 4, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
+		
+		
+		
+		
+		
+		
 		//---- guardarValoresPorDefecto ----
 		guardarValoresPorDefecto.setText("GUARDAR CONFIGURACION");
 		guardarValoresPorDefecto.addMouseListener(new MouseAdapter() {
@@ -429,39 +478,11 @@ String aliasConfig = aliasNuevaConfig.getText();
 				guardarValoresPorDefecto(e);
 			}
 		});
-		add(guardarValoresPorDefecto, new GridConstraints(6, 0, 1, 3,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		add(guardarValoresPorDefecto, new GridConstraints(7, 0, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(separator1, new GridConstraints(4, 0, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- TITULO ----
-		TITULO.setText("Configuracion de valores por defecto");
-		TITULO.setFont(TITULO.getFont().deriveFont(TITULO.getFont().getStyle() & ~Font.ITALIC, TITULO.getFont().getSize() + 7f));
-		TITULO.setHorizontalAlignment(SwingConstants.CENTER);
-		add(TITULO, new GridConstraints(0, 0, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- button1 ----
-		button1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				rutaMouseClicked(e);
-			}
-		});
-		add(button1, new GridConstraints(1, 1, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_FIXED,
-			GridConstraints.SIZEPOLICY_FIXED,
-			new Dimension(25, 25), new Dimension(25, 25), new Dimension(25, 25)));
+			null, null, null));		
 
 		//---- cargarValoresPorDefecto ----
 		cargarValoresPorDefecto.setText("CARGAR CONFIGURACION");
@@ -471,8 +492,8 @@ String aliasConfig = aliasNuevaConfig.getText();
 				cargarValoresPorDEfecto(e);
 			}
 		});
-		add(cargarValoresPorDefecto, new GridConstraints(6, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		add(cargarValoresPorDefecto, new GridConstraints(7, 1, 1, 3,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
@@ -485,12 +506,11 @@ String aliasConfig = aliasNuevaConfig.getText();
 				elminarConfiguracionMouseClicked(e);
 			}
 		});
-		add(elminarConfiguracion, new GridConstraints(6, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+		add(elminarConfiguracion, new GridConstraints(7, 4, 1, 1,
+			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
 	public void setServicioGestionTareas(ServicioGestionTareas servicioGestionTareas) {
@@ -520,7 +540,8 @@ String aliasConfig = aliasNuevaConfig.getText();
 	private JComboBox comboBoxValoresPorDefecto;
 	private JButton guardarValoresPorDefecto;
 	private JSeparator separator1;
-	private JLabel TITULO;
+	private JSeparator separator2;
+	private JLabel titulo;
 	private JButton button1;
 	private JButton cargarValoresPorDefecto;
 	private JButton elminarConfiguracion;
