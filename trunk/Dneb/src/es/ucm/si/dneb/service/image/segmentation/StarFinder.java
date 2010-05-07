@@ -1,19 +1,10 @@
 package es.ucm.si.dneb.service.image.segmentation;
 
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.media.jai.PlanarImage;
-import javax.media.jai.ROIShape;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
-import es.ucm.si.dneb.service.image.app.ImageRegion;
 
 
 public class StarFinder {
@@ -97,15 +88,11 @@ public class StarFinder {
 		}
 	}
 	
-	public void printRectStars(PlanarImage input, DisplayImageWithRegions display) {
+	public void printRectStars() {
 		Iterator<RectStar> it = recuadros.iterator();
 		while (it.hasNext()) {
 			RectStar r = it.next();		
 			LOG.debug(r.toString()+"\n");
-			Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
-		    ImageRegion ir = new ImageRegion(input,new ROIShape(s));
-		    ir.setBorderColor(new Color(255,255,0));
-		    display.addImageRegion(ir);
 		}
 	}
 	

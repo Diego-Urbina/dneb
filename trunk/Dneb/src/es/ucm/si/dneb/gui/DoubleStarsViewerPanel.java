@@ -1,8 +1,10 @@
 package es.ucm.si.dneb.gui;
 
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -12,10 +14,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.media.jai.InterpolationNearest;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
+import javax.media.jai.ROIShape;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -32,7 +36,9 @@ import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
+import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
+import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.util.FiltreExtensible;
@@ -237,6 +243,10 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 	}
 	
 	private void buttonRestaurarActionPerformed(ActionEvent e) {
+		restaurar();
+	}
+	
+	private void restaurar() {
 		scale = 100;
 		sf1.eliminarRecuadros();
 		sf2.eliminarRecuadros();
@@ -294,9 +304,25 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 				sf1.escalarYTrasladarRectangulos(scale, -porcentajeZoom);
 				sf2.escalarYTrasladarRectangulos(scale, -porcentajeZoom);
 				display1.deleteROIs();
-				sf1.printRectStars(scaledIm1, display1);
+				ArrayList<RectStar> stars = sf1.getRecuadros();
+				
+				for (RectStar r : stars) {
+					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
+				    ImageRegion ir = new ImageRegion(scaledIm1,new ROIShape(s));
+				    ir.setBorderColor(new Color(255,255,0));
+				    display1.addImageRegion(ir);
+				}
+				
 				display2.deleteROIs();
-				sf2.printRectStars(scaledIm2, display2);
+				stars = sf2.getRecuadros();
+				
+				for (RectStar r : stars) {
+					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
+				    ImageRegion ir = new ImageRegion(scaledIm2,new ROIShape(s));
+				    ir.setBorderColor(new Color(255,255,0));
+				    display2.addImageRegion(ir);
+				}
+				
 				jsp1.repaint();
 				jsp2.repaint();
 			}
@@ -337,9 +363,25 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 				sf1.escalarYTrasladarRectangulos(scale, porcentajeZoom);
 				sf2.escalarYTrasladarRectangulos(scale, porcentajeZoom);
 				display1.deleteROIs();
-				sf1.printRectStars(scaledIm1, display1);
+				ArrayList<RectStar> stars = sf1.getRecuadros();
+				
+				for (RectStar r : stars) {
+					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
+				    ImageRegion ir = new ImageRegion(scaledIm1,new ROIShape(s));
+				    ir.setBorderColor(new Color(255,255,0));
+				    display1.addImageRegion(ir);
+				}
+				
 				display2.deleteROIs();
-				sf2.printRectStars(scaledIm2, display2);
+				stars = sf2.getRecuadros();
+				
+				for (RectStar r : stars) {
+					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
+				    ImageRegion ir = new ImageRegion(scaledIm2,new ROIShape(s));
+				    ir.setBorderColor(new Color(255,255,0));
+				    display2.addImageRegion(ir);
+				}
+				
 				jsp1.repaint();
 				jsp2.repaint();
 			}
@@ -413,18 +455,28 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 			if (umbral <= 0 || brilloEstrella <= 0)
 				throw new Exception("Los parámetros deben ser mayores que 0");
 			
-			scale = 100;
-			sf1.eliminarRecuadros();
-			sf2.eliminarRecuadros();
+			restaurar();
 			
 			sf1.buscarEstrellas(l1, brilloEstrella, umbral);
-			display1.deleteROIs();
-			display1.set(input1);
-			sf1.printRectStars(scaledIm1, display1);
+			ArrayList<RectStar> stars = sf1.getRecuadros();
+			
+			for (RectStar r : stars) {
+				Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
+			    ImageRegion ir = new ImageRegion(scaledIm1,new ROIShape(s));
+			    ir.setBorderColor(new Color(255,255,0));
+			    display1.addImageRegion(ir);
+			}
+			
 			sf2.buscarEstrellas(l2, brilloEstrella, umbral);
-			display2.deleteROIs();
-			display2.set(input2);
-			sf2.printRectStars(scaledIm2, display2);
+			stars = sf2.getRecuadros();
+			
+			for (RectStar r : stars) {
+				Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
+			    ImageRegion ir = new ImageRegion(scaledIm2,new ROIShape(s));
+			    ir.setBorderColor(new Color(255,255,0));
+			    display2.addImageRegion(ir);
+			}
+			
 			jsp1.repaint();
 			jsp2.repaint();
 		} catch (NumberFormatException ex) {
