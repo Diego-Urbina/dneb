@@ -48,7 +48,7 @@ public class CreateNewDownload extends JPanel {
 	}
 
 	private void initIcons() {
-		this.button1.setIcon(new ImageIcon("images/carpeta-icono.jpg"));
+		this.button1.setIcon(new ImageIcon("images/iconos-diego/carpeta.jpg"));
 	}
 	
 	private void rellenarModel() {
@@ -324,7 +324,7 @@ public class CreateNewDownload extends JPanel {
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+		
 		label1 = new JLabel();
 		ALIASINPUT = new JTextField();
 		label2 = new JLabel();
@@ -364,103 +364,9 @@ public class CreateNewDownload extends JPanel {
 		crearDescarga = new JButton();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(16, 5, new Insets(60, 60, 60, 60), 5, -1));
+		setLayout(new GridLayoutManager(16, 5, new Insets(20, 60, 60, 60), 5, -1));
 
-		//---- label1 ----
-		label1.setText("ALIAS");
-		add(label1, new GridConstraints(3, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(ALIASINPUT, new GridConstraints(3, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label2 ----
-		label2.setText("DESCRIPCION");
-		add(label2, new GridConstraints(4, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(DESCRIPTIONINPUT, new GridConstraints(4, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(ALTOINPUT, new GridConstraints(5, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label3 ----
-		label3.setText("ALTO");
-		add(label3, new GridConstraints(5, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(ANCHOINPUT, new GridConstraints(5, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label4 ----
-		label4.setText("SURVEY 1");
-		add(label4, new GridConstraints(3, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label5 ----
-		label5.setText("SURVEY 2");
-		add(label5, new GridConstraints(4, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label6 ----
-		label6.setText("ANCHO");
-		add(label6, new GridConstraints(5, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(ARINPUT, new GridConstraints(6, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(DECINPUT, new GridConstraints(6, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label7 ----
-		label7.setText("ASCENSION RECTA");
-		add(label7, new GridConstraints(6, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label8 ----
-		label8.setText("DECLINACION");
-		add(label8, new GridConstraints(6, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label9 ----
+		//---- titulo ----
 		label9.setText("CREACIÓN DE DESCARGAS");
 		label9.setFont(label9.getFont().deriveFont(label9.getFont().getSize() + 10f));
 		label9.setHorizontalAlignment(SwingConstants.CENTER);
@@ -469,83 +375,199 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxSURVEY1, new GridConstraints(3, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(comboBoxSURVEY2, new GridConstraints(4, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- INICIARDESCARGAALCREAR ----
-		INICIARDESCARGAALCREAR.setText("INICIAR DESCARGA UNA VEZ CREADA ");
-		add(INICIARDESCARGAALCREAR, new GridConstraints(13, 0, 1, 3,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- ruta ----
-		ruta.setEditable(false);
-		ruta.setToolTipText("PULSE PARA SELECCIONAR UN DIRECTORIO.");
-		ruta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				rutaMouseClicked(e);
-			}
-		});
-		add(ruta, new GridConstraints(7, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label10 ----
-		label10.setText("RUTA");
-		add(label10, new GridConstraints(7, 0, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(formatoFichero, new GridConstraints(7, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label11 ----
-		label11.setText("FORMATO FICHERO");
-		add(label11, new GridConstraints(7, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label12 ----
-		label12.setText("FORMATO COORDENADAS");
-		add(label12, new GridConstraints(8, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- formatoCoordenadas ----
-		formatoCoordenadas.setEnabled(false);
-		add(formatoCoordenadas, new GridConstraints(8, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
+		
+		
+		
+		
+		
+		//---- separador1 ----
 		add(separator1, new GridConstraints(2, 0, 1, 5,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- alias ----
+		label1.setText("ALIAS");
+		add(label1, new GridConstraints(3, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- alias textfield ----
+		add(ALIASINPUT, new GridConstraints(3, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
-		//---- button1 ----
+		//---- decripcion ----
+		label2.setText("DESCRIPCION");
+		add(label2, new GridConstraints(3, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- decripcion textfield ----
+		add(DESCRIPTIONINPUT, new GridConstraints(3, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- survey1 ----
+		label4.setText("SURVEY 1");
+		add(label4, new GridConstraints(4, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- combo box survey1 ----
+		add(comboBoxSURVEY1, new GridConstraints(4, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		//---- survey2 ----
+		label5.setText("SURVEY 2");
+		add(label5, new GridConstraints(4, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- combo box survey2 ----
+		add(comboBoxSURVEY2, new GridConstraints(4, 4, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- AR ----
+		label7.setText("ASCENSION RECTA");
+		add(label7, new GridConstraints(5, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- AR textfield ----
+		add(ARINPUT, new GridConstraints(5, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		//---- DEC ----
+		label8.setText("DECLINACION");
+		add(label8, new GridConstraints(5, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- DEC textfield ----
+		add(DECINPUT, new GridConstraints(5, 4, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- alto ----
+		label3.setText("ALTO");
+		add(label3, new GridConstraints(6, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- alto textfield ----
+		add(ALTOINPUT, new GridConstraints(6, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- ancho ----
+		label6.setText("ANCHO");
+		add(label6, new GridConstraints(6, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));	
+		//---- ancho textfield ----
+		add(ANCHOINPUT, new GridConstraints(6, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- formato fichero ----
+		label11.setText("FORMATO FICHERO");
+		add(label11, new GridConstraints(7, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- combobox formato fichero ----
+		add(formatoFichero, new GridConstraints(7, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		//---- formato coordenadas ----
+		label12.setText("FORMATO COORDENADAS");
+		add(label12, new GridConstraints(7, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- combobox formato coordenadas ----
+		formatoCoordenadas.setEnabled(false);
+		add(formatoCoordenadas, new GridConstraints(7, 4, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- ruta ----
+		label10.setText("RUTA");
+		add(label10, new GridConstraints(8, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- ruta textfield ----
+		ruta.setEditable(false);
+		add(ruta, new GridConstraints(8, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- boton ruta ----
 		button1.setToolTipText("Seleccione ruta");
 		button1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -553,17 +575,75 @@ public class CreateNewDownload extends JPanel {
 				rutaMouseClicked(e);
 			}
 		});
-		add(button1, new GridConstraints(7, 1, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+		add(button1, new GridConstraints(8, 2, 1, 1,
+			GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_FIXED,
 			GridConstraints.SIZEPOLICY_FIXED,
 			new Dimension(20, 20), null, new Dimension(20, 20)));
+		
+		
+		
+		
+		
+		
+		//---- separador2 ----
 		add(separator2, new GridConstraints(9, 0, 1, 5,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- alias configuracion ----
+		label13.setText("ALIAS CONFIGURACION");
+		add(label13, new GridConstraints(10, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- alias configuracion textfield ----
+		add(aliasNuevaConfig, new GridConstraints(10, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		//---- valores por defecto ----
+		label14.setText("VALORES POR DEFECTO");
+		add(label14, new GridConstraints(10, 3, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		//---- combobox valores por defecto ----
+		add(comboBoxValoresPorDefecto, new GridConstraints(10, 4, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- guardarValoresPorDefecto ----
+		guardarValoresPorDefecto.setText("GUARDAR COMO VALORES POR DEFECTO");
+		guardarValoresPorDefecto.setToolTipText("PULSE AQUI PARA GUARDAR SU CONFIGURACI\u00d3N CON EL ALIAS DESIGNADO");
+		guardarValoresPorDefecto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				guardarValoresPorDefectoEvent(e);
+			}
+		});
+		add(guardarValoresPorDefecto, new GridConstraints(11, 0, 1, 2,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
 		//---- cargarValoresPorDefecto ----
 		cargarValoresPorDefecto.setText("CARGAR VALORES POR DEFECTO");
 		cargarValoresPorDefecto.setToolTipText("PULSE AQUI PARA CARGAR LA CONFIGURACION POR DEFECTO SELECCIONADA");
@@ -578,32 +658,31 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- separador3 ----
 		add(separator3, new GridConstraints(12, 0, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- INICIARDESCARGAALCREAR ----
+		INICIARDESCARGAALCREAR.setText("INICIAR DESCARGA UNA VEZ CREADA ");
+		add(INICIARDESCARGAALCREAR, new GridConstraints(13, 0, 1, 3,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
-		//---- guardarValoresPorDefecto ----
-		guardarValoresPorDefecto.setText("GUARDAR COMO VALORES POR DEFECTO");
-		guardarValoresPorDefecto.setToolTipText("PULSE AQUI PARA GUARDAR SU CONFIGURACI\u00d3N CON EL ALIAS DESIGNADO");
-		guardarValoresPorDefecto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				guardarValoresPorDefectoEvent(e);
-			}
-		});
-		add(guardarValoresPorDefecto, new GridConstraints(11, 0, 1, 3,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(separator4, new GridConstraints(14, 0, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
 		//---- visualizarAlTerminarDescarga ----
 		visualizarAlTerminarDescarga.setText("VISUALIZAR AL TERMINAR DESCARGA");
 		add(visualizarAlTerminarDescarga, new GridConstraints(13, 3, 1, 2,
@@ -611,33 +690,24 @@ public class CreateNewDownload extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(comboBoxValoresPorDefecto, new GridConstraints(10, 4, 1, 1,
+		
+		
+		
+		
+		
+		
+		//---- separador4 ----
+		add(separator4, new GridConstraints(14, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(aliasNuevaConfig, new GridConstraints(10, 2, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label13 ----
-		label13.setText("ALIAS CONFIGURACION");
-		add(label13, new GridConstraints(10, 0, 1, 2,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label14 ----
-		label14.setText("VALORES POR DEFECTO");
-		add(label14, new GridConstraints(10, 3, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
+		
+		
+		
+		
+		
+		
 		//---- crearDescarga ----
 		crearDescarga.setText("CREAR DESCARGA");
 		crearDescarga.addMouseListener(new MouseAdapter() {
@@ -646,12 +716,11 @@ public class CreateNewDownload extends JPanel {
 				crearDescargaEvent(e);
 			}
 		});
-		add(crearDescarga, new GridConstraints(15, 2, 1, 2,
+		add(crearDescarga, new GridConstraints(15, 1, 1, 3,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
 	public void setServicioGestionTareas(ServicioGestionTareas servicioGestionTareas) {
@@ -662,7 +731,6 @@ public class CreateNewDownload extends JPanel {
 		return servicioGestionTareas;
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JLabel label1;
 	private JTextField ALIASINPUT;
 	private JLabel label2;

@@ -58,7 +58,7 @@ public class CreateTask extends JPanel {
 		buttonRuta.setIcon(new ImageIcon("images/iconos-diego/carpeta.jpg"));
 
 		//======== this ========
-		setLayout(new GridLayoutManager(16, 6, new Insets(0, 60, 0, 60), 5, -1));
+		setLayout(new GridLayoutManager(10, 6, new Insets(0, 60, 0, 60), 5, -1));
 		
 		//---- titulo ----
 		titulo.setText("CREACIÓN DE TAREAS");
