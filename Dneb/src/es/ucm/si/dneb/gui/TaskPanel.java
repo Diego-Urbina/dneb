@@ -12,6 +12,9 @@ import javax.swing.table.*;
 
 import org.springframework.context.ApplicationContext;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
@@ -26,14 +29,12 @@ import es.ucm.si.dneb.util.ProgressRenderer;
 public class TaskPanel extends JPanel {
 	
 	private static final long serialVersionUID = -3364091451558723326L;
-	private VentanaPcpal principal;
 	private DefaultTableModel modelo;
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
 	private ServicioGestionTareas servicioGestionTareas;
 	
 	public TaskPanel(VentanaPcpal pcpal) {
 		initComponents();
-		principal = pcpal;
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
 		
@@ -48,9 +49,9 @@ public class TaskPanel extends JPanel {
 	}
 
 	private void initIcons() {
-		this.buttonReanudar.setIcon(new ImageIcon("images/starticon.jpg"));
-        this.buttonParar.setIcon(new ImageIcon("images/stop_icon.png"));
-        this.buttonEliminar.setIcon(new ImageIcon("images/deleteicon.png"));
+		this.buttonReanudar.setIcon(new ImageIcon("images/iconos-diego/play-rojo.png"));
+        this.buttonParar.setIcon(new ImageIcon("images/iconos-diego/stop-rojo.png"));
+        this.buttonEliminar.setIcon(new ImageIcon("images/iconos-diego/delete-rojo.png"));
 	}
 	
 	private void rellenarTabla() {
@@ -159,10 +160,9 @@ public class TaskPanel extends JPanel {
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+		
 		scrollPane = new JScrollPane();
 		tableTasks = new JTable();
-		buttonVolver = new JButton();
 		buttonEliminar = new JButton();
 		buttonParar = new JButton();
 		buttonReanudar = new JButton();
@@ -215,8 +215,7 @@ public class TaskPanel extends JPanel {
 				cm.getColumn(14).setPreferredWidth(80);
 			}
 			tableTasks.setRowSelectionAllowed(true);
-			tableTasks.setPreferredScrollableViewportSize(new Dimension(1000, 300));
-			tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			tableTasks.setPreferredScrollableViewportSize(new Dimension(2000, 2000));
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 	    	tcr.setHorizontalAlignment(SwingConstants.CENTER);
 	    	tableTasks.setAutoCreateRowSorter(true);
@@ -235,11 +234,6 @@ public class TaskPanel extends JPanel {
 	    	tableTasks.getColumnModel().getColumn(13).setCellRenderer(tcr);
 			scrollPane.setViewportView(tableTasks);
 		}
-
-		//---- buttonVolver ----
-		buttonVolver.setText("VOLVER");
-		buttonVolver.setFont(new Font("Arial", Font.PLAIN, 11));
-		buttonVolver.setVisible(false);
 
 		//---- buttonEliminar ----
 		buttonEliminar.setText("ELIMINAR");
@@ -267,47 +261,40 @@ public class TaskPanel extends JPanel {
 				buttonReanudarActionPerformed(e);
 			}
 		});
-
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
-		layout.setHorizontalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addGroup(layout.createSequentialGroup()
-							.addComponent(buttonReanudar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-							.addGap(117, 117, 117)
-							.addComponent(buttonParar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-							.addGap(117, 117, 117)
-							.addComponent(buttonEliminar, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-							.addGap(117, 117, 117)
-							.addComponent(buttonVolver, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		layout.setVerticalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-					.addGap(37, 37, 37)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(buttonVolver)
-						.addComponent(buttonEliminar)
-						.addComponent(buttonParar)
-						.addComponent(buttonReanudar))
-					.addGap(40, 40, 40))
-		);
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
+		
+		setLayout(new GridLayoutManager(2, 3, new Insets(30, 60, 30, 60), 5, -1));
+		add(scrollPane, new GridConstraints(0, 0, 1, 3,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		add(buttonReanudar, new GridConstraints(1, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		add(buttonParar, new GridConstraints(1, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		add(buttonEliminar, new GridConstraints(1, 2, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));		
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+	
 	private JScrollPane scrollPane;
 	private JTable tableTasks;
-	private JButton buttonVolver;
 	private JButton buttonEliminar;
 	private JButton buttonParar;
 	private JButton buttonReanudar;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	
 	
 }
