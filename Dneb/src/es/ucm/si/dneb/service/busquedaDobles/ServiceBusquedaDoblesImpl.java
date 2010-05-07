@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
@@ -41,8 +42,11 @@ import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.image.util.Point;
+import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.CoordinateConverter;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.Distance;
+import es.ucm.si.dneb.service.math.MathService;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 
 @Service("serviceBusquedaDobles")
@@ -51,25 +55,13 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	@PersistenceContext
 	private EntityManager manager;
 	
+	private LectorImageHDU l1, l2;
+	
 	private static final Log LOG = LogFactory
 	.getLog(ServiceBusquedaDoblesImpl.class);
 		
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void iniciarProcesamiento(List<ProcImagen> procImgs) {
-		
-		/* Algoritmo de busqueda de estrellas candidatas a haberse movido
-		 * 
-		 * 1 - Buscar todas las estrellas en las dos imagenes con el algoritmo de busqueda de estrellas
-		 * 2 - Coger de ambas imagenes el minimo numero de estrellas encontradas. La imagen con menos estrellas
-		 *     será la de los centroides a analizar y la otra la de los emparejamientos
-		 * 3 - Obtener los centroides de las estrellas encontradas
-		 * 4 - Comparar cada centroide de la primera imagen con los de la segunda e ir emparejandolos
-		 * 4.1 - Se coge el centroide mas cercano al que se quiere emparejar y se toma como su pareja
-		 * 4.2 - Si no se encuentra centroide dentro de un radio dado se desecha el centroide
-		 * 4.3 - Si el porcentaje de centroides emparejados es menor a un numero dado se desechan las imagenes
-		 * 4.4 - Si es mayor o igual se pasa al tratamiento de ambas imagenes
-		 * 5 - Por ultimo, se calcula la matriz de transformacion para ajustar las dos imagenes con respecto a los centroides elegidos
-		 */
 		
 		// Obtener nombre de ficheros y parametros configurables
 		Imagen im1 = procImgs.get(0).getImagen(), im2 = procImgs.get(1).getImagen();
@@ -85,6 +77,21 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	}
 	
 	public Point[][] busquedaEstrellasMovimiento(Imagen im1, Imagen im2) {
+		
+		/* Algoritmo de busqueda de estrellas candidatas a haberse movido
+		 * 
+		 * 1 - Buscar todas las estrellas en las dos imagenes con el algoritmo de busqueda de estrellas
+		 * 2 - Coger de ambas imagenes el minimo numero de estrellas encontradas. La imagen con menos estrellas
+		 *     será la de los centroides a analizar y la otra la de los emparejamientos
+		 * 3 - Obtener los centroides de las estrellas encontradas
+		 * 4 - Comparar cada centroide de la primera imagen con los de la segunda e ir emparejandolos
+		 * 4.1 - Se coge el centroide mas cercano al que se quiere emparejar y se toma como su pareja
+		 * 4.2 - Si no se encuentra centroide dentro de un radio dado se desecha el centroide
+		 * 4.3 - Si el porcentaje de centroides emparejados es menor a un numero dado se desechan las imagenes
+		 * 4.4 - Si es mayor o igual se pasa al tratamiento de ambas imagenes
+		 * 5 - Por ultimo, se calcula la matriz de transformacion para ajustar las dos imagenes con respecto a los centroides elegidos
+		 */
+		
 		try {
 			
 			String filename1 = im1.getRutaFichero();
@@ -94,10 +101,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			bw.write("\r\n***** Información de ejecución *****\r\n");
 			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);
 			
-			float[] brillos = {99.9f, 99.95f, 99.95f};
-			float[] umbrales = {99.8f, 99.75f, 99.8f};
+			float[] brillos = new float[100];// = {99.9f, 99.95f, 99.95f};
+			float[] umbrales = new float[100];// = {99.8f, 99.75f, 99.8f};
 			Point[][] resultado = null;
 			int longResultado = 0;
+			
+			for (int i = 0; i < 100; i++) {
+				Random r = new Random();
+				do {
+					brillos[i] = r.nextFloat() + 99.0f;
+					umbrales[i] = r.nextFloat() + 99.0f;
+				} while (brillos[i] < umbrales[i]);
+			}
 			
 			for (int iter = 0; iter < brillos.length; iter++) {
 			
@@ -108,7 +123,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				// Crear imagenes y buscar estrellas
 				Fits imagenFITS1 = new Fits(new File(filename1));			
 				BasicHDU imageHDU1 = imagenFITS1.getHDU(0);
-				LectorImageHDU l1 = new LectorImageHDU(imageHDU1, filename1);
+				l1 = new LectorImageHDU(imageHDU1, filename1);
 				StarFinder sf1 = new StarFinder();
 				umbral1 = new Float(l1.getNPercentile(umbrales[iter]));
 				brillo1 = new Float(l1.getNPercentile(brillos[iter]));
@@ -118,7 +133,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				
 				Fits imagenFITS2 = new Fits(new File(filename2));			
 				BasicHDU imageHDU2 = imagenFITS2.getHDU(0);
-				LectorImageHDU l2 = new LectorImageHDU(imageHDU2, filename2);
+				l2 = new LectorImageHDU(imageHDU2, filename2);
 				StarFinder sf2 = new StarFinder();
 				umbral2 = new Float(l2.getNPercentile(umbrales[iter]));
 				brillo2 = new Float(l2.getNPercentile(brillos[iter]));
@@ -352,15 +367,10 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 							PlanarImage pi = createPlanarImage(l2);
 							if (iter == 0)
 								resultado = new Point[2][centroidesIni.size()];
-							//int[] posiciones = new int[centroidesIni.size()];
 							Point[][] aux = new Point[2][centroidesIni.size()];
 							for (int i = 0; i < centroidesIni.size(); i++) {
 								if (errores[i] > 2*desviacion) {
 									centroide = centroidesIni.get(i);
-									/*if (iter == 0) {
-										resultado[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0][cont] = centroide;
-										resultado[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1][cont] = elegidos.get(i);
-									} else posiciones[i] = posicion(resultado, centroide, elegidos.get(i), (sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0);*/
 									aux[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0][cont] = centroide;
 									aux[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1][cont] = elegidos.get(i);
 									dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
@@ -368,9 +378,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 									cont++;
 								}
 							}
-							/*if (iter > 0)
-								resultado = eliminarPosiciones(resultado, posiciones);*/
-							longResultado += union(resultado, aux, longResultado, cont, (sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1);
+							longResultado = union(resultado, aux, longResultado, cont, (sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1);
 						}
 					}
 				}
@@ -401,8 +409,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			c2 = p2[posCent][i];
 			e2 = p2[(posCent+1)%2][i];
 			for (int j = 0; j < pos1 && !encontrado; j++) {
-				c1 = p1[posCent][i];
-				e1 = p1[(posCent+1)%2][i];
+				c1 = p1[posCent][j];
+				e1 = p1[(posCent+1)%2][j];
 				encontrado = c1.getX()-limite <= c2.getX() && c1.getX()+limite >= c2.getX()
 							&& c1.getY()-limite <= c2.getY() && c1.getY()+limite >= c2.getY()
 							&& e1.getX()-limite <= e2.getX() && e1.getX()+limite >= e2.getX()
@@ -418,51 +426,69 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		return pos;
 	}
 	
-	private int posicion(Point[][] r, Point cent, Point pareja, int posCent) {
-		int limite = 2;
-		
-		int pos = -1;
-		Point c, e;
-		for (int i = 0; i < r[0].length && pos == -1 && r[posCent][i] != null && r[(posCent+1)%2] != null; i++) {
-			c = r[posCent][i];
-			e = r[(posCent+1)%2][i];
-			if (c.getX()-limite <= cent.getX() && c.getX()+limite >= cent.getX()
-					&& c.getY()-limite <= cent.getY() && c.getY()+limite >= cent.getY()
-					&& e.getX()-limite <= pareja.getX() && e.getX()+limite >= pareja.getX()
-					&& e.getY()-limite <= pareja.getY() && e.getY()+limite >= pareja.getY())
-				
-				pos = i;
-		}
-		
-		return pos;
-	}
-	
-	private Point[][] eliminarPosiciones(Point[][] r, int[] posiciones) {
-		Point[][] aux = new Point[2][r[0].length];
-		int cont = 0;
-		for (int i : posiciones) {
-			if (i != -1) {
-				aux[0][cont] = r[0][i];
-				aux[1][cont] = r[1][i];
-				cont++;
-			}
-		}
-		
-		return aux;
-	}
-	
 	public Point[][] busquedaEstrellasDobles(Imagen im1, Imagen im2) {
 		
 		/* Algoritmo de busqueda de estrellas candidatas a ser dobles
 		 * 
 		 * 1 - Obtener la lista de estrellas candidatas a haberse movido
 		 * 2 - Emparejar las estrellas de la lista con el criterio de que se hayan movido en la misma direccion
-		 * 3 - Para ello calcularemos el vector director de cada una y veremos cuales coinciden en dirección
+		 * 3 - Para ello calcularemos el vector director de cada una y veremos cuales coinciden en dirección, sentido y módulo
 		 */
 		
+		Point[][] candidatas = busquedaEstrellasMovimiento(im1, im2);
 		
+		Point[][] resultado = new Point[2][candidatas[0].length];
+		DecimalCoordinate dc1, dc2;
+		MathService ms = (MathService) ContextoAplicacion.getApplicationContext().getBean("mathService");
+		PlanarImage pi1 = createPlanarImage(l1);
+		Point p1, p2, e1, e2;
+		Distance d;
+		int cont = 0;
+		boolean[] usados = new boolean[candidatas[0].length];
+		double modulo1, modulo2, direccion1, direccion2;
+		double semejanza = 0.25; // porcentaje de semejanza entre el modulo y la direccion de los vectores
 		
-		return busquedaEstrellasMovimiento(im1, im2);
+		for (int i = 0; i < candidatas[0].length && candidatas[0][i] != null && candidatas[1][i] != null; i++) {
+			p1 = candidatas[0][i];
+			e1 = candidatas[1][i];
+			dc1 = pixelToCoordinatesConverter(im1, pi1.getWidth(), pi1.getHeight(), p1.getX(), p1.getY());
+			modulo1 = p1.getDistancia(e1);
+			direccion1 = p1.getDireccion(e1);
+			
+			for (int j = i+1; j < candidatas[0].length && candidatas[0][j] != null && candidatas[1][j] != null; j++) {
+				p2 = candidatas[0][j];
+				e2 = candidatas[1][j];
+				dc2 = pixelToCoordinatesConverter(im1, pi1.getWidth(), pi1.getHeight(), p2.getX(), p2.getY());
+				d = ms.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
+				if (d.getDistanceSeconds() > 180) continue; // distancia entre estrellas mayor de 3 minutos
+				
+				modulo2 = p2.getDistancia(e2);
+				direccion2 = p2.getDireccion(e2);
+				
+				if (modulo2 <= modulo1*(1+semejanza) && modulo2 >= modulo1*(1-semejanza) &&
+						direccion2 <= direccion1*(1+semejanza) && direccion2 >= direccion1*(1-semejanza)) {
+					// Si los modulos y las direcciones son semejantes mirar que los sentidos sean iguales
+					
+					// Si el producto escalar es positivo tienen el mismo sentido
+					if ((e1.getX()-p1.getX())*(e2.getX()-p2.getX()) + (e1.getY()-p1.getY())*(e2.getY()-p2.getY()) > 0) {
+						if (!usados[i]) {
+							usados[i] = true;
+							resultado[0][cont] = p1;
+							resultado[1][cont] = e1;
+							cont++;
+						}
+						if (!usados[j]) {
+							usados[j] = true;
+							resultado[0][cont] = p2;
+							resultado[1][cont] = e2;
+							cont++;
+						}
+					}
+				}
+			}
+		}
+		
+		return resultado;
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
@@ -472,7 +498,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		double radioMaxBusqueda = 8; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
 		double tamRecLim = 1.5; // El area del rectangulo debera estar entre un rango determinado
-		//double distanciaPrioritaria = 4; // Por debajo de esta distancia no hace falta mirar el brillo
 		double distancia, distanciaMin = 5, brillo, brilloParecido = 0, brilloEscalado;
 		Point elegido = null;
 		Point aux;

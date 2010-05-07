@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
@@ -21,6 +24,7 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,9 +39,11 @@ import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.util.Point;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
+import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.FiltreExtensible;
 
-public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
+public class CentroidsViewerPanel extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
 
 	private static final long serialVersionUID = -7389267318471409502L;
 	
@@ -46,6 +52,7 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 	
 	private JScrollPane jsp1, jsp2;
 	private JButton buttonAnimar;
+	private JLabel labelPos, dLabel, sLabel;
 	
 	private LectorImageHDU l1, l2;
 	private PlanarImage input1, input2;
@@ -81,9 +88,26 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 	    c.gridy = 0;
 	    add(jsp2, c);
 	    
-	    JPanel panel2 = new JPanel();
-	    GroupLayout layout = new GroupLayout(panel2);
-	    panel2.setLayout(layout);
+	    labelPos = new JLabel("???");
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    c.gridwidth = 3;
+	    c.weighty = 0.0;
+	    add(labelPos, c);
+	    
+	    dLabel = new JLabel();
+	    c.gridx = 0;
+	    c.gridy = 2;
+	    add(dLabel, c);
+	    
+	    sLabel = new JLabel();
+	    c.gridx = 0;
+	    c.gridy = 3;
+	    add(sLabel, c);
+	    
+	    JPanel panel = new JPanel();
+	    GroupLayout layout = new GroupLayout(panel);
+	    panel.setLayout(layout);
 	    
 	    layout.setAutoCreateGaps(true);
 	    layout.setAutoCreateContainerGaps(true);
@@ -115,6 +139,15 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 			}
 		});
 	    
+	    JButton buttonED = new JButton();
+	    buttonED.setIcon(new ImageIcon("images/staricon2.jpg"));
+	    buttonED.setToolTipText("Buscar estrellas dobles en la imagen");
+	    buttonED.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEDActionPerformed(e);
+			}
+		});
+	    
 	    buttonAnimar = new JButton();
 	    buttonAnimar.setIcon(new ImageIcon("images/starticon2.jpg"));
 	    buttonAnimar.setToolTipText("Animación de imágenes");
@@ -130,6 +163,7 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 	    		  .addComponent(buttonAbrir)
 			      .addComponent(buttonRestaurar)
 			      .addComponent(buttonProcesar)
+			      .addComponent(buttonED)
 			      .addComponent(buttonAnimar))
 		);
 	    
@@ -138,16 +172,17 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 		      .addComponent(buttonAbrir)
 		      .addComponent(buttonRestaurar)
 		      .addComponent(buttonProcesar)
+		      .addComponent(buttonED)
 		      .addComponent(buttonAnimar)
 		);
 		
 	    c.gridx = 2;
 	    c.gridy = 0;
 	    c.gridwidth = 1;
-	    c.gridheight = 1;
+	    c.gridheight = 2;
 	    c.fill = GridBagConstraints.NONE;
 	    c.weightx = 0.0;
-	    add(panel2, c);
+	    add(panel, c);
 		
 	    // Horizontal scroll bar of the first image.
 	    jsp1.getHorizontalScrollBar().addAdjustmentListener(this);
@@ -174,6 +209,51 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 		jsp2.repaint();
 	}
 	
+	private void buttonEDActionPerformed(ActionEvent e) {
+		try {
+			if (l1 == null || l2 == null)
+				throw new Exception("Debe cargar primero dos imágenes");
+			
+			restaurar();
+			
+			Point[][] centroides = serviceBusquedaDobles.busquedaEstrellasDobles(im1, im2);
+			
+			if (centroides == null || centroides[0][0] == null || centroides[1][0] == null) {
+				JOptionPane.showMessageDialog(null, "No se han encontrado estrellas dobles", "Información", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			
+			Point p1, p2;
+			for (int i = 0; i < centroides[0].length && centroides[0][i] != null && centroides[1][i] != null; i++) {
+				p1 = centroides[0][i];
+				Shape s11 = new Ellipse2D.Float(p1.getX().floatValue() - 1.5f, p1.getY().floatValue() - 1.5f, 3.0f, 3.0f);
+				Shape s12 = new Ellipse2D.Float(p1.getX().floatValue() - 10.0f, p1.getY().floatValue() - 10.0f, 20.0f, 20.0f);
+				p2 = centroides[1][i];
+				Shape s21 = new Ellipse2D.Float(p2.getX().floatValue() - 1.5f, p2.getY().floatValue() - 1.5f, 3.0f, 3.0f);
+				Shape s22 = new Ellipse2D.Float(p2.getX().floatValue() - 10.0f, p2.getY().floatValue() - 10.0f, 20.0f, 20.0f);
+				
+				ImageRegion ir11 = new ImageRegion(input1,new ROIShape(s11));
+				ir11.setBorderColor(new Color(255,0,0));
+				display1.addImageRegion(ir11);
+				ImageRegion ir12 = new ImageRegion(input1,new ROIShape(s12));
+				ir12.setBorderColor(new Color(0,255,0));
+				display1.addImageRegion(ir12);
+				ImageRegion ir21 = new ImageRegion(input2,new ROIShape(s21));
+				ir21.setBorderColor(new Color(255,0,0));
+				display2.addImageRegion(ir21);
+				ImageRegion ir22 = new ImageRegion(input2,new ROIShape(s22));
+				ir22.setBorderColor(new Color(0,255,0));
+				display2.addImageRegion(ir22);
+			}
+			
+			jsp1.repaint();
+			jsp2.repaint();
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 	private void abrirImagenes(String file1, String file2) {
 		try {
 			File dir = new File("Temp");
@@ -186,6 +266,8 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 			JAI.create("filestore", im, "Temp/im1.png", "PNG");
 			input1 = JAI.create("fileload", "Temp/im1.png");
 			display1 = new DisplayImageWithRegions(input1);
+			display1.addMouseMotionListener(this);
+		    display1.addMouseListener(this);
 			jsp1.setViewportView(display1);
 			
 			imagenFITS = new Fits(new File(file2));
@@ -195,6 +277,8 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 			JAI.create("filestore", im, "Temp/im2.png","PNG");
 			input2 = JAI.create("fileload", "Temp/im2.png");
 			display2 = new DisplayImageWithRegions(input2);
+			display2.addMouseMotionListener(this);
+		    display2.addMouseListener(this);
 			jsp2.setViewportView(display2);
 			
 			im1 = servicioGestionTareas.getImagenByPath(file1);
@@ -382,9 +466,58 @@ public class CentroidsViewerPanel extends JPanel implements AdjustmentListener {
 		}
 		
 	}
-	
-	public static void main(String[] args) {
-		new CentroidsViewerPanel();
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		DecimalCoordinate dc = null;
+		SexagesimalCoordinate sc = null;
+		String pos = "(" + e.getX() + "," + e.getY() + ") ";
+		String s1 = "", s2 = "";
+		
+		if (e.getSource() == display1) {
+			dc = serviceBusquedaDobles.pixelToCoordinatesConverter(im1, input1.getWidth(), input1.getHeight(), e.getX(), e.getY());
+			sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
+			labelPos.setText(pos + display1.getPixelInfo());
+		}
+		
+		if (e.getSource() == display2) {
+			dc = serviceBusquedaDobles.pixelToCoordinatesConverter(im2, input2.getWidth(), input2.getHeight(), e.getX(), e.getY());
+			sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
+			labelPos.setText(pos + display2.getPixelInfo());
+		}
+		
+		if (e.getX() < input1.getWidth() && e.getY() < input1.getHeight() ||
+				e.getX() < input2.getWidth() && e.getY() < input2.getHeight()) {
+			s1 = dc.toString();
+			s2 = sc.toString();
+		}
+		
+		dLabel.setText(s1);
+		sLabel.setText(s2);
 	}
 
 }
