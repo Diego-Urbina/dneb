@@ -262,7 +262,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	private void buttonProcesarActionPerformed(ActionEvent e) {
 		/*TODO**/
 		
-		dialog1.show();
+		dialog1.setVisible(true);
 	}
 	
 	private void buttonRestaurarActionPerformed(ActionEvent e) {
@@ -468,7 +468,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			    display.addImageRegion(ir);
 			}
 			
-			dialog1.hide();
+			dialog1.setVisible(false);
 			
 			jsp.repaint();
 		} catch (Exception ex) {
