@@ -55,7 +55,7 @@ public class CreateTask extends JPanel {
 		comboBoxSurvey1 = new JComboBox();
 		comboBoxSurvey2 = new JComboBox();
 		
-		buttonRuta.setIcon(new ImageIcon("images/carpeta-icono.jpg"));
+		buttonRuta.setIcon(new ImageIcon("images/iconos-diego/carpeta.jpg"));
 
 		//======== this ========
 		setLayout(new GridLayoutManager(16, 6, new Insets(0, 60, 0, 60), 5, -1));
