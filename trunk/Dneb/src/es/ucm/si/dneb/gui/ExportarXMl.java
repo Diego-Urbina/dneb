@@ -24,8 +24,6 @@ public class ExportarXMl extends JPanel {
 	private static final long serialVersionUID = -2463002191795071823L;
 	public ExportarXMl() {
 		initComponents();
-		
-		
 	}
 
 	private void selRutaActionPerformed(ActionEvent e) {
@@ -59,7 +57,6 @@ public class ExportarXMl extends JPanel {
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		selRuta = new JButton();
 		ruta = new JTextField();
 		ruta.setEditable(false);
@@ -70,14 +67,14 @@ public class ExportarXMl extends JPanel {
 		separator1 = new JSeparator();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(20, 20, new Insets(30, 60, 60, 60), 5, -1));
+		setLayout(new GridLayoutManager(5, 5, new Insets(30, 60, 60, 60), 5, -1));
 
 		
 		//---- titulo ----
 		titulo.setText("EXPORTAR A XML");
 		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		add(titulo, new GridConstraints(0, 0, 1, 20,
+		add(titulo, new GridConstraints(0, 0, 1, 5,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK ,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
@@ -89,7 +86,7 @@ public class ExportarXMl extends JPanel {
 		
 		
 		//---- separador1 ----
-		add(separator1, new GridConstraints(1, 0, 1, 20,
+		add(separator1, new GridConstraints(1, 0, 1, 5,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
@@ -103,12 +100,12 @@ public class ExportarXMl extends JPanel {
 				selRutaActionPerformed(e);
 			}
 		});
-		add(selRuta, new GridConstraints(6, 3, 1, 6,
+		add(selRuta, new GridConstraints(2, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(ruta, new GridConstraints(6, 10, 1, 4,
+		add(ruta, new GridConstraints(2, 1, 1, 2,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -116,12 +113,12 @@ public class ExportarXMl extends JPanel {
 
 		//---- label1 ----
 		label1.setText("NOMBRE DEL FICHERO");
-		add(label1, new GridConstraints(8, 3, 1, 6,
+		add(label1, new GridConstraints(3, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(fileName, new GridConstraints(8, 10, 1, 4,
+		add(fileName, new GridConstraints(3, 1, 1, 2,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -134,10 +131,10 @@ public class ExportarXMl extends JPanel {
 				button2ActionPerformed(e);
 			}
 		});
-		add(button2, new GridConstraints(10, 7, 1, 4,
+		add(button2, new GridConstraints(4, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
 	}
 

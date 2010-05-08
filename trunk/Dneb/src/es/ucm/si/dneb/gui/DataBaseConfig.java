@@ -17,7 +17,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
  */
 public class DataBaseConfig extends JPanel {
 	
-	public DataBaseConfig(VentanaPcpal pcpal) {
+	public DataBaseConfig() {
 		initComponents();
 	}
 
