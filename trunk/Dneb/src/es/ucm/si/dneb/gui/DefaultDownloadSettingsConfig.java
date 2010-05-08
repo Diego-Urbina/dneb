@@ -297,7 +297,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 		elminarConfiguracion = new JButton();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(8, 5, new Insets(0, 60, 0, 60), 5, -1));
+		setLayout(new GridLayoutManager(8, 5, new Insets(30, 60, 0, 60), 5, -1));
 
 		//---- titulo ----
 		titulo.setText("CONFIGURACIÓN DE VALORES POR DEFECTO");
@@ -305,8 +305,8 @@ String aliasConfig = aliasNuevaConfig.getText();
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(titulo, new GridConstraints(0, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
 		
 		
@@ -317,8 +317,8 @@ String aliasConfig = aliasNuevaConfig.getText();
 		//---- separador1 ----
 		add(separator1, new GridConstraints(1, 0, 1, 5,
 				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
-				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
 		

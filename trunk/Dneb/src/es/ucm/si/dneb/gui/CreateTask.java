@@ -58,7 +58,7 @@ public class CreateTask extends JPanel {
 		buttonRuta.setIcon(new ImageIcon("images/iconos-diego/carpeta.jpg"));
 
 		//======== this ========
-		setLayout(new GridLayoutManager(10, 6, new Insets(0, 60, 0, 60), 5, -1));
+		setLayout(new GridLayoutManager(10, 6, new Insets(30, 60, 0, 60), 5, -1));
 		
 		//---- titulo ----
 		titulo.setText("CREACIÓN DE TAREAS");
@@ -66,8 +66,8 @@ public class CreateTask extends JPanel {
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(titulo, new GridConstraints(1, 0, 1, 6,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
 		
 		
@@ -78,8 +78,8 @@ public class CreateTask extends JPanel {
 		//---- separator1 ----
 		add(separator1, new GridConstraints(2, 0, 1, 6,
 				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
-				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
 		
@@ -90,14 +90,14 @@ public class CreateTask extends JPanel {
 		//---- survey1 ----
 		survey1.setText("SURVEY 1");
 		add(survey1, new GridConstraints(3, 0, 1, 1,
-			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 		
 		//---- comboBoxSurvey1 ----
 		add(comboBoxSurvey1, new GridConstraints(3, 2, 1, 1,
-				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));
@@ -105,14 +105,14 @@ public class CreateTask extends JPanel {
 		//---- survey2 ----
 		survey2.setText("SURVEY 2");
 		add(survey2, new GridConstraints(3, 3, 1, 1,
-			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 		
 		//---- comboBoxSurvey2 ----
 		add(comboBoxSurvey2, new GridConstraints(3, 4, 1, 1,
-				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));
