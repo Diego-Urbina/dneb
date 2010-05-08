@@ -20,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import sun.print.resources.serviceui_zh_TW;
-
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.InformacionRelevante;
@@ -89,8 +87,8 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 		List<ParamProcTarea> paramProcTareas = pi.getTareaProcesamiento()
 				.getParametros();
-		double brillo = 0, umbral = 0, margenAngulo = 0.15, margenDistancia = 0.15, distMinima = 4;
-		int limCandidatos = 5, maxEstrellas = 70;
+		double brillo = 32000, umbral = 30000, margenAngulo = 0.03, margenDistancia = 0.10, distMinima = 4;
+		int limCandidatos = 3, maxEstrellas = 120;
 
 		for (int i = 0; i < paramProcTareas.size(); i++) {
 			if (paramProcTareas.get(i).getTipoParametro().getIdTipoParametro() == 1) // brillo
@@ -125,6 +123,9 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 			int maxCandidatos, int maxEstrellas, double margenAngulo,
 			double margenDistancia, double distanciaMinima, Imagen imagen) {
 
+		double brilloInicial = brillo;
+		double umbralInicial = umbral;
+
 		ArrayList<Point> points = new ArrayList<Point>();
 		/*
 		 * MARGEN PARA PODER HACER CONSULTAS SOBRE DOUBLES EN BASE DE DATOS YA
@@ -133,11 +134,11 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		double ar = Double.parseDouble(imagen.getAscensionRecta());
 		double dec = Double.parseDouble(imagen.getDeclinacion());
 
-		double param1 = ar + 0.0000000000001;
-		double param2 = ar - 0.0000000000001;
+		double param1 = ar + 0.0000001;
+		double param2 = ar - 0.0000001;
 
-		double param3 = dec + 0.0000000000001;
-		double param4 = dec - 0.0000000000001;
+		double param3 = dec + 0.000001;
+		double param4 = dec - 0.000001;
 
 		List<DoubleStarCatalog> dscList = manager
 				.createQuery(
@@ -146,8 +147,8 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						3, param3).setParameter(4, param4).getResultList();
 
 		if (dscList.size() < 1) {
-			LOG
-					.error("NO SE HA PODIDO LOCALIZAR LA INFORMACIÓN EN EL CATALOGO");
+			LOG.error("NO SE HA PODIDO LOCALIZAR LA INFORMACIÓN EN EL CATALOGO"
+					+ imagen.toString());
 			throw new ServiceCalculoPosicionException(
 					"NO SE HA PODIDO LOCALIZAR LA INFORMACIÓN EN EL CATALOGO");
 		}
@@ -178,15 +179,10 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 			 * considerar como arreglarlos.
 			 * 
 			 * 
-			 * Es la magnitud de verdad relevante??? pk no parece que se corresponda el nº con la imgen
+			 * Es la magnitud de verdad relevante??? pk no parece que se
+			 * corresponda el nº con la imgen
 			 */
 			LOG.info(dsc.toString());
-
-			if (dsc.getLastSeparation() < distanciaMinima  || dsc.getFirstStarMagnitude()>=12 || dsc.getSecondStarMagnitude()>=12) {
-
-				tipoAjuste = 1;
-
-			}
 
 			imagenFITS = new Fits(new File(filename1));
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
@@ -195,181 +191,212 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 			boolean sinRelevantes = true;
 
-			while (sinRelevantes) {
+			while (sinRelevantes && margenAngulo<=0.05 && margenDistancia<=0.13) {
 
-				LOG
-						.info("SE PROCEDE A EJECUTAR EL ALGORITMO CON LOS SIGUIENTES PARÁMETROS: BRILLO: "
-								+ brillo + "UMBRAL: " + umbral);
+				while (tipoAjuste < 2 && sinRelevantes) {
 
-				sf = new StarFinder();
-				sf.buscarEstrellas(l, new Float(brillo), new Float(umbral));
-				LOG.info("Numero de estrellas encontradas: "
-						+ sf.getNumberOfStars());
-				recStars = sf.getRecuadros();
+					brillo = brilloInicial;
+					umbral = umbralInicial;
 
-				// CALCULAR CENTROIDES
-				ArrayList<Point> centroides = new ArrayList<Point>();
-				CalculateBookCentroid cc = new CalculateBookCentroid();
-				Point cent;
+					while (sinRelevantes) {
 
-				int nRecuadros = recStars.size();
+						LOG
+								.info("SE PROCEDE A EJECUTAR EL ALGORITMO CON LOS SIGUIENTES PARÁMETROS: BRILLO: "
+										+ brillo + "UMBRAL: " + umbral);
 
-				if (nRecuadros > maxEstrellas) {
+						sf = new StarFinder();
+						sf.buscarEstrellas(l, new Float(brillo), new Float(
+								umbral));
+						LOG.info("Numero de estrellas encontradas: "
+								+ sf.getNumberOfStars());
+						recStars = sf.getRecuadros();
 
-					LOG
-							.error("DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE");
+						// CALCULAR CENTROIDES
+						ArrayList<Point> centroides = new ArrayList<Point>();
+						CalculateBookCentroid cc = new CalculateBookCentroid();
+						Point cent;
 
-					throw new ServiceCalculoPosicionException(
-							"DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE"
-									+ dsc.toString());
-				}
+						int nRecuadros = recStars.size();
 
-				for (int i = 0; i < nRecuadros; i++) {
-
-					cent = cc.giveMeTheCentroid(l.getPorcionImagen(recStars
-							.get(i).getxLeft(), recStars.get(i).getyTop(),
-							recStars.get(i).getWidth(), recStars.get(i)
-									.getHeight()));
-
-					cent.setX(recStars.get(i).getxLeft() + cent.getX());
-					cent.setY(recStars.get(i).getyTop() + cent.getY());
-
-					LOG.debug("\r\n\r\nCentroide " + i
-							+ " de la imagen 1:\r\n\tX: " + cent.getX()
-							+ "\r\n\tY: " + cent.getY());
-					LOG.debug("\r\n\r\nRectángulo " + i
-							+ " de la imagen 1:\r\n\txLeft: "
-							+ recStars.get(i).getxLeft() + "\r\n\txRight: "
-							+ recStars.get(i).getxRight() + "\r\n\tyTop: "
-							+ recStars.get(i).getyTop() + "\r\n\tyBot: "
-							+ recStars.get(i).getyBot());
-
-					centroides.add(cent);
-
-				}
-
-				LOG.info("PASANDO DE PÍXELES A COORDENADAS");
-
-				// PASAR DE PÍXELES A COORDENADAS
-
-				HashMap<DecimalCoordinate, Point> dcToPoint = new HashMap<DecimalCoordinate, Point>();
-
-				ArrayList<DecimalCoordinate> centroidesDC = new ArrayList<DecimalCoordinate>();
-
-				for (Point pointIter : centroides) {
-					LOG.debug("ANCHO: " + l.getWidth() + " ALTO: "
-							+ l.getHeight() + " X: " + pointIter.getX()
-							+ " Y: " + pointIter.getY());
-					DecimalCoordinate dc = serviceBusquedaDobles
-							.pixelToCoordinatesConverter(imagen, l.getWidth(),
-									l.getHeight(), pointIter.getX(), pointIter
-											.getY());
-					LOG.debug("AR: " + dc.getAr() + " DEC: " + dc.getDec());
-					centroidesDC.add(dc);
-
-					dcToPoint.put(dc, pointIter);
-				}
-
-				// CALCULAR DISTANCIAS ENTRE TODOS LOS CENTROIDES
-
-				List<Distance> distancesList = new ArrayList<Distance>();
-
-				for (DecimalCoordinate dc1 : centroidesDC) {
-					for (DecimalCoordinate dc2 : centroidesDC) {
-
-						Distance distanceAux = this.mathService
-								.calculateDecimalDistance(dc1.getAr(), dc1
-										.getDec(), dc2.getAr(), dc2.getDec());
-
-						distanceAux.setPoint1(dc1);
-						distanceAux.setPoint2(dc2);
-
-						LOG.debug("DISTANCE INFO: " + distanceAux.toString());
-
-						distancesList.add(distanceAux);
-					}
-				}
-
-				List<InformacionRelevante> infoRels = new ArrayList<InformacionRelevante>();
-
-				for (Distance dist : distancesList) {
-
-					double sep = dsc.getLastSeparation();
-					double ang = dsc.getLastPosAnges();
-
-					if (((sep * (1 - margenDistancia)) <= dist
-							.getDistanceSeconds() && dist.getDistanceSeconds() <= (sep * (1 + margenDistancia)))
-							&& ((ang * (1 - margenAngulo)) <= dist.getAngle() && dist
-									.getAngle() <= (ang * (1 + margenAngulo)))) {
-
-						LOG.info("PUNTOS DENTRO DE RANGO:" + dist.toString());
-
-						/*
-						 * ESTUDIAR SI LA POSICIÓN EN LA QUE HAN SIDO
-						 * ENCONTRADAS ES CERCANA A LA ANTERIOR DONDE SE SUPONE
-						 * QUE ESTÁN
-						 */
-
-						/* ESTUDIO DE FILTRADO POR BRILLO */
-
-						/**/
-
-						InformacionRelevante ir = new InformacionRelevante();
-						ir
-								.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS"
-										+ dist + "INFO DSC" + dsc.toString());
-						ir.setFecha(Util.dameFechaActual());
-						List<Imagen> imagenes = new ArrayList<Imagen>();
-						imagenes.add(imagen);
-						ir.setImagenes(imagenes);
-
-						ir.setTipoInformacionRelevante(manager.find(
-								TipoInformacionRelevante.class, 2L));
-
-						infoRels.add(ir);
-
-						points.add(dcToPoint.get(dist.getPoint1()));
-						points.add(dcToPoint.get(dist.getPoint2()));
-
-						sinRelevantes = false;
-					}
-
-				}
-
-				if (infoRels.size() <= maxCandidatos) {
-					for (InformacionRelevante ir : infoRels) {
-						manager.persist(ir);
-					}
-
-				} else {
-					LOG
-							.error("El número de resultados relevantes supera el máximo: Se descarta la imagen");
-					throw new ServiceCalculoPosicionException(
-							"El número de resultados relevantes supera el máximo: Se descarta la imagen"
-									+ dsc.toString());
-
-				}
-				if (sinRelevantes) {
-					if (tipoAjuste == 0) {
-						if (umbral < brillo) {
-							brillo = brillo - (brillo * 0.04);
+						if (nRecuadros > maxEstrellas) {
 
 							LOG
-									.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
-											+ brillo + "UMBRAL: " + umbral);
-						} else {
-							sinRelevantes = false;
-						}
-					} else {
+									.error("DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE");
 
-						if (tipoAjuste == 1 && brillo < 80000) {
-							brillo = brillo + 2000;
-							umbral = umbral + 2000;
-						} else {
-							sinRelevantes = false;
+							throw new ServiceCalculoPosicionException(
+									"DESCARTADA PORQUE EL NÚMERO DE ESTRELLAS SUPERA EL LÍMITE"
+											+ dsc.toString());
 						}
+
+						for (int i = 0; i < nRecuadros; i++) {
+
+							cent = cc.giveMeTheCentroid(l.getPorcionImagen(
+									recStars.get(i).getxLeft(), recStars.get(i)
+											.getyTop(), recStars.get(i)
+											.getWidth(), recStars.get(i)
+											.getHeight()));
+
+							cent.setX(recStars.get(i).getxLeft() + cent.getX());
+							cent.setY(recStars.get(i).getyTop() + cent.getY());
+
+							LOG.debug("\r\n\r\nCentroide " + i
+									+ " de la imagen 1:\r\n\tX: " + cent.getX()
+									+ "\r\n\tY: " + cent.getY());
+							LOG.debug("\r\n\r\nRectángulo " + i
+									+ " de la imagen 1:\r\n\txLeft: "
+									+ recStars.get(i).getxLeft()
+									+ "\r\n\txRight: "
+									+ recStars.get(i).getxRight()
+									+ "\r\n\tyTop: "
+									+ recStars.get(i).getyTop()
+									+ "\r\n\tyBot: "
+									+ recStars.get(i).getyBot());
+
+							centroides.add(cent);
+
+						}
+
+						LOG.info("PASANDO DE PÍXELES A COORDENADAS");
+
+						// PASAR DE PÍXELES A COORDENADAS
+
+						HashMap<DecimalCoordinate, Point> dcToPoint = new HashMap<DecimalCoordinate, Point>();
+
+						ArrayList<DecimalCoordinate> centroidesDC = new ArrayList<DecimalCoordinate>();
+
+						for (Point pointIter : centroides) {
+							LOG.debug("ANCHO: " + l.getWidth() + " ALTO: "
+									+ l.getHeight() + " X: " + pointIter.getX()
+									+ " Y: " + pointIter.getY());
+							DecimalCoordinate dc = serviceBusquedaDobles
+									.pixelToCoordinatesConverter(imagen, l
+											.getWidth(), l.getHeight(),
+											pointIter.getX(), pointIter.getY());
+							LOG.debug("AR: " + dc.getAr() + " DEC: "
+									+ dc.getDec());
+							centroidesDC.add(dc);
+
+							dcToPoint.put(dc, pointIter);
+						}
+
+						// CALCULAR DISTANCIAS ENTRE TODOS LOS CENTROIDES
+
+						List<Distance> distancesList = new ArrayList<Distance>();
+
+						for (DecimalCoordinate dc1 : centroidesDC) {
+							for (DecimalCoordinate dc2 : centroidesDC) {
+
+								Distance distanceAux = this.mathService
+										.calculateDecimalDistance(dc1.getAr(),
+												dc1.getDec(), dc2.getAr(), dc2
+														.getDec());
+
+								distanceAux.setPoint1(dc1);
+								distanceAux.setPoint2(dc2);
+
+								LOG.debug("DISTANCE INFO: "
+										+ distanceAux.toString());
+
+								distancesList.add(distanceAux);
+							}
+						}
+
+						List<InformacionRelevante> infoRels = new ArrayList<InformacionRelevante>();
+
+						for (Distance dist : distancesList) {
+
+							double sep = dsc.getLastSeparation();
+							double ang = dsc.getLastPosAnges();
+
+							if (((sep * (1 - margenDistancia)) <= dist
+									.getDistanceSeconds() && dist
+									.getDistanceSeconds() <= (sep * (1 + margenDistancia)))
+									&& ((ang * (1 - margenAngulo)) <= dist
+											.getAngle() && dist.getAngle() <= (ang * (1 + margenAngulo)))) {
+
+								LOG.info("PUNTOS DENTRO DE RANGO:"
+										+ dist.toString());
+
+								/*
+								 * ESTUDIAR SI LA POSICIÓN EN LA QUE HAN SIDO
+								 * ENCONTRADAS ES CERCANA A LA ANTERIOR DONDE SE
+								 * SUPONE QUE ESTÁN
+								 */
+
+								/* ESTUDIO DE FILTRADO POR BRILLO */
+
+								/**/
+
+								InformacionRelevante ir = new InformacionRelevante();
+								ir
+										.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS"
+												+ dist
+												+ "INFO DSC"
+												+ dsc.toString());
+								ir.setFecha(Util.dameFechaActual());
+								List<Imagen> imagenes = new ArrayList<Imagen>();
+								imagenes.add(imagen);
+								ir.setImagenes(imagenes);
+
+								ir.setTipoInformacionRelevante(manager.find(
+										TipoInformacionRelevante.class, 2L));
+
+								infoRels.add(ir);
+
+								points.add(dcToPoint.get(dist.getPoint1()));
+								points.add(dcToPoint.get(dist.getPoint2()));
+
+								sinRelevantes = false;
+							}
+
+						}
+
+						if (infoRels.size() <= maxCandidatos) {
+							for (InformacionRelevante ir : infoRels) {
+								manager.persist(ir);
+							}
+
+						} else {
+							LOG
+									.error("El número de resultados relevantes supera el máximo: Se descarta la imagen");
+							throw new ServiceCalculoPosicionException(
+									"El número de resultados relevantes supera el máximo: Se descarta la imagen"
+											+ dsc.toString());
+
+						}
+						if (sinRelevantes) {
+							if (tipoAjuste == 0) {
+								if (umbral < brillo) {
+									brillo = brillo - (brillo * 0.04);
+									/* Introducir ajuste al umbral?? */
+
+									LOG
+											.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
+													+ brillo
+													+ "UMBRAL: "
+													+ umbral);
+								} else {
+									sinRelevantes = false;
+								}
+							} else {
+
+								if (tipoAjuste == 1 && brillo < 80000) {
+									brillo = brillo + 200;
+									umbral = umbral + 200;
+								} else {
+									sinRelevantes = false;
+								}
+							}
+						}
+
 					}
+					tipoAjuste++;
 				}
+				
+				/*TODO*/
+				
+				margenAngulo=margenAngulo*1.25;
+				margenDistancia=margenDistancia*1.10;
 
 			}
 

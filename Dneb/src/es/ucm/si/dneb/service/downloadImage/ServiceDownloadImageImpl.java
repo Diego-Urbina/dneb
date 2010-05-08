@@ -135,7 +135,7 @@ public class ServiceDownloadImageImpl  implements es.ucm.si.dneb.service.downloa
 			}
 			int total = cont;
 			while (cont >= 0) {
-				LOG.info("Leidos " + cont);
+				//LOG.info("Leidos " + cont);
 				try {
 					fos.write(buffer, 0, cont);
 				} catch (IOException e) {

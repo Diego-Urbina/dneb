@@ -416,8 +416,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 
 			ServiceCalculoPosicion serviceCalculoPosicion= (ServiceCalculoPosicion) ContextoAplicacion.getApplicationContext().getBean("serviceCalculoPosicion");
 			
-			double brillo =30000, umbral = 20000, margenAngulo=0.15,margenDistancia=0.15,distMinima=4;
-			int limCandidatos=5,maxEstrellas = 70;
+			double brillo = 32000, umbral = 30000, margenAngulo = 0.03, margenDistancia = 0.10, distMinima = 4;
+			int limCandidatos = 3, maxEstrellas = 120;
+
 			
 			if(!this.brillo.getText().equals("")){
 				brillo=Double.parseDouble( this.brillo.getText());

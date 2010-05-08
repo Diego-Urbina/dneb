@@ -366,7 +366,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 				imagen.setDescargada(false);
 				// imagen.setFechaDescarga(fechaFinalizacion);
 				// imagen.setProcesamientoImagen(procImagen);
-				imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), surveys.get(0)
+				imagen.setRutaFichero(Util.creaRuta(tarea.getRuta(), surIter
 						.getDescripcion(), dsc.getArcsecondCoordinates2000()
 						.substring(0, 10), dsc.getArcsecondCoordinates2000()
 						.substring(10, 18), tarea.getFormatoFichero().getAlias()));

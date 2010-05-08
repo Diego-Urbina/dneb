@@ -330,4 +330,9 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	}
 
 
+	public static Log getLog() {
+		return LOG;
+	}
+
+
 }
