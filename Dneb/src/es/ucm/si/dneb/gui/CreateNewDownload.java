@@ -25,10 +25,6 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
  */
 public class CreateNewDownload extends JPanel {
 	
-	private VentanaPcpal principal;
-	
-	private int position;
-	
 	private static final long serialVersionUID = 1459331863481818480L;
 	
 	private ServiceDownloadDefaultConfig serviceDownloadDefaultConfig;
@@ -38,9 +34,7 @@ public class CreateNewDownload extends JPanel {
 	private ArrayList<FormatoFichero> formatosFichero; 
 	private ArrayList<DownloadConfig> configsList;
 	
-	public CreateNewDownload(VentanaPcpal pcpal,int position) {
-		principal = pcpal;
-		this.position=position;
+	public CreateNewDownload() {
 		initComponents();
 		
 		initIcons();
@@ -196,9 +190,6 @@ public class CreateNewDownload extends JPanel {
 		}catch(ServicioGestionTareasException ex) {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-		
-		
-		principal.getPane().remove(position);
 		
 		JOptionPane.showMessageDialog(null,"Imagen creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
 	}

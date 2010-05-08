@@ -31,7 +31,6 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
  */
 public class ImportarDesdeBBDD extends JPanel {
 	
-	private VentanaPcpal principal;
 	private JTable tableTasks;
 	private DefaultTableModel modelo;
 	
@@ -39,18 +38,10 @@ public class ImportarDesdeBBDD extends JPanel {
 	private ServicioGestionTareas servicioGestionTareas;
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
 	
-	int posicion;
-	
 	public ImportarDesdeBBDD() {
-		initComponents();
-	}
-	public ImportarDesdeBBDD(VentanaPcpal pcpal,int position) {
 		
 		initComponents();
 		initTable();
-		principal = pcpal;
-		
-		posicion=position;
 		
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		importDDBBData= (ImportDDBBData) ctx.getBean("importDDBBData");
@@ -72,9 +63,7 @@ public class ImportarDesdeBBDD extends JPanel {
 	}
 	
 
-	private void importarActionPerformed(ActionEvent e) {
-		// TODO add your code here
-		
+	private void importarActionPerformed(ActionEvent e) {		
 		Object[] survStrings= this.listSurvey.getSelectedValues();
 		
 		List<Survey> surveys= new ArrayList<Survey>();
@@ -99,16 +88,12 @@ public class ImportarDesdeBBDD extends JPanel {
 		
 		importDDBBData.generarTarea(datosACargar,surveys);
 		
-		principal.getPane().remove(posicion);
-		
 		JOptionPane.showMessageDialog(null,"Datos importados satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
 		
 		
 	}
 	
-	private void rellenarTabla(){
-		//TODO
-		
+	private void rellenarTabla(){		
 		List<CargaDatos> cargaDatos=importDDBBData.getAllDatosAImportar();
 		
 		int nFila = 0;
@@ -135,7 +120,6 @@ public class ImportarDesdeBBDD extends JPanel {
 	
 	
 	private void initTable(){
-		// TODO
 		tableTasks = new JTable();
 		
 		//---- tableTasks ----
@@ -191,7 +175,6 @@ public class ImportarDesdeBBDD extends JPanel {
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		label1 = new JLabel();
 		scrollPane1 = new JScrollPane();
 		table1 = new JTable();
@@ -255,15 +238,12 @@ public class ImportarDesdeBBDD extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JLabel label1;
 	private JScrollPane scrollPane1;
 	private JTable table1;
 	private JLabel labelSurvey;
 	private JList listSurvey;
 	private JButton importar;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

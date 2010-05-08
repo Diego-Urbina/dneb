@@ -102,7 +102,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Nueva tarea ---------
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
 		//pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
-		pane.add("Nueva Tarea",new CreateTask(this,pane.getTabCount()) );
+		pane.add("Nueva Tarea",new CreateTask() );
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -125,7 +125,7 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Crear Descarga ---------
 	private void crearDescargaActionPerformed(ActionEvent e) {
-		JPanel vent = new CreateNewDownload(this,pane.getTabCount());
+		JPanel vent = new CreateNewDownload();
 		pane.addTab("Crear descarga", vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -135,7 +135,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Configurar descargas ---------
 	private void gestionarDescargasConfigActionPerformed(ActionEvent e) {
-		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig(this);
+		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig();
 		pane.addTab("Configurar descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -149,7 +149,7 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Configurar BBDD ---------
 	private void configBBDDActionPerformed(ActionEvent e) {
-		DataBaseConfig dataBaseConfig = new DataBaseConfig(this);
+		DataBaseConfig dataBaseConfig = new DataBaseConfig();
 		pane.addTab("Configurar BBDD", dataBaseConfig);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -159,7 +159,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Configurar descargas ---------
 	private void configDownloadActionPerformed(ActionEvent e) {
-		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig(this);
+		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig();
 		pane.addTab("Configurar descargas", config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -186,7 +186,7 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Importar desde BBDD ---------
 	private void importBBDDActionPerformed(ActionEvent e) {
-		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD(this,pane.getTabCount());
+		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD();
 		pane.addTab("Importar desde BBDD", imptBBDD);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);

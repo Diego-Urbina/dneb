@@ -18,13 +18,8 @@ import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 public class CreateTask extends JPanel {
 	
-	private VentanaPcpal principal;
-	private int position;
-	
-	public CreateTask(VentanaPcpal pcpal,int position) {		
+	public CreateTask() {		
 		initComponents();
-		this.position=position;
-		principal = pcpal;
 		rellenarModel();
 	}
 
@@ -356,7 +351,7 @@ public class CreateTask extends JPanel {
 			ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 			ServicioCreacionTareas servicioCreacionTareas = (ServicioCreacionTareas)ctx.getBean("servicioCreacionTareas");
 			servicioCreacionTareas.crearTarea(ari, arf, deci, decf, Double.parseDouble(alto), Double.parseDouble(ancho), Double.parseDouble(solapamiento), survey1, survey2, "fits", ruta);
-			principal.getPane().remove(position);
+			limpiarCampos();
 			JOptionPane.showMessageDialog(null,"Tarea creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/TASKICON.JPG"));	
 		} catch(Exception ex) {
 	    	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -371,6 +366,17 @@ public class CreateTask extends JPanel {
 		if (retval == JFileChooser.APPROVE_OPTION)
 			textFieldRuta.setText( fc.getSelectedFile().toString());		
 		
+	}
+	
+	private void limpiarCampos() {
+		textFieldARI.setText("");
+		textFieldARF.setText("");
+		textFieldDECI.setText("");
+		textFieldDECF.setText("");
+		textFieldAlto.setText("");
+		textFieldAncho.setText("");
+		textFieldSolap.setText("");
+		textFieldRuta.setText("");
 	}
 
 	private JTextField textFieldARI;
