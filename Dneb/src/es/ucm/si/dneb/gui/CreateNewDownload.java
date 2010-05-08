@@ -364,7 +364,7 @@ public class CreateNewDownload extends JPanel {
 		crearDescarga = new JButton();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(16, 5, new Insets(20, 60, 60, 60), 5, -1));
+		setLayout(new GridLayoutManager(16, 5, new Insets(30, 60, 60, 60), 5, -1));
 
 		//---- titulo ----
 		label9.setText("CREACIÓN DE DESCARGAS");
@@ -372,8 +372,8 @@ public class CreateNewDownload extends JPanel {
 		label9.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label9, new GridConstraints(1, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
 		
 		
@@ -383,8 +383,8 @@ public class CreateNewDownload extends JPanel {
 		//---- separador1 ----
 		add(separator1, new GridConstraints(2, 0, 1, 5,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
 		

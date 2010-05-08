@@ -62,13 +62,40 @@ public class ExportarXMl extends JPanel {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		selRuta = new JButton();
 		ruta = new JTextField();
+		ruta.setEditable(false);
 		label1 = new JLabel();
 		fileName = new JTextField();
 		button2 = new JButton();
+		titulo = new JLabel();
+		separator1 = new JSeparator();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(20, 20, new Insets(100, 100, 100, 100), 5, -1));
+		setLayout(new GridLayoutManager(20, 20, new Insets(30, 60, 60, 60), 5, -1));
 
+		
+		//---- titulo ----
+		titulo.setText("EXPORTAR A XML");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 20,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- separador1 ----
+		add(separator1, new GridConstraints(1, 0, 1, 20,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
 		//---- selRuta ----
 		selRuta.setText("SELECCIONE RUTA");
 		selRuta.addActionListener(new ActionListener() {
@@ -112,14 +139,13 @@ public class ExportarXMl extends JPanel {
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JButton selRuta;
 	private JTextField ruta;
 	private JLabel label1;
 	private JTextField fileName;
 	private JButton button2;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	private JLabel titulo;
+	private JSeparator separator1;
 }

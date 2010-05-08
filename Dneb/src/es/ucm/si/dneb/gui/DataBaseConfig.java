@@ -7,6 +7,9 @@ import javax.swing.*;
  * Created by JFormDesigner on Sat Nov 28 10:27:43 CET 2009
  */
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+
 
 
 /**
@@ -14,144 +17,169 @@ import javax.swing.*;
  */
 public class DataBaseConfig extends JPanel {
 	
-	private VentanaPcpal principal;
-	
 	public DataBaseConfig(VentanaPcpal pcpal) {
 		initComponents();
-		
-		principal = pcpal;
 	}
 
-	private void guardar(MouseEvent e) {
+	private void guardar() {
 		// TODO add your code here
 	}
 
-	private void cargarValoresActuales(MouseEvent e) {
+	private void cargarValoresActuales() {
 		// TODO add your code here
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-		label1 = new JLabel();
-		label2 = new JLabel();
+		titulo = new JLabel();
+		driver = new JLabel();
 		driverClass = new JTextField();
-		label3 = new JLabel();
+		url = new JLabel();
 		urlBBDD = new JTextField();
-		label4 = new JLabel();
+		user = new JLabel();
 		usuario = new JTextField();
-		label5 = new JLabel();
+		pass = new JLabel();
 		contraseña = new JTextField();
 		guardar = new JButton();
 		cargarValoresActuales = new JButton();
+		separator1 = new JSeparator();
 
 		//======== this ========
-
-		//---- label1 ----
-		label1.setText("Configuraci\u00f3n de Base de Datos");
-		label1.setFont(label1.getFont().deriveFont(label1.getFont().getStyle() & ~Font.ITALIC, label1.getFont().getSize() + 7f));
-		label1.setHorizontalAlignment(SwingConstants.CENTER);
-
+		setLayout(new GridLayoutManager(7, 5, new Insets(30, 60, 60, 60), 5, -1));
+		
+		
+		//---- titulo ----
+		titulo.setText("CONFIGURACIÓN DE BASE DE DATOS");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 5,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- separador1 ----
+		add(separator1, new GridConstraints(1, 0, 1, 5,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
+		
+		
+		
+		
 		//---- label2 ----
-		label2.setText("DRIVER CLASS NAME");
-
+		driver.setText("DRIVER CLASS NAME");
+		add(driver, new GridConstraints(2, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		add(driverClass, new GridConstraints(2, 1, 1, 4,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
 		//---- label3 ----
-		label3.setText("URL BBDD");
-
+		url.setText("URL BBDD");
+		add(url, new GridConstraints(3, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		add(urlBBDD, new GridConstraints(3, 1, 1, 4,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
 		//---- label4 ----
-		label4.setText("USUARIO");
-
+		user.setText("USUARIO");
+		add(user, new GridConstraints(4, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		add(usuario, new GridConstraints(4, 1, 1, 4,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		
+		
+		
+		
+		
 		//---- label5 ----
-		label5.setText("PASSWORD");
+		pass.setText("PASSWORD");
+		add(pass, new GridConstraints(5, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		add(contraseña, new GridConstraints(5, 1, 1, 4,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
 
 		//---- guardar ----
 		guardar.setText("GUARDAR");
 		guardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				guardar(e);
+				guardar();
 			}
 		});
+		add(guardar, new GridConstraints(6, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				new Dimension(400, 20), null, new Dimension(400, 20)));
 
 		//---- cargarValoresActuales ----
 		cargarValoresActuales.setText("CARGAR VALORES ACTUALES");
 		cargarValoresActuales.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cargarValoresActuales(e);
+				cargarValoresActuales();
 			}
 		});
-
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
-		layout.setHorizontalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-						.addComponent(label1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-						.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-								.addComponent(label3, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-								.addComponent(label2, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-							.addGroup(layout.createParallelGroup()
-								.addComponent(driverClass, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE)
-								.addComponent(urlBBDD, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup()
-								.addComponent(label5, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-								.addComponent(label4, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-							.addGroup(layout.createParallelGroup()
-								.addComponent(usuario, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE)
-								.addComponent(contraseña, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-							.addComponent(cargarValoresActuales, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
-							.addGap(34, 34, 34)
-							.addComponent(guardar, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		layout.setVerticalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(label1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-					.addGap(46, 46, 46)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(label2)
-						.addComponent(driverClass, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(20, 20, 20)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(label3)
-						.addComponent(urlBBDD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(22, 22, 22)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(label4)
-						.addComponent(usuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(22, 22, 22)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(label5)
-						.addComponent(contraseña, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(guardar)
-						.addComponent(cargarValoresActuales))
-					.addContainerGap())
-		);
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
+		add(cargarValoresActuales, new GridConstraints(6, 3, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				new Dimension(400, 20), null, new Dimension(400, 20)));
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-	private JLabel label1;
-	private JLabel label2;
+	private JLabel titulo;
+	private JLabel driver;
 	private JTextField driverClass;
-	private JLabel label3;
+	private JLabel url;
 	private JTextField urlBBDD;
-	private JLabel label4;
+	private JLabel user;
 	private JTextField usuario;
-	private JLabel label5;
+	private JLabel pass;
 	private JTextField contraseña;
 	private JButton guardar;
 	private JButton cargarValoresActuales;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	private JSeparator separator1;
 }
