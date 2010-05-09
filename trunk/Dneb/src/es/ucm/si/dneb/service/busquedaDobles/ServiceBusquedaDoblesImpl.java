@@ -48,6 +48,7 @@ import es.ucm.si.dneb.service.math.DecimalCoordinate;
 import es.ucm.si.dneb.service.math.Distance;
 import es.ucm.si.dneb.service.math.MathService;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
+import es.ucm.si.dneb.util.Pair;
 
 @Service("serviceBusquedaDobles")
 public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
@@ -76,7 +77,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 	}
 	
-	public Point[][] busquedaEstrellasMovimiento(Imagen im1, Imagen im2) {
+	public ArrayList<Pair<Point>> busquedaEstrellasMovimiento(Imagen im1, Imagen im2) {
 		
 		/* Algoritmo de busqueda de estrellas candidatas a haberse movido
 		 * 
@@ -101,16 +102,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			bw.write("\r\n***** Información de ejecución *****\r\n");
 			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);
 			
-			float[] brillos = new float[100];// = {99.9f, 99.95f, 99.95f};
-			float[] umbrales = new float[100];// = {99.8f, 99.75f, 99.8f};
-			Point[][] resultado = null;
-			int longResultado = 0;
+			float[] brillos = new float[50];
+			float[] umbrales = new float[50];
+			ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
 			
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 50; i++) {
 				Random r = new Random();
 				do {
-					brillos[i] = r.nextFloat() + 99.0f;
-					umbrales[i] = r.nextFloat() + 99.0f;
+					brillos[i] = (r.nextFloat()%0.5f) + 99.5f;
+					umbrales[i] = (r.nextFloat()%0.5f) + 99.5f;
 				} while (brillos[i] < umbrales[i]);
 			}
 			
@@ -364,23 +364,31 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 							bw.write("\r\n\r\n11) Lista de candidatos a haberse movido:");
 							int cont = 0;
 							DecimalCoordinate dc;
-							PlanarImage pi = createPlanarImage(l2);
-							if (iter == 0)
-								resultado = new Point[2][centroidesIni.size()];
-							Point[][] aux = new Point[2][centroidesIni.size()];
+							PlanarImage pi = createPlanarImage(l1);
+							ArrayList<Pair<Point>> aux = new ArrayList<Pair<Point>>();
 							for (int i = 0; i < centroidesIni.size(); i++) {
 								if (errores[i] > 2*desviacion) {
 									centroide = centroidesIni.get(i);
-									aux[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?1:0][cont] = centroide;
-									aux[(sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1][cont] = elegidos.get(i);
-									dc = pixelToCoordinatesConverter(im2, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
+									if (sf1.getNumberOfStars()>sf2.getNumberOfStars())
+										aux.add(new Pair<Point>(elegidos.get(i), centroide));
+									else
+										aux.add(new Pair<Point>(centroide, elegidos.get(i)));
+									dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
 									bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
 									cont++;
 								}
 							}
-							longResultado = union(resultado, aux, longResultado, cont, (sf1.getNumberOfStars()>sf2.getNumberOfStars())?0:1);
+							union(resultado, aux);
 						}
 					}
+				}
+				if (centroides1.size() > centroides2.size()) { // restaurar punteros
+					auxLI = l1;
+					l1 = l2;
+					l2 = auxLI;
+					auxIm = im1;
+					im1 = im2;
+					im2 = auxIm;
 				}
 			}
 			bw.close();
@@ -399,34 +407,28 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		}
 	}
 	
-	private int union(Point[][] p1, Point[][] p2, int pos1, int pos2, int posCent){
+	private void union(ArrayList<Pair<Point>> p1, ArrayList<Pair<Point>> p2){
 		Point c1, e1, c2, e2;
 		boolean encontrado = false;
-		int pos = pos1;
-		int limite = 2;
+		int limite = 3;
+		int nElem = p1.size();
 		
-		for (int i = 0; i < pos2; i++) {
-			c2 = p2[posCent][i];
-			e2 = p2[(posCent+1)%2][i];
-			for (int j = 0; j < pos1 && !encontrado; j++) {
-				c1 = p1[posCent][j];
-				e1 = p1[(posCent+1)%2][j];
+		for (int i = 0; i < p2.size(); i++) {
+			c2 = p2.get(i).getA();
+			e2 = p2.get(i).getB();
+			for (int j = 0; j < nElem && !encontrado; j++) {
+				c1 = p1.get(j).getA();
+				e1 = p1.get(j).getB();
 				encontrado = c1.getX()-limite <= c2.getX() && c1.getX()+limite >= c2.getX()
 							&& c1.getY()-limite <= c2.getY() && c1.getY()+limite >= c2.getY()
 							&& e1.getX()-limite <= e2.getX() && e1.getX()+limite >= e2.getX()
 							&& e1.getY()-limite <= e2.getY() && e1.getY()+limite >= e2.getY();
 			}
-			if (!encontrado) {
-				p1[posCent][pos] = c2;
-				p1[(posCent+1)%2][pos] = e2;
-				pos++;
-			}
+			if (!encontrado) p1.add(new Pair<Point>(c2, e2));
 		}
-		
-		return pos;
 	}
 	
-	public Point[][] busquedaEstrellasDobles(Imagen im1, Imagen im2) {
+	public ArrayList<Pair<Point>> busquedaEstrellasDobles(Imagen im1, Imagen im2) {
 		
 		/* Algoritmo de busqueda de estrellas candidatas a ser dobles
 		 * 
@@ -435,29 +437,29 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		 * 3 - Para ello calcularemos el vector director de cada una y veremos cuales coinciden en dirección, sentido y módulo
 		 */
 		
-		Point[][] candidatas = busquedaEstrellasMovimiento(im1, im2);
+		ArrayList<Pair<Point>> candidatas = busquedaEstrellasMovimiento(im1, im2);
 		
-		Point[][] resultado = new Point[2][candidatas[0].length];
+		ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
 		DecimalCoordinate dc1, dc2;
 		MathService ms = (MathService) ContextoAplicacion.getApplicationContext().getBean("mathService");
 		PlanarImage pi1 = createPlanarImage(l1);
 		Point p1, p2, e1, e2;
 		Distance d;
-		int cont = 0;
-		boolean[] usados = new boolean[candidatas[0].length];
+		boolean[] usados = new boolean[candidatas.size()];
 		double modulo1, modulo2, direccion1, direccion2;
-		double semejanza = 0.25; // porcentaje de semejanza entre el modulo y la direccion de los vectores
+		double difModulo = 0.3; // diferencia entre modulos de un 25%
+		double difDireccion = Math.toRadians(15); // diferencia de 10 grados entre ambas direcciones
 		
-		for (int i = 0; i < candidatas[0].length && candidatas[0][i] != null && candidatas[1][i] != null; i++) {
-			p1 = candidatas[0][i];
-			e1 = candidatas[1][i];
+		for (int i = 0; i < candidatas.size(); i++) {
+			p1 = candidatas.get(i).getA();
+			e1 = candidatas.get(i).getB();
 			dc1 = pixelToCoordinatesConverter(im1, pi1.getWidth(), pi1.getHeight(), p1.getX(), p1.getY());
 			modulo1 = p1.getDistancia(e1);
 			direccion1 = p1.getDireccion(e1);
 			
-			for (int j = i+1; j < candidatas[0].length && candidatas[0][j] != null && candidatas[1][j] != null; j++) {
-				p2 = candidatas[0][j];
-				e2 = candidatas[1][j];
+			for (int j = i+1; j < candidatas.size(); j++) {
+				p2 = candidatas.get(j).getA();
+				e2 = candidatas.get(j).getB();
 				dc2 = pixelToCoordinatesConverter(im1, pi1.getWidth(), pi1.getHeight(), p2.getX(), p2.getY());
 				d = ms.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
 				if (d.getDistanceSeconds() > 180) continue; // distancia entre estrellas mayor de 3 minutos
@@ -465,23 +467,21 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				modulo2 = p2.getDistancia(e2);
 				direccion2 = p2.getDireccion(e2);
 				
-				if (modulo2 <= modulo1*(1+semejanza) && modulo2 >= modulo1*(1-semejanza) &&
-						direccion2 <= direccion1*(1+semejanza) && direccion2 >= direccion1*(1-semejanza)) {
+				if ((modulo2 <= modulo1*(1+difModulo) && modulo2 >= modulo1*(1-difModulo) ||
+					modulo1 <= modulo2*(1+difModulo) && modulo1 >= modulo2*(1-difModulo)) &&
+					(direccion2 <= direccion1+difDireccion && direccion2 >= direccion1-difDireccion ||
+					direccion1 <= direccion2+difDireccion && direccion1 >= direccion2-difDireccion)) {
 					// Si los modulos y las direcciones son semejantes mirar que los sentidos sean iguales
 					
 					// Si el producto escalar es positivo tienen el mismo sentido
 					if ((e1.getX()-p1.getX())*(e2.getX()-p2.getX()) + (e1.getY()-p1.getY())*(e2.getY()-p2.getY()) > 0) {
 						if (!usados[i]) {
 							usados[i] = true;
-							resultado[0][cont] = p1;
-							resultado[1][cont] = e1;
-							cont++;
+							resultado.add(new Pair<Point>(p1, e1));
 						}
 						if (!usados[j]) {
 							usados[j] = true;
-							resultado[0][cont] = p2;
-							resultado[1][cont] = e2;
-							cont++;
+							resultado.add(new Pair<Point>(p2, e2));
 						}
 					}
 				}

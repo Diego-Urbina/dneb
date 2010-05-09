@@ -214,7 +214,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Visor dobles ---------
 	private void visualizadorActionPerformed(ActionEvent e) {
-		pane.addTab("Visor dobles", new DoubleStarsViewerPanel(this));
+		pane.addTab("Visor estrellas", new StarsViewerPanel(this));
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -223,9 +223,9 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Visor centroides ---------
 	private void visorCentroidesActionPerformed(ActionEvent e) {
-		CentroidsViewerPanel  visu =new CentroidsViewerPanel();
+		DoubleStarsViewerPanel  visu =new DoubleStarsViewerPanel();
 		
-		pane.add("Visor centroides",visu);
+		pane.add("Visor dobles",visu);
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
@@ -504,7 +504,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.setText("UTILIDADES");
 
 				//---- visualizador ----
-				visualizador.setText("VISOR DOBLES");
+				visualizador.setText("VISOR ESTRELLAS");
 				visualizador.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						visualizadorActionPerformed(e);
@@ -513,7 +513,7 @@ public class VentanaPcpal extends JFrame{
 				menu5.add(visualizador);
 
 				//---- visorCentroides ----
-				visorCentroides.setText("VISOR CENTROIDES");
+				visorCentroides.setText("VISOR DOBLES");
 				visorCentroides.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						visorCentroidesActionPerformed(e);
