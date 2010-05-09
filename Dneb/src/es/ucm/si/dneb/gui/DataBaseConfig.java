@@ -42,6 +42,9 @@ public class DataBaseConfig extends JPanel {
 		guardar = new JButton();
 		cargarValoresActuales = new JButton();
 		separator1 = new JSeparator();
+		
+		guardar.setIcon(new ImageIcon("images/iconos-diego/save.png"));
+		cargarValoresActuales.setIcon(new ImageIcon("images/iconos-diego/load.png"));
 
 		//======== this ========
 		setLayout(new GridLayoutManager(7, 5, new Insets(30, 60, 60, 60), 5, -1));
@@ -153,7 +156,7 @@ public class DataBaseConfig extends JPanel {
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-				new Dimension(400, 20), null, new Dimension(400, 20)));
+				new Dimension(300, 40), null, new Dimension(300, 40)));
 
 		//---- cargarValoresActuales ----
 		cargarValoresActuales.setText("CARGAR VALORES ACTUALES");
@@ -167,7 +170,7 @@ public class DataBaseConfig extends JPanel {
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-				new Dimension(400, 20), null, new Dimension(400, 20)));
+				new Dimension(300, 40), null, new Dimension(300, 40)));
 	}
 
 	private JLabel titulo;
