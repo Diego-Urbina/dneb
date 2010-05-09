@@ -64,34 +64,34 @@ public class VentanaPcpal extends JFrame{
 		this.menu6.setIcon(new ImageIcon("images/iconos-diego/export.png"));
 		this.menu7.setIcon(new ImageIcon("images/iconos-diego/help.png"));
 		
-		this.configBBDD.setIcon(new ImageIcon("images/database_icon.png"));
-		this.configDownload.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));
+		this.crearNuevaTarea.setIcon(new ImageIcon("images/iconos-diego/add.png"));
+		this.gestorTareas.setIcon(new ImageIcon("images/iconos-diego/task-monitor.png"));
+		
 		this.crearDescarga.setIcon(new ImageIcon("images/download_icon4.png"));
-		this.crearNuevaTarea.setIcon(new ImageIcon("images/addtask.png"));
-		
 		this.gestionarDescargasConfig.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));
-		this.gestorTareas.setIcon(new ImageIcon("images/vista-taskmanager-icon.png"));
-		this.importBBDD.setIcon(new ImageIcon("images/Database Insert.jpg"));
-		this.importXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
 		
-		this.buscar.setIcon(new ImageIcon("images/Process Icon.jpg"));	
-		this.consultarCatalogo.setIcon(new ImageIcon("images/catalogIcon.jpg"));
-		this.visualizador.setIcon(new ImageIcon("images/icon_viewer.png"));
-		this.visualizadorDebug.setIcon(new ImageIcon("images/icon_viewer.png"));
-		this.visorCentroides.setIcon(new ImageIcon("images/icon_viewer.png"));
-		this.nueProcEstDob.setIcon(new ImageIcon("images/new Process Icon.JPG"));
+		this.configDownload.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));		
+		this.configBBDD.setIcon(new ImageIcon("images/iconos-diego/database.png"));		
+		
+		this.exportRelevantXML.setIcon(new ImageIcon("images/iconos-diego/xml.png"));
+		
+		this.importBBDD.setIcon(new ImageIcon("images/iconos-diego/database-add.png"));
+		this.importXML.setIcon(new ImageIcon("images/iconos-diego/xml.png"));	
+		this.menuCatalogoED.setIcon(new ImageIcon("images/iconos-diego/catalogo.png"));
+		
+		this.buscar.setIcon(new ImageIcon("images/iconos-diego/monitor-proc.png"));	
+		this.consultarCatalogo.setIcon(new ImageIcon("images/iconos-diego/catalogo.png"));
+		this.visualizador.setIcon(new ImageIcon("images/iconos-diego/visor.png"));
+		this.visualizadorDebug.setIcon(new ImageIcon("images/iconos-diego/visor.png"));
+		this.visorCentroides.setIcon(new ImageIcon("images/iconos-diego/visor.png"));
+		this.nueProcEstDob.setIcon(new ImageIcon("images/iconos-diego/crear-proc.png"));		
+		this.distancias.setIcon(new ImageIcon("images/iconos-diego/distancia.png"));
+		this.conversor.setIcon(new ImageIcon("images/iconos-diego/coordenadas.png"));		
+		this.histograma.setIcon(new ImageIcon("images/iconos-diego/histograma.png"));			
 		
 		this.importInfo.setIcon(new ImageIcon("images/iconos-diego/help.png"));
 		this.dnebInfo.setIcon(new ImageIcon("images/iconos-diego/help.png"));
 		this.formaCoord.setIcon(new ImageIcon("images/iconos-diego/help.png"));
-		
-		this.distancias.setIcon(new ImageIcon("images/distance.jpg"));
-		this.conversor.setIcon(new ImageIcon("images/Converter_icon.jpg"));
-		
-		this.histograma.setIcon(new ImageIcon("images/graph-icon.jpg"));
-		
-		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogIcon.jpg"));
-		this.exportRelevantXML.setIcon(new ImageIcon("images/xml_icon_gif.gif"));	
 	}
 	
 
@@ -425,7 +425,7 @@ public class VentanaPcpal extends JFrame{
 				menu3.setText("CONFIGURACION");
 
 				//---- configBBDD ----
-				configBBDD.setText("CONFIGURAR CONEXI\u00d3N DE BASE DE DATOS");
+				configBBDD.setText("CONFIGURAR CONEXIÓN DE BASE DE DATOS");
 				configBBDD.setIcon(null);
 				configBBDD.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
