@@ -56,15 +56,13 @@ public class VentanaPcpal extends JFrame{
 	
 	private void initIcons(){
 		
-		ImageIcon taskIcon = new ImageIcon("images/TASKICON.JPG");
-		this.menu5.setIcon(new ImageIcon("images/Utilitiesicon.png"));
-		this.menu4.setIcon(new ImageIcon("images/import.png"));
-		this.menu2.setIcon(new ImageIcon("images/download_icon3.jpg"));
-		this.menu3.setIcon(new ImageIcon("images/Config-icon.png"));
-		
-		this.menu6.setIcon(new ImageIcon("images/export.png"));
-		this.menu7.setIcon(new ImageIcon("images/help_icon.jpg"));
-		this.menu1.setIcon(taskIcon);
+		this.menu1.setIcon(new ImageIcon("images/iconos-diego/task.png"));
+		this.menu2.setIcon(new ImageIcon("images/iconos-diego/download.png"));
+		this.menu3.setIcon(new ImageIcon("images/iconos-diego/preferences.png"));
+		this.menu4.setIcon(new ImageIcon("images/iconos-diego/import.png"));
+		this.menu5.setIcon(new ImageIcon("images/iconos-diego/configure.png"));
+		this.menu6.setIcon(new ImageIcon("images/iconos-diego/export.png"));
+		this.menu7.setIcon(new ImageIcon("images/iconos-diego/help.png"));
 		
 		this.configBBDD.setIcon(new ImageIcon("images/database_icon.png"));
 		this.configDownload.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));
@@ -83,9 +81,9 @@ public class VentanaPcpal extends JFrame{
 		this.visorCentroides.setIcon(new ImageIcon("images/icon_viewer.png"));
 		this.nueProcEstDob.setIcon(new ImageIcon("images/new Process Icon.JPG"));
 		
-		this.importInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
-		this.dnebInfo.setIcon(new ImageIcon("images/help_icon.jpg"));
-		this.formaCoord.setIcon(new ImageIcon("images/help_icon.jpg"));
+		this.importInfo.setIcon(new ImageIcon("images/iconos-diego/help.png"));
+		this.dnebInfo.setIcon(new ImageIcon("images/iconos-diego/help.png"));
+		this.formaCoord.setIcon(new ImageIcon("images/iconos-diego/help.png"));
 		
 		this.distancias.setIcon(new ImageIcon("images/distance.jpg"));
 		this.conversor.setIcon(new ImageIcon("images/Converter_icon.jpg"));
