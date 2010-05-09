@@ -182,8 +182,8 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	    
 	    JLabel labelUmbral = new JLabel("Umbral");
 	    JLabel labelBrillo = new JLabel("Brillo");
-	    textFieldUmbral = new JTextField("30000");
-	    textFieldBrillo = new JTextField("32000");
+	    textFieldUmbral = new JTextField("50000");
+	    textFieldBrillo = new JTextField("52000");
 	    
 	    layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
