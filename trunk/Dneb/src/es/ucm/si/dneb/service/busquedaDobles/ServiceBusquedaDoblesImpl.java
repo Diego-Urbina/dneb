@@ -102,15 +102,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			bw.write("\r\n***** Información de ejecución *****\r\n");
 			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);
 			
-			float[] brillos = new float[50];
-			float[] umbrales = new float[50];
+			double[] brillos = new double[15];
+			double[] umbrales = new double[15];
 			ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
 			
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < 15; i++) {
 				Random r = new Random();
 				do {
-					brillos[i] = (r.nextFloat()%0.5f) + 99.5f;
-					umbrales[i] = (r.nextFloat()%0.5f) + 99.5f;
+					umbrales[i] = (r.nextFloat()%0.1) + 99.0;
+					brillos[i] = (r.nextFloat()%0.1) + 99.0;
 				} while (brillos[i] < umbrales[i]);
 			}
 			
@@ -447,8 +447,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		Distance d;
 		boolean[] usados = new boolean[candidatas.size()];
 		double modulo1, modulo2, direccion1, direccion2;
-		double difModulo = 0.3; // diferencia entre modulos de un 25%
-		double difDireccion = Math.toRadians(15); // diferencia de 10 grados entre ambas direcciones
+		double difModulo = 0.4; // diferencia entre modulos de un 40%
+		double difDireccion = Math.toRadians(25); // diferencia de 25 grados entre ambas direcciones
 		
 		for (int i = 0; i < candidatas.size(); i++) {
 			p1 = candidatas.get(i).getA();
