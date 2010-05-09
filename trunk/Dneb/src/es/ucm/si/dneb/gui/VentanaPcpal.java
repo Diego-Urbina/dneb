@@ -214,7 +214,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Visor dobles ---------
 	private void visualizadorActionPerformed(ActionEvent e) {
-		pane.addTab("Visor estrellas", new StarsViewerPanel(this));
+		pane.addTab("Visor estrellas", new StarsViewerPanel());
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		

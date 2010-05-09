@@ -25,7 +25,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -34,13 +33,17 @@ import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
+import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
 import es.ucm.si.dneb.service.image.app.ImageRegion;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 import es.ucm.si.dneb.service.image.segmentation.RectStar;
 import es.ucm.si.dneb.service.image.segmentation.StarFinder;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
+import es.ucm.si.dneb.service.math.DecimalCoordinate;
+import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.FiltreExtensible;
 
 public class StarsViewerPanel extends JPanel implements AdjustmentListener, MouseListener, MouseMotionListener {
@@ -49,24 +52,21 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	private static final int porcentajeZoom = 10;
 	
 	private JScrollPane jsp1, jsp2;
-	private JLabel labelPosicion;
+	private JLabel labelPosicion, dLabel, sLabel;
 	private JTextField textFieldUmbral, textFieldBrillo;
 	
 	private DisplayImageWithRegions display1, display2;
 	private PlanarImage input1, input2, scaledIm1, scaledIm2;
 	private LectorImageHDU l1, l2;
 	private StarFinder sf1, sf2;
+	private Imagen im1, im2;
 	
-	private VentanaPcpal principal;
-	private int position, scale;
+	private int scale;
 	
-	public StarsViewerPanel(VentanaPcpal pcpal,int position) {
-		principal = pcpal;
-		this.position=position;
-		initComponents();
-	}
+	private ServiceBusquedaDobles serviceBusquedaDobles;
+	private ServicioGestionTareas servicioGestionTareas;
 	
-	public StarsViewerPanel(JFrame parent) {
+	public StarsViewerPanel() {
 		display1 = null;
 		display2 = null;
 		input1 = null;
@@ -79,10 +79,8 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		sf2 = new StarFinder();
 		scale = 100;
 		initComponents();
-	    
-		parent.add(this);
-		parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		parent.setVisible(true);
+		serviceBusquedaDobles=(ServiceBusquedaDobles)ContextoAplicacion.getApplicationContext().getBean("serviceBusquedaDobles");
+		servicioGestionTareas =(ServicioGestionTareas) ContextoAplicacion.getApplicationContext().getBean("servicioGestionTareas");
 	}
 	
 	private void initComponents() {
@@ -115,6 +113,15 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	    c.weightx = 0.0;
 	    add(labelPosicion, c);
 	    
+	    dLabel = new JLabel();
+	    c.gridx = 0;
+	    c.gridy = 2;
+	    add(dLabel, c);
+	    
+	    sLabel = new JLabel();
+	    c.gridx = 0;
+	    c.gridy = 3;
+	    add(sLabel, c);
 	    
 	    JPanel panel = new JPanel();
 	    GroupLayout layout = new GroupLayout(panel);
@@ -214,7 +221,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	    c.gridx = 2;
 	    c.gridy = 0;
 	    c.gridwidth = 1;
-	    c.gridheight = 2;
+	    c.gridheight = 4;
 	    c.fill = GridBagConstraints.NONE;
 	    add(panel, c);
 	    
@@ -411,6 +418,9 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 					scale = 100;
 					sf1.eliminarRecuadros();
 					sf2.eliminarRecuadros();
+					
+					im1 = servicioGestionTareas.getImagenByPath(file1);
+					im2 = servicioGestionTareas.getImagenByPath(file2);
 				}
 			}
 		} catch(Exception ex) {
@@ -491,11 +501,31 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		DecimalCoordinate dc = null;
+		SexagesimalCoordinate sc = null;
 		String pos = "(" + e.getX() + "," + e.getY() + ") ";
-		if (e.getSource() == display1)
+		String s1 = "", s2 = "";
+		
+		if (e.getSource() == display1 && scale == 100) {
+			dc = serviceBusquedaDobles.pixelToCoordinatesConverter(im1, input1.getWidth(), input1.getHeight(), e.getX(), e.getY());
+			sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
 			labelPosicion.setText(pos + display1.getPixelInfo());
-		if (e.getSource() == display2)
+		}
+		
+		if (e.getSource() == display2 && scale == 100) {
+			dc = serviceBusquedaDobles.pixelToCoordinatesConverter(im2, input2.getWidth(), input2.getHeight(), e.getX(), e.getY());
+			sc = es.ucm.si.dneb.service.math.CoordinateConverter.decimalToSexagesimalConverter(dc);
 			labelPosicion.setText(pos + display2.getPixelInfo());
+		}
+		
+		if (scale == 100 && (e.getX() < input1.getWidth() && e.getY() < input1.getHeight() ||
+				e.getX() < input2.getWidth() && e.getY() < input2.getHeight())) {
+			s1 = dc.toString();
+			s2 = sc.toString();
+		}
+		
+		dLabel.setText(s1);
+		sLabel.setText(s2);
 	}
 	
 	@Override
