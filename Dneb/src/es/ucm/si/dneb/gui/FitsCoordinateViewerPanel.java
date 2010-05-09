@@ -131,6 +131,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	    c.gridy = 1;
 	    c.gridwidth = 2;
 	    c.weighty = 0.0;
+	    c.weightx = 0.0;
 	    add(infoPixelLabel, c);
 	    
 	    dLabel = new JLabel();
@@ -228,9 +229,8 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	    c.gridx = 1;
 	    c.gridy = 0;
 	    c.gridwidth = 1;
-	    c.gridheight = 1;
+	    c.gridheight = 4;
 	    c.fill = GridBagConstraints.NONE;
-	    c.weightx = 0.0;
 	    add(panel, c);
 		
 		setVisible(true);
