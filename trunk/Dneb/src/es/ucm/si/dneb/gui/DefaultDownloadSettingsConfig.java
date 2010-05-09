@@ -34,9 +34,9 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		
 		this.rellenarModel();
 		this.initIcons();
-		this.elminarConfiguracion.setIcon(new ImageIcon("images/deleteicon.png"));
-		this.cargarValoresPorDefecto.setIcon(new ImageIcon("images/load-icon.jpg"));
-		this.guardarValoresPorDefecto.setIcon(new ImageIcon("images/save-icon.jpg"));
+		this.elminarConfiguracion.setIcon(new ImageIcon("images/iconos-diego/delete.png"));
+		this.cargarValoresPorDefecto.setIcon(new ImageIcon("images/iconos-diego/load.png"));
+		this.guardarValoresPorDefecto.setIcon(new ImageIcon("images/iconos-diego/save.png"));
 	}
 	
 	private void initIcons() {

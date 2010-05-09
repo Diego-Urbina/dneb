@@ -131,7 +131,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	    layout.setAutoCreateContainerGaps(true);
 	    
 	    JButton buttonAbrir = new JButton();
-	    Icon icon = new ImageIcon("images/abrir.gif");
+	    Icon icon = new ImageIcon("images/iconos-diego/load.png");
 	    buttonAbrir.setIcon(icon);
 	    buttonAbrir.setToolTipText("Abrir imagenes");
 	    buttonAbrir.addActionListener(new ActionListener() {
@@ -141,7 +141,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonBuscar = new JButton();
-	    icon = new ImageIcon("images/buscar.gif");
+	    icon = new ImageIcon("images/iconos-diego/buscar.png");
 	    buttonBuscar.setIcon(icon);
 	    buttonBuscar.setToolTipText("Buscar estrellas en la imagen y marcarlas con cuadrados");
 	    buttonBuscar.addActionListener(new ActionListener() {
@@ -151,7 +151,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonZoomMas = new JButton();
-	    icon = new ImageIcon("images/zoom_in_icon.gif");
+	    icon = new ImageIcon("images/iconos-diego/zoomin.png");
 	    buttonZoomMas.setIcon(icon);
 	    buttonZoomMas.setToolTipText("Aumentar la imagen");
 	    buttonZoomMas.addActionListener(new ActionListener() {
@@ -161,7 +161,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonZoomMenos = new JButton();
-	    icon = new ImageIcon("images/zoom_out_icon.gif");
+	    icon = new ImageIcon("images/iconos-diego/zoomout.png");
 	    buttonZoomMenos.setIcon(icon);
 	    buttonZoomMenos.setToolTipText("Disminuir la imagen");
 	    buttonZoomMenos.addActionListener(new ActionListener() {
@@ -171,7 +171,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonRestaurar = new JButton();
-	    icon = new ImageIcon("images/restaurar.gif");
+	    icon = new ImageIcon("images/iconos-diego/restaurar.png");
 	    buttonRestaurar.setIcon(icon);
 	    buttonRestaurar.setToolTipText("Restaurar la imagen");
 	    buttonRestaurar.addActionListener(new ActionListener() {

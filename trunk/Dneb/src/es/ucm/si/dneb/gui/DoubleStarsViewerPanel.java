@@ -125,7 +125,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    JButton buttonRestaurar = new JButton();
-	    buttonRestaurar.setIcon(new ImageIcon("images/restaurar.gif"));
+	    buttonRestaurar.setIcon(new ImageIcon("images/iconos-diego/restaurar.png"));
 	    buttonRestaurar.setToolTipText("Restaurar la imagen");
 	    buttonRestaurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    JButton buttonProcesar = new JButton();
-	    buttonProcesar.setIcon(new ImageIcon("images/buscar.gif"));
+	    buttonProcesar.setIcon(new ImageIcon("images/iconos-diego/buscar.png"));
 	    buttonProcesar.setToolTipText("Procesar puntos en la imagen");
 	    buttonProcesar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
