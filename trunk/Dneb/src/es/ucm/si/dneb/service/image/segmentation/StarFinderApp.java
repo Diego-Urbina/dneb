@@ -6,8 +6,6 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import es.ucm.si.dneb.service.importData.ImportDoubleStarCatalogImpl;
-
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
@@ -20,7 +18,7 @@ public class StarFinderApp {
 	public static void main(String[] args) {		
 		try {			
 			// Cargo la imagen
-			String filename = "AR2.69DEC49.74472SURVposs1_blue.fits";
+			String filename = "AR90.135125DEC81.40558333333334SURVposs1_blue.fits";
 			Fits imagenFITS = new Fits(new File(filename));			
 			
 			// Obtengo el primer HDU (la imagen) y creo con el
@@ -36,7 +34,7 @@ public class StarFinderApp {
 			System.out.println("Width:  " + l1.getWidth());
 			System.out.println("Height:  " + l1.getHeight());
 			System.out.println("Media:  " + l1.brilloMedio());
-			System.out.println("Percentil:  " + l1.getNPercentile(99.4));
+			System.out.println("Percentil:  " + l1.getNPercentile(99.55));
 			
 			StarFinder sf = new StarFinder();
 			float umbral = new Float(l1.getNPercentile(99.4));
