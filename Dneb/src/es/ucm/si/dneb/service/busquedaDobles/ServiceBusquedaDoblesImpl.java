@@ -5,13 +5,10 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.SampleModel;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.media.jai.PlanarImage;
 import javax.media.jai.RasterFactory;
@@ -98,48 +95,60 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			String filename1 = im1.getRutaFichero();
 			String filename2 = im2.getRutaFichero();
 			
-			BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
+			/*BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
 			bw.write("\r\n***** Información de ejecución *****\r\n");
-			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);
+			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);*/
 			
-			double[] brillos = new double[15];
-			double[] umbrales = new double[15];
-			ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
+			/*float[] brillos = new float[15];
+			float[] umbrales = new float[15];
+			Random r = new Random();
 			
 			for (int i = 0; i < 15; i++) {
-				Random r = new Random();
 				do {
-					umbrales[i] = (r.nextFloat()%0.1) + 99.0;
-					brillos[i] = (r.nextFloat()%0.1) + 99.0;
+					umbrales[i] = (r.nextFloat()%0.1f) + 99.0f;
+					brillos[i] = (r.nextFloat()%0.1f) + 99.0f;
 				} while (brillos[i] < umbrales[i]);
-			}
-			
-			for (int iter = 0; iter < brillos.length; iter++) {
-			
-				bw.write("\r\n\r\n\r\nIteración " + (iter+1) + ":");
 				
-				float umbral1, umbral2, brillo1, brillo2;
+			}*/
+			
+			ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
+			//for (int iter = 0; iter < brillos.length; iter++) {
+			
+				//bw.write("\r\n\r\n\r\nIteración " + (iter+1) + ":");
+				
+				//float umbral1, umbral2, brillo1, brillo2;
+				float umbral, brillo;
 				
 				// Crear imagenes y buscar estrellas
 				Fits imagenFITS1 = new Fits(new File(filename1));			
 				BasicHDU imageHDU1 = imagenFITS1.getHDU(0);
 				l1 = new LectorImageHDU(imageHDU1, filename1);
 				StarFinder sf1 = new StarFinder();
-				umbral1 = new Float(l1.getNPercentile(umbrales[iter]));
+				/*umbral1 = new Float(l1.getNPercentile(umbrales[iter]));
 				brillo1 = new Float(l1.getNPercentile(brillos[iter]));
-				sf1.buscarEstrellas(l1, brillo1, umbral1);
-				bw.write("\r\n\r\n2.1) Parámetros imagen 1:\r\n\tBrillo: " + brillo1 + "\r\n\tUmbral: " + umbral1);
-				bw.write("\r\n\r\n2.2) Número de estrellas encontradas imagen 1: " + sf1.getNumberOfStars());
+				umbral1 = umbrales[iter];
+				brillo1 = brillos[iter];*/
+				
+				umbral = new Float(l1.getNPercentile(99.55));
+				brillo = umbral + 2000;
+				sf1.buscarEstrellas(l1, brillo, umbral);
+				/*bw.write("\r\n\r\n2.1) Parámetros imagen 1:\r\n\tBrillo: " + brillo1 + "\r\n\tUmbral: " + umbral1);
+				bw.write("\r\n\r\n2.2) Número de estrellas encontradas imagen 1: " + sf1.getNumberOfStars());*/
 				
 				Fits imagenFITS2 = new Fits(new File(filename2));			
 				BasicHDU imageHDU2 = imagenFITS2.getHDU(0);
 				l2 = new LectorImageHDU(imageHDU2, filename2);
 				StarFinder sf2 = new StarFinder();
-				umbral2 = new Float(l2.getNPercentile(umbrales[iter]));
+				/*umbral2 = new Float(l2.getNPercentile(umbrales[iter]));
 				brillo2 = new Float(l2.getNPercentile(brillos[iter]));
-				sf2.buscarEstrellas(l2, brillo2, umbral2);
-				bw.write("\r\n\r\n3.1) Parámetros imagen 2:\r\n\tBrillo: " + brillo2 + "\r\n\tUmbral: " + umbral2);
-				bw.write("\r\n\r\n3.2) Número de estrellas encontradas imagen 2: " + sf2.getNumberOfStars());
+				umbral2 = umbrales[iter];
+				brillo2 = brillos[iter];*/
+				
+				umbral = new Float(l2.getNPercentile(99.55));
+				brillo = umbral + 2000;
+				sf2.buscarEstrellas(l2, brillo, umbral);
+				/*bw.write("\r\n\r\n3.1) Parámetros imagen 2:\r\n\tBrillo: " + brillo2 + "\r\n\tUmbral: " + umbral2);
+				bw.write("\r\n\r\n3.2) Número de estrellas encontradas imagen 2: " + sf2.getNumberOfStars());*/
 	
 				ArrayList<RectStar> recuadros1 = sf1.getRecuadros();
 				ArrayList<RectStar> recuadros2 = sf2.getRecuadros();
@@ -150,8 +159,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				CalculateBookCentroid cc = new CalculateBookCentroid();
 				Point cent1, cent2;
 				
-				BufferedWriter bwc = new BufferedWriter(new FileWriter("LogCentroides.txt"));
-				
 				for (int i = 0; i < nRecuadros; i++) {
 					
 					if (i < recuadros1.size()) {
@@ -160,12 +167,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						
 						cent1.setX(recuadros1.get(i).getxLeft() + cent1.getX());
 						cent1.setY(recuadros1.get(i).getyTop() + cent1.getY());
-						
-						bwc.write("\r\n\r\nCentroide " + i + " de la imagen 1" + ":\r\n\tX: " + cent1.getX() + "\r\n\tY: " + cent1.getY());
-						bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 1" + ":\r\n\txLeft: " + recuadros1.get(i).getxLeft()
-								+ "\r\n\txRight: " + recuadros1.get(i).getxRight()
-								+ "\r\n\tyTop: " + recuadros1.get(i).getyTop()
-								+ "\r\n\tyBot: " + recuadros1.get(i).getyBot());
 						
 						centroides1.add(cent1);
 					}
@@ -177,17 +178,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 						cent2.setX(recuadros2.get(i).getxLeft() + cent2.getX());
 						cent2.setY(recuadros2.get(i).getyTop() + cent2.getY());
 						
-						bwc.write("\r\n\r\nCentroide " + i + " de la imagen 2" + ":\r\n\tX: " + cent2.getX() + "\r\n\tY: " + cent2.getY());
-						bwc.write("\r\n\r\nRectángulo " + i + " de la imagen 2" + ":\r\n\txLeft: " + recuadros2.get(i).getxLeft()
-								+ "\r\n\txRight: " + recuadros2.get(i).getxRight()
-								+ "\r\n\tyTop: " + recuadros2.get(i).getyTop()
-								+ "\r\n\tyBot: " + recuadros2.get(i).getyBot());
-						
 						centroides2.add(cent2);
 					}
 				}
-				
-				bwc.close();
 				
 				LectorImageHDU auxLI;
 				Imagen auxIm;
@@ -221,7 +214,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					centroide = centroides1.get(i).clone();
 					centroide.setX(centroide.getX() * scaleW);
 					centroide.setY(centroide.getY() * scaleH);
-					elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH);
+					elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH, 10);
 					
 					if (elegido != null) { // se ha encontrado coincidente
 						
@@ -243,145 +236,139 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					}
 				}
 				
-				bw.write("\r\n\r\n4) Número de centroides elegidos: " + porcentaje);
 				porcentaje = (porcentaje/centroides1.size()) * 100;
-				bw.write("\r\n\r\n5) Porcentaje de centroides elegidos: " + porcentaje);
 				
 				// Construir las matrices de ambas listas y encontrar la matriz de transformacion
 				// Y a la vez se calcula el error cuadratico medio inicial
 				double errorInicial = 0;
 				Point p1 = new Point(), p2 = new Point();
-				if (porcentaje >= 50) {
-					double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
-					for (int i = 0; i < centroidesFin.size(); i++) {
-						centroide = centroidesFin.get(i);
-						m1[i][0] = centroide.getX();
-						m1[i][1] = centroide.getY();
-						m1[i][2] = 1;
-						
-						centroide = elegidos.get(i);
-						m2[i][0] = centroide.getX();
-						m2[i][1] = centroide.getY();
-						m2[i][2] = 1;
-						
-						p1.setX(m1[i][0] * scaleW);
-						p1.setY(m1[i][1] * scaleH);
-						p2.setX(m2[i][0]);
-						p2.setY(m2[i][1]);
-						errorInicial += Math.pow(p1.getDistancia(p2), 2);
-					}
-					
-					errorInicial = Math.sqrt(errorInicial/centroidesFin.size());
-					bw.write("\r\n\r\n6) Error cuadrático medio inicial: " + errorInicial);
-					
-					Matrix P = new Matrix(m1);
-					Matrix Q = new Matrix(m2);
-					Matrix X = P.solve(Q);
-					Matrix R = P.times(X);
-				    double errorFinal = 0;
-				    for (int i = 0; i < R.getRowDimension(); i++) {
-				    	p1.setX(R.get(i, 0));
-						p1.setY(R.get(i, 1));
-						centroide = elegidos.get(i);
-				    	errorFinal += Math.pow(p1.getDistancia(centroide),2);
-				    }
-				    
-				    errorFinal = Math.sqrt(errorFinal/R.getRowDimension());
-				    bw.write("\r\n\r\n7) Error cuadrático medio final: " + errorFinal);
 				
-				    // Comparar errores y si el final es mayor que el inicial descartar
-					if (errorFinal < errorInicial) {
+				if (porcentaje < 50 || centroidesFin.size() < 3) return resultado;
+				
+				double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
+				for (int i = 0; i < centroidesFin.size(); i++) {
+					centroide = centroidesFin.get(i);
+					m1[i][0] = centroide.getX();
+					m1[i][1] = centroide.getY();
+					m1[i][2] = 1;
+					
+					centroide = elegidos.get(i);
+					m2[i][0] = centroide.getX();
+					m2[i][1] = centroide.getY();
+					m2[i][2] = 1;
+					
+					p1.setX(m1[i][0] * scaleW);
+					p1.setY(m1[i][1] * scaleH);
+					p2.setX(m2[i][0]);
+					p2.setY(m2[i][1]);
+					errorInicial += Math.pow(p1.getDistancia(p2), 2);
+				}
+				
+				errorInicial = Math.sqrt(errorInicial/centroidesFin.size());
+				
+				Matrix P = new Matrix(m1);
+				Matrix Q = new Matrix(m2);
+				Matrix X = P.solve(Q);
+				Matrix R = P.times(X);
+			    double errorFinal = 0;
+			    for (int i = 0; i < R.getRowDimension(); i++) {
+			    	p1.setX(R.get(i, 0));
+					p1.setY(R.get(i, 1));
+					centroide = elegidos.get(i);
+			    	errorFinal += Math.pow(p1.getDistancia(centroide),2);
+			    }
+			    
+			    errorFinal = Math.sqrt(errorFinal/R.getRowDimension());
+			
+			    // Comparar errores y si el final es mayor que el inicial descartar
+				if (errorFinal > errorInicial) return resultado;
+					
+				// Aplicar matriz a todos los puntos de la imagen con menos recuadros y buscar emparejamiento
+				m1 = new double[centroides1.size()][3];
+				for (int i = 0; i < centroides1.size(); i++) {
+					centroide = centroides1.get(i);
+					m1[i][0] = centroide.getX();
+					m1[i][1] = centroide.getY();
+					m1[i][2] = 1;
+				}
+				P = new Matrix(m1);
+				Q = P.times(X);
+				
+				// Emparejamiento
+				elegidos.clear();
+				centroidesFin.clear();
+				ArrayList<Point> centroidesIni = new ArrayList<Point>();
+				porcentaje = 0.;
+				for (int i = 0; i < centroides1.size(); i++) {
+					if (recuadros1.get(i).getArea() <= 5) continue; // desechamos las estrellas muy pequeñas
+					
+					centroide = new Point();
+					centroide.setX(Q.get(i, 0));
+					centroide.setY(Q.get(i, 1));
+					elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH, 20);
+					
+					if (elegido != null) { // se ha encontrado coincidente
 						
-						// Aplicar matriz a todos los puntos de la imagen con menos recuadros y buscar emparejamiento
-						m1 = new double[centroides1.size()][3];
-						for (int i = 0; i < centroides1.size(); i++) {
-							centroide = centroides1.get(i);
-							m1[i][0] = centroide.getX();
-							m1[i][1] = centroide.getY();
-							m1[i][2] = 1;
-						}
-						P = new Matrix(m1);
-						Q = P.times(X);
-						
-						// Emparejamiento
-						elegidos.clear();
-						centroidesFin.clear();
-						ArrayList<Point> centroidesIni = new ArrayList<Point>();
-						porcentaje = 0.;
-						for (int i = 0; i < centroides1.size(); i++) {
-							if (recuadros1.get(i).getArea() <= 5) continue; // desechamos las estrellas muy pequeñas
+						// Comprobar si el centroide ya esta en el array
+						if (elegidos.contains(elegido)) {
+							int pos = elegidos.indexOf(elegido);
 							
-							centroide = new Point();
-							centroide.setX(Q.get(i, 0));
-							centroide.setY(Q.get(i, 1));
-							elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH);
-							
-							if (elegido != null) { // se ha encontrado coincidente
-								
-								// Comprobar si el centroide ya esta en el array
-								if (elegidos.contains(elegido)) {
-									int pos = elegidos.indexOf(elegido);
-									
-									// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
-									if (centroide.getDistancia(elegido) < centroidesFin.get(pos).getDistancia(elegido)) {
-										centroidesIni.remove(pos);
-										centroidesFin.remove(pos);
-										elegidos.remove(pos);
-										porcentaje--;
-									}
-								}
-								
-								centroidesIni.add(centroides1.get(i));
-								centroidesFin.add(centroide);
-								elegidos.add(elegido);
-								porcentaje++;
+							// Si la distancia del nuevo centroide es menor que la del antiguo se descarta el antiguo
+							if (centroide.getDistancia(elegido) < centroidesFin.get(pos).getDistancia(elegido)) {
+								centroidesIni.remove(pos);
+								centroidesFin.remove(pos);
+								elegidos.remove(pos);
+								porcentaje--;
 							}
 						}
 						
-						bw.write("\r\n\r\n8) Número de centroides elegidos después de aplicar la matriz: " + porcentaje);
-						porcentaje = (porcentaje/centroides1.size()) * 100;
-						bw.write("\r\n\r\n9) Porcentaje de centroides elegidos después de aplicar la matriz: " + porcentaje);
-						
-						// Si el porcentaje es mayor o igual que 50 calcular errores y ver cual es mayor que 2*desviacion tipica (candidato a que se haya movido)
-						double error, desviacion;
-						DescriptiveStatistics calcEstadisticos = new DescriptiveStatistics();
-						double[] errores = new double[centroidesFin.size()];
-						if (porcentaje >= 50) {
-							// Calculo de la media, varianza y desviacion tipica
-							for (int i = 0; i < centroidesFin.size(); i++) {
-								p1.setX(centroidesFin.get(i).getX());
-								p1.setY(centroidesFin.get(i).getY());
-								p2.setX(elegidos.get(i).getX());
-								p2.setY(elegidos.get(i).getY());
-								error = p1.getDistancia(p2);
-								calcEstadisticos.addValue(error);
-								errores[i] = error;
-							}
-							desviacion = calcEstadisticos.getStandardDeviation();
-							bw.write("\r\n\r\n10) Desviación típica: " + desviacion);
-							
-							// Calcular candidatos a haberse movido
-							bw.write("\r\n\r\n11) Lista de candidatos a haberse movido:");
-							int cont = 0;
-							DecimalCoordinate dc;
-							PlanarImage pi = createPlanarImage(l1);
-							ArrayList<Pair<Point>> aux = new ArrayList<Pair<Point>>();
-							for (int i = 0; i < centroidesIni.size(); i++) {
-								if (errores[i] > 2*desviacion) {
-									centroide = centroidesIni.get(i);
-									if (sf1.getNumberOfStars()>sf2.getNumberOfStars())
-										aux.add(new Pair<Point>(elegidos.get(i), centroide));
-									else
-										aux.add(new Pair<Point>(centroide, elegidos.get(i)));
-									dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
-									bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
-									cont++;
-								}
-							}
-							union(resultado, aux);
-						}
+						centroidesIni.add(centroides1.get(i));
+						centroidesFin.add(centroide);
+						elegidos.add(elegido);
+						porcentaje++;
 					}
 				}
+					
+				porcentaje = (porcentaje/centroides1.size()) * 100;
+				
+				// Si el porcentaje es mayor o igual que 50 calcular errores y ver cual es mayor que 2*desviacion tipica (candidato a que se haya movido)
+				double error, desviacion;
+				DescriptiveStatistics calcEstadisticos = new DescriptiveStatistics();
+				double[] errores = new double[centroidesFin.size()];
+				
+				if (porcentaje < 50) return resultado;
+					
+				// Calculo de la media, varianza y desviacion tipica
+				for (int i = 0; i < centroidesFin.size(); i++) {
+					p1.setX(centroidesFin.get(i).getX());
+					p1.setY(centroidesFin.get(i).getY());
+					p2.setX(elegidos.get(i).getX());
+					p2.setY(elegidos.get(i).getY());
+					error = p1.getDistancia(p2);
+					calcEstadisticos.addValue(error);
+					errores[i] = error;
+				}
+				desviacion = calcEstadisticos.getStandardDeviation();
+				
+				// Calcular candidatos a haberse movido
+				int cont = 0;
+				/*DecimalCoordinate dc;
+				PlanarImage pi = createPlanarImage(l1);*/
+				ArrayList<Pair<Point>> aux = new ArrayList<Pair<Point>>();
+				for (int i = 0; i < centroidesIni.size(); i++) {
+					if (errores[i] > 1.5*desviacion) {
+						centroide = centroidesIni.get(i);
+						if (sf1.getNumberOfStars()>sf2.getNumberOfStars())
+							aux.add(new Pair<Point>(elegidos.get(i), centroide));
+						else
+							aux.add(new Pair<Point>(centroide, elegidos.get(i)));
+						//dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
+						//bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
+						cont++;
+					}
+				}
+				union(resultado, aux);
+				
 				if (centroides1.size() > centroides2.size()) { // restaurar punteros
 					auxLI = l1;
 					l1 = l2;
@@ -390,16 +377,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					im1 = im2;
 					im2 = auxIm;
 				}
-			}
-			bw.close();
-			JOptionPane.showMessageDialog(null, "Fichero de log creado en " + System.getProperty("user.dir"), "Información", JOptionPane.INFORMATION_MESSAGE);
+			//}
+			//bw.close();
 			return resultado;
 		
 		} catch (FitsException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (ServicioGestionProcesamientosException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -492,13 +478,13 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
-			ArrayList<RectStar> listaRecs, double scaleW, double scaleH) {
+			ArrayList<RectStar> listaRecs, double scaleW, double scaleH, int radioBusqueda) {
 		
 		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio de 20 pixeles
 		
-		double radioMaxBusqueda = 8; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
-		double tamRecLim = 1.5; // El area del rectangulo debera estar entre un rango determinado
-		double distancia, distanciaMin = 5, brillo, brilloParecido = 0, brilloEscalado;
+		double radioMaxBusqueda = radioBusqueda; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
+		double tamRecLim = 1.7; // El area del rectangulo debera estar entre un rango determinado
+		double distancia, distanciaMin = 6, brillo, brilloParecido = 0, brilloEscalado;
 		Point elegido = null;
 		Point aux;
 		
