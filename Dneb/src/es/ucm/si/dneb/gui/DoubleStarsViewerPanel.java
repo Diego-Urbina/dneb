@@ -116,7 +116,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 	    layout.setAutoCreateContainerGaps(true);
 	    
 		JButton buttonAbrir = new JButton();
-		buttonAbrir.setIcon(new ImageIcon("images/abrir.gif"));
+		buttonAbrir.setIcon(new ImageIcon("images/iconos-diego/load.png"));
 		buttonAbrir.setToolTipText("Abrir imagenes");
 		buttonAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
