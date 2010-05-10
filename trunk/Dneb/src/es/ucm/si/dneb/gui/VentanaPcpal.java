@@ -67,10 +67,9 @@ public class VentanaPcpal extends JFrame{
 		this.crearNuevaTarea.setIcon(new ImageIcon("images/iconos-diego/add.png"));
 		this.gestorTareas.setIcon(new ImageIcon("images/iconos-diego/task-monitor.png"));
 		
-		this.crearDescarga.setIcon(new ImageIcon("images/download_icon4.png"));
-		this.gestionarDescargasConfig.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));
+		this.crearDescarga.setIcon(new ImageIcon("images/iconos-diego/add2.png"));
 		
-		this.configDownload.setIcon(new ImageIcon("images/downconfig (Custom).JPG"));		
+		this.configDownload.setIcon(new ImageIcon("images/iconos-diego/downloadconfig.png"));		
 		this.configBBDD.setIcon(new ImageIcon("images/iconos-diego/database.png"));		
 		
 		this.exportRelevantXML.setIcon(new ImageIcon("images/iconos-diego/xml.png"));
@@ -331,7 +330,6 @@ public class VentanaPcpal extends JFrame{
 		gestorTareas = new JMenuItem();
 		menu2 = new JMenu();
 		crearDescarga = new JMenuItem();
-		gestionarDescargasConfig = new JMenuItem();
 		menu3 = new JMenu();
 		configBBDD = new JMenuItem();
 		configDownload = new JMenuItem();
@@ -407,15 +405,6 @@ public class VentanaPcpal extends JFrame{
 				});
 				menu2.add(crearDescarga);
 
-				//---- gestionarDescargasConfig ----
-				gestionarDescargasConfig.setText("CREAR CONFIGURARION DE DESCARGA");
-				gestionarDescargasConfig.setIcon(null);
-				gestionarDescargasConfig.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						gestionarDescargasConfigActionPerformed(e);
-					}
-				});
-				menu2.add(gestionarDescargasConfig);
 			}
 			menuBar1.add(menu2);
 
@@ -641,7 +630,6 @@ public class VentanaPcpal extends JFrame{
 	private JMenuItem gestorTareas;
 	private JMenu menu2;
 	private JMenuItem crearDescarga;
-	private JMenuItem gestionarDescargasConfig;
 	private JMenu menu3;
 	private JMenuItem configBBDD;
 	private JMenuItem configDownload;
