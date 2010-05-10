@@ -191,7 +191,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 			boolean sinRelevantes = true;
 
-			while (sinRelevantes && margenAngulo<=0.05 && margenDistancia<=0.13) {
+			while (sinRelevantes && margenAngulo<=0.04 && margenDistancia<=0.10) {
 
 				while (tipoAjuste < 2 && sinRelevantes) {
 
