@@ -32,7 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 import Jama.Matrix;
 
 import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.InformacionRelevante;
 import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.domain.TipoInformacionRelevante;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
@@ -46,6 +48,7 @@ import es.ucm.si.dneb.service.math.Distance;
 import es.ucm.si.dneb.service.math.MathService;
 import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.Pair;
+import es.ucm.si.dneb.util.Util;
 
 @Service("serviceBusquedaDobles")
 public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
@@ -54,6 +57,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	private EntityManager manager;
 	
 	private LectorImageHDU l1, l2;
+	private PlanarImage pi;
 	
 	private static final Log LOG = LogFactory
 	.getLog(ServiceBusquedaDoblesImpl.class);
@@ -63,20 +67,44 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		
 		// Obtener nombre de ficheros y parametros configurables
 		Imagen im1, im2;
+		ArrayList<Pair<Point>> res;
+		List<InformacionRelevante> infoRels = new ArrayList<InformacionRelevante>();
+		InformacionRelevante ir;
+		List<Imagen> imagenes = new ArrayList<Imagen>();
+		DecimalCoordinate dc;
 		
-		for (int i = 0; i < procImgs.size(); i += 2) {
+		LOG.info("PROCESAMIENTO DE BUSQUEDA DE ESTRELLAS DOBLES INFO:");
 		
-			im1 = procImgs.get(i).getImagen();
-			im2 = procImgs.get(i+1).getImagen();
-			
-			busquedaEstrellasDobles(im1, im2);
-			
-			procImgs.get(i).setFinalizada(true);
-			procImgs.get(i+1).setFinalizada(true);
-			
-			manager.merge(procImgs.get(i));
-			manager.merge(procImgs.get(i+1));
+		im1 = procImgs.get(0).getImagen();
+		im2 = procImgs.get(1).getImagen();
+		res = busquedaEstrellasDobles(im1, im2);
 		
+		if (res == null || res.size() == 0) {
+			LOG.info("No se ha encontrado ninguna estrella doble en estas dos imagenes");
+		} else {
+			for (Pair<Point> p : res) {
+				dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p.getA().getX(), p.getA().getY());
+				LOG.info("Estrella: AR -> " + dc.getAr() + "    DEC -> " + dc.getDec());
+				ir = new InformacionRelevante();
+				imagenes.clear();
+				ir.setDescription("BUSQUEDA ESTRELLAS DOBLES: Estrella: AR -> " + dc.getAr() + "    DEC -> " + dc.getDec());
+				ir.setFecha(Util.dameFechaActual());
+				imagenes.add(im1);
+				imagenes.add(im2);
+				ir.setImagenes(imagenes);
+				ir.setTipoInformacionRelevante(manager.find(TipoInformacionRelevante.class, 1L));
+				infoRels.add(ir);
+			}
+		}
+		
+		procImgs.get(0).setFinalizada(true);
+		procImgs.get(1).setFinalizada(true);
+		
+		manager.merge(procImgs.get(0));
+		manager.merge(procImgs.get(1));
+		
+		for (InformacionRelevante i : infoRels) {
+			manager.persist(i);
 		}
 		
 	}
@@ -100,7 +128,10 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		try {
 			
 			String filename1 = im1.getRutaFichero();
+			LOG.info("Imagen 1: " + filename1);
 			String filename2 = im2.getRutaFichero();
+			LOG.info("Imagen 2: " + filename2);
+			
 			
 			/*BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
 			bw.write("\r\n***** Información de ejecución *****\r\n");
@@ -130,6 +161,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			Fits imagenFITS1 = new Fits(new File(filename1));			
 			BasicHDU imageHDU1 = imagenFITS1.getHDU(0);
 			l1 = new LectorImageHDU(imageHDU1, filename1);
+			pi = createPlanarImage(l1);
 			StarFinder sf1 = new StarFinder();
 			/*umbral1 = new Float(l1.getNPercentile(umbrales[iter]));
 			brillo1 = new Float(l1.getNPercentile(brillos[iter]));
@@ -250,7 +282,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			double errorInicial = 0;
 			Point p1 = new Point(), p2 = new Point();
 			
-			if (porcentaje < 50 || centroidesFin.size() < 3) return resultado;
+			if (porcentaje < 50 || centroidesFin.size() < 3)return resultado;
 			
 			double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
 			for (int i = 0; i < centroidesFin.size(); i++) {
@@ -435,25 +467,24 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
 		DecimalCoordinate dc1, dc2;
 		MathService ms = (MathService) ContextoAplicacion.getApplicationContext().getBean("mathService");
-		PlanarImage pi1 = createPlanarImage(l1);
 		Point p1, p2, e1, e2;
 		Distance d;
 		boolean[] usados = new boolean[candidatas.size()];
 		double modulo1, modulo2, direccion1, direccion2;
-		double difModulo = 0.4; // diferencia entre modulos de un 40%
+		double difModulo = 0.30; // diferencia entre modulos de un 30%
 		double difDireccion = Math.toRadians(25); // diferencia de 25 grados entre ambas direcciones
 		
 		for (int i = 0; i < candidatas.size(); i++) {
 			p1 = candidatas.get(i).getA();
 			e1 = candidatas.get(i).getB();
-			dc1 = pixelToCoordinatesConverter(im1, pi1.getWidth(), pi1.getHeight(), p1.getX(), p1.getY());
+			dc1 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p1.getX(), p1.getY());
 			modulo1 = p1.getDistancia(e1);
 			direccion1 = p1.getDireccion(e1);
 			
 			for (int j = i+1; j < candidatas.size(); j++) {
 				p2 = candidatas.get(j).getA();
 				e2 = candidatas.get(j).getB();
-				dc2 = pixelToCoordinatesConverter(im1, pi1.getWidth(), pi1.getHeight(), p2.getX(), p2.getY());
+				dc2 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p2.getX(), p2.getY());
 				d = ms.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
 				if (d.getDistanceSeconds() > 180) continue; // distancia entre estrellas mayor de 3 minutos
 				
