@@ -486,7 +486,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				e2 = candidatas.get(j).getB();
 				dc2 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p2.getX(), p2.getY());
 				d = ms.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
-				if (d.getDistanceSeconds() > 180) continue; // distancia entre estrellas mayor de 3 minutos
+				if (d.getDistanceSeconds() > 100) continue; // distancia entre estrellas mayor de 3 minutos
 				
 				modulo2 = p2.getDistancia(e2);
 				direccion2 = p2.getDireccion(e2);
@@ -511,6 +511,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				}
 			}
 		}
+		
+		if (resultado.size() > 5)
+			resultado.clear();
 		
 		return resultado;
 	}
