@@ -114,7 +114,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Gestor tareas ---------
 	private void gestorTareasActionPerformed(ActionEvent e) {		
-		JPanel vent = new TaskPanel(this);
+		JPanel vent = new TaskPanel();
 		pane.addTab("Gestor de tareas",new ImageIcon("images/iconos-diego/task-monitor.png"), vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -216,7 +216,7 @@ public class VentanaPcpal extends JFrame{
 	
 	
 
-	// --------- Visor dobles ---------
+	// --------- Visor estrellas ---------
 	private void visualizadorActionPerformed(ActionEvent e) {
 		pane.addTab("Visor estrellas",new ImageIcon("images/iconos-diego/visor.png"), new StarsViewerPanel());
 		this.initTabComponent(pane.getTabCount()-1);
@@ -225,7 +225,7 @@ public class VentanaPcpal extends JFrame{
 		setVisible(true);
 	}
 	
-	// --------- Visor centroides ---------
+	// --------- Visor dobles ---------
 	private void visorCentroidesActionPerformed(ActionEvent e) {
 		DoubleStarsViewerPanel  visu =new DoubleStarsViewerPanel();
 		
@@ -245,14 +245,14 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Crear procesamiento ---------
 	private void nueProcEstDobActionPerformed(ActionEvent e) {
-		pane.addTab("Crear procesamiento",new ImageIcon("images/iconos-diego/crear-proc.png"),new CrearProcesamiento(this));
+		pane.addTab("Crear procesamiento",new ImageIcon("images/iconos-diego/crear-proc.png"),new CrearProcesamiento());
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
 	// --------- Monitor de procesamientos ---------
 	private void buscarActionPerformed(ActionEvent e) {
-		MonitorProcesamiento prDobles= new MonitorProcesamiento(this);
+		MonitorProcesamiento prDobles= new MonitorProcesamiento();
 		pane.addTab("Monitor de procesamientos",new ImageIcon("images/iconos-diego/monitor-proc.png"), prDobles);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);

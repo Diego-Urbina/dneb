@@ -143,7 +143,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    JButton buttonED = new JButton();
-	    buttonED.setIcon(new ImageIcon("images/staricon2.jpg"));
+	    buttonED.setIcon(new ImageIcon("images/iconos-diego/estrella.png"));
 	    buttonED.setToolTipText("Buscar estrellas dobles en la imagen");
 	    buttonED.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,7 +152,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    buttonAnimar = new JButton();
-	    buttonAnimar.setIcon(new ImageIcon("images/starticon2.jpg"));
+	    buttonAnimar.setIcon(new ImageIcon("images/iconos-diego/play2.png"));
 	    buttonAnimar.setToolTipText("Animación de imágenes");
 	    buttonAnimar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,10 +323,10 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 				float sH = Math.min(input1.getHeight(), input2.getHeight());
 				hilo = new HiloAnimacion(imagenes, display2, sW, sH);
 				hilo.start();
-				buttonAnimar.setIcon(new ImageIcon("images/stop_icon2.png"));
+				buttonAnimar.setIcon(new ImageIcon("images/iconos-diego/stop2.png"));
 			} else {
 				hilo.detenerHilo();
-				buttonAnimar.setIcon(new ImageIcon("images/starticon2.jpg"));
+				buttonAnimar.setIcon(new ImageIcon("images/iconos-diego/play2.png"));
 				display2.set(input2);
 			}
 			

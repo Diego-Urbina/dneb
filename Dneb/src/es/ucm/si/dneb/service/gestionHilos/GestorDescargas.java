@@ -61,6 +61,8 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 	@Override
 	public void eliminarHilo(Long id) {
 		Hilo hilo = hilos.get(id);
+		
+		if (hilo == null) return;
 
 		if (hilo.isInterrupted() == false) {
 

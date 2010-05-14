@@ -33,7 +33,7 @@ public class TaskPanel extends JPanel {
 	private final Map<Integer, SwingWorker<Integer, Integer>> workers = new HashMap<Integer, SwingWorker<Integer, Integer>>();
 	private ServicioGestionTareas servicioGestionTareas;
 	
-	public TaskPanel(VentanaPcpal pcpal) {
+	public TaskPanel() {
 		initComponents();
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
         servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
@@ -283,7 +283,7 @@ public class TaskPanel extends JPanel {
 				null, null, null));
 		
 		add(buttonEliminar, new GridConstraints(1, 2, 1, 1,
-				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));		
