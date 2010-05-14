@@ -2,6 +2,7 @@ package es.ucm.si.dneb.gui;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import org.springframework.context.ApplicationContext;
+
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ParamProcTarea;
@@ -50,11 +54,8 @@ public class CrearProcesamiento extends JPanel {
 	private JTextField textFieldUmbral, textFieldBrillo, maxResRelevantes;
 	private JLabel labelUmbral, labelBrillo, labelMaxResRel;
 	
-	private VentanaPcpal principal;
-	
-	public CrearProcesamiento(VentanaPcpal pcpal) {
+	public CrearProcesamiento() {
 		
-		this.principal=pcpal;
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
 		servicioGestionProcesamientos = (ServicioGestionProcesamientos)ctx.getBean("servicioGestionProcesamientos");
@@ -274,7 +275,6 @@ public class CrearProcesamiento extends JPanel {
 				}
 				tableTasks.setRowSelectionAllowed(true);
 				tableTasks.setPreferredScrollableViewportSize(new Dimension(1000, 300));
-				tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		    	tcr.setHorizontalAlignment(SwingConstants.CENTER);
 		    	tableTasks.setAutoCreateRowSorter(true);
@@ -309,6 +309,7 @@ public class CrearProcesamiento extends JPanel {
 			}
 		});
 
+		/*
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
 		layout.setHorizontalGroup(
@@ -356,6 +357,65 @@ public class CrearProcesamiento extends JPanel {
 					.addComponent(buttonSiguiente)
 					.addGap(40, 40, 40))
 		);
+		*/
+		
+		
+		setLayout(new GridLayoutManager(5, 3, new Insets(30, 60, 30, 60), 5, -1));
+		add(scrollPane, new GridConstraints(0, 0, 1, 3,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		add(cbTipoProc, new GridConstraints(1, 0, 1, 3,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		add(labelUmbral, new GridConstraints(2, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		add(labelBrillo, new GridConstraints(2, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		add(labelMaxResRel, new GridConstraints(2, 2, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
+		add(textFieldUmbral, new GridConstraints(3, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		add(textFieldBrillo, new GridConstraints(3, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		add(maxResRelevantes, new GridConstraints(3, 2, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		add(buttonSiguiente, new GridConstraints(4, 0, 1, 3,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
 	}
 	
 }
