@@ -5,6 +5,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import org.springframework.context.ApplicationContext;
+
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 /*
  * Created by JFormDesigner on Tue Feb 02 17:35:35 CET 2010
  */
@@ -61,19 +64,37 @@ public class ImportarCatalogo extends JPanel {
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		titulo = new JLabel();
 		ruta = new JTextField();
 		cargar = new JButton();
 		importar = new JButton();
 		eliminar = new JButton();
+		separator1 = new JSeparator();
 
 		//======== this ========
-
+		setLayout(new GridLayoutManager(3, 2, new Insets(30, 60, 30, 60), 5, -1));
+		
 		//---- titulo ----
-		titulo.setText("Importar Cat\u00e1logo de Estrellas Dobles");
+		titulo.setText("IMPORTAR CATÁLOGO DE ESTRELLAS DOBLES");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getStyle() | Font.BOLD, titulo.getFont().getSize() + 6f));
+		add(titulo, new GridConstraints(0, 0, 1, 2,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- separator1 ----
+		add(separator1, new GridConstraints(1, 0, 1, 2,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
 
 		//---- ruta ----
 		ruta.setEditable(false);
@@ -103,14 +124,14 @@ public class ImportarCatalogo extends JPanel {
 			}
 		});
 
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
+		JPanel panel = new JPanel();
+		GroupLayout layout = new GroupLayout(panel);
+		panel.setLayout(layout);
 		layout.setHorizontalGroup(
 			layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-						.addComponent(titulo, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
 						.addGroup(layout.createSequentialGroup()
 							.addComponent(ruta, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -124,7 +145,6 @@ public class ImportarCatalogo extends JPanel {
 			layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(titulo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
 					.addGap(75, 75, 75)
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(ruta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -135,7 +155,13 @@ public class ImportarCatalogo extends JPanel {
 					.addComponent(eliminar)
 					.addGap(78, 78, 78))
 		);
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
+		
+		add(panel, new GridConstraints(2, 0, 1, 2,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
 	}
 
 	public void setImporCatalog(ImportDoubleStarCatalog imporCatalog) {
@@ -146,11 +172,10 @@ public class ImportarCatalogo extends JPanel {
 		return imporCatalog;
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JLabel titulo;
 	private JTextField ruta;
 	private JButton cargar;
 	private JButton importar;
 	private JButton eliminar;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	private JSeparator separator1;
 }
