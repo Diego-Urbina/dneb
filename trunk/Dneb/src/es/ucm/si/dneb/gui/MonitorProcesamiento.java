@@ -189,6 +189,7 @@ public class MonitorProcesamiento extends JPanel {
 		buttonEliminar = new JButton();
 		buttonParar = new JButton();
 		buttonReanudar = new JButton();
+		titulo = new JLabel();
 
 		// ======== this ========
 
@@ -290,27 +291,36 @@ public class MonitorProcesamiento extends JPanel {
 			}
 		});
 
-		setLayout(new GridLayoutManager(2, 3, new Insets(30, 60, 30, 60), 5, -1));
-		add(scrollPane, new GridConstraints(0, 0, 1, 3,
+		setLayout(new GridLayoutManager(3, 3, new Insets(30, 60, 30, 60), 5, -1));
+		titulo.setText("MONITOR DE PROCESAMIENTOS");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 3,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		add(scrollPane, new GridConstraints(1, 0, 1, 3,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));
 		
 		
-		add(buttonReanudar, new GridConstraints(1, 0, 1, 1,
+		add(buttonReanudar, new GridConstraints(2, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 		
-		add(buttonParar, new GridConstraints(1, 1, 1, 1,
+		add(buttonParar, new GridConstraints(2, 1, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));
 		
-		add(buttonEliminar, new GridConstraints(1, 2, 1, 1,
+		add(buttonEliminar, new GridConstraints(2, 2, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -323,4 +333,5 @@ public class MonitorProcesamiento extends JPanel {
 	private JButton buttonEliminar;
 	private JButton buttonParar;
 	private JButton buttonReanudar;
+	private JLabel titulo;
 }

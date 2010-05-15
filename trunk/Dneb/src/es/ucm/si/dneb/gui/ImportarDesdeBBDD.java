@@ -13,13 +13,10 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 
 import com.intellij.uiDesigner.core.*;
-/*
- * Created by JFormDesigner on Wed Feb 10 23:14:23 CET 2010
- */
+
 
 import es.ucm.si.dneb.domain.CargaDatos;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.importData.ImportDDBBData;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
@@ -46,26 +43,23 @@ public class ImportarDesdeBBDD extends JPanel {
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
 		importDDBBData= (ImportDDBBData) ctx.getBean("importDDBBData");
 		
-        this.servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");
-        
-      
+        this.servicioGestionTareas = (ServicioGestionTareas)ctx.getBean("servicioGestionTareas");      
         ArrayList<Survey> surveys = (ArrayList<Survey>) servicioGestionTareas.getAllSurveys();
 		
         DefaultListModel list = new DefaultListModel();
         for (Survey aux : surveys){
-        	list.addElement(aux.getDescripcion());
+                list.addElement(aux.getDescripcion());
         }
-        
         listSurvey.setModel(list);
         listSurvey.setSelectedIndex(0);
-		
+
         rellenarTabla();
 	}
 	
 
 	private void importarActionPerformed(ActionEvent e) {		
 		Object[] survStrings= this.listSurvey.getSelectedValues();
-		
+
 		List<Survey> surveys= new ArrayList<Survey>();
 		
 		for(int i=0; i< survStrings.length;i++){
@@ -111,10 +105,7 @@ public class ImportarDesdeBBDD extends JPanel {
         	
         	modelo.addRow(fila);
             nFila++;
-        }
-		
-        
-		
+        }		
 	}
 	
 	
@@ -159,7 +150,6 @@ public class ImportarDesdeBBDD extends JPanel {
 		}
 		tableTasks.setRowSelectionAllowed(true);
 		tableTasks.setPreferredScrollableViewportSize(new Dimension(1000, 300));
-		tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
     	tcr.setHorizontalAlignment(SwingConstants.CENTER);
     	tableTasks.setAutoCreateRowSorter(true);
@@ -175,75 +165,64 @@ public class ImportarDesdeBBDD extends JPanel {
 	}
 
 	private void initComponents() {
-		label1 = new JLabel();
+		titulo = new JLabel();
 		scrollPane1 = new JScrollPane();
-		table1 = new JTable();
+		//table1 = new JTable();
 		labelSurvey = new JLabel();
-		listSurvey = new JList();
 		importar = new JButton();
-
+		listSurvey = new JList();
+		
 		//======== this ========
-		setLayout(new GridLayoutManager(10, 10, new Insets(0, 0, 0, 0), -1, -1));
-
-		//---- label1 ----
-		label1.setText("Importar Datos desde BBDD");
-		label1.setHorizontalAlignment(SwingConstants.CENTER);
-		add(label1, new GridConstraints(0, 0, 1, 10,
+		setLayout(new GridLayoutManager(5, 1, new Insets(30, 60, 30, 60), 5, -1));
+		
+		titulo.setText("IMPORTAR DESDE BBDD");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
 
-		//======== scrollPane1 ========
-		{
-			scrollPane1.setViewportView(table1);
-		}
-		add(scrollPane1, new GridConstraints(2, 1, 3, 8,
+		add(scrollPane1, new GridConstraints(1, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+				null, null, null));
+		
+		labelSurvey.setText("SURVEY");
+		add(labelSurvey, new GridConstraints(2, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-
-		//---- labelSurvey ----
-		labelSurvey.setText("SURVEYS");
-		labelSurvey.setHorizontalAlignment(SwingConstants.CENTER);
-		labelSurvey.setFont(new Font("Arial", Font.PLAIN, 14));
-		labelSurvey.setBackground(new Color(204, 255, 255));
-		add(labelSurvey, new GridConstraints(5, 4, 1, 1,
+		
+		listSurvey.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		add(listSurvey, new GridConstraints(3, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-
-		//---- listSurvey ----
-		listSurvey.setVisibleRowCount(5);
-		listSurvey.setFont(new Font("Arial", Font.PLAIN, 11));
-		listSurvey.setSelectedIndex(0);
-		listSurvey.setBorder(new BevelBorder(BevelBorder.LOWERED));
-		add(listSurvey, new GridConstraints(6, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- importar ----
-		importar.setText("Generar Tarea Con Datos Seleccionados");
+		
+		importar.setText("GENERAR TAREA");
+		importar.setFont(new Font("Arial", Font.PLAIN, 11));
 		importar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				importarActionPerformed(e);
 			}
 		});
-		add(importar, new GridConstraints(8, 4, 1, 1,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
+		
+		add(importar, new GridConstraints(4, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
 	}
 
-	private JLabel label1;
+	private JLabel titulo;
 	private JScrollPane scrollPane1;
-	private JTable table1;
+	//private JTable table1;
 	private JLabel labelSurvey;
-	private JList listSurvey;
 	private JButton importar;
+	private JList listSurvey;
 }

@@ -131,7 +131,7 @@ public class ExportarXMl extends JPanel {
 				button2ActionPerformed(e);
 			}
 		});
-		add(button2, new GridConstraints(4, 1, 1, 1,
+		add(button2, new GridConstraints(4, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK,

@@ -707,7 +707,7 @@ public class CreateNewDownload extends JPanel {
 				crearDescargaEvent(e);
 			}
 		});
-		add(crearDescarga, new GridConstraints(15, 1, 1, 3,
+		add(crearDescarga, new GridConstraints(15, 0, 1, 5,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,

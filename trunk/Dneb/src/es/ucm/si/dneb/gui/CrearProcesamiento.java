@@ -53,6 +53,7 @@ public class CrearProcesamiento extends JPanel {
 	private JComboBox cbTipoProc;
 	private JTextField textFieldUmbral, textFieldBrillo, maxResRelevantes;
 	private JLabel labelUmbral, labelBrillo, labelMaxResRel;
+	private JLabel titulo;
 	
 	public CrearProcesamiento() {
 		
@@ -230,6 +231,7 @@ public class CrearProcesamiento extends JPanel {
 	    textFieldBrillo.setVisible(false);
 	    maxResRelevantes= new JTextField("4");
 	    maxResRelevantes.setVisible(false);
+	    titulo = new JLabel();
 		
 		{
 			modelo = new DefaultTableModel(
@@ -307,115 +309,72 @@ public class CrearProcesamiento extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				cbTipoProcActionPerformed(e);
 			}
-		});
-
-		/*
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
-		layout.setHorizontalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-						.addGroup(layout.createSequentialGroup()
-							.addComponent(cbTipoProc, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-							.addGap(50, 50, 50)
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(labelUmbral, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						        		.addComponent(textFieldUmbral, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(labelBrillo, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-								        .addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(labelMaxResRel, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-										.addComponent(maxResRelevantes, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))        ))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		layout.setVerticalGroup(
-			layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-					.addGap(37, 37, 37)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addComponent(cbTipoProc, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addComponent(labelUmbral)
-								.addComponent(textFieldUmbral, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-							.addGap(10, 10, 10)
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					    		.addComponent(labelBrillo)
-					    		.addComponent(textFieldBrillo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-				    		.addGap(10, 10, 10)
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					    		.addComponent(labelMaxResRel)
-					    		.addComponent(maxResRelevantes, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))))
-					.addGap(40, 40, 40)
-					.addComponent(buttonSiguiente)
-					.addGap(40, 40, 40))
-		);
-		*/
+		});		
 		
+		setLayout(new GridLayoutManager(6, 3, new Insets(30, 60, 30, 60), 5, -1));
+		titulo.setText("CREAR PROCESAMIENTO");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 3,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
 		
-		setLayout(new GridLayoutManager(5, 3, new Insets(30, 60, 30, 60), 5, -1));
-		add(scrollPane, new GridConstraints(0, 0, 1, 3,
+		add(scrollPane, new GridConstraints(1, 0, 1, 3,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));
 		
-		add(cbTipoProc, new GridConstraints(1, 0, 1, 3,
+		add(cbTipoProc, new GridConstraints(2, 0, 1, 3,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-		add(labelUmbral, new GridConstraints(2, 0, 1, 1,
+		add(labelUmbral, new GridConstraints(3, 0, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-		add(labelBrillo, new GridConstraints(2, 1, 1, 1,
+		add(labelBrillo, new GridConstraints(3, 1, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-		add(labelMaxResRel, new GridConstraints(2, 2, 1, 1,
+		add(labelMaxResRel, new GridConstraints(3, 2, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
 		
-		add(textFieldUmbral, new GridConstraints(3, 0, 1, 1,
+		add(textFieldUmbral, new GridConstraints(4, 0, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-		add(textFieldBrillo, new GridConstraints(3, 1, 1, 1,
+		add(textFieldBrillo, new GridConstraints(4, 1, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-		add(maxResRelevantes, new GridConstraints(3, 2, 1, 1,
+		add(maxResRelevantes, new GridConstraints(4, 2, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-		add(buttonSiguiente, new GridConstraints(4, 0, 1, 3,
+		add(buttonSiguiente, new GridConstraints(5, 0, 1, 3,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK,
 				null, null, null));
 		
-	}
-	
+	}	
 }
