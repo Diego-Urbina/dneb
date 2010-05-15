@@ -291,7 +291,7 @@ public class CreateTask extends JPanel {
 				buttonSiguienteActionPerformed(e);
 			}
 		});
-		add(buttonSiguiente, new GridConstraints(9, 2, 1, 2,
+		add(buttonSiguiente, new GridConstraints(9, 0, 1, 6,
 			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
