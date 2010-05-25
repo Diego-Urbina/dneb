@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Dsc:AdvancedSearch",query="select d from DoubleStarCatalog d where (d.numObservations between ? and ? )and (d.firstObservation between ? and ?)and (d.lastObservation between ? and ? )and (d.firstStarMagnitude  between ? and ?)and (d.primaryProperMotionRa between ? and ?)and (d.primaryProperMotionDec between ? and ?)and (d.lastSeparation between ? and ?)and (d.lastPosAnges between ? and ?)and ( d.secondStarMagnitude between ? and ?)and ( d.secondaryProperMotionRa between ? and ?)and ( d.secondaryProperMotionDec between ? and ?)")
+	@NamedQuery(name="Dsc:AdvancedSearch",query="select d from DoubleStarCatalog d where (d.arcsecondCoordinates2000 is not null) and((d.numObservations between ? and ?) or (d.numObservations is  null)  ) and ((d.firstObservation between ? and ?) or (d.firstObservation is null) )and ((d.lastObservation between ? and ? ) or (d.lastObservation is  null) )and ((d.firstStarMagnitude  between ? and ? ) or (d.firstStarMagnitude is null)) and ((d.primaryProperMotionRa between ? and ? ) or (d.primaryProperMotionRa is null))and ((d.primaryProperMotionDec between ? and ? ) or (d.primaryProperMotionDec is null))and (d.lastSeparation between ? and ?)and ((d.lastPosAnges between ? and ? )) and ( (d.secondStarMagnitude between ? and ? ) or (d.secondStarMagnitude is  null) )and (( d.secondaryProperMotionRa between ? and ? ) or (d.secondaryProperMotionRa is null))and (( d.secondaryProperMotionDec between ? and ? ) or (d.secondaryProperMotionDec is null))")
 })
 @Table(name="DOUBLE_STAR_CATALOG")
 public class DoubleStarCatalog {
