@@ -114,6 +114,10 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 		algotirmoCalculoPosicion(brillo, umbral, limCandidatos, maxEstrellas,
 				margenAngulo, margenDistancia, distMinima, imagen);
+		
+		pi.setFinalizada(true);
+		
+		this.manager.merge(pi);
 
 	}
 

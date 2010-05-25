@@ -86,6 +86,7 @@ public class ServicioConsultaCatalogoImpl implements ServicioConsultaCatalogo {
 		
 		
 		List<DoubleStarCatalog> dsc= manager.createNamedQuery("Dsc:AdvancedSearch").setParameter(1, ciobs).setParameter(2,csobs ).setParameter(3, ciDateprimObs).setParameter(4, csDateprimObs).setParameter(5,ciDateUltObs ).setParameter(6,csDateUltObs ).setParameter(7, cimag1).setParameter(8, csmag1).setParameter(9,ciDespAR1 ).setParameter(10,csDespAR1 ).setParameter(11,ciDespDEC1 ).setParameter(12,csDespDEC1 ).setParameter(13,ciDist ).setParameter(14,csDist ).setParameter(15,ciAng ).setParameter(16, csAng).setParameter(17, cimag2).setParameter(18, csmag2).setParameter(19,ciDespAR2 ).setParameter(20,csDespAR2 ).setParameter(21,ciDespDEC2 ).setParameter(22,csDespDEC2 ).getResultList();
+		LOG.info("Se han obtenido"+dsc.size()+" estrellas del catálogo");
 		return dsc;
 		
 	}
