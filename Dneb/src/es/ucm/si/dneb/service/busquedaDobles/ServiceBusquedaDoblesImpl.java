@@ -50,14 +50,19 @@ import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.Pair;
 import es.ucm.si.dneb.util.Util;
 
+/**
+ * @author  usuario1
+ */
 @Service("serviceBusquedaDobles")
 public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	
 	@PersistenceContext
 	private EntityManager manager;
 	
-	private LectorImageHDU l1, l2;
+	private LectorImageHDU l1;
+	private LectorImageHDU l2;
 	private PlanarImage pi;
+	private ArrayList<Pair<Point>> candidatas;
 	
 	private static final Log LOG = LogFactory
 	.getLog(ServiceBusquedaDoblesImpl.class);
@@ -84,10 +89,10 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		} else {
 			for (Pair<Point> p : res) {
 				dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p.getA().getX(), p.getA().getY());
-				LOG.info("Estrella: AR -> " + dc.getAr() + "    DEC -> " + dc.getDec());
+				LOG.info("Estrella: " + dc.getAr() + "    +" + dc.getDec());
 				ir = new InformacionRelevante();
 				imagenes.clear();
-				ir.setDescription("BUSQUEDA ESTRELLAS DOBLES: Estrella: AR -> " + dc.getAr() + "    DEC -> " + dc.getDec());
+				ir.setDescription("BUSQUEDA ESTRELLAS DOBLES: Estrella: " + dc.getAr() + "    +" + dc.getDec());
 				ir.setFecha(Util.dameFechaActual());
 				imagenes.add(im1);
 				imagenes.add(im2);
@@ -133,28 +138,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			LOG.info("Imagen 2: " + filename2);
 			
 			
-			/*BufferedWriter bw = new BufferedWriter(new FileWriter("Log.txt"));
-			bw.write("\r\n***** Información de ejecución *****\r\n");
-			bw.write("\r\n\r\n1) Archivos:\r\n\tImagen 1: " + filename1 + "\r\n\tImagen 2: " + filename2);*/
-			
-			/*float[] brillos = new float[15];
-			float[] umbrales = new float[15];
-			Random r = new Random();
-			
-			for (int i = 0; i < 15; i++) {
-				do {
-					umbrales[i] = (r.nextFloat()%0.1f) + 99.0f;
-					brillos[i] = (r.nextFloat()%0.1f) + 99.0f;
-				} while (brillos[i] < umbrales[i]);
-				
-			}*/
-			
 			ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
-			//for (int iter = 0; iter < brillos.length; iter++) {
+			candidatas = new ArrayList<Pair<Point>>();
 			
-				//bw.write("\r\n\r\n\r\nIteración " + (iter+1) + ":");
-				
-				//float umbral1, umbral2, brillo1, brillo2;
 			float umbral, brillo;
 			
 			// Crear imagenes y buscar estrellas
@@ -163,31 +149,19 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			l1 = new LectorImageHDU(imageHDU1, filename1);
 			pi = createPlanarImage(l1);
 			StarFinder sf1 = new StarFinder();
-			/*umbral1 = new Float(l1.getNPercentile(umbrales[iter]));
-			brillo1 = new Float(l1.getNPercentile(brillos[iter]));
-			umbral1 = umbrales[iter];
-			brillo1 = brillos[iter];*/
 			
 			umbral = new Float(l1.getNPercentile(99.55));
 			brillo = umbral + 2000;
 			sf1.buscarEstrellas(l1, brillo, umbral);
-			/*bw.write("\r\n\r\n2.1) Parámetros imagen 1:\r\n\tBrillo: " + brillo1 + "\r\n\tUmbral: " + umbral1);
-			bw.write("\r\n\r\n2.2) Número de estrellas encontradas imagen 1: " + sf1.getNumberOfStars());*/
 			
 			Fits imagenFITS2 = new Fits(new File(filename2));			
 			BasicHDU imageHDU2 = imagenFITS2.getHDU(0);
 			l2 = new LectorImageHDU(imageHDU2, filename2);
 			StarFinder sf2 = new StarFinder();
-			/*umbral2 = new Float(l2.getNPercentile(umbrales[iter]));
-			brillo2 = new Float(l2.getNPercentile(brillos[iter]));
-			umbral2 = umbrales[iter];
-			brillo2 = brillos[iter];*/
 			
 			umbral = new Float(l2.getNPercentile(99.55));
 			brillo = umbral + 2000;
 			sf2.buscarEstrellas(l2, brillo, umbral);
-			/*bw.write("\r\n\r\n3.1) Parámetros imagen 2:\r\n\tBrillo: " + brillo2 + "\r\n\tUmbral: " + umbral2);
-			bw.write("\r\n\r\n3.2) Número de estrellas encontradas imagen 2: " + sf2.getNumberOfStars());*/
 
 			ArrayList<RectStar> recuadros1 = sf1.getRecuadros();
 			ArrayList<RectStar> recuadros2 = sf2.getRecuadros();
@@ -207,7 +181,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					cent1.setX(recuadros1.get(i).getxLeft() + cent1.getX());
 					cent1.setY(recuadros1.get(i).getyTop() + cent1.getY());
 					
-					centroides1.add(cent1);
+					if (cent1.getX() >= 0 && cent1.getX() <= l1.getWidth() && cent1.getY() >= 0 && cent1.getY() <= l1.getHeight())
+						centroides1.add(cent1);
 				}
 				
 				if (i < recuadros2.size()) {
@@ -217,7 +192,8 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					cent2.setX(recuadros2.get(i).getxLeft() + cent2.getX());
 					cent2.setY(recuadros2.get(i).getyTop() + cent2.getY());
 					
-					centroides2.add(cent2);
+					if (cent2.getX() >= 0 && cent2.getX() <= l2.getWidth() && cent2.getY() >= 0 && cent2.getY() <= l2.getHeight())
+						centroides2.add(cent2);
 				}
 			}
 			
@@ -253,7 +229,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				centroide = centroides1.get(i).clone();
 				centroide.setX(centroide.getX() * scaleW);
 				centroide.setY(centroide.getY() * scaleH);
-				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH, 10);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH, 5);
 				
 				if (elegido != null) { // se ha encontrado coincidente
 					
@@ -282,7 +258,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			double errorInicial = 0;
 			Point p1 = new Point(), p2 = new Point();
 			
-			if (porcentaje < 50 || centroidesFin.size() < 3)return resultado;
+			if (porcentaje < 50 || centroidesFin.size() < 3) return resultado;
 			
 			double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
 			for (int i = 0; i < centroidesFin.size(); i++) {
@@ -377,7 +353,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			
 			if (porcentaje < 50) return resultado;
 				
-			// Calculo de la media, varianza y desviacion tipica
+			// Calculo de la desviacion tipica
 			for (int i = 0; i < centroidesFin.size(); i++) {
 				p1.setX(centroidesFin.get(i).getX());
 				p1.setY(centroidesFin.get(i).getY());
@@ -391,33 +367,20 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			
 			// Calcular candidatos a haberse movido
 			int cont = 0;
-			/*DecimalCoordinate dc;
-			PlanarImage pi = createPlanarImage(l1);*/
-			ArrayList<Pair<Point>> aux = new ArrayList<Pair<Point>>();
-			for (int i = 0; i < centroidesIni.size(); i++) {
-				if (errores[i] > 1.5*desviacion) {
-					centroide = centroidesIni.get(i);
-					if (sf1.getNumberOfStars()>sf2.getNumberOfStars())
-						aux.add(new Pair<Point>(elegidos.get(i), centroide));
-					else
-						aux.add(new Pair<Point>(centroide, elegidos.get(i)));
-					//dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), centroide.getX(), centroide.getY());
-					//bw.write("\r\n\tCandidato " + (cont+1) + " -> AR: " + dc.getAr() + " DEC: " + dc.getDec() + "\r\n");
+			for (int i = 0; i < centroidesFin.size(); i++) {
+				if (errores[i] > 2*desviacion) {
+					centroide = centroidesFin.get(i);
+					if (sf1.getNumberOfStars()>sf2.getNumberOfStars()) {
+						candidatas.add(new Pair<Point>(elegidos.get(i), centroide));
+						resultado.add(new Pair<Point>(elegidos.get(i), centroidesIni.get(i)));
+					} else {
+						candidatas.add(new Pair<Point>(centroide, elegidos.get(i)));
+						resultado.add(new Pair<Point>(centroidesIni.get(i), elegidos.get(i)));
+					}
 					cont++;
 				}
 			}
-			union(resultado, aux);
 			
-			if (centroides1.size() > centroides2.size()) { // restaurar punteros
-				auxLI = l1;
-				l1 = l2;
-				l2 = auxLI;
-				auxIm = im1;
-				im1 = im2;
-				im2 = auxIm;
-			}
-			//}
-			//bw.close();
 			return resultado;
 		
 		} catch (FitsException e) {
@@ -432,27 +395,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		}
 	}
 	
-	private void union(ArrayList<Pair<Point>> p1, ArrayList<Pair<Point>> p2){
-		Point c1, e1, c2, e2;
-		boolean encontrado = false;
-		int limite = 3;
-		int nElem = p1.size();
-		
-		for (int i = 0; i < p2.size(); i++) {
-			c2 = p2.get(i).getA();
-			e2 = p2.get(i).getB();
-			for (int j = 0; j < nElem && !encontrado; j++) {
-				c1 = p1.get(j).getA();
-				e1 = p1.get(j).getB();
-				encontrado = c1.getX()-limite <= c2.getX() && c1.getX()+limite >= c2.getX()
-							&& c1.getY()-limite <= c2.getY() && c1.getY()+limite >= c2.getY()
-							&& e1.getX()-limite <= e2.getX() && e1.getX()+limite >= e2.getX()
-							&& e1.getY()-limite <= e2.getY() && e1.getY()+limite >= e2.getY();
-			}
-			if (!encontrado) p1.add(new Pair<Point>(c2, e2));
-		}
-	}
-	
 	public ArrayList<Pair<Point>> busquedaEstrellasDobles(Imagen im1, Imagen im2) {
 		
 		/* Algoritmo de busqueda de estrellas candidatas a ser dobles
@@ -462,7 +404,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		 * 3 - Para ello calcularemos el vector director de cada una y veremos cuales coinciden en dirección, sentido y módulo
 		 */
 		
-		ArrayList<Pair<Point>> candidatas = busquedaEstrellasMovimiento(im1, im2);
+		ArrayList<Pair<Point>> movimiento = busquedaEstrellasMovimiento(im1, im2);
 		
 		ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
 		DecimalCoordinate dc1, dc2;
@@ -479,6 +421,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			e1 = candidatas.get(i).getB();
 			dc1 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p1.getX(), p1.getY());
 			modulo1 = p1.getDistancia(e1);
+			if (modulo1 < 1.5) continue;
 			direccion1 = p1.getDireccion(e1);
 			
 			for (int j = i+1; j < candidatas.size(); j++) {
@@ -486,9 +429,10 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				e2 = candidatas.get(j).getB();
 				dc2 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p2.getX(), p2.getY());
 				d = ms.calculateDecimalDistance(dc1.getAr(), dc1.getDec(), dc2.getAr(), dc2.getDec());
-				if (d.getDistanceSeconds() > 100) continue; // distancia entre estrellas mayor de 3 minutos
+				if (d.getDistanceSeconds() > 120) continue; // distancia entre estrellas mayor de 2 minutos
 				
 				modulo2 = p2.getDistancia(e2);
+				if (modulo2 < 1.5) continue;
 				direccion2 = p2.getDireccion(e2);
 				
 				if ((modulo2 <= modulo1*(1+difModulo) && modulo2 >= modulo1*(1-difModulo) ||
@@ -501,11 +445,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 					if ((e1.getX()-p1.getX())*(e2.getX()-p2.getX()) + (e1.getY()-p1.getY())*(e2.getY()-p2.getY()) > 0) {
 						if (!usados[i]) {
 							usados[i] = true;
-							resultado.add(new Pair<Point>(p1, e1));
+							resultado.add(new Pair<Point>(movimiento.get(i).getA(), movimiento.get(i).getB()));
 						}
 						if (!usados[j]) {
 							usados[j] = true;
-							resultado.add(new Pair<Point>(p2, e2));
+							resultado.add(new Pair<Point>(movimiento.get(j).getA(), movimiento.get(j).getB()));
 						}
 					}
 				}
@@ -521,11 +465,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
 			ArrayList<RectStar> listaRecs, double scaleW, double scaleH, int radioBusqueda) {
 		
-		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio de 20 pixeles
+		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio
 		
 		double radioMaxBusqueda = radioBusqueda; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
 		double tamRecLim = 1.7; // El area del rectangulo debera estar entre un rango determinado
-		double distancia, distanciaMin = 6, brillo, brilloParecido = 0, brilloEscalado;
+		double distancia, distanciaMin = 10, brillo, brilloParecido = 0, brilloEscalado;
 		Point elegido = null;
 		Point aux;
 		
@@ -554,10 +498,18 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		return elegido;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="manager"
+	 */
 	public EntityManager getManager() {
 		return manager;
 	}
 
+	/**
+	 * @param manager
+	 * @uml.property  name="manager"
+	 */
 	public void setManager(EntityManager manager) {
 		this.manager = manager;
 	}

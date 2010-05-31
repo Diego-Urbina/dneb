@@ -243,7 +243,7 @@ public class MonitorProcesamiento extends JPanel {
 			}
 			tableTasks.setRowSelectionAllowed(true);
 			tableTasks.setPreferredScrollableViewportSize(new Dimension(2000, 2000));
-			//tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			tableTasks.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 			tcr.setHorizontalAlignment(SwingConstants.CENTER);
 			tableTasks.setAutoCreateRowSorter(true);
