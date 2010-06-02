@@ -33,7 +33,6 @@ import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
 import es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig;
-import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 

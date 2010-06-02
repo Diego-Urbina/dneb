@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,8 +32,8 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ParamProcTarea;
 import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.ProcTarea;
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;

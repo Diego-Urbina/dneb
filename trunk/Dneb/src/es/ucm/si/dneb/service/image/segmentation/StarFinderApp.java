@@ -3,17 +3,12 @@ package es.ucm.si.dneb.service.image.segmentation;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 
 
 public class StarFinderApp {
-	
-	private static final  Log LOG = LogFactory.getLog(StarFinderApp.class);
 
 	public static void main(String[] args) {		
 		try {			

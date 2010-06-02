@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.ucm.si.dneb.domain.Tarea;
-import es.ucm.si.dneb.service.configurations.ServicePropertyFilesConfiguration;
 
 import es.ucm.si.dneb.service.gestionHilos.GestorProcesamientos;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;

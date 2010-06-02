@@ -9,16 +9,7 @@ import com.intellij.uiDesigner.core.*;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.service.math.Distance;
 import es.ucm.si.dneb.service.math.MathService;
-import es.ucm.si.dneb.service.math.MathServiceImpl;
-/*
- * Created by JFormDesigner on Tue Mar 30 23:57:23 CEST 2010
- */
 
-
-
-/**
- * @author Brainrain
- */
 public class CalcularDistanciaForm extends JPanel {
 
 	private static final long serialVersionUID = -7984118359931942888L;

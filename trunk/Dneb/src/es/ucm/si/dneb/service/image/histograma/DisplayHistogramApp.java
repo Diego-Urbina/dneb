@@ -35,13 +35,11 @@ import javax.media.jai.TiledImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.sun.media.jai.codecimpl.util.RasterFactory;
 
-import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
 
 import nom.tam.fits.BasicHDU;

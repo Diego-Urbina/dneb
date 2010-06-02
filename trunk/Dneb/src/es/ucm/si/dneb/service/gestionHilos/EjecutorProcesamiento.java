@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicion;
