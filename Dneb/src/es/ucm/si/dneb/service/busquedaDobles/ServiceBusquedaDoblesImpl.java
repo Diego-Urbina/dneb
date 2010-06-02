@@ -50,9 +50,7 @@ import es.ucm.si.dneb.service.math.SexagesimalCoordinate;
 import es.ucm.si.dneb.util.Pair;
 import es.ucm.si.dneb.util.Util;
 
-/**
- * @author  usuario1
- */
+
 @Service("serviceBusquedaDobles")
 public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	
@@ -150,7 +148,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			pi = createPlanarImage(l1);
 			StarFinder sf1 = new StarFinder();
 			
-			umbral = new Float(l1.getNPercentile(99.55));
+			umbral = 40000;
 			brillo = umbral + 2000;
 			sf1.buscarEstrellas(l1, brillo, umbral);
 			
@@ -159,8 +157,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			l2 = new LectorImageHDU(imageHDU2, filename2);
 			StarFinder sf2 = new StarFinder();
 			
-			umbral = new Float(l2.getNPercentile(99.55));
-			brillo = umbral + 2000;
 			sf2.buscarEstrellas(l2, brillo, umbral);
 
 			ArrayList<RectStar> recuadros1 = sf1.getRecuadros();
@@ -413,15 +409,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		Distance d;
 		boolean[] usados = new boolean[candidatas.size()];
 		double modulo1, modulo2, direccion1, direccion2;
-		double difModulo = 0.30; // diferencia entre modulos de un 30%
-		double difDireccion = Math.toRadians(25); // diferencia de 25 grados entre ambas direcciones
+		double difModulo = 0.35; // diferencia entre modulos de un 35%
+		double difDireccion = Math.toRadians(20); // diferencia de 20 grados entre ambas direcciones
 		
 		for (int i = 0; i < candidatas.size(); i++) {
 			p1 = candidatas.get(i).getA();
 			e1 = candidatas.get(i).getB();
 			dc1 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p1.getX(), p1.getY());
 			modulo1 = p1.getDistancia(e1);
-			if (modulo1 < 1.5) continue;
+			if (modulo1 < 1.25) continue;
 			direccion1 = p1.getDireccion(e1);
 			
 			for (int j = i+1; j < candidatas.size(); j++) {
@@ -432,13 +428,11 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				if (d.getDistanceSeconds() > 120) continue; // distancia entre estrellas mayor de 2 minutos
 				
 				modulo2 = p2.getDistancia(e2);
-				if (modulo2 < 1.5) continue;
+				if (modulo2 < 1.25) continue;
 				direccion2 = p2.getDireccion(e2);
 				
-				if ((modulo2 <= modulo1*(1+difModulo) && modulo2 >= modulo1*(1-difModulo) ||
-					modulo1 <= modulo2*(1+difModulo) && modulo1 >= modulo2*(1-difModulo)) &&
-					(direccion2 <= direccion1+difDireccion && direccion2 >= direccion1-difDireccion ||
-					direccion1 <= direccion2+difDireccion && direccion1 >= direccion2-difDireccion)) {
+				if (Math.min(modulo1, modulo2) >= Math.max(modulo1, modulo2) * (1 - difModulo) &&
+					Math.abs(direccion1 - direccion2) <= difDireccion) {
 					// Si los modulos y las direcciones son semejantes mirar que los sentidos sean iguales
 					
 					// Si el producto escalar es positivo tienen el mismo sentido
