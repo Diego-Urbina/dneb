@@ -2,24 +2,17 @@ package es.ucm.si.dneb.test;
 
 import java.util.ArrayList;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig;
 import es.ucm.si.dneb.service.importData.ImportDoubleStarCatalog;
 
 public class TestImportCatalog {
 	
-
-	static ImportDoubleStarCatalog importDoubleStarCatalog;
-	
-	private static final Log LOG = LogFactory.getLog(ServicioConfigDownloadTest.class);
-	
+	static ImportDoubleStarCatalog importDoubleStarCatalog;	
 	
 	@BeforeClass
 	public static void setUpClass() throws Exception {

@@ -1,6 +1,5 @@
 package es.ucm.si.dneb.test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.client.ClientProtocolException;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,10 +16,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareas;
-import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 import es.ucm.si.dneb.service.gestionHilos.Hilo;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
-import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasImpl;
 import es.ucm.si.dneb.service.inicializador.ServicioInicializador;
 
 public class ServicioGestionTareasTest {

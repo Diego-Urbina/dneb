@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import es.ucm.si.dneb.domain.DatosRelevantes;
 import es.ucm.si.dneb.domain.InformacionRelevante;
-import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionImpl;
 
 @Service("serviceExportData")
 public class ServiceExportDataImpl implements ServiceExportData {

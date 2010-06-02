@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 import com.intellij.uiDesigner.core.*;
 
 import javax.media.jai.InterpolationNearest;

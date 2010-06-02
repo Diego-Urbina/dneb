@@ -13,7 +13,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.service.configurations.ServicePropertyFilesConfiguration;
 import es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig;
 
 public class ServicioConfigDownloadTest {

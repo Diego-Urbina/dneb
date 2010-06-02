@@ -1,6 +1,5 @@
 package es.ucm.si.dneb.test;
 
-import java.util.Date;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

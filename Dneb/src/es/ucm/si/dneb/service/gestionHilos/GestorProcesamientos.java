@@ -11,8 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 

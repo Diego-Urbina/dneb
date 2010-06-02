@@ -6,9 +6,6 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
-/*
- * Created by JFormDesigner on Sun Oct 11 17:04:07 CEST 2009
- */
 
 import org.springframework.context.ApplicationContext;
 
@@ -21,11 +18,6 @@ import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 import es.ucm.si.dneb.util.ProgressRenderer;
 
-
-
-/**
- * @author Brainrain
- */
 public class TaskPanel extends JPanel {
 	
 	private static final long serialVersionUID = -3364091451558723326L;

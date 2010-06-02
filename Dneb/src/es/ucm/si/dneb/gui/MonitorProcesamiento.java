@@ -183,6 +183,7 @@ public class MonitorProcesamiento extends JPanel {
 		return worker;
 	}
 
+	
 	private void initComponents() {
 		scrollPane = new JScrollPane();
 		tableTasks = new JTable();
