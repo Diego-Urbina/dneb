@@ -131,7 +131,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	    layout.setAutoCreateContainerGaps(true);
 	    
 	    JButton buttonAbrir = new JButton();
-	    Icon icon = new ImageIcon("images/iconos-diego/load.png");
+	    Icon icon = new ImageIcon("images/load.png");
 	    buttonAbrir.setIcon(icon);
 	    buttonAbrir.setToolTipText("Abrir imagenes");
 	    buttonAbrir.addActionListener(new ActionListener() {
@@ -141,7 +141,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonBuscar = new JButton();
-	    icon = new ImageIcon("images/iconos-diego/buscar.png");
+	    icon = new ImageIcon("images/buscar.png");
 	    buttonBuscar.setIcon(icon);
 	    buttonBuscar.setToolTipText("Buscar estrellas en la imagen y marcarlas con cuadrados");
 	    buttonBuscar.addActionListener(new ActionListener() {
@@ -151,7 +151,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonZoomMas = new JButton();
-	    icon = new ImageIcon("images/iconos-diego/zoomin.png");
+	    icon = new ImageIcon("images/zoomin.png");
 	    buttonZoomMas.setIcon(icon);
 	    buttonZoomMas.setToolTipText("Aumentar la imagen");
 	    buttonZoomMas.addActionListener(new ActionListener() {
@@ -161,7 +161,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonZoomMenos = new JButton();
-	    icon = new ImageIcon("images/iconos-diego/zoomout.png");
+	    icon = new ImageIcon("images/zoomout.png");
 	    buttonZoomMenos.setIcon(icon);
 	    buttonZoomMenos.setToolTipText("Disminuir la imagen");
 	    buttonZoomMenos.addActionListener(new ActionListener() {
@@ -171,7 +171,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 		});
 	    
 	    JButton buttonRestaurar = new JButton();
-	    icon = new ImageIcon("images/iconos-diego/restaurar.png");
+	    icon = new ImageIcon("images/restaurar.png");
 	    buttonRestaurar.setIcon(icon);
 	    buttonRestaurar.setToolTipText("Restaurar la imagen");
 	    buttonRestaurar.addActionListener(new ActionListener() {
@@ -291,7 +291,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 				for (RectStar r : stars) {
 					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 				    ImageRegion ir = new ImageRegion(scaledIm1,new ROIShape(s));
-				    ir.setBorderColor(new Color(255,255,0));
+				    ir.setBorderColor(new Color(255,0,0));
 				    display1.addImageRegion(ir);
 				}
 				
@@ -301,7 +301,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 				for (RectStar r : stars) {
 					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 				    ImageRegion ir = new ImageRegion(scaledIm2,new ROIShape(s));
-				    ir.setBorderColor(new Color(255,255,0));
+				    ir.setBorderColor(new Color(255,0,0));
 				    display2.addImageRegion(ir);
 				}
 				
@@ -350,7 +350,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 				for (RectStar r : stars) {
 					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 				    ImageRegion ir = new ImageRegion(scaledIm1,new ROIShape(s));
-				    ir.setBorderColor(new Color(255,255,0));
+				    ir.setBorderColor(new Color(255,0,0));
 				    display1.addImageRegion(ir);
 				}
 				
@@ -360,7 +360,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 				for (RectStar r : stars) {
 					Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 				    ImageRegion ir = new ImageRegion(scaledIm2,new ROIShape(s));
-				    ir.setBorderColor(new Color(255,255,0));
+				    ir.setBorderColor(new Color(255,0,0));
 				    display2.addImageRegion(ir);
 				}
 				
@@ -448,7 +448,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 			for (RectStar r : stars) {
 				Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 			    ImageRegion ir = new ImageRegion(scaledIm1,new ROIShape(s));
-			    ir.setBorderColor(new Color(255,255,0));
+			    ir.setBorderColor(new Color(255,0,0));
 			    display1.addImageRegion(ir);
 			}
 			
@@ -458,7 +458,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 			for (RectStar r : stars) {
 				Shape s = new Rectangle(r.getxLeft(), r.getyTop(), r.getWidth(), r.getHeight());
 			    ImageRegion ir = new ImageRegion(scaledIm2,new ROIShape(s));
-			    ir.setBorderColor(new Color(255,255,0));
+			    ir.setBorderColor(new Color(255,0,0));
 			    display2.addImageRegion(ir);
 			}
 			

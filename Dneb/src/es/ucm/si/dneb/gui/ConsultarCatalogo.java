@@ -68,7 +68,7 @@ public class ConsultarCatalogo extends JPanel {
 		listSurvey.setModel(list);
 		listSurvey.setSelectedIndex(0);
 
-		this.selRuta.setIcon(new ImageIcon("images/load-icon-2.jpg"));
+		this.selRuta.setIcon(new ImageIcon("images/load.png"));
 
 		servicioConsultaCatalogo = (ServicioConsultaCatalogo) ContextoAplicacion
 				.getApplicationContext().getBean("servicioConsultaCatalogo");

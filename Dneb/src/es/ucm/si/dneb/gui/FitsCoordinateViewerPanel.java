@@ -150,7 +150,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	    layout.setAutoCreateContainerGaps(true);
 	    
 		JButton buttonAbrir = new JButton();
-		buttonAbrir.setIcon(new ImageIcon("images/iconos-diego/load.png"));
+		buttonAbrir.setIcon(new ImageIcon("images/load.png"));
 		buttonAbrir.setToolTipText("Abrir imagenes");
 		buttonAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,7 +159,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		});
 		
 		JButton buttonZoomMas = new JButton();
-	    buttonZoomMas.setIcon(new ImageIcon("images/iconos-diego/zoomin.png"));
+	    buttonZoomMas.setIcon(new ImageIcon("images/zoomin.png"));
 	    buttonZoomMas.setToolTipText("Aumentar la imagen");
 	    buttonZoomMas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -168,7 +168,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		});
 	    
 	    JButton buttonZoomMenos = new JButton();
-	    buttonZoomMenos.setIcon(new ImageIcon("images/iconos-diego/zoomout.png"));
+	    buttonZoomMenos.setIcon(new ImageIcon("images/zoomout.png"));
 	    buttonZoomMenos.setToolTipText("Disminuir la imagen");
 	    buttonZoomMenos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -177,7 +177,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		});
 	    
 	    JButton buttonRestaurar = new JButton();
-	    buttonRestaurar.setIcon(new ImageIcon("images/iconos-diego/restaurar.png"));
+	    buttonRestaurar.setIcon(new ImageIcon("images/restaurar.png"));
 	    buttonRestaurar.setToolTipText("Restaurar la imagen");
 	    buttonRestaurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +186,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		});
 	    
 	    JButton buttonProcesar = new JButton();
-	    buttonProcesar.setIcon(new ImageIcon("images/iconos-diego/buscar.png"));
+	    buttonProcesar.setIcon(new ImageIcon("images/buscar.png"));
 	    buttonProcesar.setToolTipText("Procesar puntos en la imagen");
 	    buttonProcesar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -195,7 +195,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 		});
 	    
 	    buttonDistancia = new JButton();
-	    buttonDistancia.setIcon(new ImageIcon("images/iconos-diego/regla.png"));
+	    buttonDistancia.setIcon(new ImageIcon("images/regla.png"));
 	    buttonDistancia.setToolTipText("Medir distancia entre dos puntos en la imagen");
 	    buttonDistancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

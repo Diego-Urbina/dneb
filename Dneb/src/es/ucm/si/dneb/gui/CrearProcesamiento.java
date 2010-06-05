@@ -298,7 +298,7 @@ public class CrearProcesamiento extends JPanel {
 
 		buttonSiguiente.setFont(new Font("Arial", Font.PLAIN, 11));
 		buttonSiguiente.setSize(50, 300);
-		buttonSiguiente.setIcon(new ImageIcon("images/next_icon.png"));
+		buttonSiguiente.setIcon(new ImageIcon("images/accept.png"));
 		buttonSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonSiguienteActionPerformed(e);

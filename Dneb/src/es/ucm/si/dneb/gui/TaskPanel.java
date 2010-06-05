@@ -41,9 +41,9 @@ public class TaskPanel extends JPanel {
 	}
 
 	private void initIcons() {
-		this.buttonReanudar.setIcon(new ImageIcon("images/iconos-diego/play-rojo.png"));
-        this.buttonParar.setIcon(new ImageIcon("images/iconos-diego/stop-rojo.png"));
-        this.buttonEliminar.setIcon(new ImageIcon("images/iconos-diego/delete-rojo.png"));
+		this.buttonReanudar.setIcon(new ImageIcon("images/play-rojo.png"));
+        this.buttonParar.setIcon(new ImageIcon("images/stop-rojo.png"));
+        this.buttonEliminar.setIcon(new ImageIcon("images/delete-rojo.png"));
 	}
 	
 	private void rellenarTabla() {
