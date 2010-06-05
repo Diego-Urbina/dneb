@@ -75,13 +75,11 @@ public class VentanaPcpal extends JFrame{
 		
 		this.crearDescarga.setIcon(new ImageIcon("images/add2.png"));
 		
-		this.configDownload.setIcon(new ImageIcon("images/downloadconfig.png"));		
-		this.configBBDD.setIcon(new ImageIcon("images/database.png"));		
+		this.configDownload.setIcon(new ImageIcon("images/downloadconfig.png"));			
 		
 		this.exportRelevantXML.setIcon(new ImageIcon("images/xml.png"));
 		
-		this.importBBDD.setIcon(new ImageIcon("images/database-add.png"));
-		this.importXML.setIcon(new ImageIcon("images/xml.png"));	
+		this.importBBDD.setIcon(new ImageIcon("images/database-add.png"));	
 		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogo.png"));
 		
 		this.buscar.setIcon(new ImageIcon("images/monitor-proc.png"));	
@@ -136,31 +134,12 @@ public class VentanaPcpal extends JFrame{
 		
 		setVisible(true);
 	}
-
-	// --------- Configurar descargas ---------
-	private void gestionarDescargasConfigActionPerformed(ActionEvent e) {
-		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig();
-		pane.addTab("Configurar descargas",new ImageIcon("images/downloadconfig.png"), config);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		setVisible(true);
-	}
 	
 	
 	
 	
 	
-	// --------- Configurar BBDD ---------
-	private void configBBDDActionPerformed(ActionEvent e) {
-		DataBaseConfig dataBaseConfig = new DataBaseConfig();
-		pane.addTab("Configurar BBDD",new ImageIcon("images/database.png"), dataBaseConfig);
-		this.initTabComponent(pane.getTabCount()-1);
-		pane.setSelectedIndex(pane.getTabCount()-1);
-		
-		setVisible(true);
-	}
-
+	
 	// --------- Configurar descargas ---------
 	private void configDownloadActionPerformed(ActionEvent e) {
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig();
@@ -196,11 +175,6 @@ public class VentanaPcpal extends JFrame{
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
 		setVisible(true);
-	}
-
-	// --------- Importar desde XML ---------
-	private void importXMLActionPerformed(ActionEvent e) {
-		// TODO add your code here
 	}
 	
 	// --------- Importar catálogo ---------
@@ -338,13 +312,11 @@ public class VentanaPcpal extends JFrame{
 		menu2 = new JMenu();
 		crearDescarga = new JMenuItem();
 		menu3 = new JMenu();
-		configBBDD = new JMenuItem();
 		configDownload = new JMenuItem();
 		menu6 = new JMenu();
 		exportRelevantXML = new JMenuItem();
 		menu4 = new JMenu();
 		importBBDD = new JMenuItem();
-		importXML = new JMenuItem();
 		menuCatalogoED = new JMenuItem();
 		menu5 = new JMenu();
 		visualizador = new JMenuItem();
@@ -364,7 +336,7 @@ public class VentanaPcpal extends JFrame{
 		//======== this ========
 		setIconImage(null);
 		setTitle("DNEB (DETECCIÓN DE NUEVAS ESTRELLAS BINARIAS)");
-		Container contentPane = getContentPane();
+		//Container contentPane = getContentPane();
 		//contentPane.setLayout(null);
 
 		//======== menuBar1 ========
@@ -420,16 +392,6 @@ public class VentanaPcpal extends JFrame{
 				menu3.setIcon(null);
 				menu3.setText("CONFIGURACION");
 
-				//---- configBBDD ----
-				configBBDD.setText("CONFIGURAR CONEXIÓN DE BASE DE DATOS");
-				configBBDD.setIcon(null);
-				configBBDD.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						configBBDDActionPerformed(e);
-					}
-				});
-				menu3.add(configBBDD);
-
 				//---- configDownload ----
 				configDownload.setText("CREAR CONFIGURACION DE DESCARGA");
 				configDownload.setIcon(null);
@@ -471,16 +433,6 @@ public class VentanaPcpal extends JFrame{
 					}
 				});
 				menu4.add(importBBDD);
-
-				//---- importXML ----
-				importXML.setText("DESDE XML");
-				importXML.setIcon(null);
-				importXML.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						importXMLActionPerformed(e);
-					}
-				});
-				menu4.add(importXML);
 
 				//---- menuCatalogoED ----
 				menuCatalogoED.setText("IMPORTAR CATÁLOGO ESTRELLAS DOBLES");
@@ -638,13 +590,11 @@ public class VentanaPcpal extends JFrame{
 	private JMenu menu2;
 	private JMenuItem crearDescarga;
 	private JMenu menu3;
-	private JMenuItem configBBDD;
 	private JMenuItem configDownload;
 	private JMenu menu6;
 	private JMenuItem exportRelevantXML;
 	private JMenu menu4;
 	private JMenuItem importBBDD;
-	private JMenuItem importXML;
 	private JMenuItem menuCatalogoED;
 	private JMenu menu5;
 	private JMenuItem visualizador;
