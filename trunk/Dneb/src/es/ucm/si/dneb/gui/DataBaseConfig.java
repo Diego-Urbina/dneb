@@ -43,8 +43,8 @@ public class DataBaseConfig extends JPanel {
 		cargarValoresActuales = new JButton();
 		separator1 = new JSeparator();
 		
-		guardar.setIcon(new ImageIcon("images/iconos-diego/save.png"));
-		cargarValoresActuales.setIcon(new ImageIcon("images/iconos-diego/load.png"));
+		guardar.setIcon(new ImageIcon("images/save.png"));
+		cargarValoresActuales.setIcon(new ImageIcon("images/load.png"));
 
 		//======== this ========
 		setLayout(new GridLayoutManager(7, 5, new Insets(30, 60, 60, 60), 5, -1));

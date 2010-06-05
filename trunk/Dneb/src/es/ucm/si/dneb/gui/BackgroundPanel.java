@@ -14,15 +14,13 @@ class BackgroundPanel extends JPanel{
 	private Image image;
 	
 	public BackgroundPanel(final JTabbedPane pane) {
-	  image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("deneb_med.jpg"));
-	  }
-	
+		image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("deneb_med.jpg"));
+	}	
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g); 
 		if (image != null)
 				g.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
-	}
-	
+	}	
 }

@@ -1,19 +1,3 @@
-/*
- * Created on June 8, 2005
- * @author Rafael Santos (rafael.santos@lac.inpe.br)
- * 
- * Part of the Java Advanced Imaging Stuff site
- * (http://www.lac.inpe.br/~rafael.santos/Java/JAI)
- * 
- * STATUS: Complete.
- * 
- * Redistribution and usage conditions must be done under the
- * Creative Commons license:
- * English: http://creativecommons.org/licenses/by-nc-sa/2.0/br/deed.en
- * Portuguese: http://creativecommons.org/licenses/by-nc-sa/2.0/br/deed.pt
- * More information on design and applications are on the projects' page
- * (http://www.lac.inpe.br/~rafael.santos/Java/JAI).
- */
 package es.ucm.si.dneb.service.image.histograma;
 
 import java.awt.BorderLayout;
@@ -53,7 +37,6 @@ public class DisplayHistogramApp extends JPanel {
 
 	private static final long serialVersionUID = -1999727268428404190L;
 	private JButton jbutton;
-	private PlanarImage input;
 	private LectorImageHDU l1;
 	private PlanarImage im;
 	private DisplayHistogram dh;
@@ -64,13 +47,11 @@ public class DisplayHistogramApp extends JPanel {
 	 */
 	public DisplayHistogramApp() {
 		
-		
-
 		this.setLayout(new BorderLayout());
 
 		// Set the closing operation so the application is finished.
 		jbutton = new JButton("CARGAR IMAGEN");
-		jbutton.setIcon(new ImageIcon("images/abrir.gif"));
+		jbutton.setIcon(new ImageIcon("images/load.png"));
 		jbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loadImage(e);
@@ -78,13 +59,6 @@ public class DisplayHistogramApp extends JPanel {
 		});
 
 		this.add(jbutton, BorderLayout.NORTH);
-
-		setVisible(true); // show the frame.
-
-		//this.add(dh);
-
-		//dh.setVisible(true);
-
 		setVisible(true); // show the frame.
 	}
 
@@ -96,7 +70,7 @@ public class DisplayHistogramApp extends JPanel {
 		try {
 			if (retval == JFileChooser.APPROVE_OPTION) {
 				file1 = fc.getSelectedFile().toString();
-				File dir = new File("Temp456");
+				File dir = new File("Temp");
 				dir.mkdir();
 
 				Fits imagenFITS = new Fits(new File(file1));
@@ -104,7 +78,6 @@ public class DisplayHistogramApp extends JPanel {
 				l1 = new LectorImageHDU(imageHDU, file1);
 				im = createPlanarImage(l1);
 				JAI.create("filestore", im, "Temp/im78.png", "PNG");
-				input = JAI.create("fileload", "Temp/im78.png");
 
 				this.removeAll();
 
@@ -119,9 +92,6 @@ public class DisplayHistogramApp extends JPanel {
 				});
 				this.add(jbutton, BorderLayout.NORTH);
 				
-				
-				/**/
-				
 				PlanarImage image = JAI.create("fileload", "Temp/im78.png");
 			    ParameterBlock pb = new ParameterBlock();
 			    pb.addSource(image);
@@ -134,17 +104,10 @@ public class DisplayHistogramApp extends JPanel {
 			    // Creates the histogram.
 			    PlanarImage temp = JAI.create("histogram", pb);
 			    Histogram h = (Histogram)temp.getProperty("histogram");
-			    
-			    
 				
 				dh = new DisplayHistogram(h, "Histogram of " + retval);
-				
 				this.add(dh, BorderLayout.CENTER);
-				
-				/**/
-
 				setVisible(true);
-
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error",
@@ -169,14 +132,4 @@ public class DisplayHistogramApp extends JPanel {
 
 		return tiledImage;
 	}
-
-	/**
-	 * The application entry point.
-	 * 
-	 * @param args
-	 *            the command line arguments.
-	 */
-
-	
-
-} // end class
+}

@@ -31,9 +31,9 @@ public class VentanaPcpal extends JFrame{
         
 	    pane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
         
-	    pane.addTab("DNEB",new ImageIcon("images/iconos-diego/help.png"),new BackgroundPanel(pane));
+	    pane.addTab("DNEB",new ImageIcon("images/help.png"),new BackgroundPanel(pane));
 	    
-	    this.setIconImage(Toolkit.getDefaultToolkit().getImage("images/staricon2.jpg"));
+	    this.setIconImage(Toolkit.getDefaultToolkit().getImage("images/star.png"));
 	    
 	    this.initTabComponent(pane.getTabCount()-1);
 		
@@ -62,41 +62,41 @@ public class VentanaPcpal extends JFrame{
 	
 	private void initIcons(){
 		
-		this.menu1.setIcon(new ImageIcon("images/iconos-diego/task.png"));
-		this.menu2.setIcon(new ImageIcon("images/iconos-diego/download.png"));
-		this.menu3.setIcon(new ImageIcon("images/iconos-diego/preferences.png"));
-		this.menu4.setIcon(new ImageIcon("images/iconos-diego/import.png"));
-		this.menu5.setIcon(new ImageIcon("images/iconos-diego/configure.png"));
-		this.menu6.setIcon(new ImageIcon("images/iconos-diego/export.png"));
-		this.menu7.setIcon(new ImageIcon("images/iconos-diego/help.png"));
+		this.menu1.setIcon(new ImageIcon("images/task.png"));
+		this.menu2.setIcon(new ImageIcon("images/download.png"));
+		this.menu3.setIcon(new ImageIcon("images/preferences.png"));
+		this.menu4.setIcon(new ImageIcon("images/import.png"));
+		this.menu5.setIcon(new ImageIcon("images/configure.png"));
+		this.menu6.setIcon(new ImageIcon("images/export.png"));
+		this.menu7.setIcon(new ImageIcon("images/help.png"));
 		
-		this.crearNuevaTarea.setIcon(new ImageIcon("images/iconos-diego/add.png"));
-		this.gestorTareas.setIcon(new ImageIcon("images/iconos-diego/task-monitor.png"));
+		this.crearNuevaTarea.setIcon(new ImageIcon("images/add.png"));
+		this.gestorTareas.setIcon(new ImageIcon("images/task-monitor.png"));
 		
-		this.crearDescarga.setIcon(new ImageIcon("images/iconos-diego/add2.png"));
+		this.crearDescarga.setIcon(new ImageIcon("images/add2.png"));
 		
-		this.configDownload.setIcon(new ImageIcon("images/iconos-diego/downloadconfig.png"));		
-		this.configBBDD.setIcon(new ImageIcon("images/iconos-diego/database.png"));		
+		this.configDownload.setIcon(new ImageIcon("images/downloadconfig.png"));		
+		this.configBBDD.setIcon(new ImageIcon("images/database.png"));		
 		
-		this.exportRelevantXML.setIcon(new ImageIcon("images/iconos-diego/xml.png"));
+		this.exportRelevantXML.setIcon(new ImageIcon("images/xml.png"));
 		
-		this.importBBDD.setIcon(new ImageIcon("images/iconos-diego/database-add.png"));
-		this.importXML.setIcon(new ImageIcon("images/iconos-diego/xml.png"));	
-		this.menuCatalogoED.setIcon(new ImageIcon("images/iconos-diego/catalogo.png"));
+		this.importBBDD.setIcon(new ImageIcon("images/database-add.png"));
+		this.importXML.setIcon(new ImageIcon("images/xml.png"));	
+		this.menuCatalogoED.setIcon(new ImageIcon("images/catalogo.png"));
 		
-		this.buscar.setIcon(new ImageIcon("images/iconos-diego/monitor-proc.png"));	
-		this.consultarCatalogo.setIcon(new ImageIcon("images/iconos-diego/catalogo.png"));
-		this.visualizador.setIcon(new ImageIcon("images/iconos-diego/visor.png"));
-		this.visualizadorDebug.setIcon(new ImageIcon("images/iconos-diego/visor.png"));
-		this.visorCentroides.setIcon(new ImageIcon("images/iconos-diego/visor.png"));
-		this.nueProcEstDob.setIcon(new ImageIcon("images/iconos-diego/crear-proc.png"));		
-		this.distancias.setIcon(new ImageIcon("images/iconos-diego/distancia.png"));
-		this.conversor.setIcon(new ImageIcon("images/iconos-diego/coordenadas.png"));		
-		this.histograma.setIcon(new ImageIcon("images/iconos-diego/histograma.png"));			
+		this.buscar.setIcon(new ImageIcon("images/monitor-proc.png"));	
+		this.consultarCatalogo.setIcon(new ImageIcon("images/catalogo.png"));
+		this.visualizador.setIcon(new ImageIcon("images/visor.png"));
+		this.visualizadorDebug.setIcon(new ImageIcon("images/visor.png"));
+		this.visorCentroides.setIcon(new ImageIcon("images/visor.png"));
+		this.nueProcEstDob.setIcon(new ImageIcon("images/crear-proc.png"));		
+		this.distancias.setIcon(new ImageIcon("images/distancia.png"));
+		this.conversor.setIcon(new ImageIcon("images/coordenadas.png"));		
+		this.histograma.setIcon(new ImageIcon("images/histograma.png"));			
 		
-		this.importInfo.setIcon(new ImageIcon("images/iconos-diego/help.png"));
-		this.dnebInfo.setIcon(new ImageIcon("images/iconos-diego/help.png"));
-		this.formaCoord.setIcon(new ImageIcon("images/iconos-diego/help.png"));
+		this.importInfo.setIcon(new ImageIcon("images/help.png"));
+		this.dnebInfo.setIcon(new ImageIcon("images/help.png"));
+		this.formaCoord.setIcon(new ImageIcon("images/help.png"));
 	}
 	
 
@@ -105,7 +105,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Nueva tarea ---------
 	private void crearNuevaTareaActionPerformed(ActionEvent e) {		
 		//pane.add("Nueva Tarea",new SurveyPanel(this,pane.getTabCount()) );
-		pane.addTab("Nueva Tarea",new ImageIcon("images/iconos-diego/add.png"),new CreateTask() );
+		pane.addTab("Nueva Tarea",new ImageIcon("images/add.png"),new CreateTask() );
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -115,7 +115,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Gestor tareas ---------
 	private void gestorTareasActionPerformed(ActionEvent e) {		
 		JPanel vent = new TaskPanel();
-		pane.addTab("Gestor de tareas",new ImageIcon("images/iconos-diego/task-monitor.png"), vent);
+		pane.addTab("Gestor de tareas",new ImageIcon("images/task-monitor.png"), vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -129,7 +129,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Crear Descarga ---------
 	private void crearDescargaActionPerformed(ActionEvent e) {
 		JPanel vent = new CreateNewDownload();
-		pane.addTab("Crear descarga",new ImageIcon("images/iconos-diego/add2.png"), vent);
+		pane.addTab("Crear descarga",new ImageIcon("images/add2.png"), vent);
 		this.initTabComponent(pane.getTabCount()-1);
 		
 		pane.setSelectedIndex(pane.getTabCount()-1);
@@ -140,7 +140,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Configurar descargas ---------
 	private void gestionarDescargasConfigActionPerformed(ActionEvent e) {
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig();
-		pane.addTab("Configurar descargas",new ImageIcon("images/iconos-diego/downloadconfig.png"), config);
+		pane.addTab("Configurar descargas",new ImageIcon("images/downloadconfig.png"), config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -154,7 +154,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Configurar BBDD ---------
 	private void configBBDDActionPerformed(ActionEvent e) {
 		DataBaseConfig dataBaseConfig = new DataBaseConfig();
-		pane.addTab("Configurar BBDD",new ImageIcon("images/iconos-diego/database.png"), dataBaseConfig);
+		pane.addTab("Configurar BBDD",new ImageIcon("images/database.png"), dataBaseConfig);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -164,7 +164,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Configurar descargas ---------
 	private void configDownloadActionPerformed(ActionEvent e) {
 		DefaultDownloadSettingsConfig config = new DefaultDownloadSettingsConfig();
-		pane.addTab("Configurar descargas",new ImageIcon("images/iconos-diego/downloadconfig.png"), config);
+		pane.addTab("Configurar descargas",new ImageIcon("images/downloadconfig.png"), config);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -177,7 +177,7 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Exportar XML ---------
 	private void exportRelevantXMLActionPerformed(ActionEvent e) {
-		pane.addTab("Exportar XML",new ImageIcon("images/iconos-diego/xml.png"), new ExportarXMl());
+		pane.addTab("Exportar XML",new ImageIcon("images/xml.png"), new ExportarXMl());
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -191,7 +191,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Importar desde BBDD ---------
 	private void importBBDDActionPerformed(ActionEvent e) {
 		ImportarDesdeBBDD imptBBDD = new ImportarDesdeBBDD();
-		pane.addTab("Importar desde BBDD",new ImageIcon("images/iconos-diego/database-add.png"), imptBBDD);
+		pane.addTab("Importar desde BBDD",new ImageIcon("images/database-add.png"), imptBBDD);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -205,7 +205,7 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Importar catálogo ---------
 	private void menuCatalogoEDActionPerformed(ActionEvent e) {
-		pane.addTab("Importar catálogo",new ImageIcon("images/iconos-diego/catalogo.png"), new ImportarCatalogo());
+		pane.addTab("Importar catálogo",new ImageIcon("images/catalogo.png"), new ImportarCatalogo());
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -218,7 +218,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Visor estrellas ---------
 	private void visualizadorActionPerformed(ActionEvent e) {
-		pane.addTab("Visor estrellas",new ImageIcon("images/iconos-diego/visor.png"), new StarsViewerPanel());
+		pane.addTab("Visor estrellas",new ImageIcon("images/visor.png"), new StarsViewerPanel());
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -229,7 +229,7 @@ public class VentanaPcpal extends JFrame{
 	private void visorCentroidesActionPerformed(ActionEvent e) {
 		DoubleStarsViewerPanel  visu =new DoubleStarsViewerPanel();
 		
-		pane.addTab("Visor dobles",new ImageIcon("images/iconos-diego/visor.png"),visu);
+		pane.addTab("Visor dobles",new ImageIcon("images/visor.png"),visu);
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
@@ -238,14 +238,14 @@ public class VentanaPcpal extends JFrame{
 	private void visualizadorDebugActionPerformed(ActionEvent e) {
 		FitsCoordinateViewerPanel visu =new FitsCoordinateViewerPanel();
 		
-		pane.addTab("Visor debug",new ImageIcon("images/iconos-diego/visor.png"),visu);
+		pane.addTab("Visor debug",new ImageIcon("images/visor.png"),visu);
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 	
 	// --------- Crear procesamiento ---------
 	private void nueProcEstDobActionPerformed(ActionEvent e) {
-		pane.addTab("Crear procesamiento",new ImageIcon("images/iconos-diego/crear-proc.png"),new CrearProcesamiento());
+		pane.addTab("Crear procesamiento",new ImageIcon("images/crear-proc.png"),new CrearProcesamiento());
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
@@ -253,7 +253,7 @@ public class VentanaPcpal extends JFrame{
 	// --------- Monitor de procesamientos ---------
 	private void buscarActionPerformed(ActionEvent e) {
 		MonitorProcesamiento prDobles= new MonitorProcesamiento();
-		pane.addTab("Monitor de procesamientos",new ImageIcon("images/iconos-diego/monitor-proc.png"), prDobles);
+		pane.addTab("Monitor de procesamientos",new ImageIcon("images/monitor-proc.png"), prDobles);
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -262,7 +262,7 @@ public class VentanaPcpal extends JFrame{
 
 	// --------- Consultar catálogo ---------
 	private void consultarCatalogoActionPerformed(ActionEvent e) {
-		pane.addTab("Consultar catálogo",new ImageIcon("images/iconos-diego/catalogo.png"), new JScrollPane(new ConsultarCatalogo()));
+		pane.addTab("Consultar catálogo",new ImageIcon("images/catalogo.png"), new JScrollPane(new ConsultarCatalogo()));
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -271,14 +271,14 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- Conversor de coordenadas ---------
 	private void conversorActionPerformed(ActionEvent e) {
-		pane.addTab("Conversor de coordenadas",new ImageIcon("images/iconos-diego/coordenadas.png"),new CoordinateConverter());
+		pane.addTab("Conversor de coordenadas",new ImageIcon("images/coordenadas.png"),new CoordinateConverter());
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 	
 	// --------- Calculadora distancias ---------
 	private void distanciasActionPerformed(ActionEvent e) {
-		pane.addTab("Calculadora distancias",new ImageIcon("images/iconos-diego/distancia.png"),new CalcularDistanciaForm());
+		pane.addTab("Calculadora distancias",new ImageIcon("images/distancia.png"),new CalcularDistanciaForm());
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
@@ -287,7 +287,7 @@ public class VentanaPcpal extends JFrame{
 	private void histogramaActionPerformed(ActionEvent e) {
 		JScrollPane sp= new JScrollPane(new DisplayHistogramApp());
 		    
-	    pane.addTab("Histograma",new ImageIcon("images/iconos-diego/histograma.png"),sp);
+	    pane.addTab("Histograma",new ImageIcon("images/histograma.png"),sp);
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);	
 	}
@@ -298,7 +298,7 @@ public class VentanaPcpal extends JFrame{
 	
 	// --------- WDSC ---------
 	private void importInfoActionPerformed(ActionEvent e) {
-		pane.addTab("WDSC",new ImageIcon("images/iconos-diego/help.png"), new WdsHelp());
+		pane.addTab("WDSC",new ImageIcon("images/help.png"), new WdsHelp());
 		this.initTabComponent(pane.getTabCount()-1);
 		pane.setSelectedIndex(pane.getTabCount()-1);
 		
@@ -306,13 +306,13 @@ public class VentanaPcpal extends JFrame{
 	}
 
 	private void formaCoordActionPerformed(ActionEvent e) {
-		pane.addTab("Información coordenadas",new ImageIcon("images/iconos-diego/help.png"),new CoordinatesFormat());
+		pane.addTab("Información coordenadas",new ImageIcon("images/help.png"),new CoordinatesFormat());
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}
 
 	private void dnebInfoActionPerformed(ActionEvent e) {
-		pane.addTab("DNEB",new ImageIcon("images/iconos-diego/help.png"),new BackgroundPanel(pane));
+		pane.addTab("DNEB",new ImageIcon("images/help.png"),new BackgroundPanel(pane));
 	    this.initTabComponent(pane.getTabCount()-1);
 	    pane.setSelectedIndex(pane.getTabCount()-1);
 	}

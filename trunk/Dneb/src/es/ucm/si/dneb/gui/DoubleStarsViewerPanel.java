@@ -116,7 +116,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 	    layout.setAutoCreateContainerGaps(true);
 	    
 		JButton buttonAbrir = new JButton();
-		buttonAbrir.setIcon(new ImageIcon("images/iconos-diego/load.png"));
+		buttonAbrir.setIcon(new ImageIcon("images/load.png"));
 		buttonAbrir.setToolTipText("Abrir imagenes");
 		buttonAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,7 +125,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    JButton buttonRestaurar = new JButton();
-	    buttonRestaurar.setIcon(new ImageIcon("images/iconos-diego/restaurar.png"));
+	    buttonRestaurar.setIcon(new ImageIcon("images/restaurar.png"));
 	    buttonRestaurar.setToolTipText("Restaurar la imagen");
 	    buttonRestaurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    JButton buttonProcesar = new JButton();
-	    buttonProcesar.setIcon(new ImageIcon("images/iconos-diego/buscar.png"));
+	    buttonProcesar.setIcon(new ImageIcon("images/buscar.png"));
 	    buttonProcesar.setToolTipText("Procesar puntos en la imagen");
 	    buttonProcesar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,7 +143,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    JButton buttonED = new JButton();
-	    buttonED.setIcon(new ImageIcon("images/iconos-diego/estrella.png"));
+	    buttonED.setIcon(new ImageIcon("images/estrella.png"));
 	    buttonED.setToolTipText("Buscar estrellas dobles en la imagen");
 	    buttonED.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,7 +152,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 		});
 	    
 	    buttonAnimar = new JButton();
-	    buttonAnimar.setIcon(new ImageIcon("images/iconos-diego/play2.png"));
+	    buttonAnimar.setIcon(new ImageIcon("images/play2.png"));
 	    buttonAnimar.setToolTipText("Animación de imágenes");
 	    buttonAnimar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,10 +323,10 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 				float sH = Math.min(input1.getHeight(), input2.getHeight());
 				hilo = new HiloAnimacion(imagenes, display2, sW, sH);
 				hilo.start();
-				buttonAnimar.setIcon(new ImageIcon("images/iconos-diego/stop2.png"));
+				buttonAnimar.setIcon(new ImageIcon("images/stop2.png"));
 			} else {
 				hilo.detenerHilo();
-				buttonAnimar.setIcon(new ImageIcon("images/iconos-diego/play2.png"));
+				buttonAnimar.setIcon(new ImageIcon("images/play2.png"));
 				display2.set(input2);
 			}
 			

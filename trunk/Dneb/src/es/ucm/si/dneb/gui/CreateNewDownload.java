@@ -42,7 +42,7 @@ public class CreateNewDownload extends JPanel {
 	}
 
 	private void initIcons() {
-		this.button1.setIcon(new ImageIcon("images/iconos-diego/carpeta.jpg"));
+		this.button1.setIcon(new ImageIcon("images/carpeta.jpg"));
 	}
 	
 	private void rellenarModel() {
