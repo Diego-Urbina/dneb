@@ -242,9 +242,9 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 			calculoDistancia = !calculoDistancia;
 			
 			if (!calculoDistancia)
-				buttonDistancia.setIcon(new ImageIcon("images/distance2.jpg"));
+				buttonDistancia.setIcon(new ImageIcon("images/regla.png"));
 			else
-				buttonDistancia.setIcon(new ImageIcon("images/stop_icon2.png"));
+				buttonDistancia.setIcon(new ImageIcon("images/stop2.png"));
 			
 			scale = 100;
 			display.deleteROIs();
