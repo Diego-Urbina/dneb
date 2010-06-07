@@ -213,7 +213,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			}
 			
 			// Hacer coincidir los nRecuadros centroides
-			double scaleW, scaleH;
+			double scaleW, scaleH, scaleBrillo = 1;
 			scaleW = (double)l2.getWidth()/l1.getWidth();
 			scaleH = (double)l2.getHeight()/l1.getHeight();
 			double porcentaje = 0;
@@ -225,7 +225,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				centroide = centroides1.get(i).clone();
 				centroide.setX(centroide.getX() * scaleW);
 				centroide.setY(centroide.getY() * scaleH);
-				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH, 5);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, 8, scaleBrillo);
 				
 				if (elegido != null) { // se ha encontrado coincidente
 					
@@ -238,12 +238,17 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 							centroidesFin.remove(pos);
 							elegidos.remove(pos);
 							porcentaje--;
-						}
+						} else continue;
 					}
 
 					centroidesFin.add(centroides1.get(i));
 					elegidos.add(elegido);
 					porcentaje++;
+					
+					// Escalar el brillo
+					if (centroidesFin.size() == 1) {
+						scaleBrillo = (double) recuadros1.get(i).getArea() / recuadros2.get(centroides2.indexOf(elegido)).getArea();
+					}
 				}
 			}
 			
@@ -316,7 +321,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				centroide = new Point();
 				centroide.setX(Q.get(i, 0));
 				centroide.setY(Q.get(i, 1));
-				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, scaleW, scaleH, 20);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, 10, scaleBrillo);
 				
 				if (elegido != null) { // se ha encontrado coincidente
 					
@@ -330,7 +335,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 							centroidesFin.remove(pos);
 							elegidos.remove(pos);
 							porcentaje--;
-						}
+						} else continue;
 					}
 					
 					centroidesIni.add(centroides1.get(i));
@@ -410,7 +415,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		boolean[] usados = new boolean[candidatas.size()];
 		double modulo1, modulo2, direccion1, direccion2;
 		double difModulo = 0.35; // diferencia entre modulos de un 35%
-		double difDireccion = Math.toRadians(20); // diferencia de 20 grados entre ambas direcciones
+		double difDireccion = Math.toRadians(25); // diferencia de 25 grados entre ambas direcciones
 		
 		for (int i = 0; i < candidatas.size(); i++) {
 			p1 = candidatas.get(i).getA();
@@ -450,20 +455,19 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			}
 		}
 		
-		if (resultado.size() > 5)
+		if (resultado.size() > 2)
 			resultado.clear();
 		
 		return resultado;
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
-			ArrayList<RectStar> listaRecs, double scaleW, double scaleH, int radioBusqueda) {
+			ArrayList<RectStar> listaRecs, int radioBusqueda, double scaleBrillo) {
 		
 		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio
 		
-		double radioMaxBusqueda = radioBusqueda; // Numero de pixeles de radio de busqueda. Esto puede ser un parametro a configurar
-		double tamRecLim = 1.7; // El area del rectangulo debera estar entre un rango determinado
-		double distancia, distanciaMin = 10, brillo, brilloParecido = 0, brilloEscalado;
+		double distancia, distanciaMin = radioBusqueda, brillo, brilloParecido = 0, brilloEscalado = 0;
+		double scaleBrilloAux = scaleBrillo;
 		Point elegido = null;
 		Point aux;
 		
@@ -471,17 +475,15 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			aux = listaPuntos.get(i);
 			distancia = punto.getDistancia(aux);
 			brillo = listaRecs.get(i).getArea();
-			brilloEscalado = rec.getWidth()*scaleW * rec.getHeight()*scaleH;
+			brilloEscalado = brillo * scaleBrilloAux;
 			if (elegido == null) {
-				if (distancia <= distanciaMin || (distancia <= radioMaxBusqueda &&
-						brillo <= tamRecLim*brilloEscalado && brillo >= brilloEscalado/tamRecLim)) {
+				if (distancia <= distanciaMin) {
 					distanciaMin = distancia;
-					brilloParecido = brillo;
+					brilloParecido = brillo * scaleBrilloAux;
 					elegido = aux;
 				}
 			} else {
-				if (distancia <= distanciaMin || (distancia <= radioMaxBusqueda &&
-						Math.abs(brilloEscalado - brillo) <= Math.abs(brilloEscalado - brilloParecido))) {
+				if (distancia <= distanciaMin && Math.abs(rec.getArea() - brilloEscalado) <= Math.abs(rec.getArea() - brilloParecido)) {
 					brilloParecido = brillo;
 					distanciaMin = distancia;
 					elegido = aux;
