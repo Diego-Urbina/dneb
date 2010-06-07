@@ -13,7 +13,7 @@ public class StarFinderApp {
 	public static void main(String[] args) {		
 		try {			
 			// Cargo la imagen
-			String filename = "AR90.135125DEC81.40558333333334SURVposs1_blue.fits";
+			String filename = "AR10.491916666666667DEC45.12705555555556SURVposs1_blue.fits";
 			Fits imagenFITS = new Fits(new File(filename));			
 			
 			// Obtengo el primer HDU (la imagen) y creo con el
@@ -32,8 +32,8 @@ public class StarFinderApp {
 			System.out.println("Percentil:  " + l1.getNPercentile(99.55));
 			
 			StarFinder sf = new StarFinder();
-			float umbral = new Float(l1.getNPercentile(99.4));
-			float brilloEstrella = new Float(l1.getNPercentile(99.5));
+			float umbral = new Float(l1.getNPercentile(99.55));
+			float brilloEstrella = umbral + 2000;
 			
 			sf.buscarEstrellas(l1, brilloEstrella, umbral);
 			
