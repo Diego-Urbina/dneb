@@ -225,7 +225,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				centroide = centroides1.get(i).clone();
 				centroide.setX(centroide.getX() * scaleW);
 				centroide.setY(centroide.getY() * scaleH);
-				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, 8, scaleBrillo);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, 5, scaleBrillo);
 				
 				if (elegido != null) { // se ha encontrado coincidente
 					
@@ -462,7 +462,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	}
 	
 	private Point getCentroideEmparejado(Point punto, RectStar rec, ArrayList<Point> listaPuntos,
-			ArrayList<RectStar> listaRecs, int radioBusqueda, double scaleBrillo) {
+			ArrayList<RectStar> listaRecs, double radioBusqueda, double scaleBrillo) {
 		
 		// Devuelve el indice de la estrella mas cercana y con semejante brillo dentro de un radio
 		
