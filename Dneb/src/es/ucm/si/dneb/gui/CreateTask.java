@@ -56,7 +56,7 @@ public class CreateTask extends JPanel {
 		setLayout(new GridLayoutManager(10, 6, new Insets(30, 60, 0, 60), 5, -1));
 		
 		//---- titulo ----
-		titulo.setText("CREACIÓN DE TAREAS");
+		titulo.setText("CREAR TAREA");
 		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(titulo, new GridConstraints(1, 0, 1, 6,
@@ -235,7 +235,7 @@ public class CreateTask extends JPanel {
 		
 		
 		//---- labelSolap ----
-		labelSolap.setText("SOLAPAMIENTO");
+		labelSolap.setText("SOLAPAMIENTO (%)");
 		add(labelSolap, new GridConstraints(8, 0, 1, 1,
 			GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
