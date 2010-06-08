@@ -293,7 +293,7 @@ public class MonitorProcesamiento extends JPanel {
 		});
 
 		setLayout(new GridLayoutManager(3, 3, new Insets(30, 60, 30, 60), 5, -1));
-		titulo.setText("MONITOR DE PROCESAMIENTOS");
+		titulo.setText("GESTOR DE PROCESAMIENTOS");
 		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(titulo, new GridConstraints(0, 0, 1, 3,
