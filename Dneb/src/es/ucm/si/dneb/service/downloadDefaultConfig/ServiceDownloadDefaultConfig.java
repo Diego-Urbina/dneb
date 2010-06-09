@@ -6,8 +6,7 @@ import es.ucm.si.dneb.domain.DownloadConfig;
 import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 
-public interface ServiceDownloadDefaultConfig {
-	
+public interface ServiceDownloadDefaultConfig {	
 	
 	public void createNewDownloadDefaultConfig(DownloadConfig downloadConfig);
 	

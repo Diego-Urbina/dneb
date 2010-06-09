@@ -19,7 +19,7 @@ import es.ucm.si.dneb.domain.Survey;
 
 
 @Service("serviceDownloadDefaultConfig")
-public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig {
+public class ServiceDownloadDefaultConfigImpl implements ServiceDownloadDefaultConfig {
 	
 	private static final Log LOG = LogFactory
 	.getLog(ServiceDownloadDefaultConfigImpl.class);
@@ -28,26 +28,20 @@ public class ServiceDownloadDefaultConfigImpl implements es.ucm.si.dneb.service.
 	EntityManager manager;
 
 	@Transactional(propagation= Propagation.REQUIRED)
-	public void createNewDownloadDefaultConfig(
-			DownloadConfig downloadConfig) {
+	public void createNewDownloadDefaultConfig(DownloadConfig downloadConfig) {
 		
 		String alias = downloadConfig.getAlias();
 		boolean error = true;
 		
-		try{
-			
+		try{			
 			downloadConfig = (DownloadConfig) manager.createNamedQuery("DownloadConfig:dameConfiguracionPorAlias").setParameter(1, alias).getSingleResult();
-		
-		}catch(NoResultException e){
-			
-			error=false;
-			
+		}catch(NoResultException e){			
+			error=false;			
 		}
 		
 		if(!error){
 			manager.persist(downloadConfig);
-		}else{
-			
+		}else{			
 			throw new ServiceDownloadDefaultConfigException("Ya existe una configuracion con ese alias");
 		}
 		

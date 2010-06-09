@@ -103,13 +103,11 @@ public class DefaultDownloadSettingsConfig extends JPanel {
         }
 	}
 	
-	private void updateConfigList() {
-		
+	private void updateConfigList() {		
 		
 		configsList = (ArrayList<DownloadConfig>) serviceDownloadDefaultConfig.getDownloadConfigs();
         if(configsList.size()==0){
-        	return;
-        	
+        	return;        	
         }
 		
         DefaultComboBoxModel comboConfigList = new DefaultComboBoxModel();
@@ -131,13 +129,15 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		
 		if(selectedDownloadDefaultConfiguration.getAlto()!=null){
 			this.ALTOINPUT.setText(selectedDownloadDefaultConfiguration.getAlto().toString());
-		}	
+		} else this.ALTOINPUT.setText("");
 		if(selectedDownloadDefaultConfiguration.getAncho()!=null){
 			this.ANCHOINPUT.setText(selectedDownloadDefaultConfiguration.getAncho().toString());
-		}
+		} else this.ANCHOINPUT.setText("");
 		if(selectedDownloadDefaultConfiguration.getPath()!=null){
 			this.ruta.setText(selectedDownloadDefaultConfiguration.getPath());
-		}
+		} else this.ruta.setText("");
+		
+		this.aliasNuevaConfig.setText(selectedDownloadDefaultConfiguration.getAlias());
 		
 		selectedDownloadDefaultConfiguration.getSurveys();
 		
@@ -183,11 +183,9 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 
 	private void guardarValoresPorDefecto(MouseEvent e) {
 
-String aliasConfig = aliasNuevaConfig.getText();
-		
+		String aliasConfig = aliasNuevaConfig.getText();		
 		
 		DownloadConfig downloadConfig= new DownloadConfig();
-		
 		
 		
 		if(!this.aliasNuevaConfig.getText().equals("")){
@@ -195,13 +193,6 @@ String aliasConfig = aliasNuevaConfig.getText();
 		}else{
 			showAlertMessage("INTRODUZCA UN ALIAS DE CONFIGURACION");
 			return;
-		}
-		
-		
-		if(serviceDownloadDefaultConfig.existsConfig(aliasConfig)){
-			showAlertMessage("YA EXISTE UNA CONFIGURACION CON ESE ALIAS");
-			return;
-			
 		}
 		
 		if(!this.ALTOINPUT.getText().equals("")){
@@ -226,17 +217,20 @@ String aliasConfig = aliasNuevaConfig.getText();
 		ArrayList<Survey> selectedSurveys = new ArrayList<Survey>();
 		
 		selectedSurveys.add(this.surveys.get(survey1));
-		selectedSurveys.add(this.surveys.get(survey2));
-	
-		
+		selectedSurveys.add(this.surveys.get(survey2));		
 		
 		downloadConfig.setSurveys(selectedSurveys);
 		
+		if(serviceDownloadDefaultConfig.existsConfig(aliasConfig)){
+			// Lo borro	
+			DownloadConfig aux = serviceDownloadDefaultConfig.loadDownloadDefaultConfiguration(aliasConfig);
+			serviceDownloadDefaultConfig.deleteConfig(aux.getId());
+		}		
 		
 		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);
 		
 		updateConfigList();
-
+		showAlertMessage("Configuración " + aliasConfig + " guardada con exito");
 	}
 	
 	private void showAlertMessage(String mensaje) {
@@ -249,12 +243,14 @@ String aliasConfig = aliasNuevaConfig.getText();
 		int configDefault = this.comboBoxValoresPorDefecto.getSelectedIndex();
 		 
 		DownloadConfig selectedDownloadDefaultConfiguration = configsList.get(configDefault);
+		String name = selectedDownloadDefaultConfiguration.getAlias();
 		
 		serviceDownloadDefaultConfig.deleteConfig(selectedDownloadDefaultConfiguration.getId());
 		
 		this.configsList.remove(selectedDownloadDefaultConfiguration);
 		
 		updateConfigList();
+		showAlertMessage("Configuración " + name + " eliminada con exito");
 	}
 
 	private void rutaMouseClicked(MouseEvent e) {
@@ -300,7 +296,7 @@ String aliasConfig = aliasNuevaConfig.getText();
 		setLayout(new GridLayoutManager(8, 5, new Insets(30, 60, 0, 60), 5, -1));
 
 		//---- titulo ----
-		titulo.setText("CONFIGURACIÓN DE VALORES POR DEFECTO");
+		titulo.setText("CONFIGURAR DESCARGA");
 		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(titulo, new GridConstraints(0, 0, 1, 5,
@@ -358,24 +354,24 @@ String aliasConfig = aliasNuevaConfig.getText();
 		
 		//---- ancho ----
 		label6.setText("ANCHO");
-		add(label6, new GridConstraints(3, 0, 1, 1,
+		add(label6, new GridConstraints(3, 3, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(ANCHOINPUT, new GridConstraints(3, 1, 1, 1,
+		add(ANCHOINPUT, new GridConstraints(3, 4, 1, 1,
 				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 				null, null, null));
 		//---- alto ----
 		label3.setText("ALTO");
-		add(label3, new GridConstraints(3, 3, 1, 1,
+		add(label3, new GridConstraints(3, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(ALTOINPUT, new GridConstraints(3, 4, 1, 1,
+		add(ALTOINPUT, new GridConstraints(3, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
