@@ -225,7 +225,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				centroide = centroides1.get(i).clone();
 				centroide.setX(centroide.getX() * scaleW);
 				centroide.setY(centroide.getY() * scaleH);
-				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, 5, scaleBrillo);
+				elegido = getCentroideEmparejado(centroide, recuadros1.get(i), centroides2, recuadros2, 2.25, scaleBrillo);
 				
 				if (elegido != null) { // se ha encontrado coincidente
 					
@@ -259,7 +259,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			double errorInicial = 0;
 			Point p1 = new Point(), p2 = new Point();
 			
-			if (porcentaje < 50 || centroidesFin.size() < 3) return resultado;
+			if (centroidesFin.size() < 3) return resultado;
 			
 			double[][] m1 = new double[centroidesFin.size()][3], m2 = new double[elegidos.size()][3];
 			for (int i = 0; i < centroidesFin.size(); i++) {
@@ -316,7 +316,6 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			ArrayList<Point> centroidesIni = new ArrayList<Point>();
 			porcentaje = 0.;
 			for (int i = 0; i < centroides1.size(); i++) {
-				if (recuadros1.get(i).getArea() <= 5) continue; // desechamos las estrellas muy pequeñas
 				
 				centroide = new Point();
 				centroide.setX(Q.get(i, 0));
@@ -369,7 +368,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			// Calcular candidatos a haberse movido
 			int cont = 0;
 			for (int i = 0; i < centroidesFin.size(); i++) {
-				if (errores[i] > 2*desviacion) {
+				if (errores[i] > 1.75*desviacion) {
 					centroide = centroidesFin.get(i);
 					if (sf1.getNumberOfStars()>sf2.getNumberOfStars()) {
 						candidatas.add(new Pair<Point>(elegidos.get(i), centroide));
@@ -422,7 +421,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			e1 = candidatas.get(i).getB();
 			dc1 = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p1.getX(), p1.getY());
 			modulo1 = p1.getDistancia(e1);
-			if (modulo1 < 1.25) continue;
+			if (modulo1 < 0.70) continue;
 			direccion1 = p1.getDireccion(e1);
 			
 			for (int j = i+1; j < candidatas.size(); j++) {
@@ -433,7 +432,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 				if (d.getDistanceSeconds() > 120) continue; // distancia entre estrellas mayor de 2 minutos
 				
 				modulo2 = p2.getDistancia(e2);
-				if (modulo2 < 1.25) continue;
+				if (modulo2 < 0.70) continue;
 				direccion2 = p2.getDireccion(e2);
 				
 				if (Math.min(modulo1, modulo2) >= Math.max(modulo1, modulo2) * (1 - difModulo) &&
