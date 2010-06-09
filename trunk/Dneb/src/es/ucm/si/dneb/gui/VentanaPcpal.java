@@ -66,9 +66,9 @@ public class VentanaPcpal extends JFrame{
 		this.menu2.setIcon(new ImageIcon("images/download.png"));
 		this.menu3.setIcon(new ImageIcon("images/proc.png"));
 		this.menu4.setIcon(new ImageIcon("images/preferences.png"));
-		this.menu5.setIcon(new ImageIcon("images/import.png"));
-		this.menu6.setIcon(new ImageIcon("images/configure.png"));
-		this.menu7.setIcon(new ImageIcon("images/export.png"));
+		this.menu5.setIcon(new ImageIcon("images/export.png"));
+		this.menu6.setIcon(new ImageIcon("images/import.png"));
+		this.menu7.setIcon(new ImageIcon("images/configure.png"));
 		this.menu8.setIcon(new ImageIcon("images/help.png"));
 		
 		this.crearNuevaTarea.setIcon(new ImageIcon("images/add.png"));

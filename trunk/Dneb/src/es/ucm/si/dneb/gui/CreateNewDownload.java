@@ -201,13 +201,14 @@ public class CreateNewDownload extends JPanel {
 		
 		if(selectedDownloadDefaultConfiguration.getAlto()!=null){
 			this.ALTOINPUT.setText(selectedDownloadDefaultConfiguration.getAlto().toString());
-		}	
+		} else this.ALTOINPUT.setText("");
 		if(selectedDownloadDefaultConfiguration.getAncho()!=null){
 			this.ANCHOINPUT.setText(selectedDownloadDefaultConfiguration.getAncho().toString());
-		}
+		} else this.ANCHOINPUT.setText("");
 		if(selectedDownloadDefaultConfiguration.getPath()!=null){
 			this.ruta.setText(selectedDownloadDefaultConfiguration.getPath());
-		}
+		} else this.ruta.setText("");
+		this.aliasNuevaConfig.setText(selectedDownloadDefaultConfiguration.getAlias());
 		
 		selectedDownloadDefaultConfiguration.getSurveys();
 		
@@ -257,12 +258,6 @@ public class CreateNewDownload extends JPanel {
 			return;
 		}
 		
-		
-		if(serviceDownloadDefaultConfig.existsConfig(aliasConfig)){
-			showAlertMessage("YA EXISTE UNA CONFIGURACION CON ESE ALIAS");
-			return;			
-		}
-		
 		if(!this.ALTOINPUT.getText().equals("")){
 			downloadConfig.setAlto(Double.valueOf(this.ALTOINPUT.getText()));	
 		}
@@ -289,9 +284,15 @@ public class CreateNewDownload extends JPanel {
 		
 		downloadConfig.setSurveys(selectedSurveys);		
 		
-		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);
+		if(serviceDownloadDefaultConfig.existsConfig(aliasConfig)){
+			// Lo borro	
+			DownloadConfig aux = serviceDownloadDefaultConfig.loadDownloadDefaultConfiguration(aliasConfig);
+			serviceDownloadDefaultConfig.deleteConfig(aux.getId());		
+		}
 		
+		serviceDownloadDefaultConfig.createNewDownloadDefaultConfig(downloadConfig);		
 		updateConfigList();
+		showAlertMessage("Configuración " + aliasConfig + " guardada con exito");
 		
 	}
 
@@ -358,7 +359,7 @@ public class CreateNewDownload extends JPanel {
 		setLayout(new GridLayoutManager(16, 5, new Insets(30, 60, 60, 60), 5, -1));
 
 		//---- titulo ----
-		label9.setText("CREACIÓN DE DESCARGAS");
+		label9.setText("CREAR DESCARGA");
 		label9.setFont(label9.getFont().deriveFont(label9.getFont().getSize() + 10f));
 		label9.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label9, new GridConstraints(1, 0, 1, 5,
