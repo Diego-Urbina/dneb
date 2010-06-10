@@ -9,15 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="PARAM_IMG")
-public class ImgParam {
-
+@Table(name="PARAMETRO_TAREA_PROC")
+public class ParamProcTarea {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID_PARAM_IMG")
-    private long idParametroImagen;
+    @Column(name="ID_PARAMETRO")
+    private long idParametro;
 	
 	@Column(name="VAL_NUM")
 	private Double valorNum;
@@ -27,21 +26,19 @@ public class ImgParam {
 	
 	@ManyToOne
 	@JoinColumn(name="TIP_PARAM",nullable=false) 
-	private ParamType tipoParametro;
+	private TipoParametro tipoParametro;
 	
 	@ManyToOne
-	@JoinColumn(name="IMG",nullable=false) 
-	private ImageProsec procImagen;
-	
+	@JoinColumn(name="PROC",nullable=false) 
+	private ProcTarea procTarea;
 
 	
-
-	public long getIdParametroImagen() {
-		return idParametroImagen;
+	public long getIdParametro() {
+		return idParametro;
 	}
 
-	public void setIdParametroImagen(long idParametroImagen) {
-		this.idParametroImagen = idParametroImagen;
+	public void setIdParametro(long idParametro) {
+		this.idParametro = idParametro;
 	}
 
 	public Double getValorNum() {
@@ -60,20 +57,20 @@ public class ImgParam {
 		this.valorAlfa = valorAlfa;
 	}
 
-	public ParamType getTipoParametro() {
+	public TipoParametro getTipoParametro() {
 		return tipoParametro;
 	}
 
-	public void setTipoParametro(ParamType tipoParametro) {
+	public void setTipoParametro(TipoParametro tipoParametro) {
 		this.tipoParametro = tipoParametro;
 	}
 
-	public ImageProsec getProcImagen() {
-		return procImagen;
+	public void setTareaProcesamiento(ProcTarea procTarea) {
+		this.procTarea = procTarea;
 	}
 
-	public void setProcImagen(ImageProsec procImagen) {
-		this.procImagen = procImagen;
+	public ProcTarea getTareaProcesamiento() {
+		return procTarea;
 	}
 
 	/**
@@ -89,13 +86,13 @@ public class ImgParam {
 	    
 	    String retValue = "";
 	    
-	    retValue = "ImgParam ( "
+	    retValue = "ParamProcTarea ( "
 	        + super.toString() + TAB
-	        + "idParametroImagen = " + this.idParametroImagen + TAB
+	        + "idParametro = " + this.idParametro + TAB
 	        + "valorNum = " + this.valorNum + TAB
 	        + "valorAlfa = " + this.valorAlfa + TAB
 	        + "tipoParametro = " + this.tipoParametro + TAB
-	       
+	        + "procTarea = " + this.procTarea + TAB
 	        + " )";
 	
 	    return retValue;
@@ -103,9 +100,4 @@ public class ImgParam {
 	
 	
 
-
-	
-	
-
 }
-	

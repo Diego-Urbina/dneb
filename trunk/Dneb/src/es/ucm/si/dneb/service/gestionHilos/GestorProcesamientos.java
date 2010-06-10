@@ -11,11 +11,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import es.ucm.si.dneb.domain.TaskProsec;
+import es.ucm.si.dneb.domain.ProcTarea;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 @Service("gestorProcesamientos")
-public class GestorProcesamientos implements GestorHilos<TaskProsec>{
+public class GestorProcesamientos implements GestorHilos<ProcTarea>{
 	
 	@PersistenceContext
 	EntityManager manager;
@@ -32,7 +32,7 @@ public class GestorProcesamientos implements GestorHilos<TaskProsec>{
 	}
 
 	@Override
-	public void anadirHilo(TaskProsec tareaProc) {
+	public void anadirHilo(ProcTarea tareaProc) {
 		
 		LOG.debug("AÑADIR HILO:" + tareaProc.getIdProcesamiento());
 
@@ -80,7 +80,7 @@ public class GestorProcesamientos implements GestorHilos<TaskProsec>{
 		
 		if(hilo==null){
 			
-			TaskProsec tp=manager.find(TaskProsec.class, idHilo);
+			ProcTarea tp=manager.find(ProcTarea.class, idHilo);
 			this.anadirHilo(tp);
 			hilo = hilos.get(idHilo);
 			
@@ -97,7 +97,7 @@ public class GestorProcesamientos implements GestorHilos<TaskProsec>{
 		
 		Hilo hilo = hilos.get(idHilo);
 
-		TaskProsec tarProc = (TaskProsec) hilo.getEjecutor().getCore();
+		ProcTarea tarProc = (ProcTarea) hilo.getEjecutor().getCore();
 
 		this.eliminarHilo(idHilo);
 

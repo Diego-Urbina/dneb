@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="PROCESAMIENTO_IMAGEN")
-public class ImageProsec {
+public class ProcImagen {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,14 +34,14 @@ public class ImageProsec {
 
 	@ManyToOne
 	@JoinColumn(name="IMG_ID_FK",nullable=false)
-	private Image imagen;
+	private Imagen imagen;
 	
 	@ManyToOne
     @JoinColumn(name="PROC_ID_FK",nullable=false)
-	private TaskProsec procTarea;
+	private ProcTarea procTarea;
 	
 	@OneToMany(mappedBy="procImagen")
-	private List<ImgParam> params;
+	private List<ParamImg> params;
 	
 	
 	
@@ -89,27 +89,27 @@ public class ImageProsec {
 
 	
 
-	public void setTareaProcesamiento(TaskProsec procTarea) {
+	public void setTareaProcesamiento(ProcTarea procTarea) {
 		this.procTarea = procTarea;
 	}
 
-	public TaskProsec getTareaProcesamiento() {
+	public ProcTarea getTareaProcesamiento() {
 		return procTarea;
 	}
 
-	public void setImagen(Image imagen) {
+	public void setImagen(Imagen imagen) {
 		this.imagen = imagen;
 	}
 
-	public Image getImagen() {
+	public Imagen getImagen() {
 		return imagen;
 	}
 
-	public void setParams(List<ImgParam> params) {
+	public void setParams(List<ParamImg> params) {
 		this.params = params;
 	}
 
-	public List<ImgParam> getParams() {
+	public List<ParamImg> getParams() {
 		return params;
 	}
 
@@ -126,7 +126,7 @@ public class ImageProsec {
 	    
 	    String retValue = "";
 	    
-	    retValue = "ImageProsec ( "
+	    retValue = "ProcImagen ( "
 	        + super.toString() + TAB
 	        + "id = " + this.id + TAB
 	        + "alias = " + this.alias + TAB

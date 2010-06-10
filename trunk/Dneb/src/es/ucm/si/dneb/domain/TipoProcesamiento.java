@@ -1,43 +1,47 @@
 package es.ucm.si.dneb.domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TIPO_PARAMETRO")
-public class ParamType {
+@Table(name="TIP_PROC")
+@NamedQueries({
+	@NamedQuery(name="TipoProcesamiento:dameTiposProcesamiento",query="select t.alias from TipoProcesamiento t"),
+	@NamedQuery(name="TipoProcesamiento:dameTipoPorAlias",query="select t from TipoProcesamiento t where t.alias=?")
+})
+public class TipoProcesamiento {
+	
+	
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID_TIPO_PARAMETRO")
-    private long idTipoParametro;
+    @Column(name="ID_TIP_PROC")
+    private long idTipoProcesamiento;
 	
 	@Column(name="ALIAS",nullable=false,unique=true)
 	private String alias;
 	
-	@Column(name="DESCRIPCION")
+	@Column(name="DESCRIPCION",unique=true)
 	private String descripcion;
 	
-	@OneToMany(mappedBy="tipoParametro")
-	private List<TaskProsecParam> paramProcTareas;
-	
-	@OneToMany(mappedBy="tipoParametro")
-	private List<ImgParam> paramImgs;
+	@OneToMany(mappedBy="tipoProcesamiento")
+	private Collection<ProcTarea> procTareas;
 
-	
-	public long getIdTipoParametro() {
-		return idTipoParametro;
+	public long getIdTipoProcesamiento() {
+		return idTipoProcesamiento;
 	}
 
-	public void setIdTipoParametro(long idTipoParametro) {
-		this.idTipoParametro = idTipoParametro;
+	public void setIdTipoProcesamiento(long idTipoProcesamiento) {
+		this.idTipoProcesamiento = idTipoProcesamiento;
 	}
 
 	public String getAlias() {
@@ -56,20 +60,13 @@ public class ParamType {
 		this.descripcion = descripcion;
 	}
 
-	public void setParametros(List<TaskProsecParam> paramProcTareas) {
-		this.paramProcTareas = paramProcTareas;
+	public Collection<ProcTarea> getTareaProcesamientos() {
+		return procTareas;
 	}
 
-	public List<TaskProsecParam> getParametros() {
-		return paramProcTareas;
-	}
-
-	public void setParamImgs(List<ImgParam> paramImgs) {
-		this.paramImgs = paramImgs;
-	}
-
-	public List<ImgParam> getParamImgs() {
-		return paramImgs;
+	public void setTareaProcesamientos(
+			Collection<ProcTarea> procTareas) {
+		this.procTareas = procTareas;
 	}
 
 	/**
@@ -85,18 +82,22 @@ public class ParamType {
 	    
 	    String retValue = "";
 	    
-	    retValue = "ParamType ( "
+	    retValue = "TipoProcesamiento ( "
 	        + super.toString() + TAB
-	        + "idTipoParametro = " + this.idTipoParametro + TAB
+	        + "idTipoProcesamiento = " + this.idTipoProcesamiento + TAB
 	        + "alias = " + this.alias + TAB
 	        + "descripcion = " + this.descripcion + TAB
-	      
+	        + "procTareas = " + this.procTareas + TAB
 	        + " )";
 	
 	    return retValue;
 	}
+	
+	
 
 	
 	
 	
+	
+
 }

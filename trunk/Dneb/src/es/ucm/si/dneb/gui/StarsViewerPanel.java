@@ -33,7 +33,7 @@ import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
-import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
@@ -59,7 +59,7 @@ public class StarsViewerPanel extends JPanel implements AdjustmentListener, Mous
 	private PlanarImage input1, input2, scaledIm1, scaledIm2;
 	private LectorImageHDU l1, l2;
 	private StarFinder sf1, sf2;
-	private Image im1, im2;
+	private Imagen im1, im2;
 	
 	private int scale;
 	

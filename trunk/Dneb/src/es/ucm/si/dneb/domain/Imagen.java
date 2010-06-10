@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Image:dameNumeroDescargasDeUnaTarea",query="select count(*) from Image d where tarea=?"),
-	@NamedQuery(name="Image:dameImagenesDeUnaTarea",query="select d from Image d where tarea=?"),
-	@NamedQuery(name="Image:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Image d where tarea=? and descargada=false")
+	@NamedQuery(name="Imagen:dameNumeroDescargasDeUnaTarea",query="select count(*) from Imagen d where tarea=?"),
+	@NamedQuery(name="Imagen:dameImagenesDeUnaTarea",query="select d from Imagen d where tarea=?"),
+	@NamedQuery(name="Imagen:dameNumeroDescargasPendientesDeUnaTarea",query="select count(*) from Imagen d where tarea=? and descargada=false")
 })
 @Table(name="IMAGEN")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,10 +25,10 @@ import javax.xml.bind.annotation.XmlType;
     "ascensionRecta",
     "declinacion"
 })
-@XmlRootElement(name = "Image")
-public class Image {
+@XmlRootElement(name = "Imagen")
+public class Imagen {
 	
-	public Image(){
+	public Imagen(){
 		
 	}
 	
@@ -70,11 +70,11 @@ public class Image {
 	@ManyToOne
     @JoinColumn(name="TAREA_ID_FK",nullable=false)
     @XmlTransient
-	private Task tarea;
+	private Tarea tarea;
 	
 	@OneToMany(mappedBy="imagen")
 	@XmlTransient
-    private List<ImageProsec> procImagen;
+    private List<ProcImagen> procImagen;
 	
 
 	public void setIdDescarga(long idDescarga) {
@@ -101,11 +101,11 @@ public class Image {
 		return declinacion;
 	}
 
-	public void setTarea(Task tarea) {
+	public void setTarea(Tarea tarea) {
 		this.tarea = tarea;
 	}
 
-	public Task getTarea() {
+	public Tarea getTarea() {
 		return tarea;
 	}
 
@@ -151,11 +151,11 @@ public class Image {
 		return ancho;
 	}
 
-	public void setProcesamientoImagen(List<ImageProsec> procImagen) {
+	public void setProcesamientoImagen(List<ProcImagen> procImagen) {
 		this.procImagen = procImagen;
 	}
 
-	public List<ImageProsec> getProcesamientoImagen() {
+	public List<ProcImagen> getProcesamientoImagen() {
 		return procImagen;
 	}
 
@@ -172,7 +172,7 @@ public class Image {
 	    
 	    String retValue = "";
 	    
-	    retValue = "Image ( "
+	    retValue = "Imagen ( "
 	        + super.toString() + TAB
 	        + "idDescarga = " + this.idDescarga + TAB
 	        + "ascensionRecta = " + this.ascensionRecta + TAB

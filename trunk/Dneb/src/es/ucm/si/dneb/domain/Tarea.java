@@ -11,19 +11,19 @@ import javax.persistence.*;
 @Entity
 @Table(name="TAREA")
 @NamedQueries({
-	@NamedQuery(name="Task:DameTareasActualizadasFecha",query="select t from Task t  where fechaUltimaActulizacion=?"),
-	@NamedQuery(name="Task:DameTareasCreadasFecha",query="select t from Task t  where fechaCreacion=?"),
-	@NamedQuery(name="Task:DameTodasTareasActivas",query="select t from Task t  where descargaActiva=true"),
-	@NamedQuery(name="Task:DameTodasTareasPendientes",query="select t from Task t where descargaFinalizada=false"),
-	@NamedQuery(name="Task:DameTodasTareasActualizadasAntesFecha",query="select t from Task t  where fechaUltimaActulizacion<=?"),
-	@NamedQuery(name="Task:DameDescargasPendientesDeEstaTarea",query="select d from Task t JOIN t.imagens d where t.idTarea=? and d.descargada=false"),
-	@NamedQuery(name="Task:DameTodasTareas",query="select t from Task t  order by fechaCreacion"),
-	@NamedQuery(name="Task:DameTareasFinalizadas",query="select t from Task t where descargaFinalizada=true")
+	@NamedQuery(name="Tarea:DameTareasActualizadasFecha",query="select t from Tarea t  where fechaUltimaActulizacion=?"),
+	@NamedQuery(name="Tarea:DameTareasCreadasFecha",query="select t from Tarea t  where fechaCreacion=?"),
+	@NamedQuery(name="Tarea:DameTodasTareasActivas",query="select t from Tarea t  where descargaActiva=true"),
+	@NamedQuery(name="Tarea:DameTodasTareasPendientes",query="select t from Tarea t where descargaFinalizada=false"),
+	@NamedQuery(name="Tarea:DameTodasTareasActualizadasAntesFecha",query="select t from Tarea t  where fechaUltimaActulizacion<=?"),
+	@NamedQuery(name="Tarea:DameDescargasPendientesDeEstaTarea",query="select d from Tarea t JOIN t.imagens d where t.idTarea=? and d.descargada=false"),
+	@NamedQuery(name="Tarea:DameTodasTareas",query="select t from Tarea t  order by fechaCreacion"),
+	@NamedQuery(name="Tarea:DameTareasFinalizadas",query="select t from Tarea t where descargaFinalizada=true")
 })
-public class Task implements Serializable {
+public class Tarea implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	public Task(){
+	public Tarea(){
 		
 	}
 	
@@ -73,7 +73,7 @@ public class Task implements Serializable {
     private List<Survey> surveys;
     
     @OneToMany(mappedBy="tarea")
-    private List<TaskProsec> tareasProcesamiento;
+    private List<ProcTarea> tareasProcesamiento;
     
     @Column(name="SOLAPAMIENTO")
     private double solapamiento;
@@ -83,10 +83,10 @@ public class Task implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="FORFICHERO_ID_FK",nullable=false) 
-    private FileFormat formatoFichero;
+    private FormatoFichero formatoFichero;
     
     @OneToMany(mappedBy="tarea")
-    private List<Image> imagens;
+    private List<Imagen> imagens;
 
 	public long getIdTarea() {
 		return idTarea;
@@ -164,11 +164,11 @@ public class Task implements Serializable {
 		return serialVersionUID;
 	}
 
-	public void setDescargas(List<Image> imagens) {
+	public void setDescargas(List<Imagen> imagens) {
 		this.imagens = imagens;
 	}
 
-	public List<Image> getDescargas() {
+	public List<Imagen> getDescargas() {
 		return imagens;
 	}
 
@@ -182,11 +182,11 @@ public class Task implements Serializable {
 		return solapamiento;
 	}
 
-	public void setFormatoFichero(FileFormat formatoFichero) {
+	public void setFormatoFichero(FormatoFichero formatoFichero) {
 		this.formatoFichero = formatoFichero;
 	}
 
-	public FileFormat getFormatoFichero() {
+	public FormatoFichero getFormatoFichero() {
 		return formatoFichero;
 	}
 
@@ -238,11 +238,11 @@ public class Task implements Serializable {
 		return descripcion;
 	}
 
-	public void setTareasProcesamiento(List<TaskProsec> tareasProcesamiento) {
+	public void setTareasProcesamiento(List<ProcTarea> tareasProcesamiento) {
 		this.tareasProcesamiento = tareasProcesamiento;
 	}
 
-	public List<TaskProsec> getTareasProcesamiento() {
+	public List<ProcTarea> getTareasProcesamiento() {
 		return tareasProcesamiento;
 	}
 
@@ -259,7 +259,7 @@ public class Task implements Serializable {
 	    
 	    String retValue = "";
 	    
-	    retValue = "Task ( "
+	    retValue = "Tarea ( "
 	        + super.toString() + TAB
 	        + "idTarea = " + this.idTarea + TAB
 	        + "alias = " + this.alias + TAB
