@@ -46,7 +46,7 @@ public class DownloadConfig {
 	
 	@ManyToOne
 	@JoinColumn(name="FORFICHERO_ID_FK",nullable=false) 
-	private FormatoFichero formatoFichero;
+	private FileFormat formatoFichero;
 
 	public long getId() {
 		return id;
@@ -96,11 +96,11 @@ public class DownloadConfig {
 		this.path = path;
 	}
 
-	public FormatoFichero getFormatoFichero() {
+	public FileFormat getFormatoFichero() {
 		return formatoFichero;
 	}
 
-	public void setFormatoFichero(FormatoFichero formatoFichero) {
+	public void setFormatoFichero(FileFormat formatoFichero) {
 		this.formatoFichero = formatoFichero;
 	}
 

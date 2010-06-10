@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.ParamProcTarea;
-import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.ProcTarea;
-import es.ucm.si.dneb.domain.TipoParametro;
-import es.ucm.si.dneb.domain.TipoProcesamiento;
+import es.ucm.si.dneb.domain.TaskProsecParam;
+import es.ucm.si.dneb.domain.ImageProsec;
+import es.ucm.si.dneb.domain.TaskProsec;
+import es.ucm.si.dneb.domain.ParamType;
+import es.ucm.si.dneb.domain.ProsecType;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicionException;
 import es.ucm.si.dneb.service.gestionHilos.GestorProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
@@ -38,18 +38,18 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Integer getPorcentajeCompletado(Long idProcesamiento) {
 		
-		ProcTarea procTarea = manager.find(ProcTarea.class,idProcesamiento);
+		TaskProsec procTarea = manager.find(TaskProsec.class,idProcesamiento);
 		
-		List <Long> terminados = manager.createNamedQuery("ProcTarea.getNumeroProcesamientoCompletados").setParameter(1, procTarea).getResultList();
+		List <Long> terminados = manager.createNamedQuery("TaskProsec.getNumeroProcesamientoCompletados").setParameter(1, procTarea).getResultList();
 		if(terminados.size()!=1){
-			LOG.error("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
-			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
+			LOG.error("Poblema ejecuntado query:TaskProsec.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
+			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:TaskProsec.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
 		}
 		
-		List <Long> total = manager.createNamedQuery("ProcTarea.getNumeroProcesamientos").setParameter(1, procTarea).getResultList();
+		List <Long> total = manager.createNamedQuery("TaskProsec.getNumeroProcesamientos").setParameter(1, procTarea).getResultList();
 		if(total.size()!=1){
-			LOG.error("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+total.size());
-			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:ProcTarea.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
+			LOG.error("Poblema ejecuntado query:TaskProsec.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+total.size());
+			throw new ServiceCalculoPosicionException("Poblema ejecuntado query:TaskProsec.getNumeroProcesamientoCompletados, se esperaba un único resultado y se obtuvieron:"+terminados.size());
 		}
 		
 		long completado= terminados.get(0)/total.get(0);
@@ -60,21 +60,21 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<ProcTarea> getProcesamientosDistancia() {
+	public List<TaskProsec> getProcesamientosDistancia() {
 		
-		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 2L);
+		ProsecType tipoProcesamiento = manager.find(ProsecType.class, 2L);
 		
-		return manager.createNamedQuery("ProcTarea.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
+		return manager.createNamedQuery("TaskProsec.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
 		
 		
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<ProcTarea> getProcesamientosDobles() {
+	public List<TaskProsec> getProcesamientosDobles() {
 		
-		TipoProcesamiento tipoProcesamiento = manager.find(TipoProcesamiento.class, 1L);
+		ProsecType tipoProcesamiento = manager.find(ProsecType.class, 1L);
 		
-		return manager.createNamedQuery("ProcTarea.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
+		return manager.createNamedQuery("TaskProsec.getProcesamientosByType").setParameter(1, tipoProcesamiento).getResultList();
 		
 	}
 
@@ -83,15 +83,15 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 		
 		gestorProcesamientos.eliminarHilo(idProcesamiento);
 		
-		ProcTarea proc = manager.find(ProcTarea.class, idProcesamiento);
+		TaskProsec proc = manager.find(TaskProsec.class, idProcesamiento);
 
 		if(proc==null){
 			throw new ServicioGestionTareasException("La tarea no existe");
 		}
 		
-		List<ProcImagen> procsImags=proc.getProcesamientoImagenes();
+		List<ImageProsec> procsImags=proc.getProcesamientoImagenes();
 		
-		for(ProcImagen imagen : procsImags){
+		for(ImageProsec imagen : procsImags){
 			manager.remove(imagen);
 		}
 			
@@ -102,7 +102,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void pararProcesamiento(Long idProcesamiento) {
 		
-		ProcTarea tarea = manager.find(ProcTarea.class, idProcesamiento);
+		TaskProsec tarea = manager.find(TaskProsec.class, idProcesamiento);
 
 		if (!tarea.isActiva()) {
 			throw new ServicioGestionTareasException(
@@ -120,7 +120,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarProcesamiento(Long idProcesamiento) {
 		
-		ProcTarea tareaProc= manager.find(ProcTarea.class, idProcesamiento);
+		TaskProsec tareaProc= manager.find(TaskProsec.class, idProcesamiento);
 		
 		if(tareaProc.isActiva()){
 			throw new ServicioGestionProcesamientosException(
@@ -141,14 +141,14 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void crearProcesamiento(ProcTarea procesamiento) {
+	public void crearProcesamiento(TaskProsec procesamiento) {
 		
 		manager.persist(procesamiento);
 		
-		for(ProcImagen procImg : procesamiento.getProcesamientoImagenes()){
+		for(ImageProsec procImg : procesamiento.getProcesamientoImagenes()){
 			manager.persist(procImg);
 		}
-		for(ParamProcTarea paramProcTarea : procesamiento.getParametros()){
+		for(TaskProsecParam paramProcTarea : procesamiento.getParametros()){
 			manager.persist(paramProcTarea);
 		}
 		
@@ -158,7 +158,7 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<String> getTiposProcesamiento() {
-		return manager.createNamedQuery("TipoProcesamiento:dameTiposProcesamiento")
+		return manager.createNamedQuery("ProsecType:dameTiposProcesamiento")
 		.getResultList();
 	}
 
@@ -171,21 +171,21 @@ public class ServicioGestionProcesamientosImpl implements ServicioGestionProcesa
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public TipoProcesamiento getTipoProcesamientoByAlias(String alias) {
+	public ProsecType getTipoProcesamientoByAlias(String alias) {
 		
-		List<TipoProcesamiento> tipoProcesamientos = manager.createNamedQuery("TipoProcesamiento:dameTipoPorAlias").setParameter(1,alias).getResultList();
+		List<ProsecType> tipoProcesamientos = manager.createNamedQuery("ProsecType:dameTipoPorAlias").setParameter(1,alias).getResultList();
 		
 		return tipoProcesamientos.get(0);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public TipoParametro getTipoParametroById(Long idParametro) {
-		return manager.find(TipoParametro.class, idParametro);
+	public ParamType getTipoParametroById(Long idParametro) {
+		return manager.find(ParamType.class, idParametro);
 	}
 
 	@Override
-	public List<ProcTarea> getProcesamientos() {
-		return manager.createNamedQuery("ProcTarea.getAllProcesamientos").getResultList();
+	public List<TaskProsec> getProcesamientos() {
+		return manager.createNamedQuery("TaskProsec.getAllProcesamientos").getResultList();
 	}
 	
 }

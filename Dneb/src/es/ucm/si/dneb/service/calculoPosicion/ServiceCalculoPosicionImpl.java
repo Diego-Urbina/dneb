@@ -21,12 +21,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
-import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.domain.InformacionRelevante;
-import es.ucm.si.dneb.domain.ParamImg;
-import es.ucm.si.dneb.domain.ParamProcTarea;
-import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.TipoInformacionRelevante;
+import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.RelevantInformation;
+import es.ucm.si.dneb.domain.ImgParam;
+import es.ucm.si.dneb.domain.TaskProsecParam;
+import es.ucm.si.dneb.domain.ImageProsec;
+import es.ucm.si.dneb.domain.RelevantInfoType;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.consultarCatalogo.ServicioConsultaCatalogo;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
@@ -58,7 +58,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 	private ServiceBusquedaDobles serviceBusquedaDobles;
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void calcularPosicion(ProcImagen pi) {
+	public void calcularPosicion(ImageProsec pi) {
 
 		/*
 		 * 
@@ -83,9 +83,9 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						+ pi.toString());
 		// TODO
 		// Saco los parámetro de la imagen
-		List<ParamImg> paramsImg = pi.getParams();
+		List<ImgParam> paramsImg = pi.getParams();
 
-		List<ParamProcTarea> paramProcTareas = pi.getTareaProcesamiento()
+		List<TaskProsecParam> paramProcTareas = pi.getTareaProcesamiento()
 				.getParametros();
 		double brillo = 32000, umbral = 30000, margenAngulo = 0.03, margenDistancia = 0.10, distMinima = 4;
 		int limCandidatos = 3, maxEstrellas = 120;
@@ -110,7 +110,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 		// Busco los datos de la estrella binaria a buscar
 
-		Imagen imagen = pi.getImagen();
+		Image imagen = pi.getImagen();
 
 		algotirmoCalculoPosicion(brillo, umbral, limCandidatos, maxEstrellas,
 				margenAngulo, margenDistancia, distMinima, imagen);
@@ -125,7 +125,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<Point> algotirmoCalculoPosicion(double brillo, double umbral,
 			int maxCandidatos, int maxEstrellas, double margenAngulo,
-			double margenDistancia, double distanciaMinima, Imagen imagen) {
+			double margenDistancia, double distanciaMinima, Image imagen) {
 
 		double brilloInicial = brillo;
 		double umbralInicial = umbral;
@@ -305,7 +305,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 							}
 						}
 
-						List<InformacionRelevante> infoRels = new ArrayList<InformacionRelevante>();
+						List<RelevantInformation> infoRels = new ArrayList<RelevantInformation>();
 
 						for (Distance dist : distancesList) {
 
@@ -331,19 +331,19 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 								/**/
 
-								InformacionRelevante ir = new InformacionRelevante();
+								RelevantInformation ir = new RelevantInformation();
 								ir
 										.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS:" +" ( (LAST SEPARATION - CURRENT DISTANCE)= "+(dsc.getLastSeparation()-dist.getDistanceSeconds())+")" 
 												+ dist
 												+ "INFO DSC"
 												+ dsc.toString());
 								ir.setFecha(Util.dameFechaActual());
-								List<Imagen> imagenes = new ArrayList<Imagen>();
+								List<Image> imagenes = new ArrayList<Image>();
 								imagenes.add(imagen);
 								ir.setImagenes(imagenes);
 
 								ir.setTipoInformacionRelevante(manager.find(
-										TipoInformacionRelevante.class, 2L));
+										RelevantInfoType.class, 2L));
 
 								infoRels.add(ir);
 
@@ -356,7 +356,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						}
 
 						if (infoRels.size() <= maxCandidatos) {
-							for (InformacionRelevante ir : infoRels) {
+							for (RelevantInformation ir : infoRels) {
 								manager.persist(ir);
 							}
 

@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.ProcTarea;
+import es.ucm.si.dneb.domain.ImageProsec;
+import es.ucm.si.dneb.domain.TaskProsec;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicion;
 
 @Service("ejecutorProcesamiento")
 @Scope("prototype")
 @Transactional(propagation = Propagation.SUPPORTS)
-public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
+public class EjecutorProcesamiento implements EjecutorTarea<TaskProsec> {
 
 	@Resource
 	private ServiceBusquedaDobles serviceBusquedaDobles;
@@ -29,7 +29,7 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 	@Resource
 	private ServiceCalculoPosicion serviceCalculoPosicion;
 
-	private ProcTarea procTarea;
+	private TaskProsec procTarea;
 	private Long tareaProcesamientoId;
 
 	private static final Log LOG = LogFactory
@@ -38,10 +38,10 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 	@PersistenceContext
 	EntityManager manager;
 
-	private List<ProcImagen> getDownloads() {
+	private List<ImageProsec> getDownloads() {
 
 		return manager.createNamedQuery(
-				"ProcTarea.getAllProcesamientoImagen").setParameter(1,
+				"TaskProsec.getAllProcesamientoImagen").setParameter(1,
 				this.procTarea).getResultList();
 
 	}
@@ -49,22 +49,22 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void ejecutar(Interrumpible inter) {
 
-		List<ProcImagen> imagens = getDownloads();
+		List<ImageProsec> imagens = getDownloads();
 
 		if (this.procTarea.getTipoProcesamiento()
 				.getIdTipoProcesamiento() == 1) {
 
-			for (ProcImagen imagen : imagens) {
+			for (ImageProsec imagen : imagens) {
 
 				if (inter.continuar()) {
 
-					ProcImagen procImg1 = manager.find(
-							ProcImagen.class, imagen.getId());
+					ImageProsec procImg1 = manager.find(
+							ImageProsec.class, imagen.getId());
 					// Buscamos la gemela pero con otro survey
 
-					List<ProcImagen> procImgs = manager
+					List<ImageProsec> procImgs = manager
 							.createNamedQuery(
-									"ProcTarea.getImagenesGemelas")
+									"TaskProsec.getImagenesGemelas")
 							.setParameter(1, procImg1.getTareaProcesamiento())
 							.setParameter(2,
 									procImg1.getImagen().getAscensionRecta())
@@ -84,7 +84,7 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 			}
 
 		} else {
-			for (ProcImagen imagen : imagens) {
+			for (ImageProsec imagen : imagens) {
 
 				if (inter.continuar()) {
 					
@@ -110,7 +110,7 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 	}
 
 	@Override
-	public ProcTarea getCore() {
+	public TaskProsec getCore() {
 		return this.procTarea;
 	}
 
@@ -120,7 +120,7 @@ public class EjecutorProcesamiento implements EjecutorTarea<ProcTarea> {
 	}
 
 	@Override
-	public void setCore(ProcTarea core) {
+	public void setCore(TaskProsec core) {
 		this.procTarea = core;
 	}
 

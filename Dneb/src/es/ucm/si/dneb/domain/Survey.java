@@ -21,7 +21,7 @@ public class Survey {
 	
 	
 	@ManyToMany(mappedBy="surveys")
-	private Collection<Tarea> tareas;
+	private Collection<Task> tareas;
 
 	public void setIdSurvey(long idSurvey) {
 		this.idSurvey = idSurvey;
@@ -39,11 +39,11 @@ public class Survey {
 		return descripcion;
 	}
 
-	public void setTareas(Collection<Tarea> tareas) {
+	public void setTareas(Collection<Task> tareas) {
 		this.tareas = tareas;
 	}
 
-	public Collection<Tarea> getTareas() {
+	public Collection<Task> getTareas() {
 		return tareas;
 	}
 

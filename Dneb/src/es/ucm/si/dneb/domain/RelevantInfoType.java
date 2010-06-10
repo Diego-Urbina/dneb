@@ -21,8 +21,8 @@ import javax.xml.bind.annotation.XmlType;
     "alias",
     "description"
 })
-@XmlRootElement(name = "TipoInformacionRelevante")
-public class TipoInformacionRelevante {
+@XmlRootElement(name = "RelevantInfoType")
+public class RelevantInfoType {
 	
 	
 	@Id
@@ -76,7 +76,7 @@ public class TipoInformacionRelevante {
 	    
 	    String retValue = "";
 	    
-	    retValue = "TipoInformacionRelevante ( "
+	    retValue = "RelevantInfoType ( "
 	        + super.toString() + TAB
 	        + "id = " + this.id + TAB
 	        + "alias = " + this.alias + TAB
