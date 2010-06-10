@@ -8,11 +8,6 @@ import com.intellij.uiDesigner.core.*;
 
 import es.ucm.si.dneb.service.math.*;
 
-
-
-/**
- * @author Brainrain
- */
 public class CoordinateConverter extends JPanel {
 	
 	private static final long serialVersionUID = 6657944572549232546L;
@@ -117,221 +112,306 @@ public class CoordinateConverter extends JPanel {
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-		label9 = new JLabel();
-		label10 = new JLabel();
-		label1 = new JLabel();
+		gradosDec = new JLabel();
+		gradosSex = new JLabel();
+		arLabel = new JLabel();
 		ar = new JTextField();
-		label3 = new JLabel();
+		arhLabel = new JLabel();
 		arh = new JTextField();
-		label2 = new JLabel();
+		decLabel = new JLabel();
 		dec = new JTextField();
-		label4 = new JLabel();
+		arminLabel = new JLabel();
 		armin = new JTextField();
-		label5 = new JLabel();
+		arsecLabel = new JLabel();
 		arsec = new JTextField();
-		label6 = new JLabel();
+		decgradLabel = new JLabel();
 		decGrad = new JTextField();
-		label7 = new JLabel();
+		decminLabel = new JLabel();
 		decMin = new JTextField();
-		label8 = new JLabel();
+		decsecLabel = new JLabel();
 		decSec = new JTextField();
 		separator1 = new JSeparator();
+		separator2 = new JSeparator();
 		decToSex = new JButton();
 		SexToDec = new JButton();
 		clean = new JButton();
+		titulo = new JLabel();
 
 		//======== this ========
-		setLayout(new GridLayoutManager(31, 30, new Insets(0, 50, 50, 50), 4, 4));
+		//setLayout(new GridLayoutManager(31, 30, new Insets(0, 50, 50, 50), 4, 4));
+		setLayout(new GridLayoutManager(12, 3, new Insets(30, 60, 0, 60), 5, -1));
 
+		//---- titulo ----
+		titulo.setText("CONVERSOR DE COORDENADAS");
+		titulo.setFont(titulo.getFont().deriveFont(titulo.getFont().getSize() + 10f));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(titulo, new GridConstraints(0, 0, 1, 3,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- separator1 ----
+		add(separator1, new GridConstraints(1, 0, 1, 3,
+				GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK ,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
+		
+		
+		
+		
 		//---- label9 ----
-		label9.setText("GRADOS DECIMALES");
-		add(label9, new GridConstraints(1, 1, 1, 12,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+		gradosDec.setText("GRADOS DECIMALES");
+		gradosDec.setFont(gradosDec.getFont().deriveFont(gradosDec.getFont().getSize() + 6f));
+		add(gradosDec, new GridConstraints(2, 0, 1, 3,
+			GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
-		//---- label10 ----
-		label10.setText("GRADOS SEXAGESIMALES");
-		add(label10, new GridConstraints(1, 18, 1, 8,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
+		
+		
+		
+		
+		
+		
 		//---- label1 ----
-		label1.setText("ASCENSI\u00d3N RECTA");
-		add(label1, new GridConstraints(3, 1, 1, 5,
+		arLabel.setText("ASCENSIÓN RECTA");
+		add(arLabel, new GridConstraints(3, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-		add(ar, new GridConstraints(3, 8, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
-		//---- label3 ----
-		label3.setText("AR H");
-		add(label3, new GridConstraints(3, 16, 1, 4,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(arh, new GridConstraints(3, 22, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
+		
 		//---- label2 ----
-		label2.setText("DECLINACI\u00d3N");
-		add(label2, new GridConstraints(5, 2, 1, 4,
+		decLabel.setText("DECLINACIÓN");
+		add(decLabel, new GridConstraints(3, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-		add(dec, new GridConstraints(5, 8, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
+		
+		
+		
+		
+		
+		// Textfield ar
+		add(ar, new GridConstraints(4, 0, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
 
+		// Textfield dec
+		add(dec, new GridConstraints(4, 1, 1, 1,
+				GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				GridConstraints.SIZEPOLICY_CAN_SHRINK,
+				null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- label10 ----
+		gradosSex.setText("GRADOS SEXAGESIMALES");
+		gradosSex.setFont(gradosSex.getFont().deriveFont(gradosSex.getFont().getSize() + 6f));
+		add(gradosSex, new GridConstraints(5, 0, 1, 3,
+			GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		//---- label3 ----
+		arhLabel.setText("AR H");
+		add(arhLabel, new GridConstraints(6, 0, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
 		//---- label4 ----
-		label4.setText("AR MIN");
-		add(label4, new GridConstraints(5, 16, 1, 4,
+		arminLabel.setText("AR MIN");
+		add(arminLabel, new GridConstraints(6, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-		add(armin, new GridConstraints(5, 22, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-
+		
 		//---- label5 ----
-		label5.setText("AR SEC");
-		add(label5, new GridConstraints(7, 16, 1, 4,
+		arsecLabel.setText("AR SEC");
+		add(arsecLabel, new GridConstraints(6, 2, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-		add(arsec, new GridConstraints(7, 22, 1, 5,
+		
+		
+		
+		
+		
+		
+		add(arh, new GridConstraints(7, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
+		
+		add(armin, new GridConstraints(7, 1, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		add(arsec, new GridConstraints(7, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		
+		
+		
+		
 
 		//---- label6 ----
-		label6.setText("DEC GRAD");
-		add(label6, new GridConstraints(9, 16, 1, 4,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(decGrad, new GridConstraints(9, 22, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+		decgradLabel.setText("DEC GRAD");
+		add(decgradLabel, new GridConstraints(8, 0, 1, 1,
+			GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
+		
 		//---- label7 ----
-		label7.setText("DEC MIN");
-		add(label7, new GridConstraints(11, 16, 1, 4,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			null, null, null));
-		add(decMin, new GridConstraints(11, 22, 1, 5,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+		decminLabel.setText("DEC MIN");
+		add(decminLabel, new GridConstraints(8, 1, 1, 1,
+			GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
+		
 		//---- label8 ----
-		label8.setText("DEC SEC");
-		add(label8, new GridConstraints(13, 16, 1, 4,
-			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+		decsecLabel.setText("DEC SEC");
+		add(decsecLabel, new GridConstraints(8, 2, 1, 1,
+			GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		add(decSec, new GridConstraints(13, 22, 1, 5,
+		
+		
+		
+		
+		
+		
+		add(decGrad, new GridConstraints(9, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
 			null, null, null));
-		add(separator1, new GridConstraints(16, 0, 1, 30,
+		
+		add(decMin, new GridConstraints(9, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		add(decSec, new GridConstraints(9, 2, 1, 1,
+			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			GridConstraints.SIZEPOLICY_CAN_SHRINK,
+			null, null, null));
+		
+		
+		
+		
+		
+		
+		add(separator2, new GridConstraints(10, 0, 1, 3,
+			GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-
+		
+		
+		
+		
+		
+		
 		//---- decToSex ----
-		decToSex.setText("DEC TO SEX");
+		decToSex.setText("A SEXAGESIMAL");
 		decToSex.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				decToSexActionPerformed(e);
 			}
 		});
-		add(decToSex, new GridConstraints(18, 3, 1, 5,
+		add(decToSex, new GridConstraints(11, 0, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 		
 		//---- clean ----
-		clean.setText("CLEAN FIELDS");
+		clean.setText("LIMPIAR CAMPOS");
 		clean.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cleanActionPerformed(e);
 			}
 		});
-		add(clean, new GridConstraints(18, 13, 1, 5,
+		add(clean, new GridConstraints(11, 1, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
 
 		//---- SexToDec ----
-		SexToDec.setText("SEX TO DEC");
+		SexToDec.setText("A DECIMAL");
 		SexToDec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SexToDecActionPerformed(e);
 			}
 		});
-		add(SexToDec, new GridConstraints(18, 23, 1, 6,
+		add(SexToDec, new GridConstraints(11, 2, 1, 1,
 			GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
 			null, null, null));
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-	private JLabel label9;
-	private JLabel label10;
-	private JLabel label1;
+	private JLabel titulo;
+	private JLabel gradosDec;
+	private JLabel gradosSex;
+	private JLabel arLabel;
+	private JLabel arhLabel;
+	private JLabel decLabel;
+	private JLabel arminLabel;
+	private JLabel arsecLabel;
+	private JLabel decgradLabel;
+	private JLabel decminLabel;
+	private JLabel decsecLabel;
 	private JTextField ar;
-	private JLabel label3;
 	private JTextField arh;
-	private JLabel label2;
-	private JTextField dec;
-	private JLabel label4;
 	private JTextField armin;
-	private JLabel label5;
 	private JTextField arsec;
-	private JLabel label6;
+	private JTextField dec;
 	private JTextField decGrad;
-	private JLabel label7;
 	private JTextField decMin;
-	private JLabel label8;
 	private JTextField decSec;
 	private JSeparator separator1;
+	private JSeparator separator2;
 	private JButton decToSex;
 	private JButton SexToDec;
 	private JButton clean;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
