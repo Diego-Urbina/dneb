@@ -135,7 +135,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 	    
 	    JButton buttonProcesar = new JButton();
 	    buttonProcesar.setIcon(new ImageIcon("images/buscar.png"));
-	    buttonProcesar.setToolTipText("Procesar puntos en la imagen");
+	    buttonProcesar.setToolTipText("Buscar estrellas en movimiento");
 	    buttonProcesar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonProcesarActionPerformed(e);
