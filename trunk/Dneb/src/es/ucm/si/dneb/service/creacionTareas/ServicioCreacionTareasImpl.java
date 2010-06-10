@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DoubleStarCatalog;
-import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.domain.FormatoFichero;
+import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.FileFormat;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.Task;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 import es.ucm.si.dneb.service.math.CoordinateConverter;
 import es.ucm.si.dneb.service.math.DecimalCoordinate;
@@ -53,24 +53,24 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 		Date fechaActual;
 
-		Tarea tarea = new Tarea();
+		Task tarea = new Task();
 
 		fechaActual = Util.dameFechaActual();
 
-		FormatoFichero formatoFichero;
+		FileFormat formatoFichero;
 
 		try {
-			formatoFichero = (FormatoFichero) manager.createNamedQuery(
-					"FormatoFichero:dameFormatoPorDescripcion").setParameter(1,
+			formatoFichero = (FileFormat) manager.createNamedQuery(
+					"FileFormat:dameFormatoPorDescripcion").setParameter(1,
 					formato).getSingleResult();
 		} catch (NoResultException e) {
 			LOG
-					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
+					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,No se Devuelve resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		} catch (NonUniqueResultException e) {
 			LOG
-					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,Se devuelve más de un resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		}
@@ -134,7 +134,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 			LOG.error("NO SE HA PODIDO PERSISTIR LA TAREA");
 
 		}
-		List<Imagen> imagens = crearDescargas(tarea);
+		List<Image> imagens = crearDescargas(tarea);
 
 		tarea.setDescargas(imagens);
 		try {
@@ -165,7 +165,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<Imagen> crearDescargas(Tarea tarea) {
+	public List<Image> crearDescargas(Task tarea) {
 		/*
 		 * Tanto AR como DEC inicial y final van en grados.
 		 * 
@@ -174,7 +174,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 		 * Solapamiento es un porcentaje??
 		 */
 		
-		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
+		ArrayList<Image> imagens = new ArrayList<Image>();
 
 		String ariniS = tarea.getArInicial();
 		Double arini = Double.parseDouble(ariniS);
@@ -209,7 +209,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 				for (Survey survey : surveys) {
 
-					Imagen imagen = new Imagen();
+					Image imagen = new Image();
 					imagen.setAscensionRecta(ar.toString());
 					imagen.setDeclinacion(dec.toString());
 					imagen.setDescargada(false);
@@ -280,7 +280,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void crearTarea(List<String> selectedSurveys,String alias, String ruta,List<DoubleStarCatalog> dscs) {
 		// TODO Ajustar el tamaño de la imagen según la distancia
-		Tarea tarea = new Tarea();
+		Task tarea = new Task();
 
 		tarea.setActiva(false);
 		tarea.setAlias(alias);
@@ -298,20 +298,20 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 		tarea.setFinalizada(false);
 
-		FormatoFichero formatoFichero;
+		FileFormat formatoFichero;
 
 		try {
-			formatoFichero = (FormatoFichero) manager.createNamedQuery(
-					"FormatoFichero:dameFormatoPorDescripcion").setParameter(1,
+			formatoFichero = (FileFormat) manager.createNamedQuery(
+					"FileFormat:dameFormatoPorDescripcion").setParameter(1,
 					"fits").getSingleResult();
 		} catch (NoResultException e) {
 			LOG
-					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
+					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,No se Devuelve resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		} catch (NonUniqueResultException e) {
 			LOG
-					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,Se devuelve más de un resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		}
@@ -356,7 +356,7 @@ public class ServicioCreacionTareasImpl implements ServicioCreacionTareas {
 
 		for (DoubleStarCatalog dsc : dscs) {
 			for(Survey surIter :surveys){
-				Imagen imagen = new Imagen();
+				Image imagen = new Image();
 	
 				imagen.setAncho(tarea.getAncho());
 				

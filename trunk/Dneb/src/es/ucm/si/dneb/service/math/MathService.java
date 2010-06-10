@@ -1,6 +1,6 @@
 package es.ucm.si.dneb.service.math;
 
-import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.Image;
 
 public interface MathService{
 	
@@ -8,6 +8,6 @@ public interface MathService{
 	
 	public double[][] transform(double image[][], double scale,double rotation,double verticalTranslation,double horizontalTranslation);
 	
-	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y);
+	public DecimalCoordinate pixelToCoordinatesConverter(Image imagen, int width, int height, double x, double y);
 
 }

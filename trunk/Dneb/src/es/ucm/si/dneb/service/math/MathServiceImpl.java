@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.Image;
 
 @Service("mathService")
 public class MathServiceImpl implements MathService{
@@ -66,7 +66,7 @@ public class MathServiceImpl implements MathService{
 	 * x e y son las coordenadas que queremos transformar
 	 */
 	@Override
-	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y) {
+	public DecimalCoordinate pixelToCoordinatesConverter(Image imagen, int width, int height, double x, double y) {
 		SexagesimalCoordinate sc;
 		DecimalCoordinate dc;
 		

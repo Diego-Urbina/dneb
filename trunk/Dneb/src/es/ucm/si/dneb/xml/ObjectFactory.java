@@ -8,10 +8,10 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-import es.ucm.si.dneb.domain.DatosRelevantes;
-import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.domain.InformacionRelevante;
-import es.ucm.si.dneb.domain.TipoInformacionRelevante;
+import es.ucm.si.dneb.domain.RelevantData;
+import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.RelevantInformation;
+import es.ucm.si.dneb.domain.RelevantInfoType;
 
 
 
@@ -34,22 +34,22 @@ import es.ucm.si.dneb.domain.TipoInformacionRelevante;
 	    public ObjectFactory() {
 	    }
 	    
-	    public Imagen createImagen(){
+	    public Image createImagen(){
 	    	
-	    	return new Imagen();
+	    	return new Image();
 	    }
 
-	    public DatosRelevantes createDatosRelevantes(){
+	    public RelevantData createDatosRelevantes(){
 	    	
-	    	return new DatosRelevantes();
+	    	return new RelevantData();
 	    }
 	    
-	    public InformacionRelevante createInformacionRelevante(){
-	    	return new InformacionRelevante();
+	    public RelevantInformation createInformacionRelevante(){
+	    	return new RelevantInformation();
 	    }
 	    
-	    public TipoInformacionRelevante createTipoInformacionRelevante(){
-	    	return new TipoInformacionRelevante();
+	    public RelevantInfoType createTipoInformacionRelevante(){
+	    	return new RelevantInfoType();
 	    }
 	 
 

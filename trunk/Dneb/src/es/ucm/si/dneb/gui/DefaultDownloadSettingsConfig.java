@@ -14,7 +14,7 @@ import com.intellij.uiDesigner.core.*;
  */
 
 import es.ucm.si.dneb.domain.DownloadConfig;
-import es.ucm.si.dneb.domain.FormatoFichero;
+import es.ucm.si.dneb.domain.FileFormat;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
@@ -26,7 +26,7 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 	private ServiceDownloadDefaultConfig serviceDownloadDefaultConfig;
 	private ServicioGestionTareas servicioGestionTareas;
 	private ArrayList<Survey> surveys;
-	private ArrayList<FormatoFichero> formatosFichero;
+	private ArrayList<FileFormat> formatosFichero;
 	private ArrayList<DownloadConfig> configsList;
 	
 	public DefaultDownloadSettingsConfig() {
@@ -79,12 +79,12 @@ public class DefaultDownloadSettingsConfig extends JPanel {
         
         //INICIALIZACION DE FORMATOS DE FICHERO
         
-        formatosFichero = (ArrayList<FormatoFichero>) serviceDownloadDefaultConfig.getFormatosFichero();
+        formatosFichero = (ArrayList<FileFormat>) serviceDownloadDefaultConfig.getFormatosFichero();
         
         DefaultComboBoxModel listFormato = new DefaultComboBoxModel();
         
         
-        for (FormatoFichero aux : formatosFichero){
+        for (FileFormat aux : formatosFichero){
         	listFormato.addElement(aux.getAlias());
         }
         
@@ -145,13 +145,13 @@ public class DefaultDownloadSettingsConfig extends JPanel {
 		//this.comboBoxSURVEY2.setSelectedIndex();
 		
 		
-		FormatoFichero formFich= selectedDownloadDefaultConfiguration.getFormatoFichero();
+		FileFormat formFich= selectedDownloadDefaultConfiguration.getFormatoFichero();
 		
 		
 		
 		for(int i= 0 ; i<=this.formatosFichero.size()-1 ;i++){
 			
-			FormatoFichero aux= formatosFichero.get(i);
+			FileFormat aux= formatosFichero.get(i);
 			
 			if(aux.getAlias().equals(formFich.getAlias())){
 				formatoFichero.setSelectedIndex(i);

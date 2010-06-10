@@ -36,7 +36,7 @@ import javax.swing.JTextField;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
-import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.Image;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.calculoPosicion.ServiceCalculoPosicion;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
@@ -68,7 +68,7 @@ public class FitsCoordinateViewerPanel extends JPanel implements MouseListener, 
 	private LectorImageHDU l;
 	private PlanarImage input, im, scaledIm;
 	private DisplayImageWithRegions display;
-	private Imagen imagen;
+	private Image imagen;
 	private DecimalCoordinate dc;
 	
 	private MathService mathService;

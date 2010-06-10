@@ -30,8 +30,8 @@ import javax.persistence.Table;
     "tipoInformacionRelevante",
     "imagenes"
 })
-@XmlRootElement(name = "InformacionRelevante")
-public class InformacionRelevante {
+@XmlRootElement(name = "RelevantInformation")
+public class RelevantInformation {
 	
 	
 	@Id
@@ -51,12 +51,12 @@ public class InformacionRelevante {
 	@ManyToOne
     @JoinColumn(name="TIP_INF_REL_FK",nullable=false)
     @XmlElement(required = true)
-	private TipoInformacionRelevante tipoInformacionRelevante;
+	private RelevantInfoType tipoInformacionRelevante;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="INFOREL_IMAGEN_JT")
 	@XmlElement(required = true)
-	private List<Imagen> imagenes;
+	private List<Image> imagenes;
 	
 
 	public long getId() {
@@ -76,11 +76,11 @@ public class InformacionRelevante {
 		this.description = description;
 	}
 
-	public void setImagenes(List<Imagen> imagenes) {
+	public void setImagenes(List<Image> imagenes) {
 		this.imagenes = imagenes;
 	}
 
-	public List<Imagen> getImagenes() {
+	public List<Image> getImagenes() {
 		return imagenes;
 	}
 
@@ -92,11 +92,11 @@ public class InformacionRelevante {
 		return fecha;
 	}
 
-	public void setTipoInformacionRelevante(TipoInformacionRelevante tipoInformacionRelevante) {
+	public void setTipoInformacionRelevante(RelevantInfoType tipoInformacionRelevante) {
 		this.tipoInformacionRelevante = tipoInformacionRelevante;
 	}
 
-	public TipoInformacionRelevante getTipoInformacionRelevante() {
+	public RelevantInfoType getTipoInformacionRelevante() {
 		return tipoInformacionRelevante;
 	}
 
@@ -113,7 +113,7 @@ public class InformacionRelevante {
 	    
 	    String retValue = "";
 	    
-	    retValue = "InformacionRelevante ( "
+	    retValue = "RelevantInformation ( "
 	       +"id = " + this.id + TAB
 	        + "description = " + this.description + TAB
 	        + "fecha = " + this.fecha + TAB

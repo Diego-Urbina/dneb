@@ -29,11 +29,11 @@ import org.springframework.context.ApplicationContext;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.domain.ParamProcTarea;
-import es.ucm.si.dneb.domain.ProcImagen;
-import es.ucm.si.dneb.domain.ProcTarea;
-import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.TaskProsecParam;
+import es.ucm.si.dneb.domain.ImageProsec;
+import es.ucm.si.dneb.domain.TaskProsec;
+import es.ucm.si.dneb.domain.Task;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientos;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
@@ -65,10 +65,10 @@ public class CrearProcesamiento extends JPanel {
 	
 	private void rellenarTabla() {
 		try {
-	        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasFinalizadas();
+	        ArrayList<Task> tareas = (ArrayList<Task>) servicioGestionTareas.getTareasFinalizadas();
 	        
 	        Object [] fila = new Object[tableTasks.getColumnCount()];
-	        for (Tarea tarea : tareas) {
+	        for (Task tarea : tareas) {
 	        	fila[0] = tarea.getIdTarea();
 	        	fila[1] = tarea.getAlto();
 	        	fila[2] = tarea.getAncho();
@@ -100,8 +100,8 @@ public class CrearProcesamiento extends JPanel {
 		
 		try {
 		
-			ArrayList<ParamProcTarea> paramProcTareas = new ArrayList<ParamProcTarea>();
-			ProcTarea procesamiento=new ProcTarea();
+			ArrayList<TaskProsecParam> paramProcTareas = new ArrayList<TaskProsecParam>();
+			TaskProsec procesamiento=new TaskProsec();
 			String tipoProc = (String) cbTipoProc.getSelectedItem();
 			
 			if (tipoProc.equals("Procesamiento busqueda dobles")) {
@@ -112,7 +112,7 @@ public class CrearProcesamiento extends JPanel {
 				if (umbral <= 0 || brillo <= 0)
 					throw new Exception("Los parámetros deben ser mayores que 0");
 				
-				ParamProcTarea p1 = new ParamProcTarea(), p2 = new ParamProcTarea();
+				TaskProsecParam p1 = new TaskProsecParam(), p2 = new TaskProsecParam();
 				
 				p1.setTareaProcesamiento(procesamiento);
 				p1.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(1L));
@@ -134,7 +134,7 @@ public class CrearProcesamiento extends JPanel {
 				if (umbral <= 0 || brillo <= 0)
 					throw new Exception("Los parámetros deben ser mayores que 0");
 				
-				ParamProcTarea p1 = new ParamProcTarea(), p2 = new ParamProcTarea();
+				TaskProsecParam p1 = new TaskProsecParam(), p2 = new TaskProsecParam();
 				
 				p1.setTareaProcesamiento(procesamiento);
 				p1.setTipoParametro(servicioGestionProcesamientos.getTipoParametroById(1L));
@@ -161,18 +161,18 @@ public class CrearProcesamiento extends JPanel {
 			procesamiento.setFechaUltimaAct(null);
 			procesamiento.setFinalizada(false);
 			
-			Tarea tarea=servicioGestionTareas.getTareaById((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
+			Task tarea=servicioGestionTareas.getTareaById((Long) modelo.getValueAt(tableTasks.getSelectedRow(), 0));
 			procesamiento.setTarea(tarea);
 			
 			procesamiento.setTipoProcesamiento(servicioGestionProcesamientos.getTipoProcesamientoByAlias(tipoProc));
 			
-			ArrayList<ProcImagen> procesamientoImagenes= new ArrayList<ProcImagen>();
+			ArrayList<ImageProsec> procesamientoImagenes= new ArrayList<ImageProsec>();
 			
-			List<Imagen> descargas = servicioGestionTareas.getDescargasTarea(tarea.getIdTarea());
+			List<Image> descargas = servicioGestionTareas.getDescargasTarea(tarea.getIdTarea());
 			
-			for(Imagen imagen: descargas){
+			for(Image imagen: descargas){
 				
-				ProcImagen procImagen= new ProcImagen();
+				ImageProsec procImagen= new ImageProsec();
 				procImagen.setImagen(imagen);
 				procImagen.setFinalizada(false);
 				procImagen.setTareaProcesamiento(procesamiento);

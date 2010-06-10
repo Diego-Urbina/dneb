@@ -17,18 +17,18 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="ProcTarea.getNumeroProcesamientoCompletados",query="select count(*) from ProcImagen p where p.procTarea=? and p.finalizada=true"),
-	@NamedQuery(name="ProcTarea.getProcesamientosByType",query="select t from ProcTarea t where t.tipoProcesamiento=?"),
-	@NamedQuery(name="ProcTarea.getImagenesGemelas",query="select p from  ProcImagen p where procTarea=? and imagen.ascensionRecta=? and imagen.declinacion=?"),
-	@NamedQuery(name="ProcTarea.getTareaProcesamientoActivo",query="select t from ProcTarea t where t.activa=true"),
-	@NamedQuery(name="ProcTarea.getAllProcesamientoImagen",query="select p from ProcImagen p where p.procTarea=? "),
-	@NamedQuery(name="ProcTarea.getAllProcesamientos",query="select t from ProcTarea t"),
-	@NamedQuery(name="ProcTarea.getParams",query="select t.paramProcTareas from ProcTarea t where t=?"),
-	@NamedQuery(name="ProcTarea.getNumeroProcesamientos",query="select count(*) from ProcImagen p where p.procTarea=?")
+	@NamedQuery(name="TaskProsec.getNumeroProcesamientoCompletados",query="select count(*) from ImageProsec p where p.procTarea=? and p.finalizada=true"),
+	@NamedQuery(name="TaskProsec.getProcesamientosByType",query="select t from TaskProsec t where t.tipoProcesamiento=?"),
+	@NamedQuery(name="TaskProsec.getImagenesGemelas",query="select p from  ImageProsec p where procTarea=? and imagen.ascensionRecta=? and imagen.declinacion=?"),
+	@NamedQuery(name="TaskProsec.getTareaProcesamientoActivo",query="select t from TaskProsec t where t.activa=true"),
+	@NamedQuery(name="TaskProsec.getAllProcesamientoImagen",query="select p from ImageProsec p where p.procTarea=? "),
+	@NamedQuery(name="TaskProsec.getAllProcesamientos",query="select t from TaskProsec t"),
+	@NamedQuery(name="TaskProsec.getParams",query="select t.paramProcTareas from TaskProsec t where t=?"),
+	@NamedQuery(name="TaskProsec.getNumeroProcesamientos",query="select count(*) from ImageProsec p where p.procTarea=?")
 	
 })
 @Table(name="TAREA_PROCESAMIENTO")
-public class ProcTarea {
+public class TaskProsec {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,17 +55,17 @@ public class ProcTarea {
 	
 	@ManyToOne
 	@JoinColumn(name="TAREA",nullable=false)
-	private Tarea tarea;
+	private Task tarea;
 	
 	@OneToMany(mappedBy="procTarea")
-	private List<ProcImagen> procesamientoImagenes;
+	private List<ImageProsec> procesamientoImagenes;
 
 	@ManyToOne
 	@JoinColumn(name="TIPO_PROC",nullable=false) 
-	private TipoProcesamiento tipoProcesamiento;
+	private ProsecType tipoProcesamiento;
 	
 	@OneToMany(mappedBy="procTarea")
-	private List<ParamProcTarea> paramProcTareas;
+	private List<TaskProsecParam> paramProcTareas;
 
 
 	public String getAlias() {
@@ -121,35 +121,35 @@ public class ProcTarea {
 	}
 
 	
-	public void setTipoProcesamiento(TipoProcesamiento tipoProcesamiento) {
+	public void setTipoProcesamiento(ProsecType tipoProcesamiento) {
 		this.tipoProcesamiento = tipoProcesamiento;
 	}
 
-	public TipoProcesamiento getTipoProcesamiento() {
+	public ProsecType getTipoProcesamiento() {
 		return tipoProcesamiento;
 	}
 
-	public Tarea getTarea() {
+	public Task getTarea() {
 		return tarea;
 	}
 
-	public void setTarea(Tarea tarea) {
+	public void setTarea(Task tarea) {
 		this.tarea = tarea;
 	}
 
-	public void setProcesamientoImagenes(List<ProcImagen> procesamientoImagenes) {
+	public void setProcesamientoImagenes(List<ImageProsec> procesamientoImagenes) {
 		this.procesamientoImagenes = procesamientoImagenes;
 	}
 
-	public List<ProcImagen> getProcesamientoImagenes() {
+	public List<ImageProsec> getProcesamientoImagenes() {
 		return procesamientoImagenes;
 	}
 
-	public void setParametros(List<ParamProcTarea> paramProcTareas) {
+	public void setParametros(List<TaskProsecParam> paramProcTareas) {
 		this.paramProcTareas = paramProcTareas;
 	}
 
-	public List<ParamProcTarea> getParametros() {
+	public List<TaskProsecParam> getParametros() {
 		return paramProcTareas;
 	}
 
@@ -174,7 +174,7 @@ public class ProcTarea {
 	    
 	    String retValue = "";
 	    
-	    retValue = "ProcTarea ( "
+	    retValue = "TaskProsec ( "
 	        + super.toString() + TAB
 	        + "idProcesamiento = " + this.idProcesamiento + TAB
 	        + "alias = " + this.alias + TAB

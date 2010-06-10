@@ -15,20 +15,20 @@ import javax.xml.bind.annotation.XmlType;
     "infoRelevante"
 })
 @XmlRootElement(name = "datosRelevantes")
-public class DatosRelevantes {
+public class RelevantData {
 
 	 @XmlElement(required = true)
-	    protected List<InformacionRelevante> infoRelevante;
+	    protected List<RelevantInformation> infoRelevante;
 
-	public List<InformacionRelevante> getInfoRelevante() {
+	public List<RelevantInformation> getInfoRelevante() {
 		if(infoRelevante!=null){
 			return infoRelevante;
 		}else{
-			return new ArrayList<InformacionRelevante>();
+			return new ArrayList<RelevantInformation>();
 		}
 	}
 
-	public void setInfoRelevante(List<InformacionRelevante> infoRelevante) {
+	public void setInfoRelevante(List<RelevantInformation> infoRelevante) {
 		this.infoRelevante = infoRelevante;
 	}
 	 

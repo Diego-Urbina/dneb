@@ -13,10 +13,10 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="FormatoFichero:dameFormatoPorDescripcion",query="select f from FormatoFichero f where description=?"),
-	@NamedQuery(name="FormatoFichero:dameTodosFormatos",query="select f from FormatoFichero f")
+	@NamedQuery(name="FileFormat:dameFormatoPorDescripcion",query="select f from FileFormat f where description=?"),
+	@NamedQuery(name="FileFormat:dameTodosFormatos",query="select f from FileFormat f")
 })
-public class FormatoFichero {
+public class FileFormat {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +28,7 @@ public class FormatoFichero {
 	
 	
 	@OneToMany(mappedBy="formatoFichero")
-	private Collection<Tarea> tareas;
+	private Collection<Task> tareas;
 	
 	
 	
@@ -48,11 +48,11 @@ public class FormatoFichero {
 		return idFormatoFichero;
 	}
 
-	public void setTareas(Collection<Tarea> tareas) {
+	public void setTareas(Collection<Task> tareas) {
 		this.tareas = tareas;
 	}
 
-	public Collection<Tarea> getTareas() {
+	public Collection<Task> getTareas() {
 		return tareas;
 	}
 
@@ -77,7 +77,7 @@ public class FormatoFichero {
 	    
 	    String retValue = "";
 	    
-	    retValue = "FormatoFichero ( "
+	    retValue = "FileFormat ( "
 	        + super.toString() + TAB
 	        + "idFormatoFichero = " + this.idFormatoFichero + TAB
 	        + "alias = " + this.alias + TAB

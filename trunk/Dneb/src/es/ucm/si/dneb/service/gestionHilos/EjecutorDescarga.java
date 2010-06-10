@@ -13,20 +13,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Imagen;
-import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.Task;
 import es.ucm.si.dneb.service.downloadImage.ServiceDownloadImage;
 
 @Service("ejecutorDescarga")
 @Scope("prototype")
 @Transactional(propagation=Propagation.SUPPORTS)
-public class EjecutorDescarga implements EjecutorTarea<Tarea>{
+public class EjecutorDescarga implements EjecutorTarea<Task>{
 
 	 
     private static final Log LOG = LogFactory
     .getLog(EjecutorDescarga.class);
     private Long idTarea;
-    private Tarea tarea;
+    private Task tarea;
     
     @PersistenceContext
     EntityManager manager;
@@ -44,18 +44,18 @@ public class EjecutorDescarga implements EjecutorTarea<Tarea>{
             return idTarea;
     }
 
-    public void setCore(Tarea tarea) {
+    public void setCore(Task tarea) {
             this.tarea = tarea;
     }
 
-    public Tarea getCore() {
+    public Task getCore() {
             return tarea;
     }
     
     //@Transactional(propagation= Propagation.SUPPORTS)
-    private List<Imagen> getDownloads() {
-            List<Imagen> imagens = manager.createNamedQuery(
-            "Tarea:DameDescargasPendientesDeEstaTarea").setParameter(1,
+    private List<Image> getDownloads() {
+            List<Image> imagens = manager.createNamedQuery(
+            "Task:DameDescargasPendientesDeEstaTarea").setParameter(1,
             tarea.getIdTarea()).getResultList();
             return imagens;
     }
@@ -64,8 +64,8 @@ public class EjecutorDescarga implements EjecutorTarea<Tarea>{
     @Transactional(propagation = Propagation.REQUIRED)
     public void ejecutar(Interrumpible inter){
             /**TODO**/
-            List<Imagen> imagens = getDownloads();
-            for (Imagen imagen : imagens) {
+            List<Image> imagens = getDownloads();
+            for (Image imagen : imagens) {
                     /*startDownload(descarga);*/
                     LOG.info("HILOS STOP =" + stop);
                     

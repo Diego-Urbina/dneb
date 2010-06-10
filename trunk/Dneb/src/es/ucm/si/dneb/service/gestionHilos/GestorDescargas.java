@@ -9,11 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.Task;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
 
 @Service("gestorDescargas")
-public class GestorDescargas implements GestorHilos<Tarea> {
+public class GestorDescargas implements GestorHilos<Task> {
 
 	private static final Log LOG = LogFactory.getLog(GestorDescargas.class);
 
@@ -23,12 +23,12 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 		hilos = new HashMap<Long, Hilo>();
 	}
 
-	public void anadirHilo(Tarea tarea) {
+	public void anadirHilo(Task tarea) {
 
 		LOG.debug("AÑADIR HILO:" + tarea.getIdTarea());
 
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		EjecutorTarea<Tarea> gestor = (EjecutorTarea<Tarea>) ctx.getBean("ejecutorDescarga");
+		EjecutorTarea<Task> gestor = (EjecutorTarea<Task>) ctx.getBean("ejecutorDescarga");
 		gestor.setCore(tarea);
 		gestor.setId(tarea.getIdTarea());
 
@@ -39,12 +39,12 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 
 	}
 
-	public void crearHilosParaTodasLasTareas(List<Tarea> tareas) {
+	public void crearHilosParaTodasLasTareas(List<Task> tareas) {
 
 		LOG.debug("LLAMADA A CREAR HILOS PARA TODAS LAS DESCARGAS");
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();
-		for (Tarea tarea : tareas) {
-			EjecutorTarea<Tarea> gestor = (EjecutorTarea<Tarea>) ctx
+		for (Task tarea : tareas) {
+			EjecutorTarea<Task> gestor = (EjecutorTarea<Task>) ctx
 					.getBean("ejecutorDescarga");
 			///gestor.setTarea(tarea);
 			gestor.setCore(tarea);
@@ -96,7 +96,7 @@ public class GestorDescargas implements GestorHilos<Tarea> {
 		
 		Hilo hilo = hilos.get(idHilo);
 
-		//Tarea tarea = hilo.getEjecutor().getTarea();
+		//Task tarea = hilo.getEjecutor().getTarea();
 
 		this.eliminarHilo(idHilo);
 

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.ucm.si.dneb.domain.DownloadConfig;
-import es.ucm.si.dneb.domain.FormatoFichero;
+import es.ucm.si.dneb.domain.FileFormat;
 import es.ucm.si.dneb.domain.Survey;
 
 
@@ -79,8 +79,8 @@ public class ServiceDownloadDefaultConfigImpl implements ServiceDownloadDefaultC
 
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<FormatoFichero> getFormatosFichero() {
-		return manager.createNamedQuery("FormatoFichero:dameTodosFormatos")
+	public List<FileFormat> getFormatosFichero() {
+		return manager.createNamedQuery("FileFormat:dameTodosFormatos")
 				.getResultList();
 	}
 	

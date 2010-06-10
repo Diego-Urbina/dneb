@@ -32,7 +32,7 @@ import javax.swing.JScrollPane;
 
 import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
-import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.Image;
 import es.ucm.si.dneb.service.busquedaDobles.ServiceBusquedaDobles;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.image.app.DisplayImageWithRegions;
@@ -59,7 +59,7 @@ public class DoubleStarsViewerPanel extends JPanel implements AdjustmentListener
 	private LectorImageHDU l1, l2;
 	private PlanarImage input1, input2;
 	private DisplayImageWithRegions display1, display2;
-	private Imagen im1, im2;
+	private Image im1, im2;
 	
 	private ServiceBusquedaDobles serviceBusquedaDobles;
 	private ServicioGestionTareas servicioGestionTareas;
