@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.Imagen;
 
 
 @Service("serviceDownloadImage")
@@ -41,7 +41,7 @@ public class ServiceDownloadImageImpl  implements es.ucm.si.dneb.service.downloa
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void startDownload(Long idDescarga,double alto,String formatoFichero) {
 		
-		Image imagen = manager.find(Image.class, idDescarga);
+		Imagen imagen = manager.find(Imagen.class, idDescarga);
 		
 		downloadImage(imagen.getSurvey().getDescripcion(), imagen
 		.getAscensionRecta().toString(), imagen.getDeclinacion()

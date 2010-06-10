@@ -2,17 +2,17 @@ package es.ucm.si.dneb.service.gestionProcesamientos;
 
 import java.util.List;
 
-import es.ucm.si.dneb.domain.TaskProsec;
-import es.ucm.si.dneb.domain.ParamType;
-import es.ucm.si.dneb.domain.ProsecType;
+import es.ucm.si.dneb.domain.ProcTarea;
+import es.ucm.si.dneb.domain.TipoParametro;
+import es.ucm.si.dneb.domain.TipoProcesamiento;
 
 public interface ServicioGestionProcesamientos {
 	
-	public List<TaskProsec> getProcesamientosDobles();
+	public List<ProcTarea> getProcesamientosDobles();
 	
-	public List<TaskProsec> getProcesamientosDistancia();
+	public List<ProcTarea> getProcesamientosDistancia();
 	
-	public List<TaskProsec> getProcesamientos();
+	public List<ProcTarea> getProcesamientos();
 	
 	public Integer  getPorcentajeCompletado(Long idProcesamiento);
 	
@@ -24,10 +24,10 @@ public interface ServicioGestionProcesamientos {
 	
 	public List<String> getTiposProcesamiento();
 	
-	public void crearProcesamiento(TaskProsec procesamiento );
+	public void crearProcesamiento(ProcTarea procesamiento );
 	
-	public ProsecType getTipoProcesamientoByAlias(String alias);
+	public TipoProcesamiento getTipoProcesamientoByAlias(String alias);
 	
-	public ParamType getTipoParametroById(Long idParametro);
+	public TipoParametro getTipoParametroById(Long idParametro);
 
 }

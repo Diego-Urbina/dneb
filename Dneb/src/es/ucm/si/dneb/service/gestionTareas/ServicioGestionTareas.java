@@ -8,7 +8,7 @@ import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 
 public interface ServicioGestionTareas {
 	
-	public Task getTareaById(long id);
+	public Tarea getTareaById(long id);
 	
 	public void iniciarTarea(long tareaId);
 	
@@ -24,18 +24,18 @@ public interface ServicioGestionTareas {
 		
 	public List<Survey> getAllSurveys();
 	
-	public List<Task> getTareas();
+	public List<Tarea> getTareas();
 	
-	public List<Image> getDescargasTarea(Long tareaId);
+	public List<Imagen> getDescargasTarea(Long tareaId);
 	
-	public List<Task> getTareasPendientes();
+	public List<Tarea> getTareasPendientes();
 	
 	public GestorDescargas getGestorDescargas();
 	
-	public void createSingleDownloadTask(String alias, String descripcion, Double alto, Double ancho, FileFormat formatoFichero, String ruta, List<Survey> surveys ,Double ar, Double dec,boolean iniciarDescarga);
+	public void createSingleDownloadTask(String alias, String descripcion, Double alto, Double ancho, FormatoFichero formatoFichero, String ruta, List<Survey> surveys ,Double ar, Double dec,boolean iniciarDescarga);
 	
-	public List<Task> getTareasFinalizadas();
+	public List<Tarea> getTareasFinalizadas();
 	
-	public Image getImagenByPath(String path);
+	public Imagen getImagenByPath(String path);
 }
 

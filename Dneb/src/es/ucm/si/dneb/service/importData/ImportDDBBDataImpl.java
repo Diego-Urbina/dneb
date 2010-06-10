@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.LoadData;
-import es.ucm.si.dneb.domain.FileFormat;
-import es.ucm.si.dneb.domain.Image;
+import es.ucm.si.dneb.domain.CargaDatos;
+import es.ucm.si.dneb.domain.FormatoFichero;
+import es.ucm.si.dneb.domain.Imagen;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Task;
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareasException;
 import es.ucm.si.dneb.util.Util;
 
@@ -35,7 +35,7 @@ public class ImportDDBBDataImpl implements ImportDDBBData{
 	
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void generarTarea(List<LoadData> cargaDatos,List<Survey> surveys) {
+	public void generarTarea(List<CargaDatos> cargaDatos,List<Survey> surveys) {
 		
 		
 		if(cargaDatos.size()==0){
@@ -60,26 +60,26 @@ public class ImportDDBBDataImpl implements ImportDDBBData{
 		
 		String formatoFichero= resource.getString("formatodefecto");
 		
-		FileFormat formato;
+		FormatoFichero formato;
 		
 		try {
-			formato = (FileFormat) manager.createNamedQuery(
-					"FileFormat:dameFormatoPorDescripcion").setParameter(1,
+			formato = (FormatoFichero) manager.createNamedQuery(
+					"FormatoFichero:dameFormatoPorDescripcion").setParameter(1,
 							formatoFichero).getSingleResult();
 		} catch (NoResultException e) {
 			LOG
-					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,No se Devuelve resultado");
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		} catch (NonUniqueResultException e) {
 			LOG
-					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		}
 
 		
-		Task tarea = new Task();
+		Tarea tarea = new Tarea();
 		tarea.setActiva(false);
 		tarea.setAlto(Double.parseDouble(alto));
 		tarea.setAncho(Double.parseDouble(ancho));
@@ -97,14 +97,14 @@ public class ImportDDBBDataImpl implements ImportDDBBData{
 		/**TODO**/
 		manager.persist(tarea);
 		
-		ArrayList<Image> imagens = new ArrayList<Image>();
+		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
 		
 		
-		for(LoadData punto : cargaDatos){
+		for(CargaDatos punto : cargaDatos){
 			
 			for(Survey survey : surveys){
 			
-				Image imagen = new Image();
+				Imagen imagen = new Imagen();
 				imagen.setAncho(Double.parseDouble(ancho));
 				String ar =new Double(punto.getAscencionRecta()).toString();
 				imagen.setAscensionRecta(ar);
@@ -134,15 +134,15 @@ public class ImportDDBBDataImpl implements ImportDDBBData{
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<LoadData> getAllDatosAImportar() {
-		return manager.createQuery("select c from LoadData c where c.procesado=false").getResultList();
+	public List<CargaDatos> getAllDatosAImportar() {
+		return manager.createQuery("select c from CargaDatos c where c.procesado=false").getResultList();
 		
 	}
 
 	@Override
-	public LoadData getCargaDatosById(Long id) {
+	public CargaDatos getCargaDatosById(Long id) {
 		
-		return manager.find(LoadData.class, id);
+		return manager.find(CargaDatos.class, id);
 	}
 
 	@Override

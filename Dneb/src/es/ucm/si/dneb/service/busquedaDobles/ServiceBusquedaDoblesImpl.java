@@ -31,10 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Jama.Matrix;
 
-import es.ucm.si.dneb.domain.Image;
-import es.ucm.si.dneb.domain.RelevantInformation;
-import es.ucm.si.dneb.domain.ImageProsec;
-import es.ucm.si.dneb.domain.RelevantInfoType;
+import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.InformacionRelevante;
+import es.ucm.si.dneb.domain.ProcImagen;
+import es.ucm.si.dneb.domain.TipoInformacionRelevante;
 import es.ucm.si.dneb.service.gestionProcesamientos.ServicioGestionProcesamientosException;
 import es.ucm.si.dneb.service.image.centroid.CalculateBookCentroid;
 import es.ucm.si.dneb.service.image.segmentation.LectorImageHDU;
@@ -66,14 +66,14 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	.getLog(ServiceBusquedaDoblesImpl.class);
 		
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void iniciarProcesamiento(List<ImageProsec> procImgs) {
+	public void iniciarProcesamiento(List<ProcImagen> procImgs) {
 		
 		// Obtener nombre de ficheros y parametros configurables
-		Image im1, im2;
+		Imagen im1, im2;
 		ArrayList<Pair<Point>> res;
-		List<RelevantInformation> infoRels = new ArrayList<RelevantInformation>();
-		RelevantInformation ir;
-		List<Image> imagenes = new ArrayList<Image>();
+		List<InformacionRelevante> infoRels = new ArrayList<InformacionRelevante>();
+		InformacionRelevante ir;
+		List<Imagen> imagenes = new ArrayList<Imagen>();
 		DecimalCoordinate dc;
 		
 		LOG.info("PROCESAMIENTO DE BUSQUEDA DE ESTRELLAS DOBLES INFO:");
@@ -88,14 +88,14 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			for (Pair<Point> p : res) {
 				dc = pixelToCoordinatesConverter(im1, pi.getWidth(), pi.getHeight(), p.getA().getX(), p.getA().getY());
 				LOG.info("Estrella: " + dc.getAr() + "    +" + dc.getDec());
-				ir = new RelevantInformation();
+				ir = new InformacionRelevante();
 				imagenes.clear();
 				ir.setDescription("BUSQUEDA ESTRELLAS DOBLES: Estrella: " + dc.getAr() + "    +" + dc.getDec());
 				ir.setFecha(Util.dameFechaActual());
 				imagenes.add(im1);
 				imagenes.add(im2);
 				ir.setImagenes(imagenes);
-				ir.setTipoInformacionRelevante(manager.find(RelevantInfoType.class, 1L));
+				ir.setTipoInformacionRelevante(manager.find(TipoInformacionRelevante.class, 1L));
 				infoRels.add(ir);
 			}
 		}
@@ -106,13 +106,13 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		manager.merge(procImgs.get(0));
 		manager.merge(procImgs.get(1));
 		
-		for (RelevantInformation i : infoRels) {
+		for (InformacionRelevante i : infoRels) {
 			manager.persist(i);
 		}
 		
 	}
 	
-	public ArrayList<Pair<Point>> busquedaEstrellasMovimiento(Image im1, Image im2) {
+	public ArrayList<Pair<Point>> busquedaEstrellasMovimiento(Imagen im1, Imagen im2) {
 		
 		/* Algoritmo de busqueda de estrellas candidatas a haberse movido
 		 * 
@@ -131,9 +131,9 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		try {
 			
 			String filename1 = im1.getRutaFichero();
-			LOG.info("Image 1: " + filename1);
+			LOG.info("Imagen 1: " + filename1);
 			String filename2 = im2.getRutaFichero();
-			LOG.info("Image 2: " + filename2);
+			LOG.info("Imagen 2: " + filename2);
 			
 			
 			ArrayList<Pair<Point>> resultado = new ArrayList<Pair<Point>>();
@@ -194,7 +194,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 			}
 			
 			LectorImageHDU auxLI;
-			Image auxIm;
+			Imagen auxIm;
 			ArrayList<Point> auxCentroides;
 			ArrayList<RectStar> auxRecuadros;
 			if (centroides1.size() > centroides2.size()) { // todo lo que lleve un 1 sera el que tenga menor numero
@@ -395,7 +395,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 		}
 	}
 	
-	public ArrayList<Pair<Point>> busquedaEstrellasDobles(Image im1, Image im2) {
+	public ArrayList<Pair<Point>> busquedaEstrellasDobles(Imagen im1, Imagen im2) {
 		
 		/* Algoritmo de busqueda de estrellas candidatas a ser dobles
 		 * 
@@ -518,7 +518,7 @@ public class ServiceBusquedaDoblesImpl implements ServiceBusquedaDobles{
 	 * x e y son las coordenadas que queremos transformar
 	 */
 	@Override
-	public DecimalCoordinate pixelToCoordinatesConverter(Image imagen, int width, int height, double x, double y) {
+	public DecimalCoordinate pixelToCoordinatesConverter(Imagen imagen, int width, int height, double x, double y) {
 		SexagesimalCoordinate sc;
 		DecimalCoordinate dc;
 		

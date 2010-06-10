@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.ucm.si.dneb.domain.Image;
-import es.ucm.si.dneb.domain.FileFormat;
-import es.ucm.si.dneb.domain.LoadData;
+import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.FormatoFichero;
+import es.ucm.si.dneb.domain.CargaDatos;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Task;
-import es.ucm.si.dneb.domain.TaskProsec;
+import es.ucm.si.dneb.domain.Tarea;
+import es.ucm.si.dneb.domain.ProcTarea;
 
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareasException;
 import es.ucm.si.dneb.util.Util;
@@ -42,9 +42,9 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void chequeoConsistencia() {
 		
-		List<Task> tareas =manager.createNamedQuery("Task:DameTodasTareasActivas").getResultList();
+		List<Tarea> tareas =manager.createNamedQuery("Tarea:DameTodasTareasActivas").getResultList();
 		
-		for(Task tarea: tareas){
+		for(Tarea tarea: tareas){
 			
 			if(tarea.isActiva()==true){
 				tarea.setActiva(false);
@@ -53,9 +53,9 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 			
 		}
 		
-		List<TaskProsec> procTareas=manager.createNamedQuery("TaskProsec.getTareaProcesamientoActivo").getResultList();
+		List<ProcTarea> procTareas=manager.createNamedQuery("ProcTarea.getTareaProcesamientoActivo").getResultList();
 		
-		for(TaskProsec procesamiento: procTareas){
+		for(ProcTarea procesamiento: procTareas){
 			
 			if(procesamiento.isActiva()){
 				procesamiento.setActiva(false);
@@ -70,14 +70,14 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 	public void eleminarTareasHistoricas(Date fecha){
 		
 		
-		List<Task> tareas= manager.createNamedQuery("Task:DameTodasTareasActualizadasAntesFecha").setParameter(1, fecha).getResultList();
+		List<Tarea> tareas= manager.createNamedQuery("Tarea:DameTodasTareasActualizadasAntesFecha").setParameter(1, fecha).getResultList();
 		
-		for(Task tarea: tareas){
+		for(Tarea tarea: tareas){
 			if(tarea.isActiva()==false && tarea.isFinalizada()==true){
 				
-				List<Image> imagens=tarea.getDescargas();
+				List<Imagen> imagens=tarea.getDescargas();
 				
-				for(Image imagen :imagens){
+				for(Imagen imagen :imagens){
 					manager.remove(imagen);
 				}
 				
@@ -97,7 +97,7 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		LOG.info("GENERANDO DATOS MANUALES DE DESCARGA");
 		
-		List<LoadData> cargaDatos=(List<LoadData>) manager.createNamedQuery("LoadData:dameTodosPuntosRelevantesNoProcesados").getResultList();
+		List<CargaDatos> cargaDatos=(List<CargaDatos>) manager.createNamedQuery("CargaDatos:dameTodosPuntosRelevantesNoProcesados").getResultList();
 		
 		if(cargaDatos.size()==0){
 			return;
@@ -121,26 +121,26 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		
 		String formatoFichero= resource.getString("formatodefecto");
 		
-		FileFormat formato;
+		FormatoFichero formato;
 		
 		try {
-			formato = (FileFormat) manager.createNamedQuery(
-					"FileFormat:dameFormatoPorDescripcion").setParameter(1,
+			formato = (FormatoFichero) manager.createNamedQuery(
+					"FormatoFichero:dameFormatoPorDescripcion").setParameter(1,
 							formatoFichero).getSingleResult();
 		} catch (NoResultException e) {
 			LOG
-					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,No se Devuelve resultado");
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,No se Devuelve resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		} catch (NonUniqueResultException e) {
 			LOG
-					.error("ProblemaQuery,FileFormat:dameFormatoPorDescripcion,Se devuelve más de un resultado");
+					.error("ProblemaQuery,FormatoFichero:dameFormatoPorDescripcion,Se devuelve más de un resultado");
 			throw new ServicioCreacionTareasException(
 					"Prolema al ejecutar query");
 		}
 
 		
-		Task tarea = new Task();
+		Tarea tarea = new Tarea();
 		tarea.setActiva(false);
 		tarea.setAlto(Double.parseDouble(alto));
 		tarea.setAncho(Double.parseDouble(ancho));
@@ -158,14 +158,14 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		/**TODO**/
 		manager.persist(tarea);
 		
-		ArrayList<Image> imagens = new ArrayList<Image>();
+		ArrayList<Imagen> imagens = new ArrayList<Imagen>();
 		
 		
-		for(LoadData punto : cargaDatos){
+		for(CargaDatos punto : cargaDatos){
 			
 			for(Survey survey : surveys){
 			
-				Image imagen = new Image();
+				Imagen imagen = new Imagen();
 				imagen.setAncho(Double.parseDouble(ancho));
 				String ar =new Double(punto.getAscencionRecta()).toString();
 				imagen.setAscensionRecta(ar);

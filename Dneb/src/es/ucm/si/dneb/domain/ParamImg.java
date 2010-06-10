@@ -9,14 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="PARAMETRO_TAREA_PROC")
-public class TaskProsecParam {
-	
+@Table(name="PARAM_IMG")
+public class ParamImg {
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID_PARAMETRO")
-    private long idParametro;
+    @Column(name="ID_PARAM_IMG")
+    private long idParametroImagen;
 	
 	@Column(name="VAL_NUM")
 	private Double valorNum;
@@ -26,19 +27,21 @@ public class TaskProsecParam {
 	
 	@ManyToOne
 	@JoinColumn(name="TIP_PARAM",nullable=false) 
-	private ParamType tipoParametro;
+	private TipoParametro tipoParametro;
 	
 	@ManyToOne
-	@JoinColumn(name="PROC",nullable=false) 
-	private TaskProsec procTarea;
+	@JoinColumn(name="IMG",nullable=false) 
+	private ProcImagen procImagen;
+	
 
 	
-	public long getIdParametro() {
-		return idParametro;
+
+	public long getIdParametroImagen() {
+		return idParametroImagen;
 	}
 
-	public void setIdParametro(long idParametro) {
-		this.idParametro = idParametro;
+	public void setIdParametroImagen(long idParametroImagen) {
+		this.idParametroImagen = idParametroImagen;
 	}
 
 	public Double getValorNum() {
@@ -57,20 +60,20 @@ public class TaskProsecParam {
 		this.valorAlfa = valorAlfa;
 	}
 
-	public ParamType getTipoParametro() {
+	public TipoParametro getTipoParametro() {
 		return tipoParametro;
 	}
 
-	public void setTipoParametro(ParamType tipoParametro) {
+	public void setTipoParametro(TipoParametro tipoParametro) {
 		this.tipoParametro = tipoParametro;
 	}
 
-	public void setTareaProcesamiento(TaskProsec procTarea) {
-		this.procTarea = procTarea;
+	public ProcImagen getProcImagen() {
+		return procImagen;
 	}
 
-	public TaskProsec getTareaProcesamiento() {
-		return procTarea;
+	public void setProcImagen(ProcImagen procImagen) {
+		this.procImagen = procImagen;
 	}
 
 	/**
@@ -86,13 +89,13 @@ public class TaskProsecParam {
 	    
 	    String retValue = "";
 	    
-	    retValue = "TaskProsecParam ( "
+	    retValue = "ParamImg ( "
 	        + super.toString() + TAB
-	        + "idParametro = " + this.idParametro + TAB
+	        + "idParametroImagen = " + this.idParametroImagen + TAB
 	        + "valorNum = " + this.valorNum + TAB
 	        + "valorAlfa = " + this.valorAlfa + TAB
 	        + "tipoParametro = " + this.tipoParametro + TAB
-	        + "procTarea = " + this.procTarea + TAB
+	       
 	        + " )";
 	
 	    return retValue;
@@ -100,4 +103,9 @@ public class TaskProsecParam {
 	
 	
 
+
+	
+	
+
 }
+	

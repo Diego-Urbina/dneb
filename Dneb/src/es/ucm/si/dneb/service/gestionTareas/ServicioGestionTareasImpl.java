@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
 import org.springframework.transaction.annotation.*;
-import es.ucm.si.dneb.domain.Image;
-import es.ucm.si.dneb.domain.FileFormat;
+import es.ucm.si.dneb.domain.Imagen;
+import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
-import es.ucm.si.dneb.domain.Task;
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionHilos.GestorDescargas;
 import es.ucm.si.dneb.util.Util;
 
@@ -57,7 +57,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void reanudarTarea(long tareaId) {
 
-		Task tarea = manager.find(Task.class, tareaId);
+		Tarea tarea = manager.find(Tarea.class, tareaId);
 
 		if (tarea.isActiva()) {
 			throw new ServicioGestionTareasException(
@@ -82,13 +82,13 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Integer obtenerPorcentajeCompletado(long tareaId) {
 
-		Task tarea = manager.find(Task.class, tareaId);
+		Tarea tarea = manager.find(Tarea.class, tareaId);
 		Long total =(Long) manager.createNamedQuery(
-				"Image:dameNumeroDescargasDeUnaTarea")
+				"Imagen:dameNumeroDescargasDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
 		
 		Long pendientes = (Long) manager.createNamedQuery(
-				"Image:dameNumeroDescargasPendientesDeUnaTarea")
+				"Imagen:dameNumeroDescargasPendientesDeUnaTarea")
 				.setParameter(1, tarea).getSingleResult();
 		if (total==0){
 			
@@ -105,7 +105,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void pararTarea(long tareaId) {
 
-		Task tarea = manager.find(Task.class, tareaId);
+		Tarea tarea = manager.find(Tarea.class, tareaId);
 
 		if (!tarea.isActiva()) {
 			throw new ServicioGestionTareasException(
@@ -129,14 +129,14 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Task> getTareas() {
-		return (List<Task>) manager.createNamedQuery("Task:DameTodasTareas")
+	public List<Tarea> getTareas() {
+		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTodasTareas")
 				.getResultList();
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<FileFormat> getFormatosFichero() {
-		return manager.createNamedQuery("FileFormat:dameTodosFormatos")
+	public List<FormatoFichero> getFormatosFichero() {
+		return manager.createNamedQuery("FormatoFichero:dameTodosFormatos")
 				.getResultList();
 	}
 	
@@ -162,7 +162,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 		gestorDescargas.eliminarHilo(tareaId);
 		
-		Task tarea = manager.find(Task.class, tareaId);
+		Tarea tarea = manager.find(Tarea.class, tareaId);
 
 		if(tarea==null){
 			throw new ServicioGestionTareasException("La tarea no existe");
@@ -173,9 +173,9 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 			gestorDescargas.eleminarHilo(tarea.getIdTarea());
 		}*/
 		
-		List<Image> imagens = tarea.getDescargas();
+		List<Imagen> imagens = tarea.getDescargas();
 		
-		for(Image imagen : imagens){
+		for(Imagen imagen : imagens){
 			manager.remove(imagen);
 		}
 			
@@ -186,7 +186,7 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Image getImagenByPath(String path) {
+	public Imagen getImagenByPath(String path) {
 		
 		String pathm=path;
 		
@@ -197,29 +197,29 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		pathm=pathm.replace("//","%");
 		
 		
-		List<Image> imagenes=manager.createQuery("select i from Image i where i.rutaFichero like ?").setParameter(1, pathm).getResultList();
+		List<Imagen> imagenes=manager.createQuery("select i from Imagen i where i.rutaFichero like ?").setParameter(1, pathm).getResultList();
 		return imagenes.get(0);
 		
 	}
 	
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Image> getDescargasTarea(Long tareaId) {
-		Task tarea = manager.find(Task.class, tareaId);
+	public List<Imagen> getDescargasTarea(Long tareaId) {
+		Tarea tarea = manager.find(Tarea.class, tareaId);
 			/*
 		if(tarea==null){
 			throw new ServicioGestionTareasException("La tarea no existe");
 		}
-		List<Image> imagens = tarea.getDescargas();
+		List<Imagen> imagens = tarea.getDescargas();
 		
 		return imagens;*/
 		
-		return manager.createNamedQuery("Image:dameImagenesDeUnaTarea").setParameter(1, tarea).getResultList();
+		return manager.createNamedQuery("Imagen:dameImagenesDeUnaTarea").setParameter(1, tarea).getResultList();
 		
 	}
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Task> getTareasPendientes() {
-		return (List<Task>) manager.createNamedQuery("Task:DameTodasTareasPendientes")
+	public List<Tarea> getTareasPendientes() {
+		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTodasTareasPendientes")
 		.getResultList();
 	}
 
@@ -236,11 +236,11 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void createSingleDownloadTask(String alias, String descripcion,
-			Double alto, Double ancho, FileFormat formatoFichero,
+			Double alto, Double ancho, FormatoFichero formatoFichero,
 			String ruta, List<Survey> surveys,Double ar, Double dec,boolean iniciarDescarga) {
 		
 		
-		Task tarea = new Task();
+		Tarea tarea = new Tarea();
 		tarea.setActiva(false);
 
 		tarea.setAlias(alias);
@@ -269,12 +269,12 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		
 		
 		
-		List<Image> imagens = new ArrayList<Image>();
+		List<Imagen> imagens = new ArrayList<Imagen>();
 		
 		for(Survey survey : surveys){
 			
 			
-			Image imagen = new Image();
+			Imagen imagen = new Imagen();
 			
 			
 			/**TODO OJO DEBERÍA DE SACAR UN ANCHO REAL??*/
@@ -317,16 +317,16 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Task> getTareasFinalizadas() {
-		return (List<Task>) manager.createNamedQuery("Task:DameTareasFinalizadas")
+	public List<Tarea> getTareasFinalizadas() {
+		return (List<Tarea>) manager.createNamedQuery("Tarea:DameTareasFinalizadas")
 		.getResultList();
 	}
 
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Task getTareaById(long id) {
+	public Tarea getTareaById(long id) {
 		
-		return manager.find(Task.class,id);
+		return manager.find(Tarea.class,id);
 	}
 
 

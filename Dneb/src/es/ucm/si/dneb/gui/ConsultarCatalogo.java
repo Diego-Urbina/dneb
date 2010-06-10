@@ -1383,7 +1383,7 @@ public class ConsultarCatalogo extends JPanel {
 						null, null));
 
 		// ---- button2 ----
-		button2.setText("Generar Task");
+		button2.setText("Generar Tarea");
 		button2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				generarTareaAction(e);

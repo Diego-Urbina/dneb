@@ -10,7 +10,7 @@ import com.intellij.uiDesigner.core.*;
 import org.springframework.context.ApplicationContext;
 
 import es.ucm.si.dneb.domain.DownloadConfig;
-import es.ucm.si.dneb.domain.FileFormat;
+import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 
 import es.ucm.si.dneb.service.downloadDefaultConfig.ServiceDownloadDefaultConfig;
@@ -31,7 +31,7 @@ public class CreateNewDownload extends JPanel {
 	private ServicioGestionTareas servicioGestionTareas;
 	
 	private ArrayList<Survey> surveys;
-	private ArrayList<FileFormat> formatosFichero; 
+	private ArrayList<FormatoFichero> formatosFichero; 
 	private ArrayList<DownloadConfig> configsList;
 	
 	public CreateNewDownload() {
@@ -81,12 +81,12 @@ public class CreateNewDownload extends JPanel {
         
         //INICIALIZACION DE FORMATOS DE FICHERO
         
-        formatosFichero = (ArrayList<FileFormat>) serviceDownloadDefaultConfig.getFormatosFichero();
+        formatosFichero = (ArrayList<FormatoFichero>) serviceDownloadDefaultConfig.getFormatosFichero();
         
         DefaultComboBoxModel listFormato = new DefaultComboBoxModel();
         
         
-        for (FileFormat aux : formatosFichero){
+        for (FormatoFichero aux : formatosFichero){
         	listFormato.addElement(aux.getAlias());
         }
         
@@ -191,7 +191,7 @@ public class CreateNewDownload extends JPanel {
         	JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 		
-		JOptionPane.showMessageDialog(null,"Image creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
+		JOptionPane.showMessageDialog(null,"Imagen creada satisfactoriamente", "Operación satisfactoria", JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/downconfig (Custom).JPG"));
 	}
 
 	private void cargarValoresDefectoEvent(MouseEvent e) {		
@@ -216,13 +216,13 @@ public class CreateNewDownload extends JPanel {
 		//this.comboBoxSURVEY2.setSelectedIndex();
 		
 		
-		FileFormat formFich= selectedDownloadDefaultConfiguration.getFormatoFichero();
+		FormatoFichero formFich= selectedDownloadDefaultConfiguration.getFormatoFichero();
 		
 		
 		
 		for(int i= 0 ; i<=this.formatosFichero.size()-1 ;i++){
 			
-			FileFormat aux= formatosFichero.get(i);
+			FormatoFichero aux= formatosFichero.get(i);
 			
 			if(aux.getAlias().equals(formFich.getAlias())){
 				formatoFichero.setSelectedIndex(i);

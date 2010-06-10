@@ -18,8 +18,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import es.ucm.si.dneb.domain.RelevantData;
-import es.ucm.si.dneb.domain.RelevantInformation;
+import es.ucm.si.dneb.domain.DatosRelevantes;
+import es.ucm.si.dneb.domain.InformacionRelevante;
 
 @Service("serviceExportData")
 public class ServiceExportDataImpl implements ServiceExportData {
@@ -27,7 +27,7 @@ public class ServiceExportDataImpl implements ServiceExportData {
 	@PersistenceContext
 	EntityManager manager;
 	
-	private RelevantData datosRelevantes = null;
+	private DatosRelevantes datosRelevantes = null;
 	private JAXBContext jaxbContext = null;
 	private Unmarshaller unmarshaller = null;
 	private Marshaller marshaller = null;
@@ -47,9 +47,9 @@ public class ServiceExportDataImpl implements ServiceExportData {
 		}
 		
 		
-		List<RelevantInformation> infRels=manager.createQuery("select ir from RelevantInformation ir").getResultList();
+		List<InformacionRelevante> infRels=manager.createQuery("select ir from InformacionRelevante ir").getResultList();
 		
-		RelevantData datRel= new RelevantData();
+		DatosRelevantes datRel= new DatosRelevantes();
 		
 		datRel.setInfoRelevante(infRels);
 		
@@ -98,11 +98,11 @@ public class ServiceExportDataImpl implements ServiceExportData {
 		return marshaller;
 	}
 
-	public void setDatosRelevantes(RelevantData datosRelevantes) {
+	public void setDatosRelevantes(DatosRelevantes datosRelevantes) {
 		this.datosRelevantes = datosRelevantes;
 	}
 
-	public RelevantData getDatosRelevantes() {
+	public DatosRelevantes getDatosRelevantes() {
 		return datosRelevantes;
 	}
 

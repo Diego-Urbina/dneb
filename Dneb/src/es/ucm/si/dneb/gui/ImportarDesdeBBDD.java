@@ -33,7 +33,7 @@ import org.springframework.context.ApplicationContext;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import es.ucm.si.dneb.domain.LoadData;
+import es.ucm.si.dneb.domain.CargaDatos;
 import es.ucm.si.dneb.domain.Survey;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.importData.ImportDDBBData;
@@ -86,7 +86,7 @@ public class ImportarDesdeBBDD extends JPanel {
 		
 		int seleccionados []= tableTasks.getSelectedRows();
 		
-		List<LoadData> datosACargar= new ArrayList<LoadData>();
+		List<CargaDatos> datosACargar= new ArrayList<CargaDatos>();
 		
 		for(int i=0;i<seleccionados.length;i++){
 			datosACargar.add(importDDBBData.getCargaDatosById((Long) modelo.getValueAt(i, 0)));
@@ -101,13 +101,13 @@ public class ImportarDesdeBBDD extends JPanel {
 	}
 	
 	private void rellenarTabla(){		
-		List<LoadData> cargaDatos=importDDBBData.getAllDatosAImportar();
+		List<CargaDatos> cargaDatos=importDDBBData.getAllDatosAImportar();
 		
 		int nFila = 0;
         TableColumn column;
         SwingWorker<Integer, Integer> worker;
         Object [] fila = new Object[tableTasks.getColumnCount()];
-        for (LoadData carga : cargaDatos) {
+        for (CargaDatos carga : cargaDatos) {
         	fila[0] = carga.getIdPunto();
         	fila[1] = carga.getAlto();
         	fila[2] = carga.getAncho();

@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import es.ucm.si.dneb.domain.Task;
+import es.ucm.si.dneb.domain.Tarea;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareas;
 import es.ucm.si.dneb.service.gestionTareas.ServicioGestionTareasException;
 import es.ucm.si.dneb.service.inicializador.ContextoAplicacion;
@@ -48,13 +48,13 @@ public class TaskPanel extends JPanel {
 	
 	private void rellenarTabla() {
 		try {
-	        ArrayList<Task> tareas = (ArrayList<Task>) servicioGestionTareas.getTareasPendientes();
+	        ArrayList<Tarea> tareas = (ArrayList<Tarea>) servicioGestionTareas.getTareasPendientes();
 	        
 	        int nFila = 0;
 	        TableColumn column;
 	        SwingWorker<Integer, Integer> worker;
 	        Object [] fila = new Object[tableTasks.getColumnCount()];
-	        for (Task tarea : tareas) {
+	        for (Tarea tarea : tareas) {
 	        	fila[0] = tarea.getIdTarea();
 	        	fila[1] = tarea.getAlto();
 	        	fila[2] = tarea.getAncho();

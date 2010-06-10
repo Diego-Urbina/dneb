@@ -3,7 +3,7 @@ package es.ucm.si.dneb.service.downloadDefaultConfig;
 import java.util.List;
 
 import es.ucm.si.dneb.domain.DownloadConfig;
-import es.ucm.si.dneb.domain.FileFormat;
+import es.ucm.si.dneb.domain.FormatoFichero;
 import es.ucm.si.dneb.domain.Survey;
 
 public interface ServiceDownloadDefaultConfig {	
@@ -14,7 +14,7 @@ public interface ServiceDownloadDefaultConfig {
 		
 	public List<Survey> getAllSurveys();
 
-	public List<FileFormat> getFormatosFichero();
+	public List<FormatoFichero> getFormatosFichero();
 	
 	public List<DownloadConfig> getDownloadConfigs();
 	
