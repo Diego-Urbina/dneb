@@ -78,9 +78,6 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 		 * Reducir el margen si la imagen es muy grande
 		 */
 
-		LOG
-				.info("PROCESAMIENTO DE CALCULO DE POSICION INFO:  "
-						+ pi.toString());
 		// TODO
 		// Saco los parámetro de la imagen
 		List<ParamImg> paramsImg = pi.getParams();
@@ -159,13 +156,11 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 		DoubleStarCatalog dsc = dscList.get(0);
 
-		// Busco las estrellas
-		LOG.info("PROCESAMIENTO DE CALCULO DE POSICION");
+		
 
 		String filename1 = imagen.getRutaFichero();
 
-		LOG.info("FICHERO : " + filename1);
-
+		
 		Fits imagenFITS;
 		List<RectStar> recStars = new ArrayList<RectStar>();
 		try {
@@ -186,7 +181,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 			 * Es la magnitud de verdad relevante??? pk no parece que se
 			 * corresponda el nº con la imgen
 			 */
-			LOG.info(dsc.toString());
+			
 
 			imagenFITS = new Fits(new File(filename1));
 			BasicHDU imageHDU = imagenFITS.getHDU(0);
@@ -204,15 +199,12 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 					while (sinRelevantes) {
 
-						LOG
-								.info("SE PROCEDE A EJECUTAR EL ALGORITMO CON LOS SIGUIENTES PARÁMETROS: BRILLO: "
-										+ brillo + "UMBRAL: " + umbral);
+						
 
 						sf = new StarFinder();
 						sf.buscarEstrellas(l, new Float(brillo), new Float(
 								umbral));
-						LOG.info("Numero de estrellas encontradas: "
-								+ sf.getNumberOfStars());
+						
 						recStars = sf.getRecuadros();
 
 						// CALCULAR CENTROIDES
@@ -243,24 +235,13 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 							cent.setX(recStars.get(i).getxLeft() + cent.getX());
 							cent.setY(recStars.get(i).getyTop() + cent.getY());
 
-							LOG.debug("\r\n\r\nCentroide " + i
-									+ " de la imagen 1:\r\n\tX: " + cent.getX()
-									+ "\r\n\tY: " + cent.getY());
-							LOG.debug("\r\n\r\nRectángulo " + i
-									+ " de la imagen 1:\r\n\txLeft: "
-									+ recStars.get(i).getxLeft()
-									+ "\r\n\txRight: "
-									+ recStars.get(i).getxRight()
-									+ "\r\n\tyTop: "
-									+ recStars.get(i).getyTop()
-									+ "\r\n\tyBot: "
-									+ recStars.get(i).getyBot());
+							
 
 							centroides.add(cent);
 
 						}
 
-						LOG.info("PASANDO DE PÍXELES A COORDENADAS");
+						
 
 						// PASAR DE PÍXELES A COORDENADAS
 
@@ -269,15 +250,12 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 						ArrayList<DecimalCoordinate> centroidesDC = new ArrayList<DecimalCoordinate>();
 
 						for (Point pointIter : centroides) {
-							LOG.debug("ANCHO: " + l.getWidth() + " ALTO: "
-									+ l.getHeight() + " X: " + pointIter.getX()
-									+ " Y: " + pointIter.getY());
+							
 							DecimalCoordinate dc = serviceBusquedaDobles
 									.pixelToCoordinatesConverter(imagen, l
 											.getWidth(), l.getHeight(),
 											pointIter.getX(), pointIter.getY());
-							LOG.debug("AR: " + dc.getAr() + " DEC: "
-									+ dc.getDec());
+							
 							centroidesDC.add(dc);
 
 							dcToPoint.put(dc, pointIter);
@@ -298,8 +276,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 								distanceAux.setPoint1(dc1);
 								distanceAux.setPoint2(dc2);
 
-								LOG.debug("DISTANCE INFO: "
-										+ distanceAux.toString());
+								
 
 								distancesList.add(distanceAux);
 							}
@@ -318,9 +295,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 									&& ((ang * (1 - margenAngulo)) <= dist
 											.getAngle() && dist.getAngle() <= (ang * (1 + margenAngulo)))) {
 
-								LOG.info("PUNTOS DENTRO DE RANGO:"
-										+ dist.toString());
-
+								
 								/*
 								 * ESTUDIAR SI LA POSICIÓN EN LA QUE HAN SIDO
 								 * ENCONTRADAS ES CERCANA A LA ANTERIOR DONDE SE
@@ -328,8 +303,8 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 								 */
 
 								/* ESTUDIO DE FILTRADO POR BRILLO */
-
-								/**/
+								
+								LOG.info(dsc.getDiscovererAndNumber()+"    "+dist.getPoint1().getAr()+"   "+dist.getPoint1().getDec());
 
 								InformacionRelevante ir = new InformacionRelevante();
 								ir
@@ -374,11 +349,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 									brillo = brillo - (brillo * 0.04);
 									/* Introducir ajuste al umbral?? */
 
-									LOG
-											.info("NO SE HAN ENCONTRADO DATOS RELEVANTES, AJUSTANDO PARÁMETROS: BRILLO: "
-													+ brillo
-													+ "UMBRAL: "
-													+ umbral);
+									
 								} else {
 									sinRelevantes = false;
 								}
