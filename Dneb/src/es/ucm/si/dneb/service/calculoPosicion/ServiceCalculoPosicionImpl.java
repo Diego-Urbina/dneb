@@ -333,7 +333,7 @@ public class ServiceCalculoPosicionImpl implements ServiceCalculoPosicion {
 
 								InformacionRelevante ir = new InformacionRelevante();
 								ir
-										.setDescription("CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS:" +" ( (LAST SEPARATION - CURRENT DISTANCE)= "+(dsc.getLastSeparation()-dist.getDistanceSeconds())+")" 
+										.setDescription("ID DSC (  "+dsc.getDiscovererAndNumber()+" ) POSICIÓN PUNTO 1( "+	dist.getPoint1().toString() +" ) POSICIÓN PUNTO 2( "+	dist.getPoint2().toString() +" )                CALCULO DISTANCIA: INFO DISTANCIA Y PUNTOS:" +" ( (LAST SEPARATION - CURRENT DISTANCE)= "+(dsc.getLastSeparation()-dist.getDistanceSeconds())+")" 
 												+ dist
 												+ "INFO DSC"
 												+ dsc.toString());
