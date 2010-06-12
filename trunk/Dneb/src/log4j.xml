@@ -17,6 +17,16 @@
 		</layout>
 		
 	</appender>
+	
+	<appender name="WDSFILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="maxFileSize" value="100000KB" />
+		<param name="maxBackupIndex" value="5" />
+		<param name="File" value="/dnebLog/WDS.log" />
+		<param name="threshold" value="debug" />
+		<layout class="org.apache.log4j.SimpleLayout">
+		</layout>
+		
+	</appender>
 
 	<appender name="ERRORFILE" class="org.apache.log4j.RollingFileAppender">
 		<param name="maxFileSize" value="10KB" />
@@ -33,6 +43,15 @@
 	
 	<logger name="org">
 		<level value="off"/> 
+	</logger>
+	
+	<logger name="org.hibernate">
+		<level value="off"/> 
+	</logger>
+	
+	<logger name="es.ucm.si.dneb.service.calculoPosicion">
+		<level value="info"/>
+		 <appender-ref ref="WDSFILE" />
 	</logger>
 	
 	<logger name="es.ucm.si.dneb">
