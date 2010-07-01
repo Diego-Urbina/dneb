@@ -1,0 +1,84 @@
+A continuación se procede a explicar el funcionamiento de las diferentes utilidades de la aplicación.
+
+Crear tareas 
+Para poder empezar a buscar estrellas dobles, necesitamos descargar las imágenes que recomponen la parcela de cielo deseada. Para ello, necesitamos crear una tarea en el menú Tareas -> Crear una nueva tarea. 
+ 
+Deberemos rellenar todos los campos. Las coordenadas de ascensión recta y declinación se expresan en grados y el alto y el ancho de la imagen en minutos de arco (arcmin). El solapamiento es útil para que una estrella no quede partida entre dos imágenes consecutivas. Por ultimo, debemos indicar el directorio en el que se almacenaran los ficheros FITS. 
+ 
+Gestionar tareas 
+Una vez que tengamos creadas tareas podremos gestionarlas. Con Tareas -> Gestor de tareas veremos la lista de las tareas creadas y no finalizadas y podremos reanudarlas, pararlas o eliminarlas. Es posible tener varias tareas activas a la vez e incluso podremos cerrar la pestaña Gestor de tareas y estas continuaran ejecutándose. 
+ 
+ 
+Crear descarga 
+Una descarga es una tarea compuesta únicamente por dos imágenes, una de cada survey. La creación de una descarga es muy similar a la de una tarea, salvo porque solo necesitamos introducir una ascensión recta y una declinación, que serán las coordenadas del centro de la imagen. Opcionalmente podremos darle un alias y una descripción a la descarga y cargar o guardar valores por defecto, pero explicaremos más detalladamente esto en el siguiente apartado. 
+ 
+Podemos crear una descarga con la opción Descargas -> Crear una descarga. 
+ 
+Configurar descargas 
+Si se van a realizar varias descargas que tengan en común algunos de los datos, como pueden ser los surveys, el alto, el ancho o la ruta, podemos crear una configuración de descarga para no tener que introducir los datos cada vez. 
+ 
+Para ello vamos a Configuración -> Crear configuración de descarga. Podremos gestionar distintas configuración; creándolas, actualizándolas o borrándolas. 
+ 
+Crear procesamientos 
+Una vez que una tarea se haya completado, podemos crear un procesamiento asociado a esta. Para esto, simplemente tenemos que ir a Procesamientos -> Crear procesamiento. 
+ 
+Solo hay que escoger una tarea, elegir el tipo de procesamiento que le queremos aplicar y aceptar. Se nos mostrará un mensaje advirtiéndonos de que el procesamiento se ha creado con éxito. 
+ 
+Gestionar procesamientos 
+Es idéntico a la opción de gestionar tareas pero con procesamientos. Una vez creado algún procesamiento, nos aparecerá en esta pantalla y podremos gestionar su funcionamiento; reanudándolo, parándolo o eliminándolo. 
+ 
+Accederemos a esta opción con Procesamientos -> Gestor de procesamientos.
+ 
+Exportar resultados a XML
+La aplicación permite exportar los resultados de los procesamientos a un fichero en formato XML para poder consultarlos más cómodamente. Simplemente deberemos escoger la ruta donde se creará el fichero y darle un nombre.
+ 
+A esta opción se accede con Exportar datos ->Exportar datos relevantes (XML).
+ 
+Importar desde base de datos
+Accedemos a esta opción desde Importar datos -> Desde BBDD.
+Nos permite generar tareas de descarga de imágenes en base a datos introducidos en la tabla CARGA_DATOS. 
+ 
+ 
+Importar catálogo
+Para poder realizar consultas al catalogo, primero deberemos importarlo. Deberemos elegir el fichero de texto donde se encuentra el catalogo y pulsar en Importar. También podremos eliminar los datos de un catálogo anterior. El formato que debe tener el fichero de texto se puede consultar en Ayuda -> Importar catálogo.
+ 
+Esta opción se encuentra disponible en Importar datos -> Importar catálogo estrellas dobles.
+ 
+Consultar catálogo
+Podemos consultar el catálogo que hayamos importado desde aquí y generar tareas con los resultados. Todos los campos que podemos rellenar son opcionales y actuarán a modo de filtro en la consulta al catálogo, pudiendo así consultar solo las estrellas que cumplan ciertos requisitos. Esta opción se encuentra disponible dentro del menú Utilidades. 
+ 
+ 
+Visores
+Los visores son herramientas que nos permiten visualizar imágenes en formato FITS y utilizar de  manera visual alguna de las funcionalidades de la aplicación.
+Visor de estrellas
+ 
+Se accede desde el menú de utilidades y nos permite visualizar pares de imágenes, pudiendo hacer zoom de manera simultánea sobre las dos imágenes y usar el localizador de estrellas (Icono con lupa vacía) pudiendo configurar los parámetros de brillo y umbral. Además tiene un botón que permite deshacer todas las operaciones y restaurar las imágenes a las originales.
+ 
+Visor de dobles
+ 
+Se accede desde el menú de utilidades y nos permite realizar varias funcionalidades una vez cargamos dos imágenes de un mismo lugar y de épocas diferentes.
+Buscar estrellas que se mueven (Icono lupa).
+Buscar estrellas dobles (Icono estrella).
+Realizar una animación basada en la superposición de las dos imágenes (Icono play).
+Además tiene un botón que permite deshacer todas las operaciones y restaurar las imágenes a las originales.
+ 
+El visor debug
+ 
+Nos permite localizar estrellas binarias ya conocidas, para ello hemos de abrir una imagen que haya sido descargada mediante una tarea generada al realizar una búsqueda en el catálogo de estrellas dobles y pulsar en el botón con la lupa. 
+Además nos permite calcular la distancia entre dos puntos, para ello pulsamos en el botón play, y posteriormente seleccionamos dos puntos pinchando sobre la imagen, nos aparecerá en una ventana la distancia entre los dos puntos.
+ 
+Conversor de coordenadas
+En Utilidades -> Conversor de coordenadas encontrados un sencillo conversor entre grados decimales y grados sexagesimales.
+ 
+ 
+Cálculo de distancias
+Con esta utilidad podremos calcular la distancia que hay entre dos puntos de la esfera celeste. Simplemente introducimos las coordenadas de los dos puntos y se nos mostrará el resultado tanto en grados como en segundos.
+Esta opción se encuentra disponible en Utilidades -> Cálculo distancias.
+ 
+ 
+Histograma
+Podemos consultar el histograma de una imagen para poder ver de una manera rápida y sencilla los valores de intensidad que más se repiten en la imagen. Solo tendremos que pulsar en el botón de cargar imagen y seleccionar la imagen deseada para que el histograma aparezca.
+ 
+ 
+La opción se encuentra en Utilidades -> Histograma.
+ 
