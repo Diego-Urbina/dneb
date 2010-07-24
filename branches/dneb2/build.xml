@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="run">
+	
+<property name="project.basedir" value="D:/DESARROLLO/workspace/Dneb" />	
+	
+<path id="project.libraries">
+  <fileset dir="${project.basedir}/lib">
+    <include name="*.jar"/>
+  </fileset>
+</path>
+	
+	
+	
+	<target name="clean">
+		<delete dir="build/jar" />
+		<delete dir="build/classes" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="build/classes" />
+		<javac encoding="iso-8859-1" srcdir="src" destdir="build/classes" >
+			<classpath refid="project.libraries"/>
+		</javac>
+	</target>
+
+	<target name="jar">
+		<mkdir dir="build/jar" />
+		<mkdir dir="build/classes/images"/>
+		<copy todir="/build/classes/images">
+			<fileset dir="${project.basedir}/images">
+			</fileset>
+		</copy>
+		
+		<copy todir="/build/classes/es/ucm/si/dneb/resources">
+					<fileset dir="${project.basedir}/src/es/ucm/si/dneb/resources">
+					</fileset>
+		</copy>
+		
+				
+		
+		<copy file="${project.basedir}/src/es/ucm/si/dneb/gui/deneb_med.jpg" todir="${project.basedir}/build/classes/es/ucm/si/dneb/gui/"></copy>
+		
+		<copy file="${project.basedir}/src/applicationContext.xml" todir="${project.basedir}/build/classes/"></copy>
+		<copy file="${project.basedir}/src/jdbc.properties" todir="${project.basedir}/build/classes/"></copy>
+		<copy file="${project.basedir}/src/log4j.xml" todir="${project.basedir}/build/classes/"></copy>
+		<copy file="${project.basedir}/src/META-INF/persistence.xml" todir="${project.basedir}/build/classes/META-INF"></copy>
+
+		<jar destfile="build/jar/dneb.jar" basedir="build/classes">
+
+			<manifest>
+				<attribute name="Main-Class" value="es.ucm.si.dneb.DnebApp" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run">
+		<java classname="es.ucm.si.dneb.DnebApp" fork="true">
+			<classpath>
+
+		          <pathelement location="${project.basedir}/build/jar/dneb.jar" />
+				  <fileset dir="${project.basedir}/build/lib">
+				    <include name="**/*.*"/>
+				  </fileset>
+			</classpath>
+		</java>
+	</target>
+
+</project>
