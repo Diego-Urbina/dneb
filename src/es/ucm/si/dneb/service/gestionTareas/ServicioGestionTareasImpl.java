@@ -249,10 +249,10 @@ public class ServicioGestionTareasImpl implements ServicioGestionTareas {
 		tarea.setAlto(alto);
 		tarea.setAncho(ancho);
 		
-		tarea.setArFinal("0");
-		tarea.setArInicial("0");
-		tarea.setDecFinal("0");
-		tarea.setDecInicial("0");
+		tarea.setArFinal(""+ar);
+		tarea.setArInicial(""+ar);
+		tarea.setDecFinal(""+dec);
+		tarea.setDecInicial(""+dec);
 		
 		tarea.setFechaCreacion(Util.dameFechaActual());
 		tarea.setFechaUltimaActualizacion(Util.dameFechaActual());

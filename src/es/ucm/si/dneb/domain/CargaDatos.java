@@ -1,15 +1,12 @@
 package es.ucm.si.dneb.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -49,9 +46,7 @@ public class CargaDatos {
 	@Column(name="PATH")
 	private String path;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="PUNTOSRELEVANTES_SURVEY_JT")
-	private List<Survey> surveys;
+	
 	
 	
 	public long getIdPunto() {
@@ -117,14 +112,12 @@ public class CargaDatos {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	
 
-	public List<Survey> getSurveys() {
-		return surveys;
-	}
+	
 
-	public void setSurveys(List<Survey> surveys) {
-		this.surveys = surveys;
-	}
+	
 
 	/**
 	 * Constructs a <code>String</code> with all attributes
@@ -149,7 +142,7 @@ public class CargaDatos {
 	        + "alto = " + this.alto + TAB
 	        + "ancho = " + this.ancho + TAB
 	        + "path = " + this.path + TAB
-	        + "surveys = " + this.surveys + TAB
+	       
 	        + " )";
 	
 	    return retValue;
