@@ -24,11 +24,20 @@ public class DnebApp {
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		// TODO Auto-generated method stub
-		LOG.debug("INICIO DE LA APLICACION");
+		LOG.info("STARTING APPLICATION");
+		LOG.info("STARTING INITIALIZATION OF CONTEXT");
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();//new ClassPathXmlApplicationContext("applicationContext.xml");
 		ServicioInicializador servicioInicializador=(ServicioInicializador) ctx.getBean("servicioInicializador");
+		LOG.info("INITIALIZATION OF CONTEXT FINISHED");
+		
+		LOG.info("INITIALIZATION OF CONFIGURATION");
+		servicioInicializador.inicializar();
+		LOG.info("INITIALIZATION OF CONFIGURARION FINISHED");
+		
 		servicioInicializador.chequeoConsistencia();
 		//servicioInicializador.generarTareaSobreDatosManuales();
+		
+		
 		
 		ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas) ctx.getBean("servicioGestionTareas");
 		servicioGestionTareas.anadirTareasAlGestor();

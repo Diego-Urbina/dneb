@@ -4,6 +4,7 @@ import java.util.Date;
 
 
 public interface ServicioInicializador {
+	public void inicializar();
 	
 	public void eleminarTareasHistoricas(Date fecha);
 	

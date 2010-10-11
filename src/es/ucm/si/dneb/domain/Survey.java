@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class Survey {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_SURVEY")
     private long idSurvey;
 	

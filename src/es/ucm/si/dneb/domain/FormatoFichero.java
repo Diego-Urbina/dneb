@@ -19,7 +19,6 @@ import javax.persistence.OneToMany;
 public class FormatoFichero {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_FORMATO_FICHERO")
     private long idFormatoFichero;
 	
