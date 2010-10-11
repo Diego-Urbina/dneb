@@ -15,7 +15,6 @@ import javax.persistence.Table;
 public class TipoParametro {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_TIPO_PARAMETRO")
     private long idTipoParametro;
 	

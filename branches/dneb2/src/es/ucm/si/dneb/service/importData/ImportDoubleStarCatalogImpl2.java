@@ -42,7 +42,7 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 		return null;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED )
 	public void loadCatalog(String path) {
 		if ((path == null) || (path == ""))
 			throw new IllegalArgumentException();
@@ -209,6 +209,10 @@ public class ImportDoubleStarCatalogImpl2 implements ImportDoubleStarCatalog {
 				/* TODO REALIZAR CONVERSIÓN DE UNIDADES */
 
 				manager.persist(doubleStarCatalog);
+				
+				if(i % 100==0){
+					manager.flush();
+				}
 
 				i++;
 

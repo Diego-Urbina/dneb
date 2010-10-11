@@ -26,7 +26,6 @@ public class TipoInformacionRelevante {
 	
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
     @XmlElement(required = true)
     private long id;

@@ -23,7 +23,6 @@ public class TipoProcesamiento {
 	
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_TIP_PROC")
     private long idTipoProcesamiento;
 	
