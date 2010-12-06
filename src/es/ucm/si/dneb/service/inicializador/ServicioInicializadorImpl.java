@@ -1,5 +1,7 @@
 package es.ucm.si.dneb.service.inicializador;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,6 +15,14 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +38,7 @@ import es.ucm.si.dneb.domain.TipoParametro;
 import es.ucm.si.dneb.domain.TipoProcesamiento;
 
 import es.ucm.si.dneb.service.creacionTareas.ServicioCreacionTareasException;
+import es.ucm.si.dneb.service.downloadImage.ServiceDownloadImageException;
 import es.ucm.si.dneb.util.Util;
 
 @Service("servicioInicializador")
@@ -394,6 +405,44 @@ public class ServicioInicializadorImpl implements ServicioInicializador {
 		manager.merge(tarea);
 
 		LOG.info("FINALIZADA LA GENERACIÓN DE DESCARGAS MANUALES");
+
+	}
+
+	@Override
+	public boolean testConnection() {
+		try{
+			final HttpClient httpclient = new DefaultHttpClient();
+			
+			final List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>(0);
+			UrlEncodedFormEntity entity = null;
+			
+			entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+			
+			LOG.info("Parámetros configurados correctamente");
+			final HttpPost httppost = new HttpPost(
+					"http://archive.stsci.edu/cgi-bin/dss_search");
+
+			httppost.setEntity(entity);
+
+			HttpResponse response = null;
+
+			response = httpclient.execute(httppost);
+
+			LOG.info("HTTPPOST EJECUTADO SATISFACTORIAMENTE");
+
+			final HttpEntity resEnt = response.getEntity();
+			if (resEnt != null) {
+				BufferedInputStream bis = null;
+				
+				LOG.info("Downloading information");
+				bis = new BufferedInputStream(resEnt.getContent());
+			}	
+
+			return true;
+			
+		}catch(Exception e){
+			return false;
+		}
 
 	}
 
