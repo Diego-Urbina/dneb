@@ -1,11 +1,25 @@
 package es.ucm.si.dneb.gui;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 import es.ucm.si.dneb.service.image.histograma.DisplayHistogramApp;
+import es.ucm.si.dneb.service.inicializador.ConnectionTestObserver;
+import es.ucm.si.dneb.service.inicializador.ServicioInicializador;
+import es.ucm.si.dneb.service.inicializador.ThreadCon;
 
 
 public class VentanaPcpal extends JFrame{
@@ -17,8 +31,21 @@ public class VentanaPcpal extends JFrame{
 	private TaskPanel taskPanel;	
 	private JTabbedPane pane = new JTabbedPane();
 	
+	private ConnectivityMenuItem conItem=new ConnectivityMenuItem();
 	
-	public VentanaPcpal(){
+	
+	public VentanaPcpal(ServicioInicializador servIni){
+		
+		ConnectionTestObserver contestob= new ConnectionTestObserver();
+		
+		contestob.addObserver(conItem);
+		
+		
+		ThreadCon contest=new ThreadCon(contestob,servIni);
+		
+		
+		contest.start();
+		
 		
 		this.getContentPane().setLayout(new BorderLayout());
 	    initComponents();
@@ -572,6 +599,9 @@ public class VentanaPcpal extends JFrame{
 				menu8.add(dnebInfo);
 			}
 			menuBar1.add(menu8);
+			
+			menuBar1.add(conItem);
+		
 		}
 		setJMenuBar(menuBar1);
 	}

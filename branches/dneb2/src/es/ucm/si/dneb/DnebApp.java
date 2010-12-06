@@ -23,8 +23,8 @@ public class DnebApp {
 	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		// TODO Auto-generated method stub
-		LOG.info("STARTING APPLICATION");
+		
+		LOG.info("Starting application");
 		LOG.info("STARTING INITIALIZATION OF CONTEXT");
 		ApplicationContext ctx = ContextoAplicacion.getApplicationContext();//new ClassPathXmlApplicationContext("applicationContext.xml");
 		ServicioInicializador servicioInicializador=(ServicioInicializador) ctx.getBean("servicioInicializador");
@@ -34,15 +34,19 @@ public class DnebApp {
 		servicioInicializador.inicializar();
 		LOG.info("INITIALIZATION OF CONFIGURARION FINISHED");
 		
+		LOG.info("Checking consistency");
 		servicioInicializador.chequeoConsistencia();
-		//servicioInicializador.generarTareaSobreDatosManuales();
+		LOG.info("Consistency checked");
 		
-		
-		
+		LOG.info("Instantiating task manager");		
 		ServicioGestionTareas servicioGestionTareas = (ServicioGestionTareas) ctx.getBean("servicioGestionTareas");
 		servicioGestionTareas.anadirTareasAlGestor();
+		LOG.info("Task manager instantiated");
 		
-		VentanaPcpal vent = new VentanaPcpal();
+		LOG.info("Showing GUI");
+		
+		
+		VentanaPcpal vent = new VentanaPcpal(servicioInicializador);
 		vent.setVisible(true);
 	}
 

@@ -626,6 +626,18 @@
           </void> 
          </object> 
         </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JMenuItem</string> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>Conectividad</string> 
+          </void> 
+          <void property="name"> 
+           <string>menuItem1</string> 
+          </void> 
+         </object> 
+        </void> 
        </object> 
       </void> 
       <void property="name"> 
